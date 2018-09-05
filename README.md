@@ -34,7 +34,7 @@ final class AppKernel extends Kernel
 
 ```yaml
 # app/config/routing.yml
-setono_sylius_bulk_specials_plugin_admin:
+setono_sylius_bulk_specials_admin:
     resource: "@SetonoSyliusBulkSpecialsPlugin/Resources/config/admin_routing.yml"
     prefix: /admin
 ```
