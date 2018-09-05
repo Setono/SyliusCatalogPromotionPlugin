@@ -1,1 +1,4 @@
 # Define your own admin routes here
+
+setono_sylius_bulk_specials_admin_specials_index:
+    path: /specials

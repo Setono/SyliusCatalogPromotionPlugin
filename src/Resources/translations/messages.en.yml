@@ -1,0 +1,6 @@
+setono_sylius_bulk_specials:
+    menu:
+        admin:
+            main:
+                marketing:
+                    specials: Specials
