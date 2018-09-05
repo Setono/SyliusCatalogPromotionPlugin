@@ -1,83 +1,93 @@
-<p align="center">
-    <a href="https://sylius.com" target="_blank">
-        <img src="https://demo.sylius.com/assets/shop/img/logo.png" />
-    </a>
-</p>
+# SetonoSyliusBulkSpecialsPlugin
 
-<h1 align="center">Plugin Skeleton</h1>
+[![Latest Version on Packagist][ico-version]][link-packagist]
+[![Software License][ico-license]](LICENSE)
+[![Build Status][ico-travis]][link-travis]
+[![Quality Score][ico-code-quality]][link-code-quality]
 
-<p align="center">Skeleton for starting Sylius plugins.</p>
+## Install
 
-## Installation
+### Add plugin to composer.json
 
-1. Run `composer create-project sylius/plugin-skeleton ProjectName`.
+```bash
+composer require setono/sylius-bulk-specials-plugin
+```
 
-2. From the plugin skeleton root directory, run the following commands:
+### Register plugin at AppKernel.php
 
-    ```bash
-    $ (cd tests/Application && yarn install)
-    $ (cd tests/Application && yarn run gulp)
-    $ (cd tests/Application && bin/console assets:install web -e test)
+```php
+# app/AppKernel.php
+
+final class AppKernel extends Kernel
+{
+    public function registerBundles(): array
+    {
+        return array_merge(parent::registerBundles(), [
+            // ...
+            new \Setono\SyliusBulkSpecialsPlugin\SetonoSyliusBulkSpecialsPlugin(),
+        ]);
+    }
+}
+```
+
+### Add routing
+
+```yaml
+# app/config/routing.yml
+setono_sylius_bulk_specials_plugin_admin:
+    resource: "@SetonoSyliusBulkSpecialsPlugin/Resources/config/admin_routing.yml"
+    prefix: /admin
+```
+
+### Configure plugin (optional)
+
+```yaml
+# app/config/config.yml
+setono_sylius_bulk_specials:
     
-    $ (cd tests/Application && bin/console doctrine:database:create -e test)
-    $ (cd tests/Application && bin/console doctrine:schema:create -e test)
+```
+
+### Update your schema (for existing project)
+
+```bash
+bin/console doctrine:schema:update --force
+```
+
+# (Manually) Test plugin
+
+- Run application:
+  (by default application have default config at `dev` environment
+  and example config from `Configure plugin` step at `prod` environment)
+  
+    ```bash
+    SYMFONY_ENV=dev
+    cd tests/Application && \
+        yarn install && \
+        yarn run gulp && \
+        bin/console assets:install web -e $SYMFONY_ENV && \
+        bin/console doctrine:database:create -e $SYMFONY_ENV && \
+        bin/console doctrine:schema:create -e $SYMFONY_ENV && \
+        bin/console sylius:fixtures:load -e $SYMFONY_ENV && \
+        bin/console server:run -d web -e $SYMFONY_ENV
     ```
 
-## Usage
+- Log in at `http://localhost:8000/admin`
+  with Sylius demo credentials:
+  
+  ```
+  Login: sylius@example.com
+  Password: sylius 
+  ```
 
-### Running plugin tests
+- ...
 
-  - PHPUnit
+- See how much that item was ordered (or even added to cart depending on config)
 
-    ```bash
-    $ bin/phpunit
-    ```
+[ico-version]: https://img.shields.io/packagist/v/setono/sylius-bulk-specials-plugin.svg?style=flat-square
+[ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
+[ico-travis]: https://img.shields.io/travis/Setono/SyliusBulkSpecialsPlugin/master.svg?style=flat-square
+[ico-code-quality]: https://img.shields.io/scrutinizer/g/Setono/SyliusBulkSpecialsPlugin.svg?style=flat-square
 
-  - PHPSpec
-
-    ```bash
-    $ bin/phpspec run
-    ```
-
-  - Behat (non-JS scenarios)
-
-    ```bash
-    $ bin/behat --tags="~@javascript"
-    ```
-
-  - Behat (JS scenarios)
- 
-    1. Download [Chromedriver](https://sites.google.com/a/chromium.org/chromedriver/)
-    
-    2. Run Selenium server with previously downloaded Chromedriver:
-    
-        ```bash
-        $ bin/selenium-server-standalone -Dwebdriver.chrome.driver=chromedriver
-        ```
-    3. Run test application's webserver on `localhost:8080`:
-    
-        ```bash
-        $ (cd tests/Application && bin/console server:run 127.0.0.1:8080 -d web -e test)
-        ```
-    
-    4. Run Behat:
-    
-        ```bash
-        $ bin/behat --tags="@javascript"
-        ```
-
-### Opening Sylius with your plugin
-
-- Using `test` environment:
-
-    ```bash
-    $ (cd tests/Application && bin/console sylius:fixtures:load -e test)
-    $ (cd tests/Application && bin/console server:run -d web -e test)
-    ```
-    
-- Using `dev` environment:
-
-    ```bash
-    $ (cd tests/Application && bin/console sylius:fixtures:load -e dev)
-    $ (cd tests/Application && bin/console server:run -d web -e dev)
-    ```
+[link-packagist]: https://packagist.org/packages/setono/sylius-bulk-specials-plugin
+[link-travis]: https://travis-ci.org/Setono/SyliusBulkSpecialsPlugin
+[link-code-quality]: https://scrutinizer-ci.com/g/Setono/SyliusBulkSpecialsPlugin
