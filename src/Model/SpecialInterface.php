@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Setono\SyliusBulkSpecialsPlugin\Model;
 
-use Sylius\Component\Channel\Model\ChannelsAwareInterface;
 use Doctrine\Common\Collections\Collection;
+use Sylius\Component\Channel\Model\ChannelsAwareInterface;
 use Sylius\Component\Resource\Model\CodeAwareInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Resource\Model\TimestampableInterface;
@@ -106,8 +106,6 @@ interface SpecialInterface extends ChannelsAwareInterface, CodeAwareInterface, T
 
     /**
      * @param string $actionType
-     *
-     * @return void
      */
     public function setActionType(string $actionType): void;
 
@@ -118,9 +116,6 @@ interface SpecialInterface extends ChannelsAwareInterface, CodeAwareInterface, T
 
     /**
      * @param string $actionType
-     *
-     * @return void
      */
     public function setActionPercent(int $actionType): void;
 }
-

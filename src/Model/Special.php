@@ -6,9 +6,9 @@ namespace Setono\SyliusBulkSpecialsPlugin\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Sylius\Component\Resource\Model\TimestampableTrait;
-use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Channel\Model\ChannelInterface as BaseChannelInterface;
+use Sylius\Component\Core\Model\ChannelInterface;
+use Sylius\Component\Resource\Model\TimestampableTrait;
 
 class Special implements SpecialInterface
 {
@@ -69,7 +69,7 @@ class Special implements SpecialInterface
     protected $actionType;
 
     /**
-     * @var integer
+     * @var int
      */
     protected $actionPercent;
 
@@ -208,7 +208,7 @@ class Special implements SpecialInterface
     {
         $this->endsAt = $endsAt;
     }
-    
+
     /**
      * {@inheritdoc}
      */
