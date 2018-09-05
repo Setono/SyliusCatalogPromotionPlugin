@@ -3,12 +3,6 @@ sylius:
 
 # Put your own routes here
 
-acme_sylius_example_plugin_shop:
-    resource: "@AcmeSyliusExamplePlugin/Resources/config/shop_routing.yml"
-    prefix: /{_locale}
-    requirements:
-        _locale: ^[a-z]{2}(?:_[A-Z]{2})?$
-
-acme_sylius_example_plugin_admin:
-    resource: "@AcmeSyliusExamplePlugin/Resources/config/admin_routing.yml"
+setono_sylius_bulk_specials_plugin_admin:
+    resource: "@SetonoSyliusBulkSpecialsPlugin/Resources/config/admin_routing.yml"
     prefix: /admin

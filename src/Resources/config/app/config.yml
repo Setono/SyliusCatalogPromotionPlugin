@@ -1,0 +1,3 @@
+# Config is empty, but it required to preload defaults
+setono_sylius_bulk_specials:
+    resources:

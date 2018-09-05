@@ -1,7 +1,7 @@
 {
-    "name": "sylius/plugin-skeleton",
+    "name": "setono/sylius-bulk-specials-plugin",
     "type": "sylius-plugin",
-    "description": "Acme example plugin for Sylius.",
+    "description": "Bulk specials plugin for Sylius.",
     "license": "MIT",
     "require": {
         "php": "^7.1",
@@ -32,8 +32,8 @@
     "prefer-stable": true,
     "autoload": {
         "psr-4": {
-            "Acme\\SyliusExamplePlugin\\": "src/",
-            "Tests\\Acme\\SyliusExamplePlugin\\": "tests/"
+            "Setono\\SyliusBulkSpecialsPlugin\\": "src/",
+            "Tests\\Setono\\SyliusBulkSpecialsPlugin\\": "tests/"
         }
     },
     "autoload-dev": {
