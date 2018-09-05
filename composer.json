@@ -37,7 +37,8 @@
         }
     },
     "autoload-dev": {
-        "classmap": ["tests/Application/app/AppKernel.php"]
+        "classmap": ["tests/Application/app/AppKernel.php"],
+        "files": [ "vendor/symfony/symfony/src/Symfony/Component/VarDumper/Resources/functions/dump.php" ]
     },
     "extra": {
         "branch-alias": {
