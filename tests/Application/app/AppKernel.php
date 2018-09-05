@@ -12,14 +12,14 @@ final class AppKernel extends Kernel
      */
     public function registerBundles(): array
     {
-        return array_merge(parent::registerBundles(), [
+        return array_merge([
+            new \Setono\SyliusBulkSpecialsPlugin\SetonoSyliusBulkSpecialsPlugin(),
+        ], parent::registerBundles(), [
             new \Sylius\Bundle\AdminBundle\SyliusAdminBundle(),
             new \Sylius\Bundle\ShopBundle\SyliusShopBundle(),
 
             new \FOS\OAuthServerBundle\FOSOAuthServerBundle(), // Required by SyliusApiBundle
             new \Sylius\Bundle\AdminApiBundle\SyliusAdminApiBundle(),
-
-            new \Setono\SyliusBulkSpecialsPlugin\SetonoSyliusBulkSpecialsPlugin(),
         ]);
     }
 
@@ -31,6 +31,9 @@ final class AppKernel extends Kernel
         $loader->load($this->getProjectDir() . '/app/config/config_' . $this->environment . '.yml');
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getProjectDir(): string
     {
         return dirname(__DIR__);

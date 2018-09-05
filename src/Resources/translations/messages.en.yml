@@ -1,4 +1,8 @@
 setono_sylius_bulk_specials:
+    ui:
+        special: Special
+        specials: Specials
+        manage_specials: Manage specials
     menu:
         admin:
             main:

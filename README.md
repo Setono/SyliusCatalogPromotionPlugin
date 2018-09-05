@@ -22,12 +22,23 @@ final class AppKernel extends Kernel
 {
     public function registerBundles(): array
     {
-        return array_merge(parent::registerBundles(), [
-            // ...
+        // Its important to instantiate SetonoSyliusBulkSpecialsPlugin
+        // before calling parent::registerBundles()
+        return array_merge([
             new \Setono\SyliusBulkSpecialsPlugin\SetonoSyliusBulkSpecialsPlugin(),
+        ], parent::registerBundles(), [
+            // ...
         ]);
     }
 }
+```
+
+**Note**, that we MUST instantiate `SetonoSyliusBulkSpecialsPlugin` 
+BEFORE `SyliusGridBundle` (which instantiates at `parent::registerBundles()`). 
+Otherwise you'll see exception like this:
+
+```bash
+You have requested a non-existent parameter "setono_sylius_bulk_specials.model.special.class".  
 ```
 
 ### Add routing

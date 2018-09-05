@@ -1,4 +1,27 @@
-# Define your own admin routes here
+# Routes (listed for better navigation):
+# - setono_sylius_bulk_specials_admin_special_index
+# - setono_sylius_bulk_specials_admin_special_create
+# - setono_sylius_bulk_specials_admin_special_update
+# - setono_sylius_bulk_specials_admin_special_bulk_delete
+# - setono_sylius_bulk_specials_admin_special_delete
 
-setono_sylius_bulk_specials_admin_specials_index:
-    path: /specials
+setono_sylius_bulk_specials_admin_special:
+    resource: |
+        alias: setono_sylius_bulk_specials.special
+        section: admin
+        templates: SyliusAdminBundle:Crud
+        except: ['show']
+        redirect: update
+        grid: setono_sylius_bulk_specials_admin_special
+        permission: true
+        vars:
+            all:
+                subheader: setono_sylius_bulk_specials.ui.manage_specials
+                templates:
+                    form: "@SyliusAdmin/Promotion/_form.html.twig"
+            index:
+                icon: in cart
+            update:
+                templates:
+                    form: "@SyliusAdmin/Special/_form.html.twig"
+    type: sylius.resource
