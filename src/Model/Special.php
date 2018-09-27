@@ -12,6 +12,9 @@ use Sylius\Component\Resource\Model\TimestampableTrait;
 
 class Special implements SpecialInterface
 {
+    const ACTION_TYPE_OFF = 'off';
+    const ACTION_TYPE_INCREASE = 'increase';
+
     use TimestampableTrait;
 
     /**
@@ -30,7 +33,7 @@ class Special implements SpecialInterface
     protected $name;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $description;
 
@@ -49,14 +52,19 @@ class Special implements SpecialInterface
     protected $exclusive = false;
 
     /**
-     * @var \DateTimeInterface
+     * @var \DateTimeInterface|null
      */
     protected $startsAt;
 
     /**
-     * @var \DateTimeInterface
+     * @var \DateTimeInterface|null
      */
     protected $endsAt;
+
+    /**
+     * @var bool
+     */
+    protected $enabled = false;
 
     /**
      * @var Collection|SpecialRuleInterface[]
@@ -66,17 +74,47 @@ class Special implements SpecialInterface
     /**
      * @var string
      */
-    protected $actionType;
+    protected $actionType = self::ACTION_TYPE_OFF;
 
     /**
      * @var int
      */
-    protected $actionPercent;
+    protected $actionPercent = 0;
 
     /**
      * @var ChannelInterface[]|Collection
      */
     protected $channels;
+
+    /**
+     * @return array
+     */
+    public static function getActionTypes(): array
+    {
+        return [
+            self::ACTION_TYPE_OFF,
+            self::ACTION_TYPE_INCREASE,
+        ];
+    }
+
+    /**
+     * @return float
+     */
+    public function getMultiplier(): float
+    {
+        switch ($this->getActionType()) {
+            case self::ACTION_TYPE_OFF:
+                return (100 - $this->getActionPercent()) / 100;
+            case self::ACTION_TYPE_INCREASE:
+                return (100 + $this->getActionPercent()) / 100;
+            default:
+                throw new \Exception(sprintf(
+                    "Unknown actionType '%s'. Expected one of: %s",
+                    $this->getActionType(),
+                    implode(' ,', self::getActionTypes())
+                ));
+        }
+    }
 
     /**
      * Special constructor.
@@ -207,6 +245,22 @@ class Special implements SpecialInterface
     public function setEndsAt(?\DateTimeInterface $endsAt): void
     {
         $this->endsAt = $endsAt;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isEnabled(): bool
+    {
+        return $this->enabled;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setEnabled(bool $enabled): void
+    {
+        $this->enabled = $enabled;
     }
 
     /**

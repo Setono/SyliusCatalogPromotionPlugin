@@ -10,8 +10,16 @@ use Sylius\Component\Resource\Model\CodeAwareInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Resource\Model\TimestampableInterface;
 
+/**
+ * Interface SpecialInterface
+ */
 interface SpecialInterface extends ChannelsAwareInterface, CodeAwareInterface, TimestampableInterface, ResourceInterface
 {
+    /**
+     * @return float
+     */
+    public function getMultiplier(): float;
+
     /**
      * @return string|null
      */
@@ -71,6 +79,16 @@ interface SpecialInterface extends ChannelsAwareInterface, CodeAwareInterface, T
      * @param \DateTimeInterface|null $endsAt
      */
     public function setEndsAt(?\DateTimeInterface $endsAt): void;
+
+    /**
+     * @return bool
+     */
+    public function isEnabled(): bool;
+
+    /**
+     * @param bool $enabled
+     */
+    public function setEnabled(bool $enabled): void;
 
     /**
      * @return Collection|SpecialRuleInterface[]
