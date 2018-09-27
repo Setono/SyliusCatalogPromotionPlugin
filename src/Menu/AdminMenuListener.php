@@ -6,6 +6,9 @@ namespace Setono\SyliusBulkSpecialsPlugin\Menu;
 
 use Sylius\Bundle\UiBundle\Menu\Event\MenuBuilderEvent;
 
+/**
+ * Class AdminMenuListener
+ */
 final class AdminMenuListener
 {
     /**

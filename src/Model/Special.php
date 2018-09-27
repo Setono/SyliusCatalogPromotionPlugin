@@ -10,6 +10,9 @@ use Sylius\Component\Channel\Model\ChannelInterface as BaseChannelInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Resource\Model\TimestampableTrait;
 
+/**
+ * Class Special
+ */
 class Special implements SpecialInterface
 {
     const ACTION_TYPE_OFF = 'off';

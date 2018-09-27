@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Setono\SyliusBulkSpecialsPlugin\Model;
 
+/**
+ * Class SpecialRule
+ */
 class SpecialRule implements SpecialRuleInterface
 {
     /**

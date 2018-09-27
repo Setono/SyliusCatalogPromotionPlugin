@@ -6,6 +6,9 @@ namespace Setono\SyliusBulkSpecialsPlugin\Model;
 
 use Sylius\Component\Resource\Model\ResourceInterface;
 
+/**
+ * Interface ConfigurableSpecialElementInterface
+ */
 interface ConfigurableSpecialElementInterface extends ResourceInterface
 {
     /**
