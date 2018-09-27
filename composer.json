@@ -37,6 +37,9 @@
         }
     },
     "autoload-dev": {
+        "psr-4": {
+            "AppBundle\\": "tests/Application/src/AppBundle/"
+        },
         "classmap": ["tests/Application/app/AppKernel.php"],
         "files": [ "vendor/symfony/symfony/src/Symfony/Component/VarDumper/Resources/functions/dump.php" ]
     },

@@ -50,13 +50,108 @@ setono_sylius_bulk_specials_admin:
     prefix: /admin
 ```
 
-### Configure plugin (optional)
+### Extend `Product` model and `ProductRepository`
 
-```yaml
-# app/config/config.yml
-setono_sylius_bulk_specials:
+(see [test/Application](test/Application) for more details how to configure)
+
+* Override config
+
+    ```yaml
+    # app/config/config.yml
+    sylius_product:
+        resources:
+            product:
+                classes:
+                    model: AppBundle\Model\Product
+                    repository: AppBundle\Doctrine\ORM\ProductRepository
+    ```
+
+* Override model
+
+    ```php
+    <?php
     
-```
+    namespace AppBundle\Model;
+    
+    use Setono\SyliusBulkSpecialsPlugin\Model\SpecialSubjectInterface;
+    use Setono\SyliusBulkSpecialsPlugin\Model\Traits\SpecialSubjectTrait;
+    use Sylius\Component\Core\Model\Product as BaseProduct;
+    
+    /**
+     * Class Product
+     * @package AppBundle\Model
+     */
+    class Product extends BaseProduct implements SpecialSubjectInterface
+    {
+        use SpecialSubjectTrait {
+            SpecialSubjectTrait::__construct as private __specialSubjectTraitConstruct;
+        }
+    
+        public function __construct()
+        {
+            $this->__specialSubjectTraitConstruct();
+    
+            parent::__construct();
+        }
+    }
+    ```
+    
+* Override mapping
+
+    ```xml
+    <?xml version="1.0" encoding="UTF-8"?>
+    
+    <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                      xmlns:gedmo="http://gediminasm.org/schemas/orm/doctrine-extensions-mapping"
+                      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                      xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                                          http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    
+        <mapped-superclass name="AppBundle\Model\Product">
+            <many-to-many field="specials" target-entity="Setono\SyliusBulkSpecialsPlugin\Model\SpecialInterface">
+                <cascade>
+                    <cascade-persist />
+                </cascade>
+                <order-by>
+                    <order-by-field name="priority" direction="DESC" />
+                </order-by>
+                <join-table name="setono_sylius_builk_specials_products">
+                    <join-columns>
+                        <join-column name="special_id" referenced-column-name="id" nullable="false" on-delete="CASCADE" />
+                    </join-columns>
+                    <inverse-join-columns>
+                        <join-column name="channel_id" referenced-column-name="id" nullable="false" on-delete="CASCADE" />
+                    </inverse-join-columns>
+                </join-table>
+            </many-to-many>
+        </mapped-superclass>
+    
+    </doctrine-mapping>
+    
+    ```
+
+* Override repository
+
+    ```php
+    <?php
+    # Doctrine/ORM/ProductRepository.php
+    
+    declare(strict_types=1);
+    
+    namespace AppBundle\Doctrine\ORM;
+    
+    use Setono\SyliusBulkSpecialsPlugin\Doctrine\ORM\ProductRepositoryTrait;
+    use Setono\SyliusBulkSpecialsPlugin\Doctrine\ORM\ProductRepositoryInterface;
+    use Sylius\Bundle\CoreBundle\Doctrine\ORM\ProductRepository as BaseProductRepository;
+    
+    /**
+     * Class ProductRepository
+     */
+    class ProductRepository extends BaseProductRepository implements ProductRepositoryInterface
+    {
+        use ProductRepositoryTrait;
+    }
+    ``` 
 
 ### Update your schema (for existing project)
 
