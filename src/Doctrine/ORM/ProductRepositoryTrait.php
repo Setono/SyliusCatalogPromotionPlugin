@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Setono\SyliusBulkSpecialsPlugin\Doctrine\ORM;
 
 use Doctrine\ORM\QueryBuilder;
-use Setono\SyliusBulkSpecialsPlugin\Model\Special;
+use Setono\SyliusBulkSpecialsPlugin\Model\SpecialInterface;
 use Setono\SyliusBulkSpecialsPlugin\Model\SpecialRule;
 
 /**
@@ -14,11 +14,11 @@ use Setono\SyliusBulkSpecialsPlugin\Model\SpecialRule;
 trait ProductRepositoryTrait
 {
     /**
-     * @param Special $special
+     * @param SpecialInterface $special
      *
      * @return array
      */
-    public function findBySpecial(Special $special): array
+    public function findBySpecial(SpecialInterface $special): array
     {
         return $this->findBySpecialQB($special)
             ->getQuery()
@@ -27,41 +27,44 @@ trait ProductRepositoryTrait
     }
 
     /**
-     * @param Special $special
+     * @param SpecialInterface $special
      *
      * @return array
      */
-    public function findBySpecialQB(Special $special): QueryBuilder
+    public function findBySpecialQB(SpecialInterface $special, $alias = 'product'): QueryBuilder
     {
-        return $this->addRulesWheres($this->createQueryBuilder('product')
-            ->where(':special IN p.specials')
+        return $this->addRulesWheres($this->createQueryBuilder($alias), $special, $alias)
+            ->distinct()
+            ->join(sprintf('%s.specials', $alias), 'special')
+            ->andWhere('special = :special')
             ->setParameter('special', $special)
-        );
+            ->addOrderBy(sprintf('%s.id', $alias), 'ASC')
+            ;
     }
 
     /**
      * @param QueryBuilder $queryBuilder
-     * @param Special $special
+     * @param SpecialInterface $special
      *
      * @return QueryBuilder
      */
-    protected function addRulesWheres(QueryBuilder $queryBuilder, Special $special): QueryBuilder
+    protected function addRulesWheres(QueryBuilder $queryBuilder, SpecialInterface $special, $alias = 'product'): QueryBuilder
     {
         /** @var SpecialRule $rule */
         foreach ($special->getRules() as $index => $rule) {
             switch ($rule->getType()) {
                 case 'contains_product':
                     return $queryBuilder
-                        ->orWhere(sprintf('(product.code IN :productCodes_%s)', $index))
-                        ->setParameter(sprintf('productCodes_%s', $index), $rule->getConfiguration())
+                        ->where(sprintf('%s.code IN (:productCodes_%s)', $alias, $index))
+                        ->setParameter(sprintf('productCodes_%s', $index), $rule->getConfiguration()['product_code'])
                         ;
                 case 'has_taxon':
                     return $queryBuilder
-                        ->join('product.mainTaxon', 'mainTaxon')
-                        ->join('product.productTaxons', 'pt')
-                        ->join('product.taxon', 'productTaxon')
-                        ->orWhere(sprintf('(mainTaxon.code IN :taxonCodes_%s OR productTaxon.code IN :taxonCodes_%s)', $index))
-                        ->setParameter(sprintf('taxonCodes_%s', $index), $rule->getConfiguration())
+                        ->join(sprintf('%s.mainTaxon', $alias), 'mainTaxon')
+                        ->join(sprintf('%s.productTaxons', $alias), 'pt')
+                        ->join('pt.taxon', 'productTaxon')
+                        ->where(sprintf('(mainTaxon.code IN (:taxonCodes_%s)) OR (productTaxon.code IN (:taxonCodes_%s))', $index, $index))
+                        ->setParameter(sprintf('taxonCodes_%s', $index), $rule->getConfiguration()['taxons'])
                         ;
                 default:
                     throw new \Exception(sprintf(
