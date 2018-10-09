@@ -13,7 +13,29 @@
 composer require setono/sylius-bulk-specials-plugin
 ```
 
-### Register plugin at AppKernel.php
+### Add transport for enqueue bundle
+
+(see https://github.com/php-enqueue/enqueue-dev/blob/master/docs/bundle/quick_tour.md
+for more details)
+
+```bash
+composer require enqueue/fs
+```
+
+### Add proper enqueue bundle configuration
+
+```yaml
+app/config/config.yml
+
+enqueue:
+    transport:
+        default: fs
+        fs:
+            dsn: "file://%kernel.project_dir%/var/queue"
+    client: ~
+```
+
+### Register plugin and enqueue bundle at AppKernel.php
 
 ```php
 # app/AppKernel.php
@@ -27,7 +49,8 @@ final class AppKernel extends Kernel
         return array_merge([
             new \Setono\SyliusBulkSpecialsPlugin\SetonoSyliusBulkSpecialsPlugin(),
         ], parent::registerBundles(), [
-            // ...
+            // Uncomment if you want to use queues
+            // new Enqueue\Bundle\EnqueueBundle(),
         ]);
     }
 }
@@ -64,7 +87,11 @@ setono_sylius_bulk_specials_admin:
                 classes:
                     model: AppBundle\Model\Product
                     repository: AppBundle\Doctrine\ORM\ProductRepository
+                    controller: Setono\SyliusBulkSpecialsPlugin\Controller\ProductController
     ```
+    
+    If you want to use queues - make configuration as shown at 
+    [tests/Application/src/AppBundle/Resources/config/app/config.yml](tests/Application/src/AppBundle/Resources/config/app/config.yml)
 
 * Override model
 
@@ -74,7 +101,7 @@ setono_sylius_bulk_specials_admin:
     namespace AppBundle\Model;
     
     use Setono\SyliusBulkSpecialsPlugin\Model\SpecialSubjectInterface;
-    use Setono\SyliusBulkSpecialsPlugin\Model\Traits\SpecialSubjectTrait;
+    use Setono\SyliusBulkSpecialsPlugin\Model\SpecialSubjectTrait;
     use Sylius\Component\Core\Model\Product as BaseProduct;
     
     /**
@@ -142,21 +169,63 @@ setono_sylius_bulk_specials_admin:
     
     use Setono\SyliusBulkSpecialsPlugin\Doctrine\ORM\ProductRepositoryTrait;
     use Setono\SyliusBulkSpecialsPlugin\Doctrine\ORM\ProductRepositoryInterface;
+    use Setono\SyliusBulkSpecialsPlugin\Special\QueryBuilder\Rule\RuleQueryBuilderAwareInterface;
     use Sylius\Bundle\CoreBundle\Doctrine\ORM\ProductRepository as BaseProductRepository;
     
     /**
      * Class ProductRepository
      */
-    class ProductRepository extends BaseProductRepository implements ProductRepositoryInterface
+    class ProductRepository extends BaseProductRepository
+        implements ProductRepositoryInterface, RuleQueryBuilderAwareInterface
     {
         use ProductRepositoryTrait;
     }
     ``` 
 
+* Override `ProductRepository` service definition as it shown at 
+  [tests/Application/src/AppBundle/Resources/config/services.xml](tests/Application/src/AppBundle/Resources/config/services.xml).
+
 ### Update your schema (for existing project)
 
 ```bash
-bin/console doctrine:schema:update --force
+# Generate and edit migration
+bin/console doctrine:migrations:diff
+
+# Then apply migration
+bin/console doctrine:migrations:migrate
+```
+
+### Install assets
+
+```bash
+bin/console sylius:install:assets
+```
+
+### Configure CRON to run next command every minute
+
+```bash
+bin/console setono:sylius-bulk-specials:check-active
+```
+
+### Make sure next command always in run state:
+
+```bash
+bin/console enqueue:consume 
+```
+
+This can be done with `supervisord`
+(see [docs](https://enqueue.readthedocs.io/en/latest/bundle/production_settings/) for details):
+
+```
+[program:enqueue_message_consumer]
+command=/path/to/app/console --env=prod --no-debug --time-limit="now + 5 minutes" enqueue:consume
+process_name=%(program_name)s_%(process_num)02d
+numprocs=4
+autostart=true
+autorestart=true
+startsecs=0
+user=apache
+redirect_stderr=true
 ```
 
 # (Manually) Test plugin
@@ -171,9 +240,10 @@ bin/console doctrine:schema:update --force
         yarn install && \
         yarn run gulp && \
         bin/console assets:install web -e $SYMFONY_ENV && \
+        bin/console doctrine:database:drop --force -e $SYMFONY_ENV && \
         bin/console doctrine:database:create -e $SYMFONY_ENV && \
         bin/console doctrine:schema:create -e $SYMFONY_ENV && \
-        bin/console sylius:fixtures:load -e $SYMFONY_ENV && \
+        bin/console sylius:fixtures:load setono -e $SYMFONY_ENV && \
         bin/console server:run -d web -e $SYMFONY_ENV
     ```
 
@@ -187,7 +257,13 @@ bin/console doctrine:schema:update --force
 
 - ...
 
-- See how much that item was ordered (or even added to cart depending on config)
+# TODO
+
+- Tests
+- Cleanup:
+  - Improve translations
+  - Remove (or no?) product_code, leave only product_codes rule
+  - [Pull request to Sylius?] Bulk action buttons looks ugly in current design (solution is "float:left" in form's style)
 
 [ico-version]: https://img.shields.io/packagist/v/setono/sylius-bulk-specials-plugin.svg?style=flat-square
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
