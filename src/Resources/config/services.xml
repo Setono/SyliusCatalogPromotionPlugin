@@ -6,8 +6,12 @@
     </parameters>
 
     <services>
-        <service id="setono_sylius_bulk_specials.listener.admin.menu_builder" class="%setono_sylius_bulk_specials.listener.admin.menu_builder.class%">
-            <tag name="kernel.event_listener" event="sylius.menu.admin.main" method="addAdminMenuItems" />
+        <defaults public="true" />
+
+        <service id="setono_sylius_bulk_specials.applicator.product_specials"
+                 class="Setono\SyliusBulkSpecialsPlugin\Special\Applicator\ProductSpecialsApplicator">
+            <argument type="service" id="sylius.repository.channel_pricing" />
         </service>
+
     </services>
 </container>

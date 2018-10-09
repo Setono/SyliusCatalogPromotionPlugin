@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <defaults public="true" />
+
+        <service id="setono_sylius_bulk_specials.recalculate_handler.channel_pricing"
+                 class="Setono\SyliusBulkSpecialsPlugin\Handler\ChannelPricingRecalculateHandler">
+            <argument type="service" id="setono_sylius_bulk_specials.applicator.product_specials" />
+            <argument type="service" id="sylius.repository.channel_pricing" />
+        </service>
+
+        <service id="setono_sylius_bulk_specials.handler.eligible_specials_reassign"
+                 class="Setono\SyliusBulkSpecialsPlugin\Handler\EligibleSpecialsReassignHandler">
+            <argument type="service" id="setono_sylius_bulk_specials.repository.special" />
+            <argument type="service" id="sylius.repository.product" />
+            <argument type="service" id="setono_sylius_bulk_specials.special_eligibility_checker" />
+            <argument type="service" id="setono_sylius_bulk_specials.recalculate_handler.product" />
+        </service>
+
+        <service id="setono_sylius_bulk_specials.recalculate_handler.product"
+                 class="Setono\SyliusBulkSpecialsPlugin\Handler\ProductRecalculateHandler">
+            <argument type="service" id="setono_sylius_bulk_specials.applicator.product_specials" />
+        </service>
+
+        <service id="setono_sylius_bulk_specials.recalculate_handler.special"
+                 class="Setono\SyliusBulkSpecialsPlugin\Handler\SpecialRecalculateHandler">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="sylius.repository.product" />
+            <argument type="service" id="setono_sylius_bulk_specials.recalculate_handler.product" />
+        </service>
+
+    </services>
+</container>
