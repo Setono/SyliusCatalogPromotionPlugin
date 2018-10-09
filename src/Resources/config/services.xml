@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
-    <parameters>
-        <parameter key="setono_sylius_bulk_specials.listener.admin.menu_builder.class">Setono\SyliusBulkSpecialsPlugin\Menu\AdminMenuListener</parameter>
-    </parameters>
+    <imports>
+        <import resource="services/admin.xml" />
+        <import resource="services/commands.xml" />
+        <import resource="services/eligibility_checkers.xml" />
+        <import resource="services/factories.xml" />
+        <import resource="services/fixtures.xml" />
+        <import resource="services/forms.xml" />
+        <import resource="services/handlers.xml" />
+        <import resource="services/rule_checkers.xml" />
+        <import resource="services/rule_query_builders.xml" />
+        <import resource="services/validators.xml" />
+    </imports>
 
     <services>
         <defaults public="true" />
