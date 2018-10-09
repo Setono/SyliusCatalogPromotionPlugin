@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Setono\SyliusBulkSpecialsPlugin\DependencyInjection;
 
+use Setono\SyliusBulkSpecialsPlugin\Controller\SpecialController;
 use Setono\SyliusBulkSpecialsPlugin\Form\Type\SpecialRuleType;
 use Setono\SyliusBulkSpecialsPlugin\Form\Type\SpecialType;
 use Setono\SyliusBulkSpecialsPlugin\Model\Special;
@@ -61,7 +62,7 @@ final class Configuration implements ConfigurationInterface
                                     ->children()
                                         ->scalarNode('model')->defaultValue(Special::class)->cannotBeEmpty()->end()
                                         ->scalarNode('interface')->defaultValue(SpecialInterface::class)->cannotBeEmpty()->end()
-                                        ->scalarNode('controller')->defaultValue(ResourceController::class)->cannotBeEmpty()->end()
+                                        ->scalarNode('controller')->defaultValue(SpecialController::class)->cannotBeEmpty()->end()
                                         ->scalarNode('repository')->cannotBeEmpty()->end()
                                         ->scalarNode('factory')->defaultValue(Factory::class)->end()
                                         ->scalarNode('form')->defaultValue(SpecialType::class)->cannotBeEmpty()->end()
