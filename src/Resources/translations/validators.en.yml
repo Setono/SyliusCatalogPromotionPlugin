@@ -1,0 +1,20 @@
+setono_sylius_bulk_specials:
+    special:
+        code:
+            unique: The special with given code already exists.
+            regex: Special code can only be comprised of letters, numbers, dashes and underscores.
+            not_blank: Please enter special code.
+        name:
+            max_length: Special name must not be longer than 1 character.|Special name must not be longer than {{ limit }} characters.
+            min_length: Special name must be at least 1 character long.|Special name must be at least {{ limit }} characters long.
+            not_blank: Please enter special name.
+        description:
+            max_length: Special description must not be longer than 1 character.|Special description must not be longer than {{ limit }} characters.
+            min_length: Special description must be at least 1 character long.|Special description must be at least {{ limit }} characters long.
+            not_blank: Please enter special description.
+        action_type:
+            not_blank: Please choose action type.
+        action_percent:
+            not_blank: Please enter action percent.
+            positive: Please, provide positive value.
+        end_date_cannot_be_set_prior_start_date: End date cannot be set prior start date.

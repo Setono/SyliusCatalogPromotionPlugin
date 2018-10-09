@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/services/constraint-mapping-1.0.xsd"
+>
+    <class name="Setono\SyliusBulkSpecialsPlugin\Model\Special">
+        <constraint name="Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity">
+            <option name="fields">code</option>
+            <option name="message">setono_sylius_bulk_specials.special.code.unique</option>
+            <option name="groups">setono_sylius_bulk_specials</option>
+        </constraint>
+        <constraint name="Setono\SyliusBulkSpecialsPlugin\Validator\Constraints\SpecialDateRange">
+            <option name="message">setono_sylius_bulk_specials.special.end_date_cannot_be_set_prior_start_date</option>
+            <option name="groups">setono_sylius_bulk_specials</option>
+        </constraint>
+        <property name="code">
+            <constraint name="NotBlank">
+                <option name="message">setono_sylius_bulk_specials.special.code.not_blank</option>
+                <option name="groups">setono_sylius_bulk_specials</option>
+            </constraint>
+            <constraint name="Regex">
+                <option name="message">setono_sylius_bulk_specials.special.code.regex</option>
+                <option name="pattern">/^[\w-]*$/</option>
+                <option name="groups">setono_sylius_bulk_specials</option>
+            </constraint>
+        </property>
+        <property name="name">
+            <constraint name="NotBlank">
+                <option name="message">setono_sylius_bulk_specials.special.name.not_blank</option>
+                <option name="groups">setono_sylius_bulk_specials</option>
+            </constraint>
+            <constraint name="Length">
+                <option name="min">2</option>
+                <option name="max">255</option>
+                <option name="minMessage">setono_sylius_bulk_specials.special.name.min_length</option>
+                <option name="maxMessage">setono_sylius_bulk_specials.special.name.max_length</option>
+                <option name="groups">setono_sylius_bulk_specials</option>
+            </constraint>
+        </property>
+        <property name="description">
+            <constraint name="Length">
+                <option name="min">2</option>
+                <option name="max">255</option>
+                <option name="minMessage">setono_sylius_bulk_specials.special.description.min_length</option>
+                <option name="maxMessage">setono_sylius_bulk_specials.special.description.max_length</option>
+                <option name="groups">setono_sylius_bulk_specials</option>
+            </constraint>
+        </property>
+        <property name="actionType">
+            <constraint name="NotBlank">
+                <option name="message">setono_sylius_bulk_specials.special.action_type.not_blank</option>
+                <option name="groups">setono_sylius_bulk_specials</option>
+            </constraint>
+        </property>
+        <property name="actionPercent">
+            <constraint name="NotBlank">
+                <option name="message">setono_sylius_bulk_specials.special.action_percent.not_blank</option>
+                <option name="groups">setono_sylius_bulk_specials</option>
+            </constraint>
+            <constraint name="GreaterThanOrEqual">
+                <option name="value">1</option>
+                <option name="message">setono_sylius_bulk_specials.special.action_percent.positive</option>
+                <option name="groups">setono_sylius_bulk_specials</option>
+            </constraint>
+        </property>
+        <property name="rules">
+            <constraint name="Valid" />
+        </property>
+    </class>
+</constraint-mapping>
