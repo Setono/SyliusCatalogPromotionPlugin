@@ -3,8 +3,52 @@ setono_sylius_bulk_specials:
         special: Special
         specials: Specials
         manage_specials: Manage specials
+        new_special: Create new special
+        edit_special: Edit special
+        product_specials: Specials
+        main_action:
+            specials: Specials
+            product:
+                reassign_all: Reassign Specials for all Products
+                recalculate_all: Recalculate special prices for all Products
+        bulk_action:
+            product:
+                reassign: Reassign
+                recalculate: Recalculate
+            special:
+                recalculate: Recalculate assigned product prices
     menu:
         admin:
             main:
                 marketing:
                     specials: Specials
+    form:
+        special:
+            channels: Apply to channels
+            name: Name
+            description: Description
+            exclusive: Exclusive
+            priority: Priority
+            starts_at: Starts at
+            ends_at: Ends at
+            enabled: Enabled
+            rules: Rules
+            add_rule: Add rule
+            action_type: Action type
+            action_percent: Action percent
+        special_rule:
+            contains_product: Product is
+            contains_product_configuration:
+                product: Product
+            contains_products: Product is one of
+            contains_products_configuration:
+                products: Products
+            has_taxon:
+                taxons: Taxons
+            has_at_least_one_from_taxons: Product has at least one from taxons
+            taxonomy: Taxonomy
+            type: Type
+        special_action_type:
+            choice:
+                off: Make a discount
+                increase: Increase price
