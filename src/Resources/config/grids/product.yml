@@ -1,0 +1,43 @@
+sylius_grid:
+    templates:
+        bulk_action:
+            recalculate: "@SetonoSyliusBulkSpecialsPlugin/Grid/BulkAction/recalculate.html.twig"
+            reassign: "@SetonoSyliusBulkSpecialsPlugin/Grid/BulkAction/reassign.html.twig"
+    grids:
+        sylius_admin_product:
+            fields:
+                specials:
+                    type: twig
+                    label: setono_sylius_bulk_specials.ui.product_specials
+                    options:
+                        template: "@SetonoSyliusBulkSpecialsPlugin/Grid/Field/productSpecials.html.twig"
+            actions:
+                main:
+                    setono_sylius_bulk_specials:
+                        type: links
+                        label: setono_sylius_bulk_specials.ui.main_action.specials
+                        options:
+                            class: primary
+                            icon: tasks
+                            links:
+                                simple:
+                                    label: setono_sylius_bulk_specials.ui.main_action.product.reassign_all
+                                    icon: tasks
+                                    route: setono_sylius_bulk_specials_admin_product_bulk_reassign_all
+                                configurable:
+                                    label: setono_sylius_bulk_specials.ui.main_action.product.recalculate_all
+                                    icon: percent
+                                    route: setono_sylius_bulk_specials_admin_product_bulk_recalculate_all
+                bulk:
+                    recalculate:
+                        type: recalculate
+                        label: setono_sylius_bulk_specials.ui.bulk_action.product.recalculate
+                        options:
+                            link:
+                                route: setono_sylius_bulk_specials_admin_product_bulk_recalculate
+                    reassign:
+                        type: reassign
+                        label: setono_sylius_bulk_specials.ui.bulk_action.product.reassign
+                        options:
+                            link:
+                                route: setono_sylius_bulk_specials_admin_product_bulk_reassign

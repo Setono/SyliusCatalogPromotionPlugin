@@ -1,4 +1,7 @@
 sylius_grid:
+    templates:
+        bulk_action:
+            recalculate: "@SetonoSyliusBulkSpecialsPlugin/Grid/BulkAction/recalculate.html.twig"
     grids:
         setono_sylius_bulk_specials_admin_special:
             driver:
@@ -43,3 +46,9 @@ sylius_grid:
                 bulk:
                     delete:
                         type: delete
+                    recalculate:
+                        type: recalculate
+                        label: setono_sylius_bulk_specials.ui.bulk_action.special.recalculate
+                        options:
+                            link:
+                                route: setono_sylius_bulk_specials_admin_special_bulk_recalculate

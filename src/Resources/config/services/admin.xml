@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="setono_sylius_bulk_specials.listener.admin.menu_builder.class">Setono\SyliusBulkSpecialsPlugin\Menu\AdminMenuListener</parameter>
+    </parameters>
+
+    <services>
+        <defaults public="true" />
+
+        <service id="setono_sylius_bulk_specials.listener.admin.menu_builder"
+                 class="%setono_sylius_bulk_specials.listener.admin.menu_builder.class%">
+            <tag name="kernel.event_listener" event="sylius.menu.admin.main" method="addAdminMenuItems" />
+        </service>
+
+        <service id="setono_sylius_bulk_specials.block_event_listener.admin.layout.javascripts"
+                 class="Sylius\Bundle\UiBundle\Block\BlockEventListener">
+            <argument>@SetonoSyliusBulkSpecialsPlugin/Admin/_javascripts.html.twig</argument>
+            <tag name="kernel.event_listener"
+                 event="sonata.block.event.sylius.admin.layout.javascripts"
+                 method="onBlockEvent" />
+        </service>
+    </services>
+</container>

@@ -1,0 +1,5 @@
+{% import '@SetonoSyliusBulkSpecialsPlugin/Macro/buttons.html.twig' as buttons %}
+
+{% set path = options.link.url|default(path(options.link.route)) %}
+
+{{ buttons.bulkAction(path, action.label, 'bulk_action_reassign', 'tasks', 'orange') }}

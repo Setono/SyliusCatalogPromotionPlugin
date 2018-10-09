@@ -18,10 +18,83 @@ setono_sylius_bulk_specials_admin_special:
             all:
                 subheader: setono_sylius_bulk_specials.ui.manage_specials
                 templates:
-                    form: "@SyliusAdmin/Promotion/_form.html.twig"
+                    form: "@SetonoSyliusBulkSpecialsPlugin/Admin/Special/_form.html.twig"
             index:
                 icon: in cart
             update:
                 templates:
-                    form: "@SyliusAdmin/Special/_form.html.twig"
+                    form: "@SetonoSyliusBulkSpecialsPlugin/Admin/Special/_form.html.twig"
     type: sylius.resource
+
+setono_sylius_bulk_specials_admin_special_bulk_recalculate:
+    path: /specials/bulk-recalculate/checked
+    methods: [GET,POST]
+    defaults:
+        _controller: setono_sylius_bulk_specials.controller.special:bulkRecalculateAction
+        _sylius:
+            csrf_protection: false
+            section: admin
+            redirect: referer
+            permission: true
+            paginate: false
+            repository:
+                method: findById
+                arguments: [$ids]
+
+setono_sylius_bulk_specials_admin_product_bulk_recalculate:
+    path: /products/bulk-recalculate/checked
+    methods: [GET,POST]
+    defaults:
+        _controller: sylius.controller.product:bulkRecalculateAction
+        _sylius:
+            csrf_protection: false
+            section: admin
+            redirect: referer
+            permission: true
+            paginate: false
+            repository:
+                method: findById
+                arguments: [$ids]
+
+setono_sylius_bulk_specials_admin_product_bulk_recalculate_all:
+    path: /products/bulk-recalculate/all
+    methods: [GET]
+    defaults:
+        _controller: sylius.controller.product:bulkRecalculateAction
+        _sylius:
+            csrf_protection: false
+            section: admin
+            redirect: referer
+            permission: true
+            paginate: false
+            repository:
+                method: findAll
+
+setono_sylius_bulk_specials_admin_product_bulk_reassign:
+    path: /products/bulk-reassign/checked
+    methods: [GET,POST]
+    defaults:
+        _controller: sylius.controller.product:bulkReassignAction
+        _sylius:
+            csrf_protection: false
+            section: admin
+            redirect: referer
+            permission: true
+            paginate: false
+            repository:
+                method: findById
+                arguments: [$ids]
+
+setono_sylius_bulk_specials_admin_product_bulk_reassign_all:
+    path: /products/bulk-reassign/all
+    methods: [GET]
+    defaults:
+        _controller: sylius.controller.product:bulkReassignAction
+        _sylius:
+            csrf_protection: false
+            section: admin
+            redirect: referer
+            permission: true
+            paginate: false
+            repository:
+                method: findAll
