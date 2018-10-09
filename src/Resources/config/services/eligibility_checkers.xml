@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <defaults public="true" />
+
+        <!--<service id="setono_sylius_bulk_specials.special_duration_eligibility_checker"-->
+                 <!--class="Setono\SyliusBulkSpecialsPlugin\Special\Checker\Eligibility\SpecialDurationEligibilityChecker"-->
+                 <!--public="false">-->
+            <!--<tag name="setono_sylius_bulk_specials.special_eligibility_checker" />-->
+        <!--</service>-->
+
+        <service id="setono_sylius_bulk_specials.special_rules_eligibility_checker"
+                 class="Setono\SyliusBulkSpecialsPlugin\Special\Checker\Eligibility\SpecialRulesEligibilityChecker"
+                 public="false">
+            <argument type="service" id="setono_sylius_bulk_specials.registry_special_rule_checker" />
+            <tag name="setono_sylius_bulk_specials.special_eligibility_checker" />
+        </service>
+
+        <service id="setono_sylius_bulk_specials.special_eligibility_checker"
+                 class="Setono\SyliusBulkSpecialsPlugin\Special\Checker\Eligibility\CompositeSpecialEligibilityChecker">
+            <argument type="collection" />
+        </service>
+    </services>
+</container>
