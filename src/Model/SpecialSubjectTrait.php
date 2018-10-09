@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Setono\SyliusBulkSpecialsPlugin\Model\Traits;
+namespace Setono\SyliusBulkSpecialsPlugin\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Setono\SyliusBulkSpecialsPlugin\Model\Special;
-use Setono\SyliusBulkSpecialsPlugin\Model\SpecialInterface;
+use Doctrine\Common\Collections\Criteria;
 use Sylius\Component\Core\Model\ChannelInterface;
+use Sylius\Component\Core\Model\ProductTaxon;
 
 /**
  * Trait SpecialSubjectTrait
@@ -27,6 +27,34 @@ trait SpecialSubjectTrait
     {
         $this->specials = new ArrayCollection();
     }
+
+//    /**
+//     * {@inheritdoc}
+//     */
+//    public function inTaxonCodes(array $taxonCodes): bool
+//    {
+//        foreach ($taxonCodes as $taxonCode) {
+//            if ($this->inTaxonCode($taxonCode)) {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
+//
+//    /**
+//     * {@inheritdoc}
+//     */
+//    public function inTaxonCode(array $taxonCode): bool
+//    {
+//        /** ProductInterface $this */
+//        if (null !== $this->getMainTaxon() && $this->getMainTaxon()->getCode() == $taxonCode) {
+//            return true;
+//        }
+//
+//        return in_array($taxonCode, $this->getProductTaxons()->map(function(ProductTaxon $productTaxon){
+//            return $productTaxon->getTaxon()->getCode();
+//        })->toArray());
+//    }
 
     /**
      * {@inheritdoc}
@@ -59,7 +87,7 @@ trait SpecialSubjectTrait
      */
     public function getActiveSpecials(): Collection
     {
-        return $this->specials->filter(function (Special $special) {
+        return $this->getSortedSpecials()->filter(function (Special $special) {
             return $special->isEnabled();
         });
     }
@@ -95,13 +123,33 @@ trait SpecialSubjectTrait
      */
     public function getActiveSpecialsForChannelCode(string $channelCode): Collection
     {
-        return $this->specials->filter(function (Special $special) use ($channelCode) {
+        return $this->getSortedSpecials()->filter(function (Special $special) use ($channelCode) {
             $specialsChannelCodes = $special->getChannels()->map(function (ChannelInterface $channel) {
                 return $channel->getCode();
-            });
+            })->toArray();
 
             return in_array($channelCode, $specialsChannelCodes) && $special->isEnabled();
         });
+    }
+
+    /**
+     * @return ArrayCollection|Special[]
+     */
+    protected function getSortedSpecials(): Collection
+    {
+        $criteria = Criteria::create()->orderBy([
+            "priority" => Criteria::DESC
+        ]);
+
+        return $this->specials->matching($criteria);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getSpecials(): Collection
+    {
+        return $this->specials;
     }
 
     /**
@@ -125,6 +173,14 @@ trait SpecialSubjectTrait
     /**
      * {@inheritdoc}
      */
+    public function removeSpecials(): void
+    {
+        $this->specials->clear();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function removeSpecial(SpecialInterface $special): void
     {
         if ($this->hasSpecial($special)) {
@@ -132,11 +188,4 @@ trait SpecialSubjectTrait
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getSpecials(): Collection
-    {
-        return $this->specials;
-    }
 }

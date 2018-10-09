@@ -3,4 +3,16 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
+    <services>
+        <defaults public="true" />
+
+        <service id="sylius.repository.product"
+                 class="%sylius.repository.product.class%">
+            <factory service="doctrine.orm.default_entity_manager" method="getRepository" />
+            <argument>%sylius.model.product.class%</argument>
+            <call method="setRuleQueryBuilder">
+                <argument type="service" id="setono_sylius_bulk_specials.registry.special_rule_query_builder" />
+            </call>
+        </service>
+    </services>
 </container>

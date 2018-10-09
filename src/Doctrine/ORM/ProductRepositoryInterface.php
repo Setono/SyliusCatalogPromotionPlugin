@@ -4,26 +4,12 @@ declare(strict_types=1);
 
 namespace Setono\SyliusBulkSpecialsPlugin\Doctrine\ORM;
 
-use Doctrine\ORM\QueryBuilder;
-use Setono\SyliusBulkSpecialsPlugin\Model\SpecialInterface;
+use Sylius\Component\Core\Repository\ProductRepositoryInterface as BaseProductRepositoryInterface;
 
 /**
  * Interface ProductRepositoryInterface
  */
 interface ProductRepositoryInterface
+    extends SpecialSubjectRepositoryInterface, BaseProductRepositoryInterface
 {
-    /**
-     * @param SpecialInterface $special
-     * @return array
-     */
-    public function findBySpecial(SpecialInterface $special): array;
-
-    /**
-     * Should be used to build some paginators
-     *
-     * @param SpecialInterface $special
-     * @param string $alias
-     * @return QueryBuilder
-     */
-    public function findBySpecialQB(SpecialInterface $special, $alias = 'product'): QueryBuilder;
 }

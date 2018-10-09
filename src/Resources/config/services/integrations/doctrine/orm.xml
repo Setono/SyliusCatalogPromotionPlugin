@@ -7,6 +7,7 @@
 
     <parameters>
         <parameter key="setono_sylius_bulk_specials.repository.special.class">Setono\SyliusBulkSpecialsPlugin\Doctrine\ORM\SpecialRepository</parameter>
+        <parameter key="setono_sylius_bulk_specials.repository.special_rule.class">Setono\SyliusBulkSpecialsPlugin\Doctrine\ORM\SpecialRuleRepository</parameter>
 
     </parameters>
 
