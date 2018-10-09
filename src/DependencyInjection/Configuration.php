@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Setono\SyliusBulkSpecialsPlugin\DependencyInjection;
 
+use Setono\SyliusBulkSpecialsPlugin\Form\Type\SpecialRuleType;
+use Setono\SyliusBulkSpecialsPlugin\Form\Type\SpecialType;
 use Setono\SyliusBulkSpecialsPlugin\Model\Special;
 use Setono\SyliusBulkSpecialsPlugin\Model\SpecialInterface;
 use Setono\SyliusBulkSpecialsPlugin\Model\SpecialRule;
@@ -62,8 +64,7 @@ final class Configuration implements ConfigurationInterface
                                         ->scalarNode('controller')->defaultValue(ResourceController::class)->cannotBeEmpty()->end()
                                         ->scalarNode('repository')->cannotBeEmpty()->end()
                                         ->scalarNode('factory')->defaultValue(Factory::class)->end()
-                                        // @todo
-                                        //->scalarNode('form')->defaultValue(SpecialType::class)->cannotBeEmpty()->end()
+                                        ->scalarNode('form')->defaultValue(SpecialType::class)->cannotBeEmpty()->end()
                                     ->end()
                                 ->end()
                             ->end()
@@ -80,8 +81,7 @@ final class Configuration implements ConfigurationInterface
                                         ->scalarNode('controller')->defaultValue(ResourceController::class)->cannotBeEmpty()->end()
                                         ->scalarNode('repository')->cannotBeEmpty()->end()
                                         ->scalarNode('factory')->defaultValue(Factory::class)->end()
-                                        // @todo
-                                        //->scalarNode('form')->defaultValue(SpecialRuleType::class)->cannotBeEmpty()->end()
+                                        ->scalarNode('form')->defaultValue(SpecialRuleType::class)->cannotBeEmpty()->end()
                                     ->end()
                                 ->end()
                             ->end()
