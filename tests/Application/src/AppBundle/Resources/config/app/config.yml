@@ -4,3 +4,25 @@ sylius_product:
             classes:
                 model: AppBundle\Model\Product
                 repository: AppBundle\Doctrine\ORM\ProductRepository
+                controller: Setono\SyliusBulkSpecialsPlugin\Controller\ProductController
+
+setono_sylius_bulk_specials:
+    # If you want to use enqueue bundle to asynchronously handle
+    # bulk actions - you should set `queue` parameter to true
+    # and install/configure enqueue/enqueue-bundle with transport implementation
+    queue: true
+
+    # If your store have not more than 1000 products - you can use
+    # plugin without any additional configuration or set `queue`
+    # to default value (false)
+    # queue: false
+
+enqueue:
+    transport:
+        # Here we use enqueue/fs for testing as most simple transport implementation
+        # @see https://enqueue.readthedocs.io/en/latest/transport/filesystem/
+        default: fs
+        fs:
+            dsn: "file://%kernel.project_dir%/var/queue"
+    client:
+        traceable_producer: true

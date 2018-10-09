@@ -10,6 +10,9 @@
         "symfony/symfony": "^3.4|^4.1"
     },
     "require-dev": {
+        "enqueue/enqueue-bundle": "^0.8.37",
+        "enqueue/fs": "^0.8.37",
+
         "behat/behat": "^3.4",
         "behat/mink": "^1.7@dev",
         "behat/mink-browserkit-driver": "^1.3",
