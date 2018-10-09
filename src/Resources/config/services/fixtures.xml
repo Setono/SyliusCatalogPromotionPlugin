@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+
+        <service id="setono_sylius_bulk_specials.fixture.example_factory.special_rule"
+                 class="Setono\SyliusBulkSpecialsPlugin\Fixture\Factory\SpecialRuleExampleFactory">
+            <argument type="service" id="setono_sylius_bulk_specials.custom_factory.special_rule" />
+            <argument>%setono_sylius_bulk_specials.special_rules%</argument>
+        </service>
+
+        <service id="setono_sylius_bulk_specials.fixture.example_factory.special"
+                 class="Setono\SyliusBulkSpecialsPlugin\Fixture\Factory\SpecialExampleFactory">
+            <argument type="service" id="sylius.repository.channel" />
+            <argument type="service" id="setono_sylius_bulk_specials.factory.special" />
+            <argument type="service" id="setono_sylius_bulk_specials.fixture.example_factory.special_rule" />
+        </service>
+
+        <service id="setono_sylius_bulk_specials.fixture.special"
+                 class="Setono\SyliusBulkSpecialsPlugin\Fixture\SpecialFixture">
+            <argument type="service" id="setono_sylius_bulk_specials.manager.special" />
+            <argument type="service" id="setono_sylius_bulk_specials.fixture.example_factory.special" />
+
+            <tag name="sylius_fixtures.fixture" />
+        </service>
+
+    </services>
+</container>

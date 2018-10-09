@@ -1,28 +1,38 @@
-# This file is part of the Sylius package.
-# (c) Paweł Jędrzejewski
+parameters:
+    de_locale: de_DE
 
 sylius_fixtures:
     suites:
-        default:
+        setono:
             listeners:
                 orm_purger: ~
                 logger: ~
 
             fixtures:
-                locale: ~
+                locale:
+                    options:
+                        locales:
+                            - "%de_locale%"
                 currency:
                     options:
-                        currencies: ['USD']
+                        currencies:
+                          - "USD"
+                          - "EUR"
 
                 geographical:
                     options:
                         countries:
                             - "US"
+                            - "DE"
                         zones:
                             US:
                                 name: "United States of America"
                                 countries:
                                     - "US"
+                            DE:
+                                name: "Germany"
+                                countries:
+                                    - "DE"
 
                 channel:
                     options:
@@ -36,7 +46,15 @@ sylius_fixtures:
                                     - "USD"
                                 enabled: true
                                 hostname: "localhost"
-
+                            de_web_store:
+                                name: "DE Web Store"
+                                code: "DE_WEB"
+                                locales:
+                                    - "%de_locale%"
+                                currencies:
+                                    - "EUR"
+                                enabled: true
+                                hostname: "localhost"
                 payment_method:
                     options:
                         custom:
@@ -61,16 +79,19 @@ sylius_fixtures:
                                 enabled: true
                                 channels:
                                     - "US_WEB"
+                                    - "DE_WEB"
                             dhl_express:
                                 code: "dhl_express"
                                 name: "DHL Express"
                                 channels:
                                     - "US_WEB"
+                                    - "DE_WEB"
                             fedex:
                                 code: "fedex"
                                 name: "FedEx"
                                 channels:
                                     - "US_WEB"
+                                    - "DE_WEB"
 
                 customer_group:
                     options:
@@ -204,10 +225,75 @@ sylius_fixtures:
                     options:
                         amount: 10
 
-                order:
-                    options:
-                        amount: 20
-
                 address:
                     options:
                         random: 10
+
+                product:
+                    options:
+                        custom:
+                            product_santa_mug:
+                                code: "santa-mug"
+                                name: "Santa mug"
+                                main_taxon: "mugs"
+                                channels:
+                                    - "US_WEB"
+
+                special:
+                    options:
+                        custom:
+                            accidentally_enabled_mugs_10_off:
+                                code: "accidentally_enabled_mugs_20_off"
+                                name: "Accidentally enabled special"
+                                starts_at: "-1 day"
+                                ends_at: "-1 second"
+                                enabled: true
+                                action_type: "off"
+                                action_percent: 20
+                                rules:
+                                  - type: "has_taxon"
+                                    configuration: ["mugs"]
+                            accidentally_disabled_mugs_10_off:
+                                code: "accidentally_disabled_mugs_10_off"
+                                name: "Accidentally disabled special"
+                                starts_at: "-1 day"
+                                ends_at: "+1 day"
+                                enabled: false
+                                action_type: "off"
+                                action_percent: 10
+                                rules:
+                                  - type: "has_taxon"
+                                    configuration: ["mugs"]
+
+                            ny_mugs_50_off:
+                                code: "ny_mugs_50_off"
+                                name: "New year -50% for mugs"
+                                description: "14 days special before New Year"
+                                priority: 99
+                                exclusive: true
+                                starts_at: "now"
+                                ends_at: "+14 day"
+                                action_type: "off"
+                                action_percent: 50
+                                rules:
+                                  - type: "has_taxon"
+                                    configuration: ["mugs"]
+                                channels:
+                                  - "US_WEB"
+                                  - "DE_WEB"
+
+                            ny_santa_mug_75_off:
+                                code: "ny_santa_mug_75_off"
+                                name: "New year -75% for Santa mug"
+                                description: "3 days special before New Year"
+                                priority: 100
+                                exclusive: true
+                                starts_at: "now"
+                                ends_at: "+3 day"
+                                action_type: "off"
+                                action_percent: 75
+                                rules:
+                                  - type: "contains_product"
+                                    configuration: "santa-mug"
+                                channels:
+                                  - "US_WEB"
