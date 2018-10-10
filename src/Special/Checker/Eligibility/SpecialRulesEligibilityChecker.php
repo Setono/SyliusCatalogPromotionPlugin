@@ -8,7 +8,6 @@ use Setono\SyliusBulkSpecialsPlugin\Model\SpecialInterface;
 use Setono\SyliusBulkSpecialsPlugin\Model\SpecialRuleInterface;
 use Setono\SyliusBulkSpecialsPlugin\Model\SpecialSubjectInterface;
 use Setono\SyliusBulkSpecialsPlugin\Special\Checker\Rule\RuleCheckerInterface;
-use Sylius\Component\Core\Model\Product;
 use Sylius\Component\Registry\ServiceRegistryInterface;
 
 /**
@@ -48,7 +47,7 @@ final class SpecialRulesEligibilityChecker implements SpecialEligibilityCheckerI
     }
 
     /**
-     * @param SpecialSubjectInterface|Product $specialSubject
+     * @param SpecialSubjectInterface $specialSubject
      * @param SpecialRuleInterface $rule
      *
      * @return bool

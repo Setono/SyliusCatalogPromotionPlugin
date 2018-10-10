@@ -98,17 +98,18 @@ setono_sylius_bulk_specials_admin:
     ```php
     <?php
     
+    declare(strict_types=1);
+    
     namespace AppBundle\Model;
     
-    use Setono\SyliusBulkSpecialsPlugin\Model\SpecialSubjectInterface;
+    use Setono\SyliusBulkSpecialsPlugin\Model\ProductInterface;
     use Setono\SyliusBulkSpecialsPlugin\Model\SpecialSubjectTrait;
     use Sylius\Component\Core\Model\Product as BaseProduct;
     
     /**
      * Class Product
-     * @package AppBundle\Model
      */
-    class Product extends BaseProduct implements SpecialSubjectInterface
+    class Product extends BaseProduct implements ProductInterface
     {
         use SpecialSubjectTrait {
             SpecialSubjectTrait::__construct as private __specialSubjectTraitConstruct;

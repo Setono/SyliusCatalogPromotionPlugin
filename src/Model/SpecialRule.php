@@ -25,7 +25,7 @@ class SpecialRule implements SpecialRuleInterface
     protected $configuration = [];
 
     /**
-     * @var SpecialInterface
+     * @var SpecialInterface|null
      */
     protected $special;
 
@@ -40,7 +40,7 @@ class SpecialRule implements SpecialRuleInterface
     /**
      * {@inheritdoc}
      */
-    public function getType(): ?string
+    public function getType(): string
     {
         return $this->type;
     }
@@ -48,7 +48,7 @@ class SpecialRule implements SpecialRuleInterface
     /**
      * {@inheritdoc}
      */
-    public function setType(?string $type): void
+    public function setType(string $type): void
     {
         $this->type = $type;
     }

@@ -19,7 +19,7 @@
         <field name="priority" type="integer">
             <gedmo:sortable-position/>
         </field>
-        <field name="exclusive" type="boolean" />
+        <field name="exclusive" type="boolean" nullable="false" />
 
         <field name="startsAt" column="starts_at" type="datetime" nullable="true"/>
         <field name="endsAt" column="ends_at" type="datetime" nullable="true"/>

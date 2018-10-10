@@ -11,7 +11,6 @@
             <argument type="service" id="enqueue.client.spool_producer" />
             <argument type="service" id="sylius.repository.channel_pricing" />
             <argument type="service" id="setono_sylius_bulk_specials.recalculate_async_handler.channel_pricing.inner" />
-            <argument type="service" id="logger" />
 
             <tag name="enqueue.client.processor" />
         </service>
@@ -23,7 +22,6 @@
             <argument type="service" id="enqueue.client.spool_producer" />
             <argument type="service" id="sylius.repository.product" />
             <argument type="service" id="setono_sylius_bulk_specials.async_handler.eligible_specials_reassign.inner" />
-            <argument type="service" id="logger" />
 
             <tag name="enqueue.client.processor" />
         </service>
@@ -35,7 +33,6 @@
             <argument type="service" id="enqueue.client.spool_producer" />
             <argument type="service" id="sylius.repository.product" />
             <argument type="service" id="setono_sylius_bulk_specials.recalculate_async_handler.product.inner" />
-            <argument type="service" id="logger" />
 
             <tag name="enqueue.client.processor" />
         </service>
@@ -47,7 +44,6 @@
             <argument type="service" id="enqueue.client.spool_producer" />
             <argument type="service" id="setono_sylius_bulk_specials.repository.special" />
             <argument type="service" id="setono_sylius_bulk_specials.recalculate_async_handler.special.inner" />
-            <argument type="service" id="logger" />
 
             <tag name="enqueue.client.processor" />
         </service>

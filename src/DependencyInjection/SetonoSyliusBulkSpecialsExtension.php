@@ -33,7 +33,7 @@ final class SetonoSyliusBulkSpecialsExtension extends AbstractResourceExtension
             }
 
             // Load handler decorators to work asynchronously via enqueue
-            $loader->load(sprintf('services/handlers_async.xml', $config['driver']));
+            $loader->load('services/handlers_async.xml');
         }
     }
 }

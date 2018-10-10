@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace AppBundle\Model;
 
-use Setono\SyliusBulkSpecialsPlugin\Model\SpecialSubjectInterface;
+use Setono\SyliusBulkSpecialsPlugin\Model\ProductInterface;
 use Setono\SyliusBulkSpecialsPlugin\Model\SpecialSubjectTrait;
 use Sylius\Component\Core\Model\Product as BaseProduct;
 
 /**
  * Class Product
  */
-class Product extends BaseProduct implements SpecialSubjectInterface
+class Product extends BaseProduct implements ProductInterface
 {
     use SpecialSubjectTrait {
         SpecialSubjectTrait::__construct as private __specialSubjectTraitConstruct;

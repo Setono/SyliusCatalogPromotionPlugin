@@ -7,6 +7,7 @@ namespace Setono\SyliusBulkSpecialsPlugin\Doctrine\ORM;
 use Doctrine\ORM\QueryBuilder;
 use Setono\SyliusBulkSpecialsPlugin\Model\SpecialInterface;
 use Setono\SyliusBulkSpecialsPlugin\Model\SpecialRuleInterface;
+use Setono\SyliusBulkSpecialsPlugin\Special\QueryBuilder\Rule\RuleQueryBuilderInterface;
 use Setono\SyliusBulkSpecialsPlugin\Special\QueryBuilder\Rule\RuleQueryBuilderServiceRegistry;
 
 /**
@@ -88,7 +89,9 @@ trait ProductRepositoryTrait
     {
         /** @var SpecialRuleInterface $rule */
         foreach ($special->getRules() as $rule) {
-            $this->ruleQueryBuilders->get($rule->getType())->addRulesWheres(
+            /** @var RuleQueryBuilderInterface $ruleQueryBuilder */
+            $ruleQueryBuilder = $this->ruleQueryBuilders->get($rule->getType());
+            $ruleQueryBuilder->addRulesWheres(
                 $queryBuilder,
                 $rule->getConfiguration(),
                 $alias

@@ -56,9 +56,9 @@ interface SpecialInterface extends ChannelsAwareInterface, CodeAwareInterface, T
     public function isExclusive(): bool;
 
     /**
-     * @param bool|null $exclusive
+     * @param bool $exclusive
      */
-    public function setExclusive(?bool $exclusive): void;
+    public function setExclusive(bool $exclusive): void;
 
     /**
      * @return \DateTimeInterface|null
@@ -128,12 +128,12 @@ interface SpecialInterface extends ChannelsAwareInterface, CodeAwareInterface, T
     public function setActionType(string $actionType): void;
 
     /**
-     * @return string
+     * @return int
      */
     public function getActionPercent(): int;
 
     /**
-     * @param string $actionType
+     * @param int $actionPercent
      */
-    public function setActionPercent(int $actionType): void;
+    public function setActionPercent(int $actionPercent): void;
 }

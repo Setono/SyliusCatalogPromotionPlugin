@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Setono\SyliusBulkSpecialsPlugin\Handler;
 
-use Setono\SyliusBulkSpecialsPlugin\Model\SpecialSubjectInterface;
+use Setono\SyliusBulkSpecialsPlugin\Model\ProductInterface;
 
 /**
  * Interface ProductRecalculateHandlerInterface
@@ -12,7 +12,7 @@ use Setono\SyliusBulkSpecialsPlugin\Model\SpecialSubjectInterface;
 interface ProductRecalculateHandlerInterface extends HandlerInterface
 {
     /**
-     * @param SpecialSubjectInterface $product
+     * @param ProductInterface $product
      */
-    public function handle(SpecialSubjectInterface $product): void;
+    public function handleProduct(ProductInterface $product): void;
 }

@@ -7,7 +7,6 @@ namespace Setono\SyliusBulkSpecialsPlugin\Doctrine\ORM;
 use Doctrine\ORM\QueryBuilder;
 use Setono\SyliusBulkSpecialsPlugin\Model\Special;
 use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
-use Sylius\Component\Channel\Model\ChannelInterface;
 use Sylius\Component\Core\Model\Product;
 
 /**
@@ -52,7 +51,7 @@ class SpecialRepository extends EntityRepository implements SpecialRepositoryInt
     /**
      * @param Product $product
      *
-     * @return array|Special
+     * @return array|Special[]
      */
     public function findByProduct(Product $product): array
     {
@@ -65,24 +64,8 @@ class SpecialRepository extends EntityRepository implements SpecialRepositoryInt
             ;
     }
 
-//    /**
-//     * @param ChannelInterface $channel
-//     *
-//     * @return array|Special
-//     */
-//    public function findActiveByChannel(ChannelInterface $channel): array
-//    {
-//        return $this->filterByActive($this->createQueryBuilder('o'))
-//            ->andWhere(':channel MEMBER OF o.channels')
-//            ->setParameter('channel', $channel)
-//            ->addOrderBy('o.priority', 'DESC')
-//            ->getQuery()
-//            ->getResult()
-//            ;
-//    }
-
     /**
-     * @return array|Special
+     * @return array|Special[]
      */
     public function findAll(): array
     {
@@ -92,7 +75,7 @@ class SpecialRepository extends EntityRepository implements SpecialRepositoryInt
     }
 
     /**
-     * @return array|Special
+     * @return array|Special[]
      */
     public function findActive(): array
     {

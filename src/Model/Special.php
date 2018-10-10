@@ -26,12 +26,12 @@ class Special implements SpecialInterface
     protected $id;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $code;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $name;
 
@@ -101,7 +101,7 @@ class Special implements SpecialInterface
     }
 
     /**
-     * @return float
+     * {@inheritdoc}
      */
     public function getMultiplier(): float
     {
@@ -213,7 +213,7 @@ class Special implements SpecialInterface
     /**
      * {@inheritdoc}
      */
-    public function setExclusive(?bool $exclusive): void
+    public function setExclusive(bool $exclusive): void
     {
         $this->exclusive = $exclusive;
     }
@@ -311,7 +311,7 @@ class Special implements SpecialInterface
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
     public function getActionType(): string
     {
@@ -319,7 +319,7 @@ class Special implements SpecialInterface
     }
 
     /**
-     * @param string $actionType
+     * {@inheritdoc}
      */
     public function setActionType(string $actionType): void
     {
@@ -327,7 +327,7 @@ class Special implements SpecialInterface
     }
 
     /**
-     * @return int
+     * {@inheritdoc}
      */
     public function getActionPercent(): int
     {
@@ -335,7 +335,7 @@ class Special implements SpecialInterface
     }
 
     /**
-     * @param int $actionPercent
+     * {@inheritdoc}
      */
     public function setActionPercent(int $actionPercent): void
     {

@@ -18,10 +18,6 @@ final class RegisterRuleCheckersPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container): void
     {
-        if (!$container->has('setono_sylius_bulk_specials.registry_special_rule_checker') || !$container->has('setono_sylius_bulk_specials.form_registry.special_rule_checker')) {
-            return;
-        }
-
         $specialRuleCheckerRegistry = $container->getDefinition('setono_sylius_bulk_specials.registry_special_rule_checker');
         $specialRuleCheckerFormTypeRegistry = $container->getDefinition('setono_sylius_bulk_specials.form_registry.special_rule_checker');
 

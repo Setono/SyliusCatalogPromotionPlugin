@@ -60,8 +60,6 @@ class SpecialRuleExampleFactory extends AbstractExampleFactory implements Exampl
             $options['type'],
             $options['configuration']
         );
-
-        return $specialRule;
     }
 
     /**

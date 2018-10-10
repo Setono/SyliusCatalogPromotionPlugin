@@ -12,20 +12,6 @@ use Sylius\Component\Resource\Model\ResourceInterface;
  */
 interface SpecialSubjectInterface extends ResourceInterface
 {
-//    /**
-//     * Product have one of given Taxon Codes (OR)
-//     *
-//     * @param array $taxonCodes
-//     * @return bool
-//     */
-//    public function inTaxonCodes(array $taxonCodes): bool;
-//
-//    /**
-//     * @param array $taxonCode
-//     * @return bool
-//     */
-//    public function inTaxonCode(array $taxonCode): bool;
-
     /**
      * @return bool
      */

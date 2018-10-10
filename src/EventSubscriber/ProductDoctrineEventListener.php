@@ -6,8 +6,7 @@ namespace Setono\SyliusBulkSpecialsPlugin\EventSubscriber;
 
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use Setono\SyliusBulkSpecialsPlugin\Handler\EligibleSpecialsReassignHandlerInterface;
-use Setono\SyliusBulkSpecialsPlugin\Model\SpecialSubjectInterface;
-use Sylius\Component\Core\Model\Product;
+use Setono\SyliusBulkSpecialsPlugin\Model\ProductInterface;
 
 /**
  * Class ProductDoctrineEventListener
@@ -38,12 +37,11 @@ class ProductDoctrineEventListener
      */
     public function postPersist(LifecycleEventArgs $args)
     {
-        /** @var Product|SpecialSubjectInterface $entity */
         $entity = $args->getObject();
-        if (!$entity instanceof SpecialSubjectInterface) {
+        if (!$entity instanceof ProductInterface) {
             return;
         }
 
-        $this->eligibleSpecialsReassignHandler->handle($entity);
+        $this->eligibleSpecialsReassignHandler->handleProduct($entity);
     }
 }

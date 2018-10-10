@@ -14,5 +14,5 @@ interface ChannelPricingRecalculateHandlerInterface extends HandlerInterface
     /**
      * @param ChannelPricingInterface $channelPricing
      */
-    public function handle(ChannelPricingInterface $channelPricing): void;
+    public function handleChannelPricing(ChannelPricingInterface $channelPricing): void;
 }

@@ -29,9 +29,9 @@ class SpecialRuleFactory implements SpecialRuleFactoryInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @return SpecialRuleInterface|object
      */
-    public function createNew(): SpecialRuleInterface
+    public function createNew()
     {
         return $this->decoratedFactory->createNew();
     }

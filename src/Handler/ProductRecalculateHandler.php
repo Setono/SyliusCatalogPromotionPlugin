@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Setono\SyliusBulkSpecialsPlugin\Handler;
 
-use Setono\SyliusBulkSpecialsPlugin\Model\SpecialSubjectInterface;
+use Setono\SyliusBulkSpecialsPlugin\Model\ProductInterface;
 use Setono\SyliusBulkSpecialsPlugin\Special\Applicator\ProductSpecialsApplicator;
 
 /**
  * Class ProductRecalculateHandler
  */
-class ProductRecalculateHandler implements ProductRecalculateHandlerInterface
+class ProductRecalculateHandler extends AbstractProductHandler
 {
     /**
      * @var ProductSpecialsApplicator
@@ -29,9 +29,9 @@ class ProductRecalculateHandler implements ProductRecalculateHandlerInterface
     }
 
     /**
-     * @param SpecialSubjectInterface $product
+     * {@inheritdoc}
      */
-    public function handle(SpecialSubjectInterface $product): void
+    public function handleProduct(ProductInterface $product): void
     {
         $this->productSpecialsApplicator->applyToProduct($product);
     }

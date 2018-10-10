@@ -18,10 +18,6 @@ final class RegisterRuleQueryBuildersPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container): void
     {
-        if (!$container->has('setono_sylius_bulk_specials.registry.special_rule_query_builder')) {
-            return;
-        }
-
         $specialRuleQueryBuilderRegistry = $container->getDefinition('setono_sylius_bulk_specials.registry.special_rule_query_builder');
 
         foreach ($container->findTaggedServiceIds('setono_sylius_bulk_specials.special_rule_query_builder') as $id => $attributes) {

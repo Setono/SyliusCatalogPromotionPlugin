@@ -242,7 +242,7 @@ sylius_fixtures:
                 special:
                     options:
                         custom:
-                            accidentally_enabled_mugs_10_off:
+                            accidentally_enabled_mugs_20_off:
                                 code: "accidentally_enabled_mugs_20_off"
                                 name: "Accidentally enabled special"
                                 starts_at: "-1 day"
@@ -273,6 +273,7 @@ sylius_fixtures:
                                 exclusive: true
                                 starts_at: "now"
                                 ends_at: "+14 day"
+                                enabled: true
                                 action_type: "off"
                                 action_percent: 50
                                 rules:
@@ -290,6 +291,7 @@ sylius_fixtures:
                                 exclusive: true
                                 starts_at: "now"
                                 ends_at: "+3 day"
+                                enabled: true
                                 action_type: "off"
                                 action_percent: 75
                                 rules:

@@ -6,7 +6,6 @@ namespace Setono\SyliusBulkSpecialsPlugin\Special\Checker\Eligibility;
 
 use Setono\SyliusBulkSpecialsPlugin\Model\SpecialInterface;
 use Setono\SyliusBulkSpecialsPlugin\Model\SpecialSubjectInterface;
-use Sylius\Component\Core\Model\Product;
 
 /**
  * Interface SpecialEligibilityCheckerInterface
@@ -14,7 +13,7 @@ use Sylius\Component\Core\Model\Product;
 interface SpecialEligibilityCheckerInterface
 {
     /**
-     * @param SpecialSubjectInterface|Product $specialSubject
+     * @param SpecialSubjectInterface $specialSubject
      * @param SpecialInterface $special
      *
      * @return bool

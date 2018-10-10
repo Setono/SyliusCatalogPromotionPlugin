@@ -12,9 +12,9 @@ use Sylius\Component\Resource\Model\ResourceInterface;
 interface ConfigurableSpecialElementInterface extends ResourceInterface
 {
     /**
-     * @return string|null
+     * @return string
      */
-    public function getType(): ?string;
+    public function getType(): string;
 
     /**
      * @return array

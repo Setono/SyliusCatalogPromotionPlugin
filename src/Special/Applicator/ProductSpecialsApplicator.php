@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Setono\SyliusBulkSpecialsPlugin\Special\Applicator;
 
+use Setono\SyliusBulkSpecialsPlugin\Model\ProductInterface;
 use Setono\SyliusBulkSpecialsPlugin\Model\SpecialInterface;
-use Setono\SyliusBulkSpecialsPlugin\Model\SpecialSubjectInterface;
 use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 use Sylius\Component\Core\Model\ChannelPricingInterface;
-use Sylius\Component\Core\Model\Product;
 use Sylius\Component\Core\Model\ProductVariant;
+use Sylius\Component\Core\Model\ProductVariantInterface;
 
 /**
  * Class ProductSpecialsApplicator
@@ -33,9 +33,9 @@ class ProductSpecialsApplicator
     }
 
     /**
-     * @param Product|SpecialSubjectInterface $product
+     * @param ProductInterface $product
      */
-    public function applyToProduct(Product $product)
+    public function applyToProduct(ProductInterface $product): void
     {
         /** @var ProductVariant $variant */
         foreach ($product->getVariants() as $variant) {
@@ -50,10 +50,18 @@ class ProductSpecialsApplicator
     /**
      * @param ChannelPricingInterface $channelPricing
      */
-    public function applyToChannelPricing(ChannelPricingInterface $channelPricing)
+    public function applyToChannelPricing(ChannelPricingInterface $channelPricing): void
     {
-        /** @var Product|SpecialSubjectInterface $product */
-        $product = $channelPricing->getProductVariant()->getProduct();
+        $productVariant = $channelPricing->getProductVariant();
+        if (!$productVariant instanceof ProductVariantInterface) {
+            return;
+        }
+
+        $product = $productVariant->getProduct();
+        if (!$product instanceof ProductInterface) {
+            return;
+        }
+
         $this->applyMultiplierToChannelPricing(
             $channelPricing,
             $this->getProductMultiplierForChannelCode(
@@ -75,12 +83,12 @@ class ProductSpecialsApplicator
     }
 
     /**
-     * @param Product|SpecialSubjectInterface $product
+     * @param ProductInterface $product
      * @param string $channelCode
      *
      * @return float
      */
-    protected function getProductMultiplierForChannelCode(Product $product, string $channelCode): float
+    protected function getProductMultiplierForChannelCode(ProductInterface $product, string $channelCode): float
     {
         if ($product->hasExclusiveSpecialsForChannelCode($channelCode)) {
             return $product->getFirstExclusiveSpecialForChannelCode($channelCode)->getMultiplier();
@@ -88,7 +96,7 @@ class ProductSpecialsApplicator
 
         $multiplier = 1;
         /** @var SpecialInterface $special */
-        foreach ($product->getActiveSpecialsForChannelCode($channelCode) as $special) {
+        foreach ($product->getActiveSpecialsForChannelCode($channelCode)->toArray() as $special) {
             $multiplier *= $special->getMultiplier();
         }
 

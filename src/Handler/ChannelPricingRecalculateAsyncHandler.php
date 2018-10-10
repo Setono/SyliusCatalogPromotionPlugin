@@ -9,15 +9,13 @@ use Enqueue\Client\TopicSubscriberInterface;
 use Interop\Queue\PsrContext;
 use Interop\Queue\PsrMessage;
 use Interop\Queue\PsrProcessor;
-use Psr\Log\LoggerInterface;
-use Sylius\Bundle\CoreBundle\Doctrine\ORM\ProductRepository;
 use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 use Sylius\Component\Core\Model\ChannelPricingInterface;
 
 /**
  * Class ChannelPricingRecalculateAsyncHandler
  */
-class ChannelPricingRecalculateAsyncHandler extends AbstractHandler implements ChannelPricingRecalculateHandlerInterface, PsrProcessor, TopicSubscriberInterface
+class ChannelPricingRecalculateAsyncHandler extends AbstractChannelPricingHandler implements ChannelPricingRecalculateHandlerInterface, PsrProcessor, TopicSubscriberInterface
 {
     const EVENT = 'setono_sylius_bulk_specials_topic_channel_pricing_recalculate';
 
@@ -27,7 +25,7 @@ class ChannelPricingRecalculateAsyncHandler extends AbstractHandler implements C
     protected $producer;
 
     /**
-     * @var ProductRepository
+     * @var EntityRepository
      */
     protected $repository;
 
@@ -42,25 +40,21 @@ class ChannelPricingRecalculateAsyncHandler extends AbstractHandler implements C
      * @param ProducerInterface $producer
      * @param EntityRepository $repository
      * @param ChannelPricingRecalculateHandler $recalculateHandler
-     * @param LoggerInterface|null $logger
      */
     public function __construct(
         ProducerInterface $producer,
         EntityRepository $repository,
-        ChannelPricingRecalculateHandler $recalculateHandler,
-        LoggerInterface $logger = null
+        ChannelPricingRecalculateHandler $recalculateHandler
     ) {
         $this->producer = $producer;
         $this->repository = $repository;
         $this->recalculateHandler = $recalculateHandler;
-
-        parent::__construct($logger);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function handle(ChannelPricingInterface $subject): void
+    public function handleChannelPricing(ChannelPricingInterface $subject): void
     {
         $this->producer->sendEvent(
             self::EVENT,

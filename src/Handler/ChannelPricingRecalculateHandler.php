@@ -11,7 +11,7 @@ use Sylius\Component\Core\Model\ChannelPricingInterface;
 /**
  * Class ChannelPricingRecalculateHandler
  */
-class ChannelPricingRecalculateHandler implements ChannelPricingRecalculateHandlerInterface
+class ChannelPricingRecalculateHandler extends AbstractChannelPricingHandler
 {
     /**
      * @var ProductSpecialsApplicator
@@ -40,7 +40,7 @@ class ChannelPricingRecalculateHandler implements ChannelPricingRecalculateHandl
     /**
      * {@inheritdoc}
      */
-    public function handle(ChannelPricingInterface $channelPricing): void
+    public function handleChannelPricing(ChannelPricingInterface $channelPricing): void
     {
         $this->productSpecialsApplicator->applyToChannelPricing($channelPricing);
         $this->channelPricingRepository->add($channelPricing);

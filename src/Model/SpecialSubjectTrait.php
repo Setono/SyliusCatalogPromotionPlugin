@@ -8,7 +8,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use Sylius\Component\Core\Model\ChannelInterface;
-use Sylius\Component\Core\Model\ProductTaxon;
 
 /**
  * Trait SpecialSubjectTrait
@@ -28,36 +27,8 @@ trait SpecialSubjectTrait
         $this->specials = new ArrayCollection();
     }
 
-//    /**
-//     * {@inheritdoc}
-//     */
-//    public function inTaxonCodes(array $taxonCodes): bool
-//    {
-//        foreach ($taxonCodes as $taxonCode) {
-//            if ($this->inTaxonCode($taxonCode)) {
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
-//
-//    /**
-//     * {@inheritdoc}
-//     */
-//    public function inTaxonCode(array $taxonCode): bool
-//    {
-//        /** ProductInterface $this */
-//        if (null !== $this->getMainTaxon() && $this->getMainTaxon()->getCode() == $taxonCode) {
-//            return true;
-//        }
-//
-//        return in_array($taxonCode, $this->getProductTaxons()->map(function(ProductTaxon $productTaxon){
-//            return $productTaxon->getTaxon()->getCode();
-//        })->toArray());
-//    }
-
     /**
-     * {@inheritdoc}
+     * @return bool
      */
     public function hasExclusiveSpecials(): bool
     {
@@ -65,7 +36,7 @@ trait SpecialSubjectTrait
     }
 
     /**
-     * {@inheritdoc}
+     * @return SpecialInterface|null
      */
     public function getFirstExclusiveSpecial(): ?SpecialInterface
     {
@@ -73,7 +44,7 @@ trait SpecialSubjectTrait
     }
 
     /**
-     * {@inheritdoc}
+     * @return Collection|SpecialInterface[]
      */
     public function getExclusiveSpecials(): Collection
     {
@@ -83,7 +54,7 @@ trait SpecialSubjectTrait
     }
 
     /**
-     * {@inheritdoc}
+     * @return Collection|SpecialInterface[]
      */
     public function getActiveSpecials(): Collection
     {
@@ -93,7 +64,9 @@ trait SpecialSubjectTrait
     }
 
     /**
-     * {@inheritdoc}
+     * @param string $channelCode
+     *
+     * @return bool
      */
     public function hasExclusiveSpecialsForChannelCode(string $channelCode): bool
     {
@@ -101,7 +74,9 @@ trait SpecialSubjectTrait
     }
 
     /**
-     * {@inheritdoc}
+     * @param string $channelCode
+     *
+     * @return SpecialInterface|null
      */
     public function getFirstExclusiveSpecialForChannelCode(string $channelCode): ?SpecialInterface
     {
@@ -109,7 +84,7 @@ trait SpecialSubjectTrait
     }
 
     /**
-     * {@inheritdoc}
+     * @return Collection|SpecialInterface[]
      */
     public function getExclusiveSpecialsForChannelCode(string $channelCode): Collection
     {
@@ -119,7 +94,7 @@ trait SpecialSubjectTrait
     }
 
     /**
-     * {@inheritdoc}
+     * @return Collection|SpecialInterface[]
      */
     public function getActiveSpecialsForChannelCode(string $channelCode): Collection
     {
@@ -133,7 +108,7 @@ trait SpecialSubjectTrait
     }
 
     /**
-     * @return ArrayCollection|Special[]
+     * @return Collection|SpecialInterface[]
      */
     protected function getSortedSpecials(): Collection
     {
@@ -145,7 +120,7 @@ trait SpecialSubjectTrait
     }
 
     /**
-     * {@inheritdoc}
+     * @return Collection|SpecialInterface[]
      */
     public function getSpecials(): Collection
     {
@@ -153,7 +128,9 @@ trait SpecialSubjectTrait
     }
 
     /**
-     * {@inheritdoc}
+     * @param SpecialInterface $special
+     *
+     * @return bool
      */
     public function hasSpecial(SpecialInterface $special): bool
     {
@@ -161,7 +138,7 @@ trait SpecialSubjectTrait
     }
 
     /**
-     * {@inheritdoc}
+     * @param SpecialInterface $special
      */
     public function addSpecial(SpecialInterface $special): void
     {
@@ -170,16 +147,13 @@ trait SpecialSubjectTrait
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function removeSpecials(): void
     {
         $this->specials->clear();
     }
 
     /**
-     * {@inheritdoc}
+     * @param SpecialInterface $special
      */
     public function removeSpecial(SpecialInterface $special): void
     {

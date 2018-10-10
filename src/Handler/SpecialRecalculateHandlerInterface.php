@@ -14,5 +14,5 @@ interface SpecialRecalculateHandlerInterface extends HandlerInterface
     /**
      * @param SpecialInterface $special
      */
-    public function handle(SpecialInterface $special): void;
+    public function handleSpecial(SpecialInterface $special): void;
 }

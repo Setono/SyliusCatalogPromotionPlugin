@@ -70,7 +70,7 @@ before_script:
 
 script:
     - composer validate --strict
-    - bin/phpstan.phar analyse -c phpstan.neon -l max src/
+    - bin/phpstan.phar analyse -c phpstan.neon -l max src/ tests/Application/src/
 
     #- bin/phpunit
     #- bin/phpspec run

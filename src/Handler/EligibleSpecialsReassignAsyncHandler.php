@@ -9,15 +9,13 @@ use Enqueue\Client\TopicSubscriberInterface;
 use Interop\Queue\PsrContext;
 use Interop\Queue\PsrMessage;
 use Interop\Queue\PsrProcessor;
-use Psr\Log\LoggerInterface;
 use Setono\SyliusBulkSpecialsPlugin\Model\ProductInterface;
-use Setono\SyliusBulkSpecialsPlugin\Model\SpecialSubjectInterface;
 use Sylius\Bundle\CoreBundle\Doctrine\ORM\ProductRepository;
 
 /**
  * Class EligibleSpecialsReassignAsyncHandler
  */
-class EligibleSpecialsReassignAsyncHandler extends AbstractHandler implements EligibleSpecialsReassignHandlerInterface, PsrProcessor, TopicSubscriberInterface
+class EligibleSpecialsReassignAsyncHandler extends AbstractProductHandler implements EligibleSpecialsReassignHandlerInterface, PsrProcessor, TopicSubscriberInterface
 {
     const EVENT = 'setono_sylius_bulk_specials_topic_reassign_specials';
 
@@ -42,38 +40,26 @@ class EligibleSpecialsReassignAsyncHandler extends AbstractHandler implements El
      * @param ProducerInterface $producer
      * @param ProductRepository $repository
      * @param EligibleSpecialsReassignHandler $handler
-     * @param LoggerInterface|null $logger
      */
     public function __construct(
         ProducerInterface $producer,
         ProductRepository $repository,
-        EligibleSpecialsReassignHandler $handler,
-        LoggerInterface $logger = null
+        EligibleSpecialsReassignHandler $handler
     ) {
         $this->producer = $producer;
         $this->repository = $repository;
         $this->handler = $handler;
-
-        parent::__construct($logger);
-
-        $this->log('Initialized');
     }
 
     /**
      * {@inheritdoc}
      */
-    public function handle(SpecialSubjectInterface $subject): void
+    public function handleProduct(ProductInterface $product): void
     {
         $this->producer->sendEvent(
             self::EVENT,
-            $subject->getId()
+            $product->getId()
         );
-
-        $this->log(sprintf(
-            'Event %s was sent with ID %s',
-            self::EVENT,
-            $subject->getId()
-        ));
     }
 
     /**
@@ -81,18 +67,12 @@ class EligibleSpecialsReassignAsyncHandler extends AbstractHandler implements El
      */
     public function process(PsrMessage $message, PsrContext $session)
     {
-        $this->log(sprintf(
-            'Event %s was received with Body %s',
-            self::EVENT,
-            $message->getBody()
-        ));
-
         /** @var ProductInterface $product */
         $product = $this->repository->find(
             $message->getBody()
         );
 
-        if (!$product instanceof SpecialSubjectInterface) {
+        if (!$product instanceof ProductInterface) {
             return self::REJECT;
         }
 

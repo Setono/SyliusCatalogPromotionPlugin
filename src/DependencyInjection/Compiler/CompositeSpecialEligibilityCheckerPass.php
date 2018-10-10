@@ -18,10 +18,6 @@ final class CompositeSpecialEligibilityCheckerPass implements CompilerPassInterf
      */
     public function process(ContainerBuilder $container): void
     {
-        if (!$container->has('setono_sylius_bulk_specials.special_eligibility_checker')) {
-            return;
-        }
-
         $container->getDefinition('setono_sylius_bulk_specials.special_eligibility_checker')->setArguments([
             array_map(
                 function ($id) {

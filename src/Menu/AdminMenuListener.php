@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Setono\SyliusBulkSpecialsPlugin\Menu;
 
+use Knp\Menu\ItemInterface;
 use Sylius\Bundle\UiBundle\Menu\Event\MenuBuilderEvent;
 
 /**
@@ -19,6 +20,10 @@ final class AdminMenuListener
         $menu = $event->getMenu();
 
         $marketingSubmenu = $menu->getChild('marketing');
+        if (!$marketingSubmenu instanceof ItemInterface) {
+            return;
+        }
+
         $marketingSubmenu
             ->addChild('specials', [
                 'route' => 'setono_sylius_bulk_specials_admin_special_index',

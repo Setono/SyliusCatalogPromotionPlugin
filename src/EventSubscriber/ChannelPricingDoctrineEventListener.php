@@ -42,7 +42,7 @@ class ChannelPricingDoctrineEventListener
             return;
         }
 
-        if ($args->getOldValue('originalPrice') != $args->getNewValue('originalPrice')) {
+        if ($args->hasChangedField('originalPrice') && $args->getOldValue('originalPrice') != $args->getNewValue('originalPrice')) {
             if ($this->channelPricingRecalculateHandler instanceof ChannelPricingRecalculateHandler) {
                 // Important: This will not work with non-async handlers as far as
                 // new values not yet applied and recalculation result will be the same as before

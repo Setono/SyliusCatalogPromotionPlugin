@@ -8,12 +8,11 @@ use Doctrine\ORM\EntityManager;
 use Setono\SyliusBulkSpecialsPlugin\Doctrine\ORM\ProductRepositoryInterface;
 use Setono\SyliusBulkSpecialsPlugin\Model\SpecialInterface;
 use Setono\SyliusBulkSpecialsPlugin\Model\SpecialSubjectInterface;
-use Sylius\Bundle\CoreBundle\Doctrine\ORM\ProductRepository;
 
 /**
  * Class SpecialRecalculateHandler
  */
-class SpecialRecalculateHandler implements SpecialRecalculateHandlerInterface
+class SpecialRecalculateHandler extends AbstractSpecialHandler
 {
     /**
      * Required for cleanup
@@ -23,7 +22,7 @@ class SpecialRecalculateHandler implements SpecialRecalculateHandlerInterface
     protected $entityManager;
 
     /**
-     * @var ProductRepositoryInterface|ProductRepository
+     * @var ProductRepositoryInterface
      */
     protected $productRepository;
 
@@ -50,9 +49,9 @@ class SpecialRecalculateHandler implements SpecialRecalculateHandlerInterface
     }
 
     /**
-     * @param SpecialInterface $special
+     * {@inheritdoc}
      */
-    public function handle(SpecialInterface $special): void
+    public function handleSpecial(SpecialInterface $special): void
     {
         // @see Good explanation at https://stackoverflow.com/a/26698814
         $iterableResult = $this->productRepository->findBySpecialQB($special)->getQuery()->iterate();
@@ -67,7 +66,6 @@ class SpecialRecalculateHandler implements SpecialRecalculateHandlerInterface
             }
 
             $this->productRecalculateHandler->handle($product);
-            //$this->entityManager->clear();
         }
     }
 }

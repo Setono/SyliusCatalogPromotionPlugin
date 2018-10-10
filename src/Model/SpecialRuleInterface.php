@@ -12,9 +12,9 @@ use Sylius\Component\Resource\Model\ResourceInterface;
 interface SpecialRuleInterface extends ResourceInterface, ConfigurableSpecialElementInterface
 {
     /**
-     * @param string|null $type
+     * @param string $type
      */
-    public function setType(?string $type): void;
+    public function setType(string $type): void;
 
     /**
      * @param array $configuration
@@ -22,7 +22,7 @@ interface SpecialRuleInterface extends ResourceInterface, ConfigurableSpecialEle
     public function setConfiguration(array $configuration): void;
 
     /**
-     * @param SpecialInterface|null $promotion
+     * @param SpecialInterface|null $special
      */
-    public function setSpecial(?SpecialInterface $promotion): void;
+    public function setSpecial(?SpecialInterface $special): void;
 }

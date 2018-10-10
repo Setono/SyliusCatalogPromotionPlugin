@@ -9,15 +9,13 @@ use Enqueue\Client\TopicSubscriberInterface;
 use Interop\Queue\PsrContext;
 use Interop\Queue\PsrMessage;
 use Interop\Queue\PsrProcessor;
-use Psr\Log\LoggerInterface;
-use Setono\SyliusBulkSpecialsPlugin\Model\SpecialSubjectInterface;
+use Setono\SyliusBulkSpecialsPlugin\Model\ProductInterface;
 use Sylius\Bundle\CoreBundle\Doctrine\ORM\ProductRepository;
-use Sylius\Component\Core\Model\Product;
 
 /**
  * Class ProductRecalculateAsyncHandler
  */
-class ProductRecalculateAsyncHandler extends AbstractHandler implements ProductRecalculateHandlerInterface, PsrProcessor, TopicSubscriberInterface
+class ProductRecalculateAsyncHandler extends AbstractProductHandler implements ProductRecalculateHandlerInterface, PsrProcessor, TopicSubscriberInterface
 {
     const EVENT = 'setono_sylius_bulk_specials_topic_product_recalculate';
 
@@ -42,29 +40,25 @@ class ProductRecalculateAsyncHandler extends AbstractHandler implements ProductR
      * @param ProducerInterface $producer
      * @param ProductRepository $repository
      * @param ProductRecalculateHandler $recalculateHandler
-     * @param LoggerInterface|null $logger
      */
     public function __construct(
         ProducerInterface $producer,
         ProductRepository $repository,
-        ProductRecalculateHandler $recalculateHandler,
-        LoggerInterface $logger = null
+        ProductRecalculateHandler $recalculateHandler
     ) {
         $this->producer = $producer;
         $this->repository = $repository;
         $this->recalculateHandler = $recalculateHandler;
-
-        parent::__construct($logger);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function handle(SpecialSubjectInterface $subject): void
+    public function handleProduct(ProductInterface $product): void
     {
         $this->producer->sendEvent(
             self::EVENT,
-            $subject->getId()
+            $product->getId()
         );
     }
 
@@ -73,12 +67,12 @@ class ProductRecalculateAsyncHandler extends AbstractHandler implements ProductR
      */
     public function process(PsrMessage $message, PsrContext $session)
     {
-        /** @var SpecialSubjectInterface|Product $product */
+        /** @var ProductInterface $product */
         $product = $this->repository->find(
             $message->getBody()
         );
 
-        if (!$product instanceof SpecialSubjectInterface) {
+        if (!$product instanceof ProductInterface) {
             return self::REJECT;
         }
 

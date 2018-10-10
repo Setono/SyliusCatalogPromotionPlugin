@@ -9,14 +9,13 @@ use Enqueue\Client\TopicSubscriberInterface;
 use Interop\Queue\PsrContext;
 use Interop\Queue\PsrMessage;
 use Interop\Queue\PsrProcessor;
-use Psr\Log\LoggerInterface;
 use Setono\SyliusBulkSpecialsPlugin\Doctrine\ORM\SpecialRepositoryInterface;
 use Setono\SyliusBulkSpecialsPlugin\Model\SpecialInterface;
 
 /**
  * Class SpecialRecalculateAsyncHandler
  */
-class SpecialRecalculateAsyncHandler extends AbstractHandler implements SpecialRecalculateHandlerInterface, PsrProcessor, TopicSubscriberInterface
+class SpecialRecalculateAsyncHandler extends AbstractSpecialHandler implements SpecialRecalculateHandlerInterface, PsrProcessor, TopicSubscriberInterface
 {
     const EVENT = 'setono_sylius_bulk_specials_topic_special_recalculate';
 
@@ -41,25 +40,21 @@ class SpecialRecalculateAsyncHandler extends AbstractHandler implements SpecialR
      * @param ProducerInterface $producer
      * @param SpecialRepositoryInterface $repository
      * @param SpecialRecalculateHandler $recalculateHandler
-     * @param LoggerInterface|null $logger
      */
     public function __construct(
         ProducerInterface $producer,
         SpecialRepositoryInterface $repository,
-        SpecialRecalculateHandler $recalculateHandler,
-        LoggerInterface $logger = null
+        SpecialRecalculateHandler $recalculateHandler
     ) {
         $this->producer = $producer;
         $this->repository = $repository;
         $this->recalculateHandler = $recalculateHandler;
-
-        parent::__construct($logger);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function handle(SpecialInterface $special): void
+    public function handleSpecial(SpecialInterface $special): void
     {
         $this->producer->sendEvent(
             self::EVENT,

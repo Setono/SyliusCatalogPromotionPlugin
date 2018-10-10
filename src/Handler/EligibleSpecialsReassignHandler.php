@@ -5,15 +5,15 @@ declare(strict_types=1);
 namespace Setono\SyliusBulkSpecialsPlugin\Handler;
 
 use Setono\SyliusBulkSpecialsPlugin\Doctrine\ORM\SpecialRepositoryInterface;
+use Setono\SyliusBulkSpecialsPlugin\Model\ProductInterface;
 use Setono\SyliusBulkSpecialsPlugin\Model\Special;
-use Setono\SyliusBulkSpecialsPlugin\Model\SpecialSubjectInterface;
 use Setono\SyliusBulkSpecialsPlugin\Special\Checker\Eligibility\SpecialEligibilityCheckerInterface;
 use Sylius\Bundle\CoreBundle\Doctrine\ORM\ProductRepository;
 
 /**
  * Class ProductRecalculateHandler
  */
-class EligibleSpecialsReassignHandler implements EligibleSpecialsReassignHandlerInterface
+class EligibleSpecialsReassignHandler extends AbstractProductHandler
 {
     /**
      * @var SpecialRepositoryInterface
@@ -56,22 +56,22 @@ class EligibleSpecialsReassignHandler implements EligibleSpecialsReassignHandler
     }
 
     /**
-     * @param SpecialSubjectInterface $subject
+     * {@inheritdoc}
      */
-    public function handle(SpecialSubjectInterface $subject): void
+    public function handleProduct(ProductInterface $product): void
     {
         $specials = $this->specialRepository->findAll();
 
-        $subject->removeSpecials();
+        $product->removeSpecials();
 
         /** @var Special $special */
         foreach ($specials as $special) {
-            if ($this->specialEligibilityChecker->isEligible($subject, $special)) {
-                $subject->addSpecial($special);
+            if ($this->specialEligibilityChecker->isEligible($product, $special)) {
+                $product->addSpecial($special);
             }
         }
 
-        $this->productRepository->add($subject);
-        $this->productRecalculateHandler->handle($subject);
+        $this->productRepository->add($product);
+        $this->productRecalculateHandler->handle($product);
     }
 }
