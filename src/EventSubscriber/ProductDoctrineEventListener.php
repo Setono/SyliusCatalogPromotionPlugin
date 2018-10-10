@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Setono\SyliusBulkSpecialsPlugin\EventSubscriber;
 
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
-use Doctrine\ORM\Events;
 use Setono\SyliusBulkSpecialsPlugin\Handler\EligibleSpecialsReassignHandlerInterface;
 use Setono\SyliusBulkSpecialsPlugin\Model\SpecialSubjectInterface;
 use Sylius\Component\Core\Model\Product;
@@ -29,13 +28,6 @@ class ProductDoctrineEventListener
         EligibleSpecialsReassignHandlerInterface $eligibleSpecialsReassignHandler
     ) {
         $this->eligibleSpecialsReassignHandler = $eligibleSpecialsReassignHandler;
-    }
-
-    public function getSubscribedEvents()
-    {
-        return [
-            Events::postPersist,
-        ];
     }
 
     /**
