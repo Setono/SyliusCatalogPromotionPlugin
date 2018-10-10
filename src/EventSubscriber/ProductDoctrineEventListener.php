@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Setono\SyliusBulkSpecialsPlugin\EventSubscriber;
 
-use Doctrine\Common\EventSubscriber;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use Doctrine\ORM\Events;
 use Setono\SyliusBulkSpecialsPlugin\Handler\EligibleSpecialsReassignHandlerInterface;
@@ -23,6 +22,7 @@ class ProductDoctrineEventListener
 
     /**
      * ProductDoctrineEventSubscriber constructor.
+     *
      * @param EligibleSpecialsReassignHandlerInterface $eligibleSpecialsReassignHandler
      */
     public function __construct(
@@ -31,9 +31,6 @@ class ProductDoctrineEventListener
         $this->eligibleSpecialsReassignHandler = $eligibleSpecialsReassignHandler;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSubscribedEvents()
     {
         return [
@@ -57,5 +54,4 @@ class ProductDoctrineEventListener
 
         $this->eligibleSpecialsReassignHandler->handle($entity);
     }
-
 }

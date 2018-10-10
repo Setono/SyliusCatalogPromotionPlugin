@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Setono\SyliusBulkSpecialsPlugin\Handler;
 
-use Setono\SyliusBulkSpecialsPlugin\Special\Applicator\ProductSpecialsApplicator;
 use Setono\SyliusBulkSpecialsPlugin\Model\SpecialSubjectInterface;
+use Setono\SyliusBulkSpecialsPlugin\Special\Applicator\ProductSpecialsApplicator;
 
 /**
  * Class ProductRecalculateHandler
@@ -19,6 +19,7 @@ class ProductRecalculateHandler implements ProductRecalculateHandlerInterface
 
     /**
      * ProductRecalculateHandler constructor.
+     *
      * @param ProductSpecialsApplicator $productSpecialsApplicator
      */
     public function __construct(

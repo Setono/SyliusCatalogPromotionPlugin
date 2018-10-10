@@ -33,11 +33,13 @@ trait ProductRepositoryTrait
      * Find Products, assigned to given Special
      *
      * @param SpecialInterface $special
+     *
      * @return array
      */
     public function findAssignedBySpecial(SpecialInterface $special): array
     {
         $alias = 'product';
+
         return $this->createQueryBuilder($alias)
             ->join(sprintf('%s.specials', $alias), 'special')
             ->andWhere('special = :special')
@@ -69,6 +71,7 @@ trait ProductRepositoryTrait
     public function findBySpecialQB(SpecialInterface $special): QueryBuilder
     {
         $alias = 'product';
+
         return $this->addRulesWheres($this->createQueryBuilder($alias), $special, $alias)
             ->distinct()
             ->addOrderBy(sprintf('%s.id', $alias), 'ASC')

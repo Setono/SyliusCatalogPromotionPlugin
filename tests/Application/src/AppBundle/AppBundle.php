@@ -15,10 +15,10 @@ final class AppBundle extends Bundle
         parent::build($container);
 
         $container->addCompilerPass(DoctrineOrmMappingsPass::createXmlMappingDriver(
-            array(
+            [
                 realpath(__DIR__ . '/Resources/config/doctrine/model') => 'AppBundle\Model',
-            ),
-            array('doctrine.orm.entity_manager')
+            ],
+            ['doctrine.orm.entity_manager']
         ));
     }
 }

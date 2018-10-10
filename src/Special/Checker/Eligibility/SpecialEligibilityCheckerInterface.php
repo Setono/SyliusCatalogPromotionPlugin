@@ -16,6 +16,7 @@ interface SpecialEligibilityCheckerInterface
     /**
      * @param SpecialSubjectInterface|Product $specialSubject
      * @param SpecialInterface $special
+     *
      * @return bool
      */
     public function isEligible(SpecialSubjectInterface $specialSubject, SpecialInterface $special): bool;

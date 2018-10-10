@@ -17,7 +17,7 @@ class HasTaxonRuleQueryBuilder implements RuleQueryBuilderInterface
     {
         static $index = 0;
 
-        $index++;
+        ++$index;
 
         return $queryBuilder
             ->join(sprintf('%s.mainTaxon', $alias), 'mainTaxon')

@@ -12,6 +12,7 @@ class SpecialController extends ResourceController
 {
     /**
      * @param Request $request
+     *
      * @return Response
      */
     public function bulkRecalculateAction(Request $request): Response

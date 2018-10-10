@@ -17,8 +17,7 @@ use Sylius\Component\Core\Model\Product;
 /**
  * Class ProductRecalculateAsyncHandler
  */
-class ProductRecalculateAsyncHandler extends AbstractHandler
-    implements ProductRecalculateHandlerInterface, PsrProcessor, TopicSubscriberInterface
+class ProductRecalculateAsyncHandler extends AbstractHandler implements ProductRecalculateHandlerInterface, PsrProcessor, TopicSubscriberInterface
 {
     const EVENT = 'setono_sylius_bulk_specials_topic_product_recalculate';
 
@@ -39,6 +38,7 @@ class ProductRecalculateAsyncHandler extends AbstractHandler
 
     /**
      * ProductRecalculateAsyncHandler constructor.
+     *
      * @param ProducerInterface $producer
      * @param ProductRepository $repository
      * @param ProductRecalculateHandler $recalculateHandler

@@ -34,6 +34,7 @@ class SpecialRecalculateHandler implements SpecialRecalculateHandlerInterface
 
     /**
      * SpecialRecalculateHandler constructor.
+     *
      * @param EntityManager $entityManager
      * @param ProductRepositoryInterface $productRepository
      * @param ProductRecalculateHandlerInterface $productRecalculateHandler

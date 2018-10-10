@@ -22,6 +22,7 @@ class SpecialDoctrineEventListener
 
     /**
      * SpecialDoctrineEventSubscriber constructor.
+     *
      * @param SpecialRecalculateHandlerInterface $specialRecalculateHandler
      */
     public function __construct(
@@ -45,7 +46,6 @@ class SpecialDoctrineEventListener
 
         if ($args->getOldValue('actionType') != $args->getNewValue('actionType') ||
             $args->getOldValue('actionPercent') != $args->getNewValue('actionPercent')) {
-
             if ($this->specialRecalculateHandler instanceof SpecialRecalculateHandler) {
                 // Important: This will not work with non-async handlers as far as
                 // new values not yet applied and recalculation result will be the same as before

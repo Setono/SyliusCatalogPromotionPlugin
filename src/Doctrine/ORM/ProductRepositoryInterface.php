@@ -9,7 +9,6 @@ use Sylius\Component\Core\Repository\ProductRepositoryInterface as BaseProductRe
 /**
  * Interface ProductRepositoryInterface
  */
-interface ProductRepositoryInterface
-    extends SpecialSubjectRepositoryInterface, BaseProductRepositoryInterface
+interface ProductRepositoryInterface extends SpecialSubjectRepositoryInterface, BaseProductRepositoryInterface
 {
 }

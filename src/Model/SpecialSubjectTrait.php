@@ -138,7 +138,7 @@ trait SpecialSubjectTrait
     protected function getSortedSpecials(): Collection
     {
         $criteria = Criteria::create()->orderBy([
-            "priority" => Criteria::DESC
+            'priority' => Criteria::DESC,
         ]);
 
         return $this->specials->matching($criteria);
@@ -187,5 +187,4 @@ trait SpecialSubjectTrait
             $this->specials->removeElement($special);
         }
     }
-
 }

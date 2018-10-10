@@ -17,8 +17,7 @@ use Sylius\Bundle\CoreBundle\Doctrine\ORM\ProductRepository;
 /**
  * Class EligibleSpecialsReassignAsyncHandler
  */
-class EligibleSpecialsReassignAsyncHandler extends AbstractHandler
-    implements EligibleSpecialsReassignHandlerInterface, PsrProcessor, TopicSubscriberInterface
+class EligibleSpecialsReassignAsyncHandler extends AbstractHandler implements EligibleSpecialsReassignHandlerInterface, PsrProcessor, TopicSubscriberInterface
 {
     const EVENT = 'setono_sylius_bulk_specials_topic_reassign_specials';
 
@@ -39,6 +38,7 @@ class EligibleSpecialsReassignAsyncHandler extends AbstractHandler
 
     /**
      * EligibleSpecialsReassignAsyncHandler constructor.
+     *
      * @param ProducerInterface $producer
      * @param ProductRepository $repository
      * @param EligibleSpecialsReassignHandler $handler

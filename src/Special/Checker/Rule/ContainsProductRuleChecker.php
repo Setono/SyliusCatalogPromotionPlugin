@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Setono\SyliusBulkSpecialsPlugin\Special\Checker\Rule;
 
 use Setono\SyliusBulkSpecialsPlugin\Model\SpecialSubjectInterface;
-use Sylius\Component\Core\Model\ProductInterface;
 use Setono\SyliusBulkSpecialsPlugin\Special\Exception\UnsupportedTypeException;
+use Sylius\Component\Core\Model\ProductInterface;
 
 /**
  * Class ContainsProductRuleChecker

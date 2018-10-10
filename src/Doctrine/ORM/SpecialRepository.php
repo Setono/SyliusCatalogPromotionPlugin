@@ -87,7 +87,7 @@ class SpecialRepository extends EntityRepository implements SpecialRepositoryInt
     public function findAll(): array
     {
         return $this->findBy([], [
-            'priority'=>'desc'
+            'priority' => 'desc',
         ]);
     }
 

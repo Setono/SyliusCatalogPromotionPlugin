@@ -20,6 +20,7 @@ abstract class AbstractHandler implements LoggableHandlerInterface
 
     /**
      * AbstractHandler constructor.
+     *
      * @param LoggerInterface|null $logger
      */
     public function __construct(LoggerInterface $logger = null)

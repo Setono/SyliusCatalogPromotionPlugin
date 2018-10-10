@@ -28,6 +28,7 @@ class CheckActiveCommand extends Command
 
     /**
      * CheckActiveCommand constructor.
+     *
      * @param SpecialRepository $specialRepository
      * @param SpecialRecalculateHandlerInterface $specialRecalculateHandler
      */

@@ -12,6 +12,7 @@ interface RuleQueryBuilderInterface
      * @param QueryBuilder $queryBuilder
      * @param array $configuration
      * @param string $alias
+     *
      * @return QueryBuilder
      */
     public function addRulesWheres(QueryBuilder $queryBuilder, array $configuration, string $alias): QueryBuilder;

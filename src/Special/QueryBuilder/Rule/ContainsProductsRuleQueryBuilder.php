@@ -17,7 +17,7 @@ class ContainsProductsRuleQueryBuilder implements RuleQueryBuilderInterface
     {
         static $index = 0;
 
-        $index++;
+        ++$index;
 
         return $queryBuilder
             ->andWhere(sprintf('%s.code IN (:%s_%s)', $alias, self::PARAMETER, $index))

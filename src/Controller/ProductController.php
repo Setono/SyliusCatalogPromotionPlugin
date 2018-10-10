@@ -12,6 +12,7 @@ class ProductController extends ResourceController
 {
     /**
      * @param Request $request
+     *
      * @return Response
      */
     public function bulkReassignAction(Request $request): Response
@@ -26,6 +27,7 @@ class ProductController extends ResourceController
 
     /**
      * @param Request $request
+     *
      * @return Response
      */
     public function bulkRecalculateAction(Request $request): Response

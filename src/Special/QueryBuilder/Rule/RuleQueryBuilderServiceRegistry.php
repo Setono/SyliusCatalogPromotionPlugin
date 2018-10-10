@@ -32,6 +32,7 @@ class RuleQueryBuilderServiceRegistry extends ServiceRegistry
 
     /**
      * @param string $identifier
+     *
      * @return RuleQueryBuilderInterface
      */
     public function get(string $identifier)

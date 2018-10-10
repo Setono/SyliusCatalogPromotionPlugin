@@ -25,6 +25,7 @@ class ChannelPricingRecalculateHandler implements ChannelPricingRecalculateHandl
 
     /**
      * ChannelPricingRecalculateHandler constructor.
+     *
      * @param ProductSpecialsApplicator $productSpecialsApplicator
      * @param EntityRepository $channelPricingRepository
      */

@@ -14,6 +14,7 @@ interface SpecialSubjectRepositoryInterface
 {
     /**
      * @param SpecialInterface $special
+     *
      * @return array
      */
     public function findBySpecial(SpecialInterface $special): array;

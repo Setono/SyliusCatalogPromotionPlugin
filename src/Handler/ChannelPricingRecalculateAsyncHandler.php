@@ -17,8 +17,7 @@ use Sylius\Component\Core\Model\ChannelPricingInterface;
 /**
  * Class ChannelPricingRecalculateAsyncHandler
  */
-class ChannelPricingRecalculateAsyncHandler extends AbstractHandler
-    implements ChannelPricingRecalculateHandlerInterface, PsrProcessor, TopicSubscriberInterface
+class ChannelPricingRecalculateAsyncHandler extends AbstractHandler implements ChannelPricingRecalculateHandlerInterface, PsrProcessor, TopicSubscriberInterface
 {
     const EVENT = 'setono_sylius_bulk_specials_topic_channel_pricing_recalculate';
 
@@ -39,6 +38,7 @@ class ChannelPricingRecalculateAsyncHandler extends AbstractHandler
 
     /**
      * ChannelPricingRecalculateAsyncHandler constructor.
+     *
      * @param ProducerInterface $producer
      * @param EntityRepository $repository
      * @param ChannelPricingRecalculateHandler $recalculateHandler

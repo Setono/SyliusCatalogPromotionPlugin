@@ -37,6 +37,7 @@ class EligibleSpecialsReassignHandler implements EligibleSpecialsReassignHandler
 
     /**
      * EligibleSpecialsReassignHandler constructor.
+     *
      * @param SpecialRepositoryInterface $specialRepository
      * @param ProductRepository $productRepository
      * @param SpecialEligibilityCheckerInterface $specialEligibilityChecker
