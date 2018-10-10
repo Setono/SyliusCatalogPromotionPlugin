@@ -7,9 +7,26 @@
     <services>
         <defaults public="true" />
 
-        <service id="setono_sylius_bulk_specials.event_listener.doctrine"
-                 class="Setono\SyliusBulkSpecialsPlugin\EventListener\DoctrineEventListener">
-            <argument type="service" id="setono_sylius_bulk_specials.applicator.product_specials" />
+        <service id="setono_sylius_bulk_specials.doctrine_event_listener.channel_pricing"
+                 class="Setono\SyliusBulkSpecialsPlugin\EventSubscriber\ChannelPricingDoctrineEventListener">
+            <argument type="service" id="setono_sylius_bulk_specials.recalculate_handler.channel_pricing" />
+
+            <tag name="doctrine.event_listener" event="preUpdate" lazy="true" />
+        </service>
+
+        <service id="setono_sylius_bulk_specials.doctrine_event_listener.product"
+                 class="Setono\SyliusBulkSpecialsPlugin\EventSubscriber\ProductDoctrineEventSubscriber">
+            <argument type="service" id="setono_sylius_bulk_specials.handler.eligible_specials_reassign" />
+
+            <tag name="doctrine.event_listener" event="postPersist" lazy="true" />
+        </service>
+
+        <service id="setono_sylius_bulk_specials.doctrine_event_listener.special"
+                 class="Setono\SyliusBulkSpecialsPlugin\EventSubscriber\SpecialDoctrineEventSubscriber">
+            <argument type="service" id="setono_sylius_bulk_specials.recalculate_handler.special" />
+
+            <tag name="doctrine.event_listener" event="preUpdate" lazy="true" />
+            <tag name="doctrine.event_listener" event="postPersist" lazy="true" />
         </service>
 
     </services>

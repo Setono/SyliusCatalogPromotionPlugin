@@ -5,6 +5,7 @@
         <import resource="services/admin.xml" />
         <import resource="services/commands.xml" />
         <import resource="services/eligibility_checkers.xml" />
+        <import resource="services/event_listeners.xml" />
         <import resource="services/factories.xml" />
         <import resource="services/fixtures.xml" />
         <import resource="services/forms.xml" />
