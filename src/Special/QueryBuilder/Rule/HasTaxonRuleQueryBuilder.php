@@ -24,7 +24,7 @@ class HasTaxonRuleQueryBuilder implements RuleQueryBuilderInterface
             ->join(sprintf('%s.productTaxons', $alias), 'pt')
             ->join('pt.taxon', 'productTaxon')
             ->andWhere(sprintf('(mainTaxon.code IN (:%s_%s)) OR (productTaxon.code IN (:%s_%s))', self::PARAMETER, $index, self::PARAMETER, $index))
-            ->setParameter(sprintf('taxonCodes_%s', $index), $configuration[self::PARAMETER])
+            ->setParameter(sprintf('%s_%s', self::PARAMETER, $index), $configuration[self::PARAMETER])
             ;
     }
 }

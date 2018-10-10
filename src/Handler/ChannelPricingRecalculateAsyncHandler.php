@@ -10,17 +10,15 @@ use Interop\Queue\PsrContext;
 use Interop\Queue\PsrMessage;
 use Interop\Queue\PsrProcessor;
 use Psr\Log\LoggerInterface;
-use Setono\SyliusBulkSpecialsPlugin\Model\SpecialSubjectInterface;
 use Sylius\Bundle\CoreBundle\Doctrine\ORM\ProductRepository;
 use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
-use Sylius\Component\Core\Model\ChannelPricing;
 use Sylius\Component\Core\Model\ChannelPricingInterface;
 
 /**
  * Class ChannelPricingRecalculateAsyncHandler
  */
 class ChannelPricingRecalculateAsyncHandler extends AbstractHandler
-    implements ProductRecalculateHandlerInterface, PsrProcessor, TopicSubscriberInterface
+    implements ChannelPricingRecalculateHandlerInterface, PsrProcessor, TopicSubscriberInterface
 {
     const EVENT = 'setono_sylius_bulk_specials_topic_channel_pricing_recalculate';
 
@@ -62,7 +60,7 @@ class ChannelPricingRecalculateAsyncHandler extends AbstractHandler
     /**
      * {@inheritdoc}
      */
-    public function handle(SpecialSubjectInterface $subject): void
+    public function handle(ChannelPricingInterface $subject): void
     {
         $this->producer->sendEvent(
             self::EVENT,
@@ -75,7 +73,7 @@ class ChannelPricingRecalculateAsyncHandler extends AbstractHandler
      */
     public function process(PsrMessage $message, PsrContext $session)
     {
-        /** @var ChannelPricing $channelPricing */
+        /** @var ChannelPricingInterface $channelPricing */
         $channelPricing = $this->repository->find(
             $message->getBody()
         );
