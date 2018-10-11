@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Setono\SyliusBulkSpecialsPlugin\Command;
 
 use Setono\SyliusBulkSpecialsPlugin\Doctrine\ORM\ProductRepositoryInterface;
-use Setono\SyliusBulkSpecialsPlugin\Handler\EligibleSpecialsReassignHandlerInterface;
+use Setono\SyliusBulkSpecialsPlugin\Handler\ProductRecalculateHandlerInterface;
 use Setono\SyliusBulkSpecialsPlugin\Model\ProductInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -13,9 +13,9 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class ReassignCommand
+ * Class RecalculateProductCommand
  */
-class ReassignCommand extends Command
+class RecalculateProductCommand extends Command
 {
     /**
      * @var ProductRepositoryInterface
@@ -23,21 +23,21 @@ class ReassignCommand extends Command
     protected $productRepository;
 
     /**
-     * @var EligibleSpecialsReassignHandlerInterface
+     * @var ProductRecalculateHandlerInterface
      */
-    protected $eligibleSpecialsReassignHandler;
+    protected $productRecalculateHandler;
 
     /**
-     * ReassignCommand constructor.
+     * RecalculateProductCommand constructor.
      * @param ProductRepositoryInterface $productRepository
-     * @param EligibleSpecialsReassignHandlerInterface $eligibleSpecialsReassignHandler
+     * @param ProductRecalculateHandlerInterface $productRecalculateHandler
      */
     public function __construct(
         ProductRepositoryInterface $productRepository,
-        EligibleSpecialsReassignHandlerInterface $eligibleSpecialsReassignHandler
+        ProductRecalculateHandlerInterface $productRecalculateHandler
     ) {
         $this->productRepository = $productRepository;
-        $this->eligibleSpecialsReassignHandler = $eligibleSpecialsReassignHandler;
+        $this->productRecalculateHandler = $productRecalculateHandler;
 
         parent::__construct(null);
     }
@@ -48,13 +48,13 @@ class ReassignCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('setono:sylius-bulk-specials:reassign')
+            ->setName('setono:sylius-bulk-specials:recalculate-product')
             ->addArgument(
                 'identifier',
                 InputArgument::OPTIONAL,
                 'Product identifier (ID or code)'
             )
-            ->setDescription('Reassign specials to given Product or to all products')
+            ->setDescription('Recalculate given Product. Pass no arguments to recalculate all Products')
         ;
     }
 
@@ -64,6 +64,7 @@ class ReassignCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $identifier = $input->getArgument('identifier');
+
         if (is_null($identifier)) {
             $products = $this->productRepository->findAll();
         } else {
@@ -79,9 +80,9 @@ class ReassignCommand extends Command
 
         /** @var ProductInterface $product */
         foreach ($products as $product) {
-            $this->eligibleSpecialsReassignHandler->handleProduct($product);
+            $this->productRecalculateHandler->handleProduct($product);
             $output->writeln(sprintf(
-                "<info>Eligible Specials was reassigned to Product '%s'</info>",
+                "<info>Price for Product '%s' was recalculated based on previously assigned Specials</info>",
                 (string) $product
             ));
         }

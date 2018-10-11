@@ -13,6 +13,11 @@ use Sylius\Component\Resource\Model\ResourceInterface;
 interface SpecialSubjectInterface extends ResourceInterface
 {
     /**
+     * @return string|null
+     */
+    public function __toString();
+
+    /**
      * @return bool
      */
     public function hasExclusiveSpecials(): bool;

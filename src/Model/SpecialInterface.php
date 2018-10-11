@@ -16,6 +16,11 @@ use Sylius\Component\Resource\Model\TimestampableInterface;
 interface SpecialInterface extends ChannelsAwareInterface, CodeAwareInterface, TimestampableInterface, ResourceInterface
 {
     /**
+     * @return string
+     */
+    public function __toString();
+
+    /**
      * @return float
      */
     public function getMultiplier(): float;

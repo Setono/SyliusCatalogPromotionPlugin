@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace Setono\SyliusBulkSpecialsPlugin\Doctrine\ORM;
 
 use Doctrine\ORM\QueryBuilder;
-use Setono\SyliusBulkSpecialsPlugin\Model\Special;
+use Setono\SyliusBulkSpecialsPlugin\Model\SpecialInterface;
 use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
-use Sylius\Component\Core\Model\Product;
 
 /**
  * Class SpecialRepository
@@ -15,9 +14,7 @@ use Sylius\Component\Core\Model\Product;
 class SpecialRepository extends EntityRepository implements SpecialRepositoryInterface
 {
     /**
-     * Actually, that is not accidentally, just time going on...
-     *
-     * @return array|Special[]
+     * {@inheritdoc}
      */
     public function findAccidentallyDisabled(?\DateTimeInterface $date = null): array
     {
@@ -32,9 +29,7 @@ class SpecialRepository extends EntityRepository implements SpecialRepositoryInt
     }
 
     /**
-     * Actually, that is not accidentally, just time going on...
-     *
-     * @return array|Special[]
+     * {@inheritdoc}
      */
     public function findAccidentallyEnabled(?\DateTimeInterface $date = null): array
     {
@@ -49,23 +44,7 @@ class SpecialRepository extends EntityRepository implements SpecialRepositoryInt
     }
 
     /**
-     * @param Product $product
-     *
-     * @return array|Special[]
-     */
-    public function findByProduct(Product $product): array
-    {
-        return $this->filterByActive($this->createQueryBuilder('o'))
-            ->join('o.rules', 'rule')
-            ->andWhere('rule.type')
-            ->addOrderBy('o.priority', 'desc')
-            ->getQuery()
-            ->getResult()
-            ;
-    }
-
-    /**
-     * @return array|Special[]
+     * @return array|SpecialInterface[]
      */
     public function findAll(): array
     {
@@ -75,7 +54,7 @@ class SpecialRepository extends EntityRepository implements SpecialRepositoryInt
     }
 
     /**
-     * @return array|Special[]
+     * {@inheritdoc}
      */
     public function findActive(): array
     {
