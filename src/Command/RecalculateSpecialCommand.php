@@ -4,17 +4,13 @@ declare(strict_types=1);
 
 namespace Setono\SyliusBulkSpecialsPlugin\Command;
 
-use Setono\SyliusBulkSpecialsPlugin\Doctrine\ORM\ProductRepositoryInterface;
 use Setono\SyliusBulkSpecialsPlugin\Doctrine\ORM\SpecialRepositoryInterface;
-use Setono\SyliusBulkSpecialsPlugin\Handler\ProductRecalculateHandlerInterface;
 use Setono\SyliusBulkSpecialsPlugin\Handler\SpecialRecalculateHandlerInterface;
-use Setono\SyliusBulkSpecialsPlugin\Model\ProductInterface;
 use Setono\SyliusBulkSpecialsPlugin\Model\SpecialInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Webmozart\Assert\Assert;
 
 /**
  * Class RecalculateSpecialCommand
@@ -33,6 +29,7 @@ class RecalculateSpecialCommand extends Command
 
     /**
      * RecalculateSpecialCommand constructor.
+     *
      * @param SpecialRepositoryInterface $specialRepository
      * @param SpecialRecalculateHandlerInterface $specialRecalculateHandler
      */
@@ -69,7 +66,7 @@ class RecalculateSpecialCommand extends Command
     {
         $identifier = $input->getArgument('identifier');
         $special = $this->specialRepository->findOneBy([
-            is_numeric($identifier) ? 'id' : 'code' => $identifier
+            is_numeric($identifier) ? 'id' : 'code' => $identifier,
         ]);
 
         if (!$special instanceof SpecialInterface) {
@@ -77,6 +74,7 @@ class RecalculateSpecialCommand extends Command
                 "<error>Special with identifier '%s' was not found</error>",
                 $identifier
             ));
+
             return 0;
         }
 

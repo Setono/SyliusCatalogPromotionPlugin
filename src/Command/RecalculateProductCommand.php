@@ -29,6 +29,7 @@ class RecalculateProductCommand extends Command
 
     /**
      * RecalculateProductCommand constructor.
+     *
      * @param ProductRepositoryInterface $productRepository
      * @param ProductRecalculateHandlerInterface $productRecalculateHandler
      */
@@ -65,16 +66,17 @@ class RecalculateProductCommand extends Command
     {
         $identifier = $input->getArgument('identifier');
 
-        if (is_null($identifier)) {
+        if (null === $identifier) {
             $products = $this->productRepository->findAll();
         } else {
             $products = $this->productRepository->findBy([
-                is_numeric($identifier) ? 'id' : 'code' => $identifier
+                is_numeric($identifier) ? 'id' : 'code' => $identifier,
             ]);
         }
 
         if (!count($products)) {
-            $output->writeln("<error>Products was not found</error>");
+            $output->writeln('<error>Products was not found</error>');
+
             return 0;
         }
 
