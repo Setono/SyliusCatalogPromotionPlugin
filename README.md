@@ -5,6 +5,15 @@
 [![Build Status][ico-travis]][link-travis]
 [![Quality Score][ico-code-quality]][link-code-quality]
 
+Plugin for Sylius 1.3 to define permanent or time-limited
+Specials (discounts) for Products and automatically update prices.
+
+Discounts calculated from `ChannelPrice`'s `originalPrice` field if it non-zero
+and applies to `price` field. 
+
+All calculations can be done immediately
+(if you have not much products in your store) or asynchronously via queues.
+
 ## Install
 
 ### Add plugin to composer.json
