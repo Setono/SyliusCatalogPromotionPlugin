@@ -13,7 +13,7 @@
 composer require setono/sylius-bulk-specials-plugin
 ```
 
-### Add transport for enqueue bundle
+#### (optional) Add transport for enqueue bundle
 
 (see https://github.com/php-enqueue/enqueue-dev/blob/master/docs/bundle/quick_tour.md
 for more details)
@@ -22,38 +22,25 @@ for more details)
 composer require enqueue/fs
 ```
 
-### Add proper enqueue bundle configuration
-
-```yaml
-app/config/config.yml
-
-enqueue:
-    transport:
-        default: fs
-        fs:
-            dsn: "file://%kernel.project_dir%/var/queue"
-    client: ~
-```
-
 ### Register plugin and enqueue bundle at AppKernel.php
 
 ```php
-# app/AppKernel.php
+<?php
+# config/bundles.php
 
-final class AppKernel extends Kernel
-{
-    public function registerBundles(): array
-    {
-        // Its important to instantiate SetonoSyliusBulkSpecialsPlugin
-        // before calling parent::registerBundles()
-        return array_merge([
-            new \Setono\SyliusBulkSpecialsPlugin\SetonoSyliusBulkSpecialsPlugin(),
-        ], parent::registerBundles(), [
-            // Uncomment if you want to use queues
-            // new Enqueue\Bundle\EnqueueBundle(),
-        ]);
-    }
-}
+return [
+    // ...
+    // Its important to instantiate SetonoSyliusBulkSpecialsPlugin
+    // before calling parent::registerBundles()
+    Setono\SyliusBulkSpecialsPlugin\SetonoSyliusBulkSpecialsPlugin::class => ['all' => true],
+    Sylius\Bundle\GridBundle\SyliusGridBundle::class => ['all' => true],
+    // ...
+    // Uncomment if you want to use queues
+    // Enqueue\Bundle\EnqueueBundle::class => ['all' => true],
+    AppBundle\AppBundle::class => ['all' => true],
+    // ...
+];
+
 ```
 
 **Note**, that we MUST instantiate `SetonoSyliusBulkSpecialsPlugin` 
@@ -64,10 +51,45 @@ Otherwise you'll see exception like this:
 You have requested a non-existent parameter "setono_sylius_bulk_specials.model.special.class".  
 ```
 
+### Add config
+
+```yaml
+# config/packages/_sylius.yaml
+imports:
+    - { resource: "@SetonoSyliusBulkSpecialsPlugin/Resources/config/app/config.yml" }
+```
+
+#### (optional) Add proper enqueue bundle configuration
+
+```yaml
+# config/packages/_sylius.yaml
+
+setono_sylius_bulk_specials:
+    # If you want to use enqueue bundle to asynchronously handle
+    # bulk actions - you should set `queue` parameter to true
+    # and install/configure enqueue/enqueue-bundle with transport implementation
+    queue: true
+
+    # If your store have not more than 1000 products - you can use
+    # plugin without any additional configuration or set `queue`
+    # to default value (false)
+    # queue: false
+
+enqueue:
+    transport:
+        # Here we use enqueue/fs for testing as most simple transport implementation
+        # @see https://enqueue.readthedocs.io/en/latest/transport/filesystem/
+        default: fs
+        fs:
+            dsn: "file://%kernel.project_dir%/var/queue"
+    client:
+        traceable_producer: true
+```
+
 ### Add routing
 
 ```yaml
-# app/config/routing.yml
+# config/routes.yaml
 setono_sylius_bulk_specials_admin:
     resource: "@SetonoSyliusBulkSpecialsPlugin/Resources/config/admin_routing.yml"
     prefix: /admin
@@ -89,9 +111,6 @@ setono_sylius_bulk_specials_admin:
                     repository: AppBundle\Doctrine\ORM\ProductRepository
                     controller: Setono\SyliusBulkSpecialsPlugin\Controller\ProductController
     ```
-    
-    If you want to use queues - make configuration as shown at 
-    [tests/Application/src/AppBundle/Resources/config/app/config.yml](tests/Application/src/AppBundle/Resources/config/app/config.yml)
 
 * Override model
 
@@ -208,7 +227,11 @@ bin/console sylius:install:assets
 bin/console setono:sylius-bulk-specials:check-active
 ```
 
-### Make sure next command always in run state:
+This required to enable/disable Specials that have `startsAt`/`endsAt` defined.
+
+### (optional) Configure `supervisord` on production if you use queues 
+
+Make sure next command always in run state:
 
 ```bash
 bin/console enqueue:consume 
@@ -240,12 +263,12 @@ redirect_stderr=true
     cd tests/Application && \
         yarn install && \
         yarn run gulp && \
-        bin/console assets:install web -e $SYMFONY_ENV && \
+        bin/console assets:install public -e $SYMFONY_ENV && \
         bin/console doctrine:database:drop --force -e $SYMFONY_ENV && \
         bin/console doctrine:database:create -e $SYMFONY_ENV && \
         bin/console doctrine:schema:create -e $SYMFONY_ENV && \
         bin/console sylius:fixtures:load setono -e $SYMFONY_ENV && \
-        bin/console server:run -d web -e $SYMFONY_ENV
+        bin/console server:run -d public -e $SYMFONY_ENV
     ```
 
 - Log in at `http://localhost:8000/admin`

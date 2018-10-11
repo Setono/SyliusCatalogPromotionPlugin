@@ -1,0 +1,303 @@
+parameters:
+    de_locale: de_DE
+
+sylius_fixtures:
+    suites:
+        setono:
+            listeners:
+                orm_purger: ~
+                logger: ~
+
+            fixtures:
+                locale:
+                    options:
+                        locales:
+                            - "%de_locale%"
+                currency:
+                    options:
+                        currencies:
+                          - "USD"
+                          - "EUR"
+
+                geographical:
+                    options:
+                        countries:
+                            - "US"
+                            - "DE"
+                        zones:
+                            US:
+                                name: "United States of America"
+                                countries:
+                                    - "US"
+                            DE:
+                                name: "Germany"
+                                countries:
+                                    - "DE"
+
+                channel:
+                    options:
+                        custom:
+                            us_web_store:
+                                name: "US Web Store"
+                                code: "US_WEB"
+                                locales:
+                                    - "%locale%"
+                                currencies:
+                                    - "USD"
+                                enabled: true
+                                hostname: "localhost"
+                            de_web_store:
+                                name: "DE Web Store"
+                                code: "DE_WEB"
+                                locales:
+                                    - "%de_locale%"
+                                currencies:
+                                    - "EUR"
+                                enabled: true
+                                hostname: "localhost"
+                payment_method:
+                    options:
+                        custom:
+                            cash_on_delivery:
+                                code: "cash_on_delivery"
+                                name: "Cash on delivery"
+                                channels:
+                                    - "US_WEB"
+                            bank_transfer:
+                                code: "bank_transfer"
+                                name: "Bank transfer"
+                                channels:
+                                    - "US_WEB"
+                                enabled: true
+
+                shipping_method:
+                    options:
+                        custom:
+                            ups:
+                                code: "ups"
+                                name: "UPS"
+                                enabled: true
+                                channels:
+                                    - "US_WEB"
+                                    - "DE_WEB"
+                            dhl_express:
+                                code: "dhl_express"
+                                name: "DHL Express"
+                                channels:
+                                    - "US_WEB"
+                                    - "DE_WEB"
+                            fedex:
+                                code: "fedex"
+                                name: "FedEx"
+                                channels:
+                                    - "US_WEB"
+                                    - "DE_WEB"
+
+                customer_group:
+                    options:
+                        custom:
+                            retail:
+                                code: "retail"
+                                name: "Retail"
+                            wholesale:
+                                code: "wholesale"
+                                name: "Wholesale"
+
+                shop_user:
+                    name: "shop_user"
+                    options:
+                        random: 20
+                        custom:
+                            -
+                                email: "shop@example.com"
+                                first_name: "John"
+                                last_name: "Doe"
+                                password: "sylius"
+
+                admin_user:
+                    name: "admin_user"
+                    options:
+                        custom:
+                            -
+                                email: "sylius@example.com"
+                                username: "sylius"
+                                password: "sylius"
+                                enabled: true
+                                locale_code: "%locale%"
+                                first_name: "John"
+                                last_name: "Doe"
+                            -
+                                email: "api@example.com"
+                                username: "api"
+                                password: "sylius-api"
+                                enabled: true
+                                locale_code: "%locale%"
+                                first_name: "Luke"
+                                last_name: "Brushwood"
+                                api: true
+
+                tax_category:
+                    options:
+                        custom:
+                            clothing:
+                                code: "clothing"
+                                name: "Clothing"
+                            books:
+                                code: "books"
+                                name: "Books"
+                            other:
+                                code: "other"
+                                name: "Other"
+
+                tax_rate:
+                    options:
+                        custom:
+                            clothing_tax:
+                                code: "clothing_sales_tax_7"
+                                name: "Clothing Sales Tax 7%"
+                                zone: "US"
+                                category: "clothing"
+                                amount: 0.07
+                            books_tax:
+                                code: "books_sales_tax_2"
+                                name: "Books Sales Tax 2%"
+                                zone: "US"
+                                category: "books"
+                                amount: 0.02
+                            default_sales_tax:
+                                code: "sales_tax_20"
+                                name: "Sales Tax 20%"
+                                zone: "US"
+                                category: "other"
+                                amount: 0.2
+
+                promotion:
+                    options:
+                        custom:
+                            christmas:
+                                code: "christmas"
+                                name: "Christmas"
+                                channels:
+                                    - "US_WEB"
+                            new_year:
+                                code: "new_year"
+                                name: "New Year"
+                                usage_limit: 10
+                                priority: 2
+                                starts_at: "-7 day"
+                                ends_at: "7 day"
+                                channels:
+                                    - "US_WEB"
+                                rules:
+                                    -
+                                        type: "item_total"
+                                        configuration:
+                                            US_WEB:
+                                                amount: 100.00
+                                actions:
+                                    -
+                                        type: "order_fixed_discount"
+                                        configuration:
+                                            US_WEB:
+                                                amount: 10.00
+
+                mug_product:
+                    options:
+                        amount: 15
+
+                sticker_product:
+                    options:
+                        amount: 15
+
+                book_product:
+                    options:
+                        amount: 15
+
+                tshirt_product:
+                    options:
+                        amount: 15
+
+                product_review:
+                    options:
+                        random: 40
+
+                similar_product_association:
+                    options:
+                        amount: 10
+
+                address:
+                    options:
+                        random: 10
+
+                product:
+                    options:
+                        custom:
+                            product_santa_mug:
+                                code: "santa-mug"
+                                name: "Santa mug"
+                                main_taxon: "mugs"
+                                product_options:
+                                    - "mug_type"
+                                channels:
+                                    - "US_WEB"
+
+                special:
+                    options:
+                        custom:
+                            accidentally_enabled_mugs_20_off:
+                                code: "accidentally_enabled_mugs_20_off"
+                                name: "Accidentally enabled special"
+                                starts_at: "-1 day"
+                                ends_at: "-1 second"
+                                enabled: true
+                                action_type: "off"
+                                action_percent: 20
+                                rules:
+                                  - type: "has_taxon"
+                                    configuration: ["mugs"]
+                            accidentally_disabled_mugs_10_off:
+                                code: "accidentally_disabled_mugs_10_off"
+                                name: "Accidentally disabled special"
+                                starts_at: "-1 day"
+                                ends_at: "+1 day"
+                                enabled: false
+                                action_type: "off"
+                                action_percent: 10
+                                rules:
+                                  - type: "has_taxon"
+                                    configuration: ["mugs"]
+
+                            ny_mugs_50_off:
+                                code: "ny_mugs_50_off"
+                                name: "New year -50% for mugs"
+                                description: "14 days special before New Year"
+                                priority: 99
+                                exclusive: true
+                                starts_at: "now"
+                                ends_at: "+14 day"
+                                enabled: true
+                                action_type: "off"
+                                action_percent: 50
+                                rules:
+                                  - type: "has_taxon"
+                                    configuration: ["mugs"]
+                                channels:
+                                  - "US_WEB"
+                                  - "DE_WEB"
+
+                            ny_santa_mug_75_off:
+                                code: "ny_santa_mug_75_off"
+                                name: "New year -75% for Santa mug"
+                                description: "3 days special before New Year"
+                                priority: 100
+                                exclusive: true
+                                starts_at: "now"
+                                ends_at: "+3 day"
+                                enabled: true
+                                action_type: "off"
+                                action_percent: 75
+                                rules:
+                                  - type: "contains_product"
+                                    configuration: "santa-mug"
+                                channels:
+                                  - "US_WEB"

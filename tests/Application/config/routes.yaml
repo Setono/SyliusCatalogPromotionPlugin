@@ -1,0 +1,3 @@
+setono_sylius_bulk_specials_admin:
+    resource: "@SetonoSyliusBulkSpecialsPlugin/Resources/config/admin_routing.yml"
+    prefix: /admin
