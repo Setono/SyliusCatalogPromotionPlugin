@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Setono\SyliusBulkSpecialsPlugin\Command;
 
-use Setono\SyliusBulkSpecialsPlugin\Doctrine\ORM\SpecialRepository;
+use Setono\SyliusBulkSpecialsPlugin\Doctrine\ORM\SpecialRepositoryInterface;
 use Setono\SyliusBulkSpecialsPlugin\Handler\SpecialRecalculateHandlerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -17,7 +17,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class CheckActiveCommand extends Command
 {
     /**
-     * @var SpecialRepository
+     * @var SpecialRepositoryInterface
      */
     protected $specialRepository;
 
@@ -29,11 +29,11 @@ class CheckActiveCommand extends Command
     /**
      * CheckActiveCommand constructor.
      *
-     * @param SpecialRepository $specialRepository
+     * @param SpecialRepositoryInterface $specialRepository
      * @param SpecialRecalculateHandlerInterface $specialRecalculateHandler
      */
     public function __construct(
-        SpecialRepository $specialRepository,
+        SpecialRepositoryInterface $specialRepository,
         SpecialRecalculateHandlerInterface $specialRecalculateHandler
     ) {
         $this->specialRepository = $specialRepository;

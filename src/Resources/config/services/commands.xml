@@ -12,5 +12,21 @@
             <tag name="console.command" />
         </service>
 
+        <service id="setono_sylius_bulk_specials.command.reassign"
+                 class="Setono\SyliusBulkSpecialsPlugin\Command\ReassignCommand">
+            <argument type="service" id="sylius.repository.product" />
+            <argument type="service" id="setono_sylius_bulk_specials.handler.eligible_specials_reassign" />
+            <tag name="console.command" />
+        </service>
+
+        <service id="setono_sylius_bulk_specials.command.recalculate"
+                 class="Setono\SyliusBulkSpecialsPlugin\Command\RecalculateCommand">
+            <argument type="service" id="setono_sylius_bulk_specials.repository.special" />
+            <argument type="service" id="sylius.repository.product" />
+            <argument type="service" id="setono_sylius_bulk_specials.recalculate_handler.special" />
+            <argument type="service" id="setono_sylius_bulk_specials.recalculate_handler.product" />
+            <tag name="console.command" />
+        </service>
+
     </services>
 </container>

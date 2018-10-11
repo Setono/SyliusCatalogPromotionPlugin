@@ -131,6 +131,14 @@ class Special implements SpecialInterface
     }
 
     /**
+     * @return null|string
+     */
+    public function __toString()
+    {
+        return $this->getName();
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function getId()
