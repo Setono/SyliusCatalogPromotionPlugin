@@ -14,7 +14,7 @@ default:
             kernel:
                 env: test
                 debug: true
-                class: Kernel
+                class: Tests\Setono\SyliusBulkSpecialsPlugin\Application\Kernel
                 path: tests/Application/Kernel.php
                 bootstrap: ~
 
