@@ -33,4 +33,10 @@ interface SpecialRuleFactoryInterface extends FactoryInterface
      * @return SpecialRuleInterface
      */
     public function createContainsProduct(string $productCode): SpecialRuleInterface;
+
+    /**
+     * @param array $productCodes
+     * @return SpecialRuleInterface
+     */
+    public function createContainsProducts(array $productCodes): SpecialRuleInterface;
 }
