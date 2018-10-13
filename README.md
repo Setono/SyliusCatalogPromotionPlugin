@@ -171,7 +171,7 @@ setono_sylius_bulk_specials_admin:
                 <order-by>
                     <order-by-field name="priority" direction="DESC" />
                 </order-by>
-                <join-table name="setono_sylius_builk_specials_products">
+                <join-table name="setono_sylius_bulk_specials_products">
                     <join-columns>
                         <join-column name="special_id" referenced-column-name="id" nullable="false" on-delete="CASCADE" />
                     </join-columns>
