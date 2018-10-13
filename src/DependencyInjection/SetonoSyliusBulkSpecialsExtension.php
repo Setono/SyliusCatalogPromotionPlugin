@@ -35,5 +35,10 @@ final class SetonoSyliusBulkSpecialsExtension extends AbstractResourceExtension
             // Load handler decorators to work asynchronously via enqueue
             $loader->load('services/handlers_async.xml');
         }
+
+        $env = $container->getParameter('kernel.environment');
+        if ('test' === $env || 'test_cached' === $env) {
+            $loader->load('test_services.xml');
+        }
     }
 }
