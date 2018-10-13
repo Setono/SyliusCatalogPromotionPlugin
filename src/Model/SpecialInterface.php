@@ -133,12 +133,12 @@ interface SpecialInterface extends ChannelsAwareInterface, CodeAwareInterface, T
     public function setActionType(string $actionType): void;
 
     /**
-     * @return int
+     * @return float
      */
-    public function getActionPercent(): int;
+    public function getActionPercent(): float;
 
     /**
-     * @param int $actionPercent
+     * @param float $actionPercent
      */
-    public function setActionPercent(int $actionPercent): void;
+    public function setActionPercent(float $actionPercent): void;
 }

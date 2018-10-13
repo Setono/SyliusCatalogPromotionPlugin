@@ -31,7 +31,7 @@
         </one-to-many>
 
         <field name="actionType" column="action_type" type="string" nullable="false" />
-        <field name="actionPercent" column="action_percent" type="integer" nullable="false" />
+        <field name="actionPercent" column="action_percent" type="decimal" precision="5" scale="2" nullable="false" />
 
         <field name="createdAt" column="created_at" type="datetime">
             <gedmo:timestampable on="create"/>

@@ -341,7 +341,7 @@ class Special implements SpecialInterface
     /**
      * {@inheritdoc}
      */
-    public function getActionPercent(): int
+    public function getActionPercent(): float
     {
         return $this->actionPercent;
     }
@@ -349,7 +349,7 @@ class Special implements SpecialInterface
     /**
      * {@inheritdoc}
      */
-    public function setActionPercent(int $actionPercent): void
+    public function setActionPercent(float $actionPercent): void
     {
         $this->actionPercent = $actionPercent;
     }
