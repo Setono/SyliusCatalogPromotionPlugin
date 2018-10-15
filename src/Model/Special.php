@@ -80,9 +80,9 @@ class Special implements SpecialInterface
     protected $actionType = self::ACTION_TYPE_OFF;
 
     /**
-     * @var int
+     * @var float
      */
-    protected $actionPercent = 0;
+    protected $actionPercent = 0.0;
 
     /**
      * @var ChannelInterface[]|Collection
