@@ -58,11 +58,6 @@
                 <option name="message">setono_sylius_bulk_specials.special.action_percent.not_blank</option>
                 <option name="groups">setono_sylius_bulk_specials</option>
             </constraint>
-            <constraint name="GreaterThanOrEqual">
-                <option name="value">1</option>
-                <option name="message">setono_sylius_bulk_specials.special.action_percent.positive</option>
-                <option name="groups">setono_sylius_bulk_specials</option>
-            </constraint>
         </property>
         <property name="rules">
             <constraint name="Valid" />
