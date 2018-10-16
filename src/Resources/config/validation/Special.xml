@@ -58,6 +58,13 @@
                 <option name="message">setono_sylius_bulk_specials.special.action_percent.not_blank</option>
                 <option name="groups">setono_sylius_bulk_specials</option>
             </constraint>
+            <constraint name="Range">
+                <option name="min">0</option>
+                <option name="max">100</option>
+                <option name="minMessage">setono_sylius_bulk_specials.special.action_percent.min</option>
+                <option name="maxMessage">setono_sylius_bulk_specials.special.action_percent.max</option>
+                <option name="groups">setono_sylius_bulk_specials</option>
+            </constraint>
         </property>
         <property name="rules">
             <constraint name="Valid" />
