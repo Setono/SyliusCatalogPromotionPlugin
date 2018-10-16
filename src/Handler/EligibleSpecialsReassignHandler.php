@@ -13,7 +13,7 @@ use Sylius\Bundle\CoreBundle\Doctrine\ORM\ProductRepository;
 /**
  * Class ProductRecalculateHandler
  */
-class EligibleSpecialsReassignHandler extends AbstractProductHandler
+class EligibleSpecialsReassignHandler extends AbstractProductHandler implements EligibleSpecialsReassignHandlerInterface
 {
     /**
      * @var SpecialRepositoryInterface
