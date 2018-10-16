@@ -78,7 +78,13 @@ class ProductSpecialsApplicator
     protected function applyMultiplierToChannelPricing(ChannelPricingInterface $channelPricing, float $multiplier): void
     {
         if (!$channelPricing->getOriginalPrice()) {
-            return;
+            if (!$channelPricing->getPrice()) {
+                return;
+            }
+
+            $channelPricing->setOriginalPrice(
+                $channelPricing->getPrice()
+            );
         }
 
         $channelPricing->setPrice(
