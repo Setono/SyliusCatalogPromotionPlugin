@@ -15,7 +15,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * Class RecalculateSpecialCommand
  */
-class RecalculateSpecialCommand extends Command
+class RecalculateSpecialCommand extends Command implements CommandInterface
 {
     /**
      * @var SpecialRepositoryInterface

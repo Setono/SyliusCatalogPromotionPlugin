@@ -15,7 +15,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * Class RecalculateProductCommand
  */
-class RecalculateProductCommand extends Command
+class RecalculateProductCommand extends Command implements CommandInterface
 {
     /**
      * @var ProductRepositoryInterface

@@ -15,7 +15,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * Class ReassignCommand
  */
-class ReassignCommand extends Command
+class ReassignCommand extends Command implements CommandInterface
 {
     /**
      * @var ProductRepositoryInterface

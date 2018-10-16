@@ -14,7 +14,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * Class CheckActiveCommand
  */
-class CheckActiveCommand extends Command
+class CheckActiveCommand extends Command implements CommandInterface
 {
     /**
      * @var SpecialRepositoryInterface
