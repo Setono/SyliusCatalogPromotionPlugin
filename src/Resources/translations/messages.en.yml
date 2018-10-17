@@ -51,4 +51,4 @@ setono_sylius_bulk_specials:
         special_action_type:
             choice:
                 off: Make a discount
-                increase: Increase price
+                increase: Make a margin (increase price)
