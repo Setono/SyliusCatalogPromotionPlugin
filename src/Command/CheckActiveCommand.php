@@ -97,7 +97,7 @@ class CheckActiveCommand extends Command implements CommandInterface
             }
 
             $output->writeln(sprintf(
-                "Special '%s' was enabled and recalculated (or queued to recalculate).",
+                "Special '%s' was disabled and recalculated (or queued to recalculate).",
                 $special->getCode()
             ));
         }
