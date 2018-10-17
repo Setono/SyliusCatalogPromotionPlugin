@@ -36,6 +36,8 @@ final class SetonoSyliusBulkSpecialsExtension extends AbstractResourceExtension
             $loader->load('services/handlers_async.xml');
         }
 
+        $container->setParameter('setono_sylius_bulk_specials.queue', $config['queue']);
+
         $env = $container->getParameter('kernel.environment');
         if ('test' === $env || 'test_cached' === $env) {
             $loader->load('test_services.xml');
