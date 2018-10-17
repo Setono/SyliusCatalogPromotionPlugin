@@ -19,8 +19,8 @@ class SpecialRepository extends EntityRepository implements SpecialRepositoryInt
     public function findAccidentallyDisabled(?\DateTimeInterface $date = null): array
     {
         return $this->createQueryBuilder('o')
-            ->andWhere('o.startsAt IS NOT NULL AND o.startsAt < :date')
-            ->andWhere('o.endsAt IS NOT NULL AND o.endsAt > :date')
+            ->andWhere('o.startsAt IS NULL OR o.startsAt < :date')
+            ->andWhere('o.endsAt IS NULL OR o.endsAt > :date')
             ->setParameter('date', $date ?: new \DateTime())
             ->andWhere('o.enabled = 0')
             ->getQuery()
@@ -34,8 +34,8 @@ class SpecialRepository extends EntityRepository implements SpecialRepositoryInt
     public function findAccidentallyEnabled(?\DateTimeInterface $date = null): array
     {
         return $this->createQueryBuilder('o')
-            ->orWhere('o.startsAt IS NOT NULL AND o.startsAt >= :date')
-            ->orWhere('o.endsAt IS NOT NULL AND o.endsAt <= :date')
+            ->orWhere('o.startsAt IS NULL OR o.startsAt >= :date')
+            ->orWhere('o.endsAt IS NULL OR o.endsAt <= :date')
             ->setParameter('date', $date ?: new \DateTime())
             ->andWhere('o.enabled = 1')
             ->getQuery()
