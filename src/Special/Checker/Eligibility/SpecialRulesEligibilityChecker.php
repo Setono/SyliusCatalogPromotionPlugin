@@ -34,7 +34,7 @@ final class SpecialRulesEligibilityChecker implements SpecialEligibilityCheckerI
     public function isEligible(SpecialSubjectInterface $specialSubject, SpecialInterface $special): bool
     {
         if (!$special->hasRules()) {
-            return true;
+            return false;
         }
 
         foreach ($special->getRules() as $rule) {
