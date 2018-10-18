@@ -28,32 +28,6 @@ trait SpecialSubjectTrait
     }
 
     /**
-     * @return bool
-     */
-    public function hasExclusiveSpecials(): bool
-    {
-        return null !== $this->getFirstExclusiveSpecial();
-    }
-
-    /**
-     * @return SpecialInterface|null
-     */
-    public function getFirstExclusiveSpecial(): ?SpecialInterface
-    {
-        return $this->getExclusiveSpecials()->first() ?: null;
-    }
-
-    /**
-     * @return Collection|SpecialInterface[]
-     */
-    public function getExclusiveSpecials(): Collection
-    {
-        return $this->getActiveSpecials()->filter(function (Special $special) {
-            return $special->isExclusive();
-        });
-    }
-
-    /**
      * @return Collection|SpecialInterface[]
      */
     public function getActiveSpecials(): Collection

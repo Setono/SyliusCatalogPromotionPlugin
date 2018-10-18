@@ -18,21 +18,6 @@ interface SpecialSubjectInterface extends ResourceInterface
     public function __toString();
 
     /**
-     * @return bool
-     */
-    public function hasExclusiveSpecials(): bool;
-
-    /**
-     * @return SpecialInterface|null
-     */
-    public function getFirstExclusiveSpecial(): ?SpecialInterface;
-
-    /**
-     * @return Collection|SpecialInterface[]
-     */
-    public function getExclusiveSpecials(): Collection;
-
-    /**
      * @return Collection|SpecialInterface[]
      */
     public function getActiveSpecials(): Collection;
