@@ -26,6 +26,12 @@ interface SpecialInterface extends ChannelsAwareInterface, CodeAwareInterface, T
     public function getMultiplier(): float;
 
     /**
+     * @param \DateTime $now
+     * @return bool
+     */
+    public function isSpecialActiveAt(\DateTime $now): bool;
+
+    /**
      * @return string|null
      */
     public function getName(): ?string;

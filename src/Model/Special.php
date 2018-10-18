@@ -120,6 +120,17 @@ class Special implements SpecialInterface
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function isSpecialActiveAt(\DateTime $now): bool
+    {
+        return
+            (null !== $this->getStartsAt() && $now->getTimestamp() > $this->getStartsAt()->getTimestamp()) &&
+            (null !== $this->getEndsAt() && $now->getTimestamp() < $this->getEndsAt()->getTimestamp())
+            ;
+    }
+
+    /**
      * Special constructor.
      */
     public function __construct()

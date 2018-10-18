@@ -58,8 +58,9 @@ trait SpecialSubjectTrait
      */
     public function getActiveSpecials(): Collection
     {
-        return $this->getSortedSpecials()->filter(function (Special $special) {
-            return $special->isEnabled();
+        $date = new \DateTime();
+        return $this->getSortedSpecials()->filter(function (SpecialInterface $special) use($date) {
+            return $special->isSpecialActiveAt($date);
         });
     }
 
@@ -88,7 +89,7 @@ trait SpecialSubjectTrait
      */
     public function getExclusiveSpecialsForChannelCode(string $channelCode): Collection
     {
-        return $this->getActiveSpecialsForChannelCode($channelCode)->filter(function (Special $special) {
+        return $this->getActiveSpecialsForChannelCode($channelCode)->filter(function (SpecialInterface $special) {
             return $special->isExclusive();
         });
     }
@@ -98,12 +99,13 @@ trait SpecialSubjectTrait
      */
     public function getActiveSpecialsForChannelCode(string $channelCode): Collection
     {
-        return $this->getSortedSpecials()->filter(function (Special $special) use ($channelCode) {
+        $date = new \DateTime();
+        return $this->getSortedSpecials()->filter(function (SpecialInterface $special) use ($channelCode, $date) {
             $specialsChannelCodes = $special->getChannels()->map(function (ChannelInterface $channel) {
                 return $channel->getCode();
             })->toArray();
 
-            return in_array($channelCode, $specialsChannelCodes) && $special->isEnabled();
+            return in_array($channelCode, $specialsChannelCodes) && $special->isSpecialActiveAt($date);
         });
     }
 
