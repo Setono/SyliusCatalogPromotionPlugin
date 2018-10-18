@@ -6,6 +6,7 @@ namespace Setono\SyliusBulkSpecialsPlugin\Handler;
 
 use Doctrine\ORM\EntityManager;
 use Setono\SyliusBulkSpecialsPlugin\Doctrine\ORM\ProductRepositoryInterface;
+use Setono\SyliusBulkSpecialsPlugin\Model\ProductInterface;
 use Setono\SyliusBulkSpecialsPlugin\Model\SpecialInterface;
 use Setono\SyliusBulkSpecialsPlugin\Model\SpecialSubjectInterface;
 
@@ -57,7 +58,7 @@ class SpecialRecalculateHandler extends AbstractSpecialHandler
         $iterableResult = $this->productRepository->findBySpecialQB($special)->getQuery()->iterate();
 
         foreach ($iterableResult as $productRow) {
-            /** @var SpecialSubjectInterface $product */
+            /** @var ProductInterface $product */
             $product = $productRow[0];
 
             if (!$product->hasSpecial($special)) {
@@ -65,7 +66,7 @@ class SpecialRecalculateHandler extends AbstractSpecialHandler
                 $this->productRepository->add($product);
             }
 
-            $this->productRecalculateHandler->handle($product);
+            $this->productRecalculateHandler->handleProduct($product);
         }
     }
 }
