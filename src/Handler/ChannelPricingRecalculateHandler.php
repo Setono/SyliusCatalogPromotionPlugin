@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Setono\SyliusBulkSpecialsPlugin\Handler;
 
 use Setono\SyliusBulkSpecialsPlugin\Special\Applicator\ProductSpecialsApplicator;
-use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 use Sylius\Component\Core\Model\ChannelPricingInterface;
 
 /**
@@ -19,22 +18,13 @@ class ChannelPricingRecalculateHandler extends AbstractChannelPricingHandler
     protected $productSpecialsApplicator;
 
     /**
-     * @var EntityRepository
-     */
-    protected $channelPricingRepository;
-
-    /**
      * ChannelPricingRecalculateHandler constructor.
-     *
      * @param ProductSpecialsApplicator $productSpecialsApplicator
-     * @param EntityRepository $channelPricingRepository
      */
     public function __construct(
-        ProductSpecialsApplicator $productSpecialsApplicator,
-        EntityRepository $channelPricingRepository
+        ProductSpecialsApplicator $productSpecialsApplicator
     ) {
         $this->productSpecialsApplicator = $productSpecialsApplicator;
-        $this->channelPricingRepository = $channelPricingRepository;
     }
 
     /**
@@ -43,6 +33,5 @@ class ChannelPricingRecalculateHandler extends AbstractChannelPricingHandler
     public function handleChannelPricing(ChannelPricingInterface $channelPricing): void
     {
         $this->productSpecialsApplicator->applyToChannelPricing($channelPricing);
-        $this->channelPricingRepository->add($channelPricing);
     }
 }

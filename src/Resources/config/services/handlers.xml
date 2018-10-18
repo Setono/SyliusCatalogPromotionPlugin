@@ -7,7 +7,6 @@
         <service id="setono_sylius_bulk_specials.recalculate_handler.channel_pricing"
                  class="Setono\SyliusBulkSpecialsPlugin\Handler\ChannelPricingRecalculateHandler">
             <argument type="service" id="setono_sylius_bulk_specials.applicator.product_specials" />
-            <argument type="service" id="sylius.repository.channel_pricing" />
         </service>
 
         <service id="setono_sylius_bulk_specials.handler.eligible_specials_reassign"

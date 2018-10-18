@@ -42,7 +42,6 @@ class ProductSpecialsApplicator
             /** @var ChannelPricingInterface $channelPricing */
             foreach ($variant->getChannelPricings() as $channelPricing) {
                 $this->applyToChannelPricing($channelPricing);
-                $this->channelPricingRepository->add($channelPricing);
             }
         }
     }
@@ -69,6 +68,8 @@ class ProductSpecialsApplicator
                 $channelPricing->getChannelCode()
             )
         );
+
+        $this->channelPricingRepository->add($channelPricing);
     }
 
     /**
