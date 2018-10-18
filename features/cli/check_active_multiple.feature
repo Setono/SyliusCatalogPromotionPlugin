@@ -7,10 +7,10 @@ Feature: Special CLI feature
     Background:
         Given the store operates on a single channel in the "United States" named "Web"
         And there is a special "Enabled special"
-        And this special is enabled
+        And this special was enabled
         And this special has already expired
         And there is a special "Disabled special"
-        And this special is disabled
+        And this special was disabled
         And this special has started yesterday
 
     Scenario: Accidentally enabled/disabled special should be disabled/enabled

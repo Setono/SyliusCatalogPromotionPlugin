@@ -14,7 +14,7 @@ Feature: Special CLI feature
 
     Scenario: Accidentally enabled special should be disabled
         Given there is a special "Enabled special"
-        And this special is enabled
+        And this special was enabled
         And this special has already expired
         When I run check active CLI command
         Then the command should finish successfully
@@ -23,7 +23,7 @@ Feature: Special CLI feature
 
     Scenario: Accidentally disabled special should be enabled
         Given there is a special "Disabled special"
-        And this special is disabled
+        And this special was disabled
         And this special has started yesterday
         When I run check active CLI command
         Then the command should finish successfully
