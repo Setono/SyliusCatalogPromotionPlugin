@@ -107,7 +107,7 @@ class ProductSpecialsApplicator
 
         $multiplier = 1;
         /** @var SpecialInterface $special */
-        foreach ($product->getActiveSpecialsForChannelCode($channelCode)->toArray() as $special) {
+        foreach ($product->getActiveSpecialsForChannelCode($channelCode) as $special) {
             $multiplier *= $special->getMultiplier();
         }
 
