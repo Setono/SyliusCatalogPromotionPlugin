@@ -141,7 +141,7 @@ class Special implements SpecialInterface
             return (string) $this->getId();
         }
 
-        return (string) $this->getName();
+        return $this->getName();
     }
 
     /**
