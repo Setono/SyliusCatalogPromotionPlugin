@@ -37,7 +37,7 @@ class SpecialRule implements SpecialRuleInterface
     /**
      * {@inheritdoc}
      */
-    public function getType(): string
+    public function getType(): ?string
     {
         return $this->type;
     }
