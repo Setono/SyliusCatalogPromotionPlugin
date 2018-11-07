@@ -7,9 +7,6 @@ namespace Setono\SyliusBulkSpecialsPlugin\Model;
 use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Resource\Model\ResourceInterface;
 
-/**
- * Interface SpecialSubjectInterface
- */
 interface SpecialSubjectInterface extends ResourceInterface
 {
     /**

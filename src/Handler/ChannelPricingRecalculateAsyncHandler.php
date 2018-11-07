@@ -32,8 +32,6 @@ class ChannelPricingRecalculateAsyncHandler extends AbstractChannelPricingHandle
     protected $recalculateHandler;
 
     /**
-     * ChannelPricingRecalculateAsyncHandler constructor.
-     *
      * @param ProducerInterface $producer
      * @param EntityRepository $repository
      * @param ChannelPricingRecalculateHandler $recalculateHandler

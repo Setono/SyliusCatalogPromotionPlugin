@@ -9,9 +9,6 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 
-/**
- * Class ContainsProductConfigurationType
- */
 final class ContainsProductsConfigurationType extends AbstractType
 {
     /**

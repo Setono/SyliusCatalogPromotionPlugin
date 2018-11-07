@@ -9,9 +9,6 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use Sylius\Component\Core\Model\ChannelInterface;
 
-/**
- * Trait SpecialSubjectTrait
- */
 trait SpecialSubjectTrait
 {
     /**

@@ -10,9 +10,6 @@ use Sylius\Component\Resource\Model\CodeAwareInterface;
 use Sylius\Component\Resource\Model\ResourceInterface;
 use Sylius\Component\Resource\Model\TimestampableInterface;
 
-/**
- * Interface SpecialInterface
- */
 interface SpecialInterface extends ChannelsAwareInterface, CodeAwareInterface, TimestampableInterface, ResourceInterface
 {
     /**

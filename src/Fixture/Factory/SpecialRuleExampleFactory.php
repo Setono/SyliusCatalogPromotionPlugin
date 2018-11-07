@@ -28,8 +28,6 @@ class SpecialRuleExampleFactory extends AbstractExampleFactory
     protected $optionsResolver;
 
     /**
-     * SpecialRuleExampleFactory constructor.
-     *
      * @param SpecialRuleFactoryInterface $specialRuleFactory
      * @param array $specialRules
      */

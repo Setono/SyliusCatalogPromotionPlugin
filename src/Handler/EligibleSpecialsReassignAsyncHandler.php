@@ -32,8 +32,6 @@ class EligibleSpecialsReassignAsyncHandler extends AbstractProductHandler implem
     protected $handler;
 
     /**
-     * EligibleSpecialsReassignAsyncHandler constructor.
-     *
      * @param ProducerInterface $producer
      * @param ProductRepository $repository
      * @param EligibleSpecialsReassignHandler $handler

@@ -10,9 +10,6 @@ use Sylius\Component\Channel\Model\ChannelInterface as BaseChannelInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Resource\Model\TimestampableTrait;
 
-/**
- * Class Special
- */
 class Special implements SpecialInterface
 {
     public const ACTION_TYPE_OFF = 'off';
@@ -121,9 +118,6 @@ class Special implements SpecialInterface
         }
     }
 
-    /**
-     * Special constructor.
-     */
     public function __construct()
     {
         $this->createdAt = new \DateTime();

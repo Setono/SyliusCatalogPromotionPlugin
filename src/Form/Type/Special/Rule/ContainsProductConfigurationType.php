@@ -34,10 +34,6 @@ final class ContainsProductConfigurationType extends AbstractType
         $builder
             ->add('product_code', ProductAutocompleteChoiceType::class, [
                 'label' => 'setono_sylius_bulk_specials.form.special_rule.contains_product_configuration.product',
-//                'constraints' => [
-//                    new NotBlank(['groups' => ['sylius']]),
-//                    new Type(['type' => 'string', 'groups' => ['sylius']]),
-//                ],
             ])
         ;
 

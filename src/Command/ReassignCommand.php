@@ -12,9 +12,6 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-/**
- * Class ReassignCommand
- */
 class ReassignCommand extends Command
 {
     /**
@@ -28,8 +25,6 @@ class ReassignCommand extends Command
     protected $eligibleSpecialsReassignHandler;
 
     /**
-     * ReassignCommand constructor.
-     *
      * @param ProductRepositoryInterface $productRepository
      * @param EligibleSpecialsReassignHandlerInterface $eligibleSpecialsReassignHandler
      */

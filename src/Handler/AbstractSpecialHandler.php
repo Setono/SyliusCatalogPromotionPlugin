@@ -6,9 +6,6 @@ namespace Setono\SyliusBulkSpecialsPlugin\Handler;
 
 use Setono\SyliusBulkSpecialsPlugin\Model\SpecialInterface;
 
-/**
- * Class AbstractSpecialHandler
- */
 abstract class AbstractSpecialHandler implements SpecialRecalculateHandlerInterface
 {
     /**

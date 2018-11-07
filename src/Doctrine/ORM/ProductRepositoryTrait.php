@@ -10,11 +10,6 @@ use Setono\SyliusBulkSpecialsPlugin\Model\SpecialRuleInterface;
 use Setono\SyliusBulkSpecialsPlugin\Special\QueryBuilder\Rule\RuleQueryBuilderInterface;
 use Setono\SyliusBulkSpecialsPlugin\Special\QueryBuilder\Rule\RuleQueryBuilderServiceRegistry;
 
-/**
- * Trait ProductRepositoryTrait
- *
- * Implements RuleQueryBuilderAwareInterface methods
- */
 trait ProductRepositoryTrait
 {
     /**

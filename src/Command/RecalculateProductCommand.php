@@ -12,9 +12,6 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-/**
- * Class RecalculateProductCommand
- */
 class RecalculateProductCommand extends Command
 {
     /**
@@ -28,8 +25,6 @@ class RecalculateProductCommand extends Command
     protected $productRecalculateHandler;
 
     /**
-     * RecalculateProductCommand constructor.
-     *
      * @param ProductRepositoryInterface $productRepository
      * @param ProductRecalculateHandlerInterface $productRecalculateHandler
      */

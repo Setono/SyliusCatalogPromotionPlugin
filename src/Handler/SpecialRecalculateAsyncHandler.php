@@ -32,8 +32,6 @@ class SpecialRecalculateAsyncHandler extends AbstractSpecialHandler implements P
     protected $recalculateHandler;
 
     /**
-     * SpecialRecalculateAsyncHandler constructor.
-     *
      * @param ProducerInterface $producer
      * @param SpecialRepositoryInterface $repository
      * @param SpecialRecalculateHandler $recalculateHandler

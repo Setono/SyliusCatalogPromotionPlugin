@@ -10,9 +10,6 @@ use Setono\SyliusBulkSpecialsPlugin\Handler\SpecialRecalculateHandler;
 use Setono\SyliusBulkSpecialsPlugin\Handler\SpecialRecalculateHandlerInterface;
 use Setono\SyliusBulkSpecialsPlugin\Model\SpecialInterface;
 
-/**
- * Class SpecialDoctrineEventListener
- */
 class SpecialDoctrineEventListener
 {
     /**
@@ -21,8 +18,6 @@ class SpecialDoctrineEventListener
     protected $specialRecalculateHandler;
 
     /**
-     * SpecialDoctrineEventSubscriber constructor.
-     *
      * @param SpecialRecalculateHandlerInterface $specialRecalculateHandler
      */
     public function __construct(

@@ -43,8 +43,6 @@ class SpecialExampleFactory extends AbstractExampleFactory
     protected $optionsResolver;
 
     /**
-     * SpecialExampleFactory constructor.
-     *
      * @param ChannelRepositoryInterface $channelRepository
      * @param Factory $specialFactory
      * @param SpecialRuleExampleFactory $specialRuleExampleFactory

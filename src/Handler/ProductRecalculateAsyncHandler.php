@@ -32,8 +32,6 @@ class ProductRecalculateAsyncHandler extends AbstractProductHandler implements P
     protected $recalculateHandler;
 
     /**
-     * ProductRecalculateAsyncHandler constructor.
-     *
      * @param ProducerInterface $producer
      * @param ProductRepository $repository
      * @param ProductRecalculateHandler $recalculateHandler

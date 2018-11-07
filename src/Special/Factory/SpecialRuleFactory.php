@@ -10,9 +10,6 @@ use Setono\SyliusBulkSpecialsPlugin\Special\Checker\Rule\ContainsProductsRuleChe
 use Setono\SyliusBulkSpecialsPlugin\Special\Checker\Rule\HasTaxonRuleChecker;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 
-/**
- * Class SpecialRuleFactory
- */
 class SpecialRuleFactory implements SpecialRuleFactoryInterface
 {
     /**

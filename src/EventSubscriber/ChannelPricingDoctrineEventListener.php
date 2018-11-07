@@ -9,9 +9,6 @@ use Setono\SyliusBulkSpecialsPlugin\Handler\ChannelPricingRecalculateHandler;
 use Setono\SyliusBulkSpecialsPlugin\Handler\ChannelPricingRecalculateHandlerInterface;
 use Sylius\Component\Core\Model\ChannelPricing;
 
-/**
- * Class ChannelPricingDoctrineEventSubscriber
- */
 class ChannelPricingDoctrineEventListener
 {
     /**
@@ -20,8 +17,6 @@ class ChannelPricingDoctrineEventListener
     protected $channelPricingRecalculateHandler;
 
     /**
-     * ChannelPricingDoctrineEventSubscriber constructor.
-     *
      * @param ChannelPricingRecalculateHandlerInterface $channelPricingRecalculateHandler
      */
     public function __construct(

@@ -8,9 +8,6 @@ use Setono\SyliusBulkSpecialsPlugin\Model\SpecialInterface;
 use Setono\SyliusBulkSpecialsPlugin\Model\SpecialSubjectInterface;
 use Webmozart\Assert\Assert;
 
-/**
- * Class CompositeSpecialEligibilityChecker
- */
 final class CompositeSpecialEligibilityChecker implements SpecialEligibilityCheckerInterface
 {
     /**

@@ -8,9 +8,6 @@ use Setono\SyliusBulkSpecialsPlugin\Model\SpecialSubjectInterface;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Resource\Exception\UnexpectedTypeException;
 
-/**
- * Class HasTaxonRuleChecker
- */
 final class HasTaxonRuleChecker implements RuleCheckerInterface
 {
     public const TYPE = 'has_taxon';

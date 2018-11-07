@@ -6,9 +6,6 @@ namespace Setono\SyliusBulkSpecialsPlugin\Special\Checker\Rule;
 
 use Setono\SyliusBulkSpecialsPlugin\Model\SpecialSubjectInterface;
 
-/**
- * Interface RuleCheckerInterface
- */
 interface RuleCheckerInterface
 {
     /**

@@ -8,9 +8,6 @@ use Setono\SyliusBulkSpecialsPlugin\Special\Applicator\ProductSpecialsApplicator
 use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 use Sylius\Component\Core\Model\ChannelPricingInterface;
 
-/**
- * Class ChannelPricingRecalculateHandler
- */
 class ChannelPricingRecalculateHandler extends AbstractChannelPricingHandler
 {
     /**
@@ -24,8 +21,6 @@ class ChannelPricingRecalculateHandler extends AbstractChannelPricingHandler
     protected $channelPricingRepository;
 
     /**
-     * ChannelPricingRecalculateHandler constructor.
-     *
      * @param ProductSpecialsApplicator $productSpecialsApplicator
      * @param EntityRepository $channelPricingRepository
      */

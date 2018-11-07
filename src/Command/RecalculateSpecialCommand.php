@@ -12,9 +12,6 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-/**
- * Class RecalculateSpecialCommand
- */
 class RecalculateSpecialCommand extends Command
 {
     /**
@@ -28,8 +25,6 @@ class RecalculateSpecialCommand extends Command
     protected $specialRecalculateHandler;
 
     /**
-     * RecalculateSpecialCommand constructor.
-     *
      * @param SpecialRepositoryInterface $specialRepository
      * @param SpecialRecalculateHandlerInterface $specialRecalculateHandler
      */

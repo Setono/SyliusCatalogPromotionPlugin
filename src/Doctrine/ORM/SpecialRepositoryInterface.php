@@ -7,9 +7,6 @@ namespace Setono\SyliusBulkSpecialsPlugin\Doctrine\ORM;
 use Setono\SyliusBulkSpecialsPlugin\Model\SpecialInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 
-/**
- * Interface SpecialRepositoryInterface
- */
 interface SpecialRepositoryInterface extends RepositoryInterface
 {
     /**

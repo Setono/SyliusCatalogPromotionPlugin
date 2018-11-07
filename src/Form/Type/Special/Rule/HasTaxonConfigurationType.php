@@ -9,9 +9,6 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 
-/**
- * Class HasTaxonConfigurationType
- */
 final class HasTaxonConfigurationType extends AbstractType
 {
     /**
