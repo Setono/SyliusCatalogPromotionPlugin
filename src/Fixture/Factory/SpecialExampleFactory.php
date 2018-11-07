@@ -8,7 +8,6 @@ use Setono\SyliusBulkSpecialsPlugin\Model\Special;
 use Setono\SyliusBulkSpecialsPlugin\Model\SpecialInterface;
 use Setono\SyliusBulkSpecialsPlugin\Model\SpecialRuleInterface;
 use Sylius\Bundle\CoreBundle\Fixture\Factory\AbstractExampleFactory;
-use Sylius\Bundle\CoreBundle\Fixture\Factory\ExampleFactoryInterface;
 use Sylius\Bundle\CoreBundle\Fixture\OptionsResolver\LazyOption;
 use Sylius\Component\Channel\Repository\ChannelRepositoryInterface;
 use Sylius\Component\Core\Formatter\StringInflector;
@@ -16,10 +15,7 @@ use Sylius\Component\Resource\Factory\Factory;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-/**
- * Class SpecialExampleFactory
- */
-class SpecialExampleFactory extends AbstractExampleFactory implements ExampleFactoryInterface
+class SpecialExampleFactory extends AbstractExampleFactory
 {
     /**
      * @var ChannelRepositoryInterface
@@ -144,7 +140,7 @@ class SpecialExampleFactory extends AbstractExampleFactory implements ExampleFac
                 return $actionTypes[array_rand($actionTypes)];
             })
             ->setDefault('action_percent', function (Options $options): int {
-                return 10 * rand(1, 9);
+                return 10 * random_int(1, 9);
             })
             ->setAllowedTypes('action_percent', 'int')
 

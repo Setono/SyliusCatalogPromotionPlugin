@@ -51,6 +51,8 @@ class SpecialRuleFactory implements SpecialRuleFactoryInterface
             case ContainsProductsRuleChecker::TYPE:
                 return $this->createContainsProducts((array) $configuration);
         }
+
+        throw new \InvalidArgumentException('$type must be one of [' . HasTaxonRuleChecker::TYPE . ', ' . ContainsProductRuleChecker::TYPE . ', ' . ContainsProductsRuleChecker::TYPE . ']');
     }
 
     /**

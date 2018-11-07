@@ -45,7 +45,7 @@ class CheckActiveCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('setono:sylius-bulk-specials:check-active')

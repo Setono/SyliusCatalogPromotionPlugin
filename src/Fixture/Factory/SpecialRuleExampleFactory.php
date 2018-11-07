@@ -7,14 +7,10 @@ namespace Setono\SyliusBulkSpecialsPlugin\Fixture\Factory;
 use Setono\SyliusBulkSpecialsPlugin\Model\SpecialRuleInterface;
 use Setono\SyliusBulkSpecialsPlugin\Special\Factory\SpecialRuleFactoryInterface;
 use Sylius\Bundle\CoreBundle\Fixture\Factory\AbstractExampleFactory;
-use Sylius\Bundle\CoreBundle\Fixture\Factory\ExampleFactoryInterface;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-/**
- * Class SpecialRuleExampleFactory
- */
-class SpecialRuleExampleFactory extends AbstractExampleFactory implements ExampleFactoryInterface
+class SpecialRuleExampleFactory extends AbstractExampleFactory
 {
     /**
      * @var SpecialRuleFactoryInterface

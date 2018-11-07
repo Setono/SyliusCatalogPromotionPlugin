@@ -46,7 +46,7 @@ class ReassignCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('setono:sylius-bulk-specials:reassign')
@@ -62,7 +62,7 @@ class ReassignCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $identifier = $input->getArgument('identifier');
         if (null === $identifier) {
@@ -76,7 +76,7 @@ class ReassignCommand extends Command
         if (!count($products)) {
             $output->writeln('<error>Products was not found</error>');
 
-            return 0;
+            return;
         }
 
         /** @var ProductInterface $product */

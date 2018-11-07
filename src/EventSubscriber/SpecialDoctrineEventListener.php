@@ -37,15 +37,15 @@ class SpecialDoctrineEventListener
      *
      * @param PreUpdateEventArgs $args
      */
-    public function preUpdate(PreUpdateEventArgs $args)
+    public function preUpdate(PreUpdateEventArgs $args): void
     {
         $entity = $args->getObject();
         if (!$entity instanceof SpecialInterface) {
             return;
         }
 
-        if (($args->hasChangedField('actionType') && $args->getOldValue('actionType') != $args->getNewValue('action_type')) ||
-            ($args->hasChangedField('actionPercent') && $args->getOldValue('actionPercent') != $args->getNewValue('actionPercent'))) {
+        if (($args->hasChangedField('actionType') && $args->getOldValue('actionType') !== $args->getNewValue('action_type')) ||
+            ($args->hasChangedField('actionPercent') && $args->getOldValue('actionPercent') !== $args->getNewValue('actionPercent'))) {
             if ($this->specialRecalculateHandler instanceof SpecialRecalculateHandler) {
                 // Important: This will not work with non-async handlers as far as
                 // new values not yet applied and recalculation result will be the same as before
@@ -66,7 +66,7 @@ class SpecialDoctrineEventListener
      *
      * @param LifecycleEventArgs $args
      */
-    public function postPersist(LifecycleEventArgs $args)
+    public function postPersist(LifecycleEventArgs $args): void
     {
         $entity = $args->getObject();
         if (!$entity instanceof SpecialInterface) {

@@ -8,7 +8,7 @@ use Doctrine\ORM\QueryBuilder;
 
 class HasTaxonRuleQueryBuilder implements RuleQueryBuilderInterface
 {
-    const PARAMETER = 'taxons';
+    public const PARAMETER = 'taxons';
 
     /**
      * {@inheritdoc}

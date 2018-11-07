@@ -28,7 +28,7 @@ final class ContainsProductsRuleChecker implements RuleCheckerInterface
             throw new UnsupportedTypeException($subject, ProductInterface::class);
         }
 
-        if (in_array($subject->getCode(), $configuration['product_codes'])) {
+        if (\in_array($subject->getCode(), $configuration['product_codes'], true)) {
             return true;
         }
 

@@ -12,12 +12,9 @@ use Interop\Queue\PsrProcessor;
 use Setono\SyliusBulkSpecialsPlugin\Doctrine\ORM\SpecialRepositoryInterface;
 use Setono\SyliusBulkSpecialsPlugin\Model\SpecialInterface;
 
-/**
- * Class SpecialRecalculateAsyncHandler
- */
-class SpecialRecalculateAsyncHandler extends AbstractSpecialHandler implements SpecialRecalculateHandlerInterface, PsrProcessor, TopicSubscriberInterface
+class SpecialRecalculateAsyncHandler extends AbstractSpecialHandler implements PsrProcessor, TopicSubscriberInterface
 {
-    const EVENT = 'setono_sylius_bulk_specials_topic_special_recalculate';
+    public const EVENT = 'setono_sylius_bulk_specials_topic_special_recalculate';
 
     /**
      * @var ProducerInterface

@@ -46,7 +46,7 @@ class RecalculateSpecialCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('setono:sylius-bulk-specials:recalculate-special')
@@ -62,7 +62,7 @@ class RecalculateSpecialCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $identifier = $input->getArgument('identifier');
         $special = $this->specialRepository->findOneBy([
@@ -75,7 +75,7 @@ class RecalculateSpecialCommand extends Command
                 $identifier
             ));
 
-            return 0;
+            return;
         }
 
         $this->specialRecalculateHandler->handleSpecial($special);

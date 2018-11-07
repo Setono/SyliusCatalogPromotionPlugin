@@ -15,8 +15,8 @@ use Sylius\Component\Resource\Model\TimestampableTrait;
  */
 class Special implements SpecialInterface
 {
-    const ACTION_TYPE_OFF = 'off';
-    const ACTION_TYPE_INCREASE = 'increase';
+    public const ACTION_TYPE_OFF = 'off';
+    public const ACTION_TYPE_INCREASE = 'increase';
 
     use TimestampableTrait;
 
@@ -102,6 +102,8 @@ class Special implements SpecialInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @throws \Exception
      */
     public function getMultiplier(): float
     {
@@ -136,10 +138,10 @@ class Special implements SpecialInterface
     public function __toString()
     {
         if (null === $this->getName()) {
-            return $this->getId();
+            return (string) $this->getId();
         }
 
-        return $this->getName();
+        return (string) $this->getName();
     }
 
     /**

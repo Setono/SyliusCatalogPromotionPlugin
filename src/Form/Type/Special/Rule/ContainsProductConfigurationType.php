@@ -10,12 +10,7 @@ use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\ReversedTransformer;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Type;
 
-/**
- * Class ContainsProductConfigurationType
- */
 final class ContainsProductConfigurationType extends AbstractType
 {
     /**

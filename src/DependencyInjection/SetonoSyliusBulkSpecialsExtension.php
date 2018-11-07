@@ -9,13 +9,12 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 
-/**
- * Class SetonoSyliusBulkSpecialsExtension
- */
 final class SetonoSyliusBulkSpecialsExtension extends AbstractResourceExtension
 {
     /**
      * {@inheritdoc}
+     *
+     * @throws \Exception
      */
     public function load(array $config, ContainerBuilder $container): void
     {

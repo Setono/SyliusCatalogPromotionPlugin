@@ -82,10 +82,11 @@ trait ProductRepositoryTrait
     /**
      * @param QueryBuilder $queryBuilder
      * @param SpecialInterface $special
+     * @param string $alias
      *
      * @return QueryBuilder
      */
-    protected function addRulesWheres(QueryBuilder $queryBuilder, SpecialInterface $special, $alias): QueryBuilder
+    protected function addRulesWheres(QueryBuilder $queryBuilder, SpecialInterface $special, string $alias): QueryBuilder
     {
         /** @var SpecialRuleInterface $rule */
         foreach ($special->getRules() as $rule) {

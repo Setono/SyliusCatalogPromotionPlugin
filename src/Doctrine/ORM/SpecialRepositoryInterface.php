@@ -15,12 +15,16 @@ interface SpecialRepositoryInterface extends RepositoryInterface
     /**
      * Actually, that is not accidentally, just time going on...
      *
+     * @param \DateTimeInterface|null $date
+     *
      * @return array|SpecialInterface[]
      */
     public function findAccidentallyDisabled(?\DateTimeInterface $date = null): array;
 
     /**
      * Actually, that is not accidentally, just time going on...
+     *
+     * @param \DateTimeInterface|null $date
      *
      * @return array|SpecialInterface[]
      */
