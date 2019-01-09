@@ -50,7 +50,7 @@
         "psr-4": {
             "AppBundle\\": "tests/Application/src/AppBundle/"
         },
-        "files": [ "vendor/symfony/symfony/src/Symfony/Component/VarDumper/Resources/functions/dump.php" ]
+        "files": [ "vendor/symfony/var-dumper/Resources/functions/dump.php" ]
     },
     "extra": {
         "branch-alias": {
