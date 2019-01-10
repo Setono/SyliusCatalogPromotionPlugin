@@ -16,7 +16,7 @@ setono_sylius_bulk_specials:
                 reassign: Reassign Specials to selected Products
                 recalculate: Recalculate selected Products prices
             special:
-                recalculate: Recalculate assigned product prices
+                recalculate: Recalculate prices for Products matching Special rules
     menu:
         admin:
             main:
