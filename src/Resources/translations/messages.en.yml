@@ -43,9 +43,9 @@ setono_sylius_bulk_specials:
             contains_products: Product is one of
             contains_products_configuration:
                 products: Products
-            has_taxon:
+            has_taxon: Product having one of taxons
+            has_taxon_configuration:
                 taxons: Taxons
-            has_at_least_one_from_taxons: Product has at least one from taxons
             taxonomy: Taxonomy
             type: Type
         special_action_type:

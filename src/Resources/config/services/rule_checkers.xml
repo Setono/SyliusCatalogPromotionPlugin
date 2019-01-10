@@ -17,7 +17,7 @@
                  class="Setono\SyliusBulkSpecialsPlugin\Special\Checker\Rule\HasTaxonRuleChecker">
             <tag name="setono_sylius_bulk_specials.special_rule_checker"
                  type="has_taxon"
-                 label="setono_sylius_bulk_specials.form.special_rule.has_at_least_one_from_taxons"
+                 label="setono_sylius_bulk_specials.form.special_rule.has_taxon"
                  form-type="Setono\SyliusBulkSpecialsPlugin\Form\Type\Special\Rule\HasTaxonConfigurationType" />
         </service>
 

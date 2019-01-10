@@ -31,7 +31,7 @@ final class HasTaxonConfigurationType extends AbstractType
     {
         $builder
             ->add('taxons', TaxonAutocompleteChoiceType::class, [
-                'label' => 'setono_sylius_bulk_specials.form.special_rule.has_taxon.taxons',
+                'label' => 'setono_sylius_bulk_specials.form.special_rule.has_taxon_configuration.taxons',
                 'multiple' => true,
             ])
         ;
