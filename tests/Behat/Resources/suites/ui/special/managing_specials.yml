@@ -1,0 +1,31 @@
+default:
+    suites:
+        setono_sylius_bulk_specials_ui_managing_specials:
+            contexts_services:
+                - sylius.behat.context.hook.doctrine_orm
+
+                - sylius.behat.context.transform.address
+                - sylius.behat.context.transform.customer
+                - sylius.behat.context.transform.date_time
+                - sylius.behat.context.transform.lexical
+                - sylius.behat.context.transform.payment
+                - sylius.behat.context.transform.product
+                - setono_sylius_bulk_specials.behat.context.transform.special
+                - sylius.behat.context.transform.shared_storage
+                - sylius.behat.context.transform.shipping_method
+                - sylius.behat.context.transform.taxon
+
+                - sylius.behat.context.setup.channel
+                - sylius.behat.context.setup.currency
+                - sylius.behat.context.setup.payment
+                - sylius.behat.context.setup.product
+                - sylius.behat.context.setup.product_taxon
+                - setono_sylius_bulk_specials.behat.context.setup.special
+                - sylius.behat.context.setup.admin_security
+                - sylius.behat.context.setup.shipping
+                - sylius.behat.context.setup.taxonomy
+
+                - setono_sylius_bulk_specials.behat.context.ui.admin.managing_specials
+                - sylius.behat.context.ui.admin.notification
+            filters:
+                tags: "@setono_sylius_bulk_specials_managing_specials && @ui"

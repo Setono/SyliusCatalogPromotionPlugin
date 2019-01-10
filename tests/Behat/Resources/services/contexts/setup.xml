@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <defaults public="true" />
+
+        <service id="setono_sylius_bulk_specials.behat.context.setup.special"
+                 class="Tests\Setono\SyliusBulkSpecialsPlugin\Behat\Context\Setup\SpecialContext">
+            <argument type="service" id="sylius.behat.shared_storage" />
+            <argument type="service" id="__symfony__.setono_sylius_bulk_specials.factory.special_rule" />
+            <argument type="service" id="__symfony__.setono_sylius_bulk_specials.test.factory.special" />
+            <argument type="service" id="__symfony__.setono_sylius_bulk_specials.repository.special" />
+            <argument type="service" id="__symfony__.doctrine.orm.entity_manager" />
+            <tag name="fob.context_service" />
+        </service>
+
+    </services>
+</container>
