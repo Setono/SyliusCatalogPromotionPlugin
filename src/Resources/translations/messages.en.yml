@@ -13,8 +13,8 @@ setono_sylius_bulk_specials:
                 recalculate_all: Recalculate special prices for all Products
         bulk_action:
             product:
-                reassign: Reassign
-                recalculate: Recalculate
+                reassign: Reassign Specials to selected Products
+                recalculate: Recalculate selected Products prices
             special:
                 recalculate: Recalculate assigned product prices
     menu:
