@@ -10,13 +10,10 @@ use Sylius\Component\Channel\Model\ChannelInterface as BaseChannelInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Resource\Model\TimestampableTrait;
 
-/**
- * Class Special
- */
 class Special implements SpecialInterface
 {
-    const ACTION_TYPE_OFF = 'off';
-    const ACTION_TYPE_INCREASE = 'increase';
+    public const ACTION_TYPE_OFF = 'off';
+    public const ACTION_TYPE_INCREASE = 'increase';
 
     use TimestampableTrait;
 
@@ -102,6 +99,8 @@ class Special implements SpecialInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @throws \Exception
      */
     public function getMultiplier(): float
     {
@@ -130,9 +129,6 @@ class Special implements SpecialInterface
             ;
     }
 
-    /**
-     * Special constructor.
-     */
     public function __construct()
     {
         $this->createdAt = new \DateTime();
@@ -147,7 +143,7 @@ class Special implements SpecialInterface
     public function __toString()
     {
         if (null === $this->getName()) {
-            return $this->getId();
+            return (string) $this->getId();
         }
 
         return $this->getName();

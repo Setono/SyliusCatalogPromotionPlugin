@@ -7,9 +7,6 @@ namespace Setono\SyliusBulkSpecialsPlugin\Special\Factory;
 use Setono\SyliusBulkSpecialsPlugin\Model\SpecialRuleInterface;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 
-/**
- * Interface SpecialRuleFactoryInterface
- */
 interface SpecialRuleFactoryInterface extends FactoryInterface
 {
     /**

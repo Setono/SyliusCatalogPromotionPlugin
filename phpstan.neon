@@ -23,5 +23,4 @@ parameters:
 
         # Plugin specific
         - '#Cannot call method getMultiplier\(\) on .+\\SpecialInterface\|null\.#'
-        - '#Method .+\\RuleQueryBuilderServiceRegistry::get\(\) should return .+\\RuleQueryBuilderInterface but returns object\.#'
         - '#Cannot cast array\|string to string\.#'

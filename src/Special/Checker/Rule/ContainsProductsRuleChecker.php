@@ -8,9 +8,6 @@ use Setono\SyliusBulkSpecialsPlugin\Model\SpecialSubjectInterface;
 use Setono\SyliusBulkSpecialsPlugin\Special\Exception\UnsupportedTypeException;
 use Sylius\Component\Core\Model\ProductInterface;
 
-/**
- * Class ContainsProductRuleChecker
- */
 final class ContainsProductsRuleChecker implements RuleCheckerInterface
 {
     public const TYPE = 'contains_products';
@@ -28,7 +25,7 @@ final class ContainsProductsRuleChecker implements RuleCheckerInterface
             throw new UnsupportedTypeException($subject, ProductInterface::class);
         }
 
-        if (in_array($subject->getCode(), $configuration['product_codes'])) {
+        if (\in_array($subject->getCode(), $configuration['product_codes'], true)) {
             return true;
         }
 

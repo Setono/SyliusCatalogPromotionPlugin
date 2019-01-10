@@ -10,9 +10,6 @@ use Setono\SyliusBulkSpecialsPlugin\Model\SpecialSubjectInterface;
 use Setono\SyliusBulkSpecialsPlugin\Special\Checker\Rule\RuleCheckerInterface;
 use Sylius\Component\Registry\ServiceRegistryInterface;
 
-/**
- * Class SpecialRulesEligibilityChecker
- */
 final class SpecialRulesEligibilityChecker implements SpecialEligibilityCheckerInterface
 {
     /**

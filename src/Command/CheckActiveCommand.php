@@ -11,9 +11,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-/**
- * Class CheckActiveCommand
- */
 class CheckActiveCommand extends Command implements CommandInterface
 {
     /**
@@ -27,8 +24,6 @@ class CheckActiveCommand extends Command implements CommandInterface
     protected $specialRecalculateHandler;
 
     /**
-     * CheckActiveCommand constructor.
-     *
      * @param SpecialRepositoryInterface $specialRepository
      * @param SpecialRecalculateHandlerInterface $specialRecalculateHandler
      */
@@ -45,7 +40,7 @@ class CheckActiveCommand extends Command implements CommandInterface
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('setono:sylius-bulk-specials:check-active')

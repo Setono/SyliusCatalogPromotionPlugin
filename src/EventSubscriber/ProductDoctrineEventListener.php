@@ -8,9 +8,6 @@ use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use Setono\SyliusBulkSpecialsPlugin\Handler\EligibleSpecialsReassignHandlerInterface;
 use Setono\SyliusBulkSpecialsPlugin\Model\ProductInterface;
 
-/**
- * Class ProductDoctrineEventListener
- */
 class ProductDoctrineEventListener
 {
     /**
@@ -19,8 +16,6 @@ class ProductDoctrineEventListener
     protected $eligibleSpecialsReassignHandler;
 
     /**
-     * ProductDoctrineEventSubscriber constructor.
-     *
      * @param EligibleSpecialsReassignHandlerInterface $eligibleSpecialsReassignHandler
      */
     public function __construct(
@@ -35,7 +30,7 @@ class ProductDoctrineEventListener
      *
      * @param LifecycleEventArgs $args
      */
-    public function postPersist(LifecycleEventArgs $args)
+    public function postPersist(LifecycleEventArgs $args): void
     {
         $entity = $args->getObject();
         if (!$entity instanceof ProductInterface) {

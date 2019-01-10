@@ -10,9 +10,6 @@ use Setono\SyliusBulkSpecialsPlugin\Special\Checker\Rule\ContainsProductsRuleChe
 use Setono\SyliusBulkSpecialsPlugin\Special\Checker\Rule\HasTaxonRuleChecker;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 
-/**
- * Class SpecialRuleFactory
- */
 class SpecialRuleFactory implements SpecialRuleFactoryInterface
 {
     /**
@@ -51,6 +48,8 @@ class SpecialRuleFactory implements SpecialRuleFactoryInterface
             case ContainsProductsRuleChecker::TYPE:
                 return $this->createContainsProducts((array) $configuration);
         }
+
+        throw new \InvalidArgumentException('$type must be one of [' . HasTaxonRuleChecker::TYPE . ', ' . ContainsProductRuleChecker::TYPE . ', ' . ContainsProductsRuleChecker::TYPE . ']');
     }
 
     /**

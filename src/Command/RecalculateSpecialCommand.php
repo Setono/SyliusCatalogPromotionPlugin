@@ -12,9 +12,6 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-/**
- * Class RecalculateSpecialCommand
- */
 class RecalculateSpecialCommand extends Command implements CommandInterface
 {
     /**
@@ -28,8 +25,6 @@ class RecalculateSpecialCommand extends Command implements CommandInterface
     protected $specialRecalculateHandler;
 
     /**
-     * RecalculateSpecialCommand constructor.
-     *
      * @param SpecialRepositoryInterface $specialRepository
      * @param SpecialRecalculateHandlerInterface $specialRecalculateHandler
      */
@@ -46,7 +41,7 @@ class RecalculateSpecialCommand extends Command implements CommandInterface
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('setono:sylius-bulk-specials:recalculate-special')
@@ -62,7 +57,7 @@ class RecalculateSpecialCommand extends Command implements CommandInterface
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $identifier = $input->getArgument('identifier');
         $special = $this->specialRepository->findOneBy([
@@ -75,7 +70,7 @@ class RecalculateSpecialCommand extends Command implements CommandInterface
                 $identifier
             ));
 
-            return 0;
+            return;
         }
 
         $this->specialRecalculateHandler->handleSpecial($special);

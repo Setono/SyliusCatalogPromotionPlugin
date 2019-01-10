@@ -7,9 +7,6 @@ namespace Setono\SyliusBulkSpecialsPlugin\Handler;
 use Setono\SyliusBulkSpecialsPlugin\Special\Applicator\ProductSpecialsApplicator;
 use Sylius\Component\Core\Model\ChannelPricingInterface;
 
-/**
- * Class ChannelPricingRecalculateHandler
- */
 class ChannelPricingRecalculateHandler extends AbstractChannelPricingHandler
 {
     /**
@@ -18,7 +15,6 @@ class ChannelPricingRecalculateHandler extends AbstractChannelPricingHandler
     protected $productSpecialsApplicator;
 
     /**
-     * ChannelPricingRecalculateHandler constructor.
      * @param ProductSpecialsApplicator $productSpecialsApplicator
      */
     public function __construct(

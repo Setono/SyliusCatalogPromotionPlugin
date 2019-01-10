@@ -12,9 +12,6 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-/**
- * Class ReassignCommand
- */
 class ReassignCommand extends Command implements CommandInterface
 {
     /**
@@ -28,8 +25,6 @@ class ReassignCommand extends Command implements CommandInterface
     protected $eligibleSpecialsReassignHandler;
 
     /**
-     * ReassignCommand constructor.
-     *
      * @param ProductRepositoryInterface $productRepository
      * @param EligibleSpecialsReassignHandlerInterface $eligibleSpecialsReassignHandler
      */
@@ -46,7 +41,7 @@ class ReassignCommand extends Command implements CommandInterface
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('setono:sylius-bulk-specials:reassign')
@@ -62,7 +57,7 @@ class ReassignCommand extends Command implements CommandInterface
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $identifier = $input->getArgument('identifier');
         if (null === $identifier) {
@@ -76,7 +71,7 @@ class ReassignCommand extends Command implements CommandInterface
         if (!count($products)) {
             $output->writeln('<error>Products was not found</error>');
 
-            return 0;
+            return;
         }
 
         /** @var ProductInterface $product */

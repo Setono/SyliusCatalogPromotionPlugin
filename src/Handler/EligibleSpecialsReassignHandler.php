@@ -10,9 +10,6 @@ use Setono\SyliusBulkSpecialsPlugin\Model\Special;
 use Setono\SyliusBulkSpecialsPlugin\Special\Checker\Eligibility\SpecialEligibilityCheckerInterface;
 use Sylius\Bundle\CoreBundle\Doctrine\ORM\ProductRepository;
 
-/**
- * Class ProductRecalculateHandler
- */
 class EligibleSpecialsReassignHandler extends AbstractProductHandler implements EligibleSpecialsReassignHandlerInterface
 {
     /**
@@ -36,8 +33,6 @@ class EligibleSpecialsReassignHandler extends AbstractProductHandler implements 
     private $productRecalculateHandler;
 
     /**
-     * EligibleSpecialsReassignHandler constructor.
-     *
      * @param SpecialRepositoryInterface $specialRepository
      * @param ProductRepository $productRepository
      * @param SpecialEligibilityCheckerInterface $specialEligibilityChecker

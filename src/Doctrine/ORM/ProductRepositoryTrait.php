@@ -10,11 +10,6 @@ use Setono\SyliusBulkSpecialsPlugin\Model\SpecialRuleInterface;
 use Setono\SyliusBulkSpecialsPlugin\Special\QueryBuilder\Rule\RuleQueryBuilderInterface;
 use Setono\SyliusBulkSpecialsPlugin\Special\QueryBuilder\Rule\RuleQueryBuilderServiceRegistry;
 
-/**
- * Trait ProductRepositoryTrait
- *
- * Implements RuleQueryBuilderAwareInterface methods
- */
 trait ProductRepositoryTrait
 {
     /**
@@ -82,10 +77,11 @@ trait ProductRepositoryTrait
     /**
      * @param QueryBuilder $queryBuilder
      * @param SpecialInterface $special
+     * @param string $alias
      *
      * @return QueryBuilder
      */
-    protected function addRulesWheres(QueryBuilder $queryBuilder, SpecialInterface $special, $alias): QueryBuilder
+    protected function addRulesWheres(QueryBuilder $queryBuilder, SpecialInterface $special, string $alias): QueryBuilder
     {
         /** @var SpecialRuleInterface $rule */
         foreach ($special->getRules() as $rule) {

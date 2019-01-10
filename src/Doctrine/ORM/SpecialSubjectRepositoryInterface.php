@@ -7,9 +7,6 @@ namespace Setono\SyliusBulkSpecialsPlugin\Doctrine\ORM;
 use Doctrine\ORM\QueryBuilder;
 use Setono\SyliusBulkSpecialsPlugin\Model\SpecialInterface;
 
-/**
- * Interface SpecialSubjectRepositoryInterface
- */
 interface SpecialSubjectRepositoryInterface
 {
     /**

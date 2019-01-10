@@ -8,9 +8,6 @@ use Doctrine\ORM\QueryBuilder;
 use Setono\SyliusBulkSpecialsPlugin\Model\SpecialInterface;
 use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 
-/**
- * Class SpecialRepository
- */
 class SpecialRepository extends EntityRepository implements SpecialRepositoryInterface
 {
     /**

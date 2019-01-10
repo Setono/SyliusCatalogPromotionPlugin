@@ -12,12 +12,9 @@ use Interop\Queue\PsrProcessor;
 use Setono\SyliusBulkSpecialsPlugin\Model\ProductInterface;
 use Sylius\Bundle\CoreBundle\Doctrine\ORM\ProductRepository;
 
-/**
- * Class ProductRecalculateAsyncHandler
- */
-class ProductRecalculateAsyncHandler extends AbstractProductHandler implements ProductRecalculateHandlerInterface, PsrProcessor, TopicSubscriberInterface
+class ProductRecalculateAsyncHandler extends AbstractProductHandler implements PsrProcessor, TopicSubscriberInterface
 {
-    const EVENT = 'setono_sylius_bulk_specials_topic_product_recalculate';
+    public const EVENT = 'setono_sylius_bulk_specials_topic_product_recalculate';
 
     /**
      * @var ProducerInterface
@@ -35,8 +32,6 @@ class ProductRecalculateAsyncHandler extends AbstractProductHandler implements P
     protected $recalculateHandler;
 
     /**
-     * ProductRecalculateAsyncHandler constructor.
-     *
      * @param ProducerInterface $producer
      * @param ProductRepository $repository
      * @param ProductRecalculateHandler $recalculateHandler

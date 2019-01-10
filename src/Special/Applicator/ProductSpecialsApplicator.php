@@ -11,9 +11,6 @@ use Sylius\Component\Core\Model\ChannelPricingInterface;
 use Sylius\Component\Core\Model\ProductVariant;
 use Sylius\Component\Core\Model\ProductVariantInterface;
 
-/**
- * Class ProductSpecialsApplicator
- */
 class ProductSpecialsApplicator
 {
     /**
@@ -22,8 +19,6 @@ class ProductSpecialsApplicator
     protected $channelPricingRepository;
 
     /**
-     * ProductSpecialsApplicator constructor.
-     *
      * @param EntityRepository $channelPricingRepository
      */
     public function __construct(

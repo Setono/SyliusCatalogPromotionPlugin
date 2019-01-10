@@ -5,13 +5,9 @@ declare(strict_types=1);
 namespace Setono\SyliusBulkSpecialsPlugin\Fixture;
 
 use Sylius\Bundle\CoreBundle\Fixture\AbstractResourceFixture;
-use Sylius\Bundle\FixturesBundle\Fixture\FixtureInterface;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 
-/**
- * Class SpecialFixture
- */
-final class SpecialFixture extends AbstractResourceFixture implements FixtureInterface
+final class SpecialFixture extends AbstractResourceFixture
 {
     /**
      * @return string
