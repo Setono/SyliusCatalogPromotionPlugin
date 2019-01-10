@@ -24,9 +24,15 @@ All calculations can be done immediately
 
 </p>
 
+Menu:
+
 ![Screenshot showing admin menu](docs/admin-menu.png)
 
+Specials admin page:
+
 ![Screenshot showing specials admin page](docs/admin-specials.png)
+
+Products admin page actions:
 
 ![Screenshot showing products admin actions](docs/admin-products-actions.png)
 
@@ -277,12 +283,80 @@ user=apache
 redirect_stderr=true
 ```
 
+# How to use
+
+Lets list what bulk actions we have to execute:
+
+- `Reassign Specials for all Products`
+  - Click `Admin > Products > Specials menu > Reassign Specials for all Products`.
+  - OR run: `bin/command setono:sylius-bulk-specials:reassign` 
+
+- `Recalculate special prices for all Products`
+  - Click`Admin > Products > Specials menu > Recalculate special prices for all Products`.
+  - OR run: `bin/command setono:sylius-bulk-specials:recalculate-product`
+
+- `Recalculate selected Products prices`
+  - Click `Admin > Products > Bulk actions > Recalculate selected Products prices`.
+  - OR run: `bin/command setono:sylius-bulk-specials:recalculate-product PRODUCT_CODE`
+
+- `Reassign Specials to selected Products`
+  - Click `Admin > Products > Bulk actions > Reassign Specials to selected Products`.
+  - OR run: `bin/command setono:sylius-bulk-specials:reassign PRODUCT_CODE`
+
+- `Recalculate prices for Products matching Special rules`
+  - Select special rules you want to recalculate
+    and click `Admin > Specials > Bulk actions > Recalculate prices for Products matching Special rules`.
+  - OR run: `bin/command setono:sylius-bulk-specials:recalculate-special SPECIAL_CODE`
+
+### After new Bulk Special created
+
+- Special will be automatically assigned to Products
+  matching Special's rules (via Doctrine Lifecycle Events Listener).
+
+### After Bulk Special updated
+
+- If `action type` or `action percent` was changed -
+  all Products assigned to updated Special will be recalculated
+  automatically
+
+- If `channels` list was changed - you should recalculate prices
+  for this Special
+  (see `Recalculate prices for Products matching Special rules`)
+
+- If `rules` updated - you should reassign Products to updated Special.
+
+  This can be done by executing `Reassign Specials for all Products` action.
+
+  After reassigning - you should recalculate prices for all Products
+  (see `Recalculate special prices for all Products`).
+
+  Why we need to recalculate all - because some products potentially
+  still have inactual prices based on old Special rules.
+
+### After new Product created
+
+- Specials (that have rules matching this new Product)
+  will be automatically assigned to it
+  and then prices will be automatically recalculated.
+
+
+### After Product's `originalPrice` updated
+
+- Special price will be recalculated automatically based on previously
+  assigned Specials (via Doctrine Lifecycle Events Listener).
+
+### If you not getting expected result
+
+- Please, bugreport this
+- And run `Reassign Specials for all Products` &
+  `Recalculate special prices for all Products`
+
 # (Manually) Test plugin
 
 - Run application:
   (by default application have default config at `dev` environment
   and example config from `Configure plugin` step at `prod` environment)
-  
+
     ```bash
     SYMFONY_ENV=dev
     cd tests/Application && \
