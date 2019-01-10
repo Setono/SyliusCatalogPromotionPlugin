@@ -292,7 +292,7 @@ redirect_stderr=true
         bin/console doctrine:database:drop --force -e $SYMFONY_ENV && \
         bin/console doctrine:database:create -e $SYMFONY_ENV && \
         bin/console doctrine:schema:create -e $SYMFONY_ENV && \
-        bin/console sylius:fixtures:load setono -e $SYMFONY_ENV && \
+        bin/console sylius:fixtures:load -e $SYMFONY_ENV && \
         bin/console server:run -d public -e $SYMFONY_ENV
     ```
 

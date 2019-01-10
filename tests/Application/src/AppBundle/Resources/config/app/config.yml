@@ -1,3 +1,6 @@
+imports:
+    - { resource: "@AppBundle/Resources/config/app/fixtures.yml" }
+
 sylius_product:
     resources:
         product:
