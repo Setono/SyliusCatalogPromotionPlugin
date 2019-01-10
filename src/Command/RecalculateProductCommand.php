@@ -12,9 +12,6 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-/**
- * Class RecalculateProductCommand
- */
 class RecalculateProductCommand extends Command
 {
     /**
@@ -28,8 +25,6 @@ class RecalculateProductCommand extends Command
     protected $productRecalculateHandler;
 
     /**
-     * RecalculateProductCommand constructor.
-     *
      * @param ProductRepositoryInterface $productRepository
      * @param ProductRecalculateHandlerInterface $productRecalculateHandler
      */
@@ -46,7 +41,7 @@ class RecalculateProductCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('setono:sylius-bulk-specials:recalculate-product')
@@ -62,7 +57,7 @@ class RecalculateProductCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $identifier = $input->getArgument('identifier');
 
@@ -77,7 +72,7 @@ class RecalculateProductCommand extends Command
         if (!count($products)) {
             $output->writeln('<error>Products was not found</error>');
 
-            return 0;
+            return;
         }
 
         /** @var ProductInterface $product */

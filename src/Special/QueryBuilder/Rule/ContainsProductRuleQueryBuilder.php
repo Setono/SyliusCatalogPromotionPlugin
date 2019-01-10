@@ -8,7 +8,7 @@ use Doctrine\ORM\QueryBuilder;
 
 class ContainsProductRuleQueryBuilder implements RuleQueryBuilderInterface
 {
-    const PARAMETER = 'product_code';
+    public const PARAMETER = 'product_code';
 
     /**
      * {@inheritdoc}

@@ -7,9 +7,6 @@ namespace Setono\SyliusBulkSpecialsPlugin\Form\Type;
 use Sylius\Bundle\PromotionBundle\Form\Type\Core\AbstractConfigurationCollectionType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-/**
- * Class SpecialRuleCollectionType
- */
 final class SpecialRuleCollectionType extends AbstractConfigurationCollectionType
 {
     /**

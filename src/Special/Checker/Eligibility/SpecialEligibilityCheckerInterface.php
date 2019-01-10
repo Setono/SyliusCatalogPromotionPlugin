@@ -7,9 +7,6 @@ namespace Setono\SyliusBulkSpecialsPlugin\Special\Checker\Eligibility;
 use Setono\SyliusBulkSpecialsPlugin\Model\SpecialInterface;
 use Setono\SyliusBulkSpecialsPlugin\Model\SpecialSubjectInterface;
 
-/**
- * Interface SpecialEligibilityCheckerInterface
- */
 interface SpecialEligibilityCheckerInterface
 {
     /**

@@ -7,13 +7,12 @@ namespace Setono\SyliusBulkSpecialsPlugin\Doctrine\ORM;
 use Setono\SyliusBulkSpecialsPlugin\Model\SpecialInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 
-/**
- * Interface SpecialRepositoryInterface
- */
 interface SpecialRepositoryInterface extends RepositoryInterface
 {
     /**
      * Actually, that is not accidentally, just time going on...
+     *
+     * @param \DateTimeInterface|null $date
      *
      * @return array|SpecialInterface[]
      */
@@ -21,6 +20,8 @@ interface SpecialRepositoryInterface extends RepositoryInterface
 
     /**
      * Actually, that is not accidentally, just time going on...
+     *
+     * @param \DateTimeInterface|null $date
      *
      * @return array|SpecialInterface[]
      */

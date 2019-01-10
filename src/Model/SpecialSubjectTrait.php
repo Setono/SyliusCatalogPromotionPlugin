@@ -9,9 +9,6 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use Sylius\Component\Core\Model\ChannelInterface;
 
-/**
- * Trait SpecialSubjectTrait
- */
 trait SpecialSubjectTrait
 {
     /**
@@ -84,6 +81,8 @@ trait SpecialSubjectTrait
     }
 
     /**
+     * @param string $channelCode
+     *
      * @return Collection|SpecialInterface[]
      */
     public function getExclusiveSpecialsForChannelCode(string $channelCode): Collection
@@ -94,6 +93,8 @@ trait SpecialSubjectTrait
     }
 
     /**
+     * @param string $channelCode
+     *
      * @return Collection|SpecialInterface[]
      */
     public function getActiveSpecialsForChannelCode(string $channelCode): Collection
@@ -103,7 +104,7 @@ trait SpecialSubjectTrait
                 return $channel->getCode();
             })->toArray();
 
-            return in_array($channelCode, $specialsChannelCodes) && $special->isEnabled();
+            return \in_array($channelCode, $specialsChannelCodes, true) && $special->isEnabled();
         });
     }
 

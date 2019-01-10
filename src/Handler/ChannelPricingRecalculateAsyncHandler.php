@@ -12,12 +12,9 @@ use Interop\Queue\PsrProcessor;
 use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 use Sylius\Component\Core\Model\ChannelPricingInterface;
 
-/**
- * Class ChannelPricingRecalculateAsyncHandler
- */
-class ChannelPricingRecalculateAsyncHandler extends AbstractChannelPricingHandler implements ChannelPricingRecalculateHandlerInterface, PsrProcessor, TopicSubscriberInterface
+class ChannelPricingRecalculateAsyncHandler extends AbstractChannelPricingHandler implements PsrProcessor, TopicSubscriberInterface
 {
-    const EVENT = 'setono_sylius_bulk_specials_topic_channel_pricing_recalculate';
+    public const EVENT = 'setono_sylius_bulk_specials_topic_channel_pricing_recalculate';
 
     /**
      * @var ProducerInterface
@@ -35,8 +32,6 @@ class ChannelPricingRecalculateAsyncHandler extends AbstractChannelPricingHandle
     protected $recalculateHandler;
 
     /**
-     * ChannelPricingRecalculateAsyncHandler constructor.
-     *
      * @param ProducerInterface $producer
      * @param EntityRepository $repository
      * @param ChannelPricingRecalculateHandler $recalculateHandler

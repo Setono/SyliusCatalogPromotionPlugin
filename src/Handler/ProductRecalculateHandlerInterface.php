@@ -6,9 +6,6 @@ namespace Setono\SyliusBulkSpecialsPlugin\Handler;
 
 use Setono\SyliusBulkSpecialsPlugin\Model\ProductInterface;
 
-/**
- * Interface ProductRecalculateHandlerInterface
- */
 interface ProductRecalculateHandlerInterface extends HandlerInterface
 {
     /**

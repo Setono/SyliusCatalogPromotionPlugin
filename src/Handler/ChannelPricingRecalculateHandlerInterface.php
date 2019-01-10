@@ -6,9 +6,6 @@ namespace Setono\SyliusBulkSpecialsPlugin\Handler;
 
 use Sylius\Component\Core\Model\ChannelPricingInterface;
 
-/**
- * Interface ChannelPricingRecalculateHandlerInterface
- */
 interface ChannelPricingRecalculateHandlerInterface extends HandlerInterface
 {
     /**

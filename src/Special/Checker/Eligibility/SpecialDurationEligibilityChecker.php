@@ -7,9 +7,6 @@ namespace Setono\SyliusBulkSpecialsPlugin\Special\Checker\Eligibility;
 use Setono\SyliusBulkSpecialsPlugin\Model\SpecialInterface;
 use Setono\SyliusBulkSpecialsPlugin\Model\SpecialSubjectInterface;
 
-/**
- * Class SpecialDurationEligibilityChecker
- */
 final class SpecialDurationEligibilityChecker implements SpecialEligibilityCheckerInterface
 {
     /**
@@ -25,10 +22,7 @@ final class SpecialDurationEligibilityChecker implements SpecialEligibilityCheck
         }
 
         $endsAt = $special->getEndsAt();
-        if (null !== $endsAt && $now > $endsAt) {
-            return false;
-        }
 
-        return true;
+        return !(null !== $endsAt && $now > $endsAt);
     }
 }

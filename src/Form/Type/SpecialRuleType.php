@@ -6,9 +6,6 @@ namespace Setono\SyliusBulkSpecialsPlugin\Form\Type;
 
 use Symfony\Component\Form\FormBuilderInterface;
 
-/**
- * Class SpecialRuleType
- */
 final class SpecialRuleType extends AbstractConfigurableSpecialElementType
 {
     /**

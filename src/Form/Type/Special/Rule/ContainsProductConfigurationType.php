@@ -10,12 +10,7 @@ use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\ReversedTransformer;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Type;
 
-/**
- * Class ContainsProductConfigurationType
- */
 final class ContainsProductConfigurationType extends AbstractType
 {
     /**
@@ -39,10 +34,6 @@ final class ContainsProductConfigurationType extends AbstractType
         $builder
             ->add('product_code', ProductAutocompleteChoiceType::class, [
                 'label' => 'setono_sylius_bulk_specials.form.special_rule.contains_product_configuration.product',
-//                'constraints' => [
-//                    new NotBlank(['groups' => ['sylius']]),
-//                    new Type(['type' => 'string', 'groups' => ['sylius']]),
-//                ],
             ])
         ;
 

@@ -12,12 +12,9 @@ use Interop\Queue\PsrProcessor;
 use Setono\SyliusBulkSpecialsPlugin\Model\ProductInterface;
 use Sylius\Bundle\CoreBundle\Doctrine\ORM\ProductRepository;
 
-/**
- * Class EligibleSpecialsReassignAsyncHandler
- */
 class EligibleSpecialsReassignAsyncHandler extends AbstractProductHandler implements EligibleSpecialsReassignHandlerInterface, PsrProcessor, TopicSubscriberInterface
 {
-    const EVENT = 'setono_sylius_bulk_specials_topic_reassign_specials';
+    public const EVENT = 'setono_sylius_bulk_specials_topic_reassign_specials';
 
     /**
      * @var ProducerInterface
@@ -35,8 +32,6 @@ class EligibleSpecialsReassignAsyncHandler extends AbstractProductHandler implem
     protected $handler;
 
     /**
-     * EligibleSpecialsReassignAsyncHandler constructor.
-     *
      * @param ProducerInterface $producer
      * @param ProductRepository $repository
      * @param EligibleSpecialsReassignHandler $handler

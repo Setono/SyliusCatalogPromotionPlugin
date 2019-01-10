@@ -9,9 +9,6 @@ use Setono\SyliusBulkSpecialsPlugin\Doctrine\ORM\ProductRepositoryInterface;
 use Setono\SyliusBulkSpecialsPlugin\Model\SpecialInterface;
 use Setono\SyliusBulkSpecialsPlugin\Model\SpecialSubjectInterface;
 
-/**
- * Class SpecialRecalculateHandler
- */
 class SpecialRecalculateHandler extends AbstractSpecialHandler
 {
     /**
@@ -32,8 +29,6 @@ class SpecialRecalculateHandler extends AbstractSpecialHandler
     protected $productRecalculateHandler;
 
     /**
-     * SpecialRecalculateHandler constructor.
-     *
      * @param EntityManager $entityManager
      * @param ProductRepositoryInterface $productRepository
      * @param ProductRecalculateHandlerInterface $productRecalculateHandler
