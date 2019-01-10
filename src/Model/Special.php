@@ -124,8 +124,8 @@ class Special implements SpecialInterface
     public function isSpecialActiveAt(\DateTime $now): bool
     {
         return
-            (null !== $this->getStartsAt() && $now->getTimestamp() > $this->getStartsAt()->getTimestamp()) &&
-            (null !== $this->getEndsAt() && $now->getTimestamp() < $this->getEndsAt()->getTimestamp())
+            (null === $this->getStartsAt() || $now->getTimestamp() > $this->getStartsAt()->getTimestamp()) &&
+            (null === $this->getEndsAt() || $now->getTimestamp() < $this->getEndsAt()->getTimestamp())
             ;
     }
 
