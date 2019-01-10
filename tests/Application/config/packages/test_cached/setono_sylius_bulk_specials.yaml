@@ -1,0 +1,2 @@
+setono_sylius_bulk_specials:
+    queue: false
