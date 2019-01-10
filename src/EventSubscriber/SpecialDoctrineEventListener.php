@@ -18,6 +18,11 @@ class SpecialDoctrineEventListener
     protected $specialRecalculateHandler;
 
     /**
+     * @var array|SpecialInterface[]
+     */
+    private $specialsToRecalculate = [];
+
+    /**
      * @param SpecialRecalculateHandlerInterface $specialRecalculateHandler
      */
     public function __construct(
@@ -42,14 +47,26 @@ class SpecialDoctrineEventListener
         if (($args->hasChangedField('actionType') && $args->getOldValue('actionType') !== $args->getNewValue('action_type')) ||
             ($args->hasChangedField('actionPercent') && $args->getOldValue('actionPercent') !== $args->getNewValue('actionPercent'))) {
             if ($this->specialRecalculateHandler instanceof SpecialRecalculateHandler) {
-                // Important: This will not work with non-async handlers as far as
-                // new values not yet applied and recalculation result will be the same as before
-
-                // @todo Dirty workaround
-                // - Store Special that should be recalculated
-                // - At postUpdateSpecial handler - recalculate if given Special === storedSpecial
+                $this->specialsToRecalculate[$entity->getId()] = $entity;
                 return;
             }
+
+            $this->specialRecalculateHandler->handle($entity);
+        }
+    }
+
+    /**
+     * @param LifecycleEventArgs $args
+     */
+    public function postUpdate(LifecycleEventArgs $args): void
+    {
+        $entity = $args->getObject();
+        if (!$entity instanceof SpecialInterface) {
+            return;
+        }
+
+        if (isset($this->specialsToRecalculate[$entity->getId()])) {
+            unset($this->specialsToRecalculate[$entity->getId()]);
 
             $this->specialRecalculateHandler->handle($entity);
         }

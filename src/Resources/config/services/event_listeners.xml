@@ -12,6 +12,7 @@
             <argument type="service" id="setono_sylius_bulk_specials.recalculate_handler.channel_pricing" />
 
             <tag name="doctrine.event_listener" event="preUpdate" lazy="true" />
+            <tag name="doctrine.event_listener" event="postUpdate" lazy="true" />
         </service>
 
         <service id="setono_sylius_bulk_specials.doctrine_event_listener.product"
@@ -26,6 +27,7 @@
             <argument type="service" id="setono_sylius_bulk_specials.recalculate_handler.special" />
 
             <tag name="doctrine.event_listener" event="preUpdate" lazy="true" />
+            <tag name="doctrine.event_listener" event="postUpdate" lazy="true" />
             <tag name="doctrine.event_listener" event="postPersist" lazy="true" />
         </service>
 
