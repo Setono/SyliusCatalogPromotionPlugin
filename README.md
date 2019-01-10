@@ -1,4 +1,12 @@
-# SetonoSyliusBulkSpecialsPlugin
+<p align="center">
+    <a href="https://sylius.com" target="_blank">
+        <img src="https://demo.sylius.com/assets/shop/img/logo.png" />
+    </a>
+</p>
+
+<h1 align="center">SetonoSyliusBulkSpecialsPlugin</h1>
+
+<p align="center">
 
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Software License][ico-license]](LICENSE)
@@ -13,6 +21,8 @@ and applies to `price` field.
 
 All calculations can be done immediately
 (if you have not much products in your store) or asynchronously via queues.
+
+</p>
 
 ## Install
 
