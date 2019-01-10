@@ -17,7 +17,7 @@ final class ContainsProductRuleChecker implements RuleCheckerInterface
      */
     public function isEligible(SpecialSubjectInterface $subject, array $configuration): bool
     {
-        if (!isset($configuration['product_code'])) {
+        if (!isset($configuration['product'])) {
             return false;
         }
 
@@ -25,6 +25,6 @@ final class ContainsProductRuleChecker implements RuleCheckerInterface
             throw new UnsupportedTypeException($subject, ProductInterface::class);
         }
 
-        return $configuration['product_code'] === $subject->getCode();
+        return $configuration['product'] === $subject->getCode();
     }
 }

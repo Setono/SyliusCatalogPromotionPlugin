@@ -70,7 +70,7 @@ class SpecialRuleFactory implements SpecialRuleFactoryInterface
     {
         return $this->createSpecialRule(
             ContainsProductRuleChecker::TYPE,
-            ['product_code' => $productCode]
+            ['product' => $productCode]
         );
     }
 
@@ -81,7 +81,7 @@ class SpecialRuleFactory implements SpecialRuleFactoryInterface
     {
         return $this->createSpecialRule(
             ContainsProductsRuleChecker::TYPE,
-            ['product_codes' => $productCodes]
+            ['products' => $productCodes]
         );
     }
 

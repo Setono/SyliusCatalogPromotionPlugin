@@ -32,12 +32,12 @@ final class ContainsProductConfigurationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('product_code', ProductAutocompleteChoiceType::class, [
+            ->add('product', ProductAutocompleteChoiceType::class, [
                 'label' => 'setono_sylius_bulk_specials.form.special_rule.contains_product_configuration.product',
             ])
         ;
 
-        $builder->get('product_code')->addModelTransformer(
+        $builder->get('product')->addModelTransformer(
             new ReversedTransformer(new ResourceToIdentifierTransformer($this->productRepository, 'code'))
         );
     }
