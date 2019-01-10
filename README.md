@@ -24,6 +24,12 @@ All calculations can be done immediately
 
 </p>
 
+![Screenshot showing admin menu](docs/admin-menu.png)
+
+![Screenshot showing specials admin page](docs/admin-specials.png)
+
+![Screenshot showing products admin actions](docs/admin-products-actions.png)
+
 ## Install
 
 ### Add plugin to composer.json
