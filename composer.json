@@ -61,9 +61,57 @@
         "sort-packages": true
     },
     "scripts": {
-        "test": "./vendor/bin/phpunit",
-        "check-style": "./vendor/bin/ecs check src/ tests/Application/src/",
-        "fix-style": "./vendor/bin/ecs check src/ tests/Application/src/ --fix",
-        "analyse": "./vendor/bin/phpstan.phar analyse -c phpstan.neon -l max src/ tests/Application/src/"
+        "try": [
+            "composer ensure-vendors-installed",
+            "composer assets",
+            "composer fixtures",
+            "composer run"
+        ],
+        "assets": [
+            "composer ensure-assets-installed",
+            "composer ensure-assets-compiled"
+        ],
+        "fixtures": [
+            "composer ensure-database-created",
+            "composer ensure-schema-updated",
+            "(cd tests/Application && bin/console sylius:fixtures:load --no-interaction -e ${SYMFONY_ENV:-'dev'})"
+        ],
+        "run": [
+            "composer ensure-env-copied",
+            "(cd tests/Application && bin/console server:run -d public -e ${SYMFONY_ENV:-'dev'})"
+        ],
+        "all": [
+            "composer checks",
+            "composer tests"
+        ],
+        "checks": [
+            "composer check-style",
+            "composer analyse"
+        ],
+        "tests": [
+            "composer phpspec",
+            "composer behat"
+        ],
+        "phpspec": "./vendor/bin/phpspec run -vvv",
+        "behat": [
+            "SYMFONY_ENV=test composer ensure-database-created",
+            "SYMFONY_ENV=test composer ensure-schema-updated",
+            "SYMFONY_ENV=test composer ensure-env-copied",
+            "./vendor/bin/behat --no-interaction --format=progress"
+        ],
+        "check-style": "./vendor/bin/ecs check src tests/Application/src",
+        "fix-style": "./vendor/bin/ecs check src tests/Application/src --fix",
+        "analyse": [
+            "composer ensure-test-container-exists",
+            "./vendor/bin/phpstan.phar analyse -c phpstan.neon -l max src tests/Application/src"
+        ],
+        "ensure-vendors-installed": "[[ -f vendor/autoload.php ]] || composer install",
+        "ensure-assets-installed": "[[ -d tests/Application/node_modules ]] || (cd tests/Application && yarn install)",
+        "ensure-assets-compiled": "[[ -d tests/Application/public/assets ]] || (cd tests/Application && yarn build && composer ensure-env-copied && bin/console assets:install public -e ${SYMFONY_ENV:-'dev'})",
+        "ensure-database-created": "composer ensure-env-copied && (cd tests/Application && bin/console doctrine:database:create --if-not-exists -e ${SYMFONY_ENV:-'dev'})",
+        "ensure-schema-updated": "composer ensure-env-copied && (cd tests/Application && bin/console doctrine:schema:update --force -e ${SYMFONY_ENV:-'dev'})",
+        "ensure-test-container-exists": "[[ -f tests/Application/var/cache/test/ApplicationTests_Setono_SyliusReturnsPlugin_Application_KernelTestDebugContainer.xml ]] || (cd tests/Application && php -d memory_limit=-1 bin/console cache:clear --env=test)",
+        "ensure-env-test-copied": "(cd tests/Application && ([[ -f .env.test ]] || cp .env.test.dist .env.test))",
+        "ensure-env-copied": "composer ensure-env-test-copied && (cd tests/Application && cp .env.${SYMFONY_ENV:-'dev'}.dist .env)"
     }
 }
