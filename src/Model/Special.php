@@ -129,6 +129,16 @@ class Special implements SpecialInterface
             ;
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function getChannelCodes(): array
+    {
+        return $this->channels->map(function (ChannelInterface $channel) {
+            return $channel->getCode();
+        })->toArray();
+    }
+
     public function __construct()
     {
         $this->createdAt = new \DateTime();

@@ -76,11 +76,7 @@ trait SpecialSubjectTrait
     {
         $date = new \DateTime();
         return $this->getSortedSpecials()->filter(function (SpecialInterface $special) use ($channelCode, $date) {
-            $specialsChannelCodes = $special->getChannels()->map(function (ChannelInterface $channel) {
-                return $channel->getCode();
-            })->toArray();
-
-            return \in_array($channelCode, $specialsChannelCodes, true) && $special->isSpecialActiveAt($date);
+            return \in_array($channelCode, $special->getChannelCodes(), true) && $special->isSpecialActiveAt($date);
         });
     }
 

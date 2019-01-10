@@ -29,6 +29,11 @@ interface SpecialInterface extends ChannelsAwareInterface, CodeAwareInterface, T
     public function isSpecialActiveAt(\DateTime $now): bool;
 
     /**
+     * @return array|string[]
+     */
+    public function getChannelCodes(): array;
+
+    /**
      * @return string|null
      */
     public function getName(): ?string;
