@@ -97,7 +97,7 @@
             "SYMFONY_ENV=test composer ensure-database-created",
             "SYMFONY_ENV=test composer ensure-schema-updated",
             "SYMFONY_ENV=test composer ensure-env-copied",
-            "./vendor/bin/behat --no-interaction --format=progress"
+            "./vendor/bin/behat --tags=\"~@javascript\" --no-interaction --format=progress"
         ],
         "check-style": "./vendor/bin/ecs check src tests/Application/src",
         "fix-style": "./vendor/bin/ecs check src tests/Application/src --fix",

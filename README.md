@@ -351,43 +351,85 @@ Lets list what bulk actions we have to execute:
 - And run `Reassign Specials for all Products` &
   `Recalculate special prices for all Products`
 
-# (Manually) Test plugin
+# Contribution
 
-- Run application:
-  (by default application have default config at `dev` environment
-  and example config from `Configure plugin` step at `prod` environment)
+## Installation
+
+To automatically execute installation steps, load fixtures 
+and run server with just one command, run:
+
+```bash
+# Optional step, if 5 mins enough for webserver to try
+# @see https://getcomposer.org/doc/06-config.md#process-timeout
+composer config --global process-timeout 0
+
+composer try
+```
+
+or follow next steps manually:
+
+* Initialize:
 
     ```bash
-    SYMFONY_ENV=dev
-    cd tests/Application && \
-        yarn install && \
-        yarn run gulp && \
-        bin/console assets:install public -e $SYMFONY_ENV && \
-        bin/console doctrine:database:drop --force -e $SYMFONY_ENV && \
-        bin/console doctrine:database:create -e $SYMFONY_ENV && \
-        bin/console doctrine:schema:create -e $SYMFONY_ENV && \
-        bin/console sylius:fixtures:load -e $SYMFONY_ENV && \
-        bin/console server:run -d public -e $SYMFONY_ENV
+    SYMFONY_ENV=test
+    (cd tests/Application && yarn install) && \
+        (cd tests/Application && yarn build) && \
+        (cd tests/Application && bin/console assets:install public -e $SYMFONY_ENV) && \
+        (cd tests/Application && bin/console doctrine:database:create -e $SYMFONY_ENV) && \
+        (cd tests/Application && bin/console doctrine:schema:create -e $SYMFONY_ENV)
     ```
 
-- Log in at `http://localhost:8000/admin`
-  with Sylius demo credentials:
-  
-  ```
-  Login: sylius@example.com
-  Password: sylius 
-  ```
+* If you want to manually play with plugin test app, run:
 
-- ...
+    ```bash
+    SYMFONY_ENV=test
+    (cd tests/Application && bin/console sylius:fixtures:load --no-interaction -e $SYMFONY_ENV && \
+        (cd tests/Application && bin/console server:run -d public -e $SYMFONY_ENV)
+    ```
 
-# TODO
+## Running plugin tests
 
-- Tests
-- Cleanup:
-  - Improve translations
-  - Remove (or no?) product_code, leave only product_codes rule
-  - [Pull request to Sylius?] Bulk action buttons looks ugly in current design (solution is "float:left" in form's style)
+  - PHPSpec
 
+    ```bash
+    $ composer phpspec
+    ```
+
+  - Behat (non-JS scenarios)
+
+    ```bash
+    $ composer behat
+    ```
+
+  - All tests (phpspec & behat)
+
+    ```bash
+    $ composer test
+    ```
+
+  - Behat (JS scenarios)
+ 
+    1. Download [Chromedriver](https://sites.google.com/a/chromium.org/chromedriver/)
+    
+    2. Download [Selenium Standalone Server](https://www.seleniumhq.org/download/).
+    
+    2. Run Selenium server with previously downloaded Chromedriver:
+    
+        ```bash
+        $ java -Dwebdriver.chrome.driver=chromedriver -jar selenium-server-standalone.jar
+        ```
+        
+    3. Run test application's webserver on `localhost:8080`:
+    
+        ```bash
+        $ (cd tests/Application && bin/console server:run localhost:8080 -d public -e test)
+        ```
+    
+    4. Run Behat:
+    
+        ```bash
+        $ vendor/bin/behat --tags="@javascript"
+ 
 [ico-version]: https://img.shields.io/packagist/v/setono/sylius-bulk-specials-plugin.svg?style=flat-square
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
 [ico-travis]: https://img.shields.io/travis/Setono/SyliusBulkSpecialsPlugin/master.svg?style=flat-square
