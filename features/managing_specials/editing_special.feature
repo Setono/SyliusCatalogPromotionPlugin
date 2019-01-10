@@ -1,4 +1,4 @@
-@managing_specials
+@setono_sylius_bulk_specials_managing_specials
 Feature: Editing special
     In order to change special details
     As an Administrator

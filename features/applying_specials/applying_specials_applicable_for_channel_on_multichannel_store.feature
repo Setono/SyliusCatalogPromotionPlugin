@@ -1,4 +1,4 @@
-@applying_specials
+@setono_sylius_bulk_specials_applying_specials
 Feature: Applying specials only to configured channel prices
     As an Administrator
     I want special discount applied only to specified channel prices

@@ -1,4 +1,4 @@
-@managing_specials
+@setono_sylius_bulk_specials_managing_specials
 Feature: special validation
     In order to avoid making mistakes when managing a special
     As an Administrator

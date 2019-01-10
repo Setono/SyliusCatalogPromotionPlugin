@@ -1,4 +1,4 @@
-@managing_specials
+@setono_sylius_bulk_specials_managing_specials
 Feature: Special unique code validation
     In order to uniquely identify specials
     As an Administrator

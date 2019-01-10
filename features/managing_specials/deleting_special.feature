@@ -1,4 +1,4 @@
-@managing_specials
+@setono_sylius_bulk_specials_managing_specials
 Feature: Deleting a special
     In order to remove test, obsolete or incorrect specials
     As an Administrator
@@ -9,7 +9,7 @@ Feature: Deleting a special
         And there is a special "Christmas sale"
         And I am logged in as an administrator
 
-    @domain @ui
+    @ui
     Scenario: Deleted special should disappear from the registry
         When I delete a "Christmas sale" special
         Then I should be notified that it has been successfully deleted

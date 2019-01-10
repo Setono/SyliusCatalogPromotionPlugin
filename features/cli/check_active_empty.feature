@@ -1,4 +1,4 @@
-@special_commands @cli
+@setono_sylius_bulk_specials_commands
 Feature: Special CLI feature
     In order to enable/disable specials via CLI
     As a Developer

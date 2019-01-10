@@ -1,4 +1,4 @@
-@applying_specials
+@setono_sylius_bulk_specials_applying_specials
 Feature: Applying special with an expiration date
     As a Visitor
     I want to have special's discounts applied to products only if special is valid
