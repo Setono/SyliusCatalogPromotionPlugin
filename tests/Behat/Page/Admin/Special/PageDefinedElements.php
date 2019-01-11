@@ -12,7 +12,7 @@ trait PageDefinedElements
     /**
      * @return array
      */
-    protected function getDefinedElements()
+    protected function getDefinedElements(): array
     {
         return [
             'code' => '#setono_sylius_bulk_specials_special_code',
