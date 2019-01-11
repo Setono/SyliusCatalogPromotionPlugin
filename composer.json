@@ -36,7 +36,6 @@
         "symfony/debug-bundle": "^3.4|^4.1",
         "symfony/dotenv": "^3.4|^4.1",
         "symfony/intl": "^3.4|^4.1",
-        "symfony/var-dumper": "^4.2",
         "symfony/web-profiler-bundle": "^3.4|^4.1",
         "symfony/web-server-bundle": "^3.4|^4.1"
     },
@@ -50,8 +49,7 @@
     "autoload-dev": {
         "psr-4": {
             "AppBundle\\": "tests/Application/src/AppBundle/"
-        },
-        "files": [ "vendor/symfony/var-dumper/Resources/functions/dump.php" ]
+        }
     },
     "extra": {
         "branch-alias": {
