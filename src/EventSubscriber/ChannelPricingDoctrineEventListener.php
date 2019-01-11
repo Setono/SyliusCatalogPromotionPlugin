@@ -47,6 +47,7 @@ class ChannelPricingDoctrineEventListener
             if ($this->channelPricingRecalculateHandler instanceof ChannelPricingRecalculateHandler) {
                 // Store to recalculate after flush
                 $this->channelPricingsToRecalculate[$entity->getId()] = $entity;
+
                 return;
             }
 

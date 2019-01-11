@@ -8,7 +8,6 @@ use Doctrine\ORM\EntityManager;
 use Setono\SyliusBulkSpecialsPlugin\Doctrine\ORM\ProductRepositoryInterface;
 use Setono\SyliusBulkSpecialsPlugin\Model\ProductInterface;
 use Setono\SyliusBulkSpecialsPlugin\Model\SpecialInterface;
-use Setono\SyliusBulkSpecialsPlugin\Model\SpecialSubjectInterface;
 
 class SpecialRecalculateHandler extends AbstractSpecialHandler
 {

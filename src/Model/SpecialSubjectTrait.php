@@ -7,7 +7,6 @@ namespace Setono\SyliusBulkSpecialsPlugin\Model;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
-use Sylius\Component\Core\Model\ChannelInterface;
 
 trait SpecialSubjectTrait
 {
@@ -30,7 +29,8 @@ trait SpecialSubjectTrait
     public function getActiveSpecials(): Collection
     {
         $date = new \DateTime();
-        return $this->getSortedSpecials()->filter(function (SpecialInterface $special) use($date) {
+
+        return $this->getSortedSpecials()->filter(function (SpecialInterface $special) use ($date) {
             return $special->isSpecialActiveAt($date);
         });
     }
@@ -75,6 +75,7 @@ trait SpecialSubjectTrait
     public function getActiveSpecialsForChannelCode(string $channelCode): Collection
     {
         $date = new \DateTime();
+
         return $this->getSortedSpecials()->filter(function (SpecialInterface $special) use ($channelCode, $date) {
             return \in_array($channelCode, $special->getChannelCodes(), true) && $special->isSpecialActiveAt($date);
         });

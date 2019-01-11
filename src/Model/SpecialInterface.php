@@ -24,6 +24,7 @@ interface SpecialInterface extends ChannelsAwareInterface, CodeAwareInterface, T
 
     /**
      * @param \DateTime $now
+     *
      * @return bool
      */
     public function isSpecialActiveAt(\DateTime $now): bool;
