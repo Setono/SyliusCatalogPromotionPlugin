@@ -73,8 +73,7 @@ return [
 
 ```
 
-**Note**, that we MUST instantiate `SetonoSyliusBulkSpecialsPlugin` 
-BEFORE `SyliusGridBundle` (which instantiates at `parent::registerBundles()`). 
+**Note**, that we MUST define `SetonoSyliusBulkSpecialsPlugin` BEFORE `SyliusGridBundle`.
 Otherwise you'll see exception like this:
 
 ```bash
