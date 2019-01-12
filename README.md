@@ -68,7 +68,6 @@ return [
     // ...
     // Uncomment if you want to use queues
     // Enqueue\Bundle\EnqueueBundle::class => ['all' => true],
-    AppBundle\AppBundle::class => ['all' => true],
     // ...
 ];
 
