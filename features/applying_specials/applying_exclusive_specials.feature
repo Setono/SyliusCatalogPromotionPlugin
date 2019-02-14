@@ -11,7 +11,11 @@ Feature: Receiving discount from most prioritized exclusive special
 
     @ui
     Scenario: Receiving exclusive product discount from special with greater priority
-        Given there is an exclusive special "10% off for 1L mugs" with priority 1
+        # This special shouldn't be applied
+        Given there is a special "50% off for mugs"
+        And it gives "50%" off on a "1L Mug" product
+        # And this one - should
+        And there is an exclusive special "10% off for 1L mugs" with priority 1
         And it gives "10%" off on a "1L Mug" product
         And there is an exclusive special "20% off for 1L mugs" with priority 2
         And it gives "20%" off on a "1L Mug" product
@@ -20,7 +24,11 @@ Feature: Receiving discount from most prioritized exclusive special
 
     @ui
     Scenario: Receiving exclusive taxonomy discount from special with greater priority
-        Given there is an exclusive special "10% off for 1L mugs" with priority 1
+        # This special shouldn't be applied
+        Given there is a special "50% off for mugs"
+        And it gives "50%" off on every product classified as "Mugs"
+        # And this one - should
+        And there is an exclusive special "10% off for 1L mugs" with priority 1
         And it gives "10%" off on every product classified as "Mugs"
         And there is an exclusive special "20% off for 1L mugs" with priority 2
         And it gives "30%" off on every product classified as "Mugs"
