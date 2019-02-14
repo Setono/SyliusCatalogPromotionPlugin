@@ -21,7 +21,7 @@ interface UpdatePageInterface extends BaseUpdatePageInterface
     /**
      * @param string $name
      */
-    public function nameIt($name);
+    public function nameIt(string $name): void;
 
     /**
      * @param string $channelName
