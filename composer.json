@@ -105,7 +105,7 @@
             "composer ensure-test-container-exists",
             "./vendor/bin/phpstan.phar analyse -c phpstan.neon -l max src tests/Application/src"
         ],
-        "ensure-vendors-installed": "[[ -f vendor/autoload.php ]] || composer install",
+        "ensure-vendors-installed": "[[ -f vendor/autoload.php ]] || COMPOSER_MEMORY_LIMIT=-1 composer install",
         "ensure-assets-installed": "[[ -d tests/Application/node_modules ]] || (cd tests/Application && yarn install)",
         "ensure-assets-compiled": "[[ -d tests/Application/public/assets ]] || (cd tests/Application && yarn build && composer ensure-env-copied && bin/console assets:install public -e ${SYMFONY_ENV:-'dev'})",
         "ensure-database-created": "composer ensure-env-copied && (cd tests/Application && bin/console doctrine:database:create --if-not-exists -e ${SYMFONY_ENV:-'dev'})",
