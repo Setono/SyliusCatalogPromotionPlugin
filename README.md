@@ -234,6 +234,27 @@ setono_sylius_bulk_specials_admin:
 * Override `ProductRepository` service definition as it shown at 
   [tests/Application/src/AppBundle/Resources/config/services.xml](tests/Application/src/AppBundle/Resources/config/services.xml).
 
+  ```xml
+    <service id="sylius.repository.product"
+             class="%sylius.repository.product.class%">
+        <factory service="doctrine.orm.default_entity_manager" method="getRepository" />
+        <argument>%sylius.model.product.class%</argument>
+        <call method="setRuleQueryBuilder">
+            <argument type="service" id="setono_sylius_bulk_specials.registry.special_rule_query_builder" />
+        </call>
+    </service>
+  ```
+
+  ```yaml
+     sylius.repository.product:
+         class: "%sylius.repository.product.class%"
+         factory: ["@doctrine.orm.default_entity_manager", "getRepository"]
+         arguments:
+           - "%sylius.model.product.class%"
+         calls:
+           - ["setRuleQueryBuilder", ["@setono_sylius_bulk_specials.registry.special_rule_query_builder"]]
+  ```
+
 ### Update your schema (for existing project)
 
 ```bash
