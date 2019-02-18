@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Setono\SyliusBulkSpecialsPlugin\Handler;
 
+use Doctrine\ORM\EntityManager;
 use Enqueue\Client\ProducerInterface;
 use Enqueue\Client\TopicSubscriberInterface;
 use Interop\Queue\PsrContext;
@@ -29,7 +30,14 @@ class EligibleSpecialsReassignAsyncHandler extends AbstractProductHandler implem
     /**
      * @var EligibleSpecialsReassignHandler
      */
-    protected $handler;
+    protected $eligibleSpecialsReassignHandler;
+
+    /**
+     * Required for cleanup
+     *
+     * @var EntityManager
+     */
+    protected $entityManager;
 
     /**
      * @param ProducerInterface $producer
@@ -39,11 +47,13 @@ class EligibleSpecialsReassignAsyncHandler extends AbstractProductHandler implem
     public function __construct(
         ProducerInterface $producer,
         ProductRepository $repository,
-        EligibleSpecialsReassignHandler $handler
+        EligibleSpecialsReassignHandler $eligibleSpecialsReassignHandler,
+        EntityManager $entityManager
     ) {
         $this->producer = $producer;
         $this->repository = $repository;
-        $this->handler = $handler;
+        $this->eligibleSpecialsReassignHandler = $eligibleSpecialsReassignHandler;
+        $this->entityManager = $entityManager;
     }
 
     /**
@@ -71,7 +81,10 @@ class EligibleSpecialsReassignAsyncHandler extends AbstractProductHandler implem
             return self::REJECT;
         }
 
-        $this->handler->handle($product);
+        $this->eligibleSpecialsReassignHandler->handle($product);
+
+        $this->entityManager->flush();
+        $this->entityManager->clear();
 
         return self::ACK;
     }

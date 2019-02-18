@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Setono\SyliusBulkSpecialsPlugin\Handler;
 
+use Doctrine\ORM\EntityManager;
 use Enqueue\Client\ProducerInterface;
 use Enqueue\Client\TopicSubscriberInterface;
 use Interop\Queue\PsrContext;
@@ -32,6 +33,13 @@ class ProductRecalculateAsyncHandler extends AbstractProductHandler implements P
     protected $recalculateHandler;
 
     /**
+     * Required for cleanup
+     *
+     * @var EntityManager
+     */
+    protected $entityManager;
+
+    /**
      * @param ProducerInterface $producer
      * @param ProductRepository $repository
      * @param ProductRecalculateHandler $recalculateHandler
@@ -39,11 +47,13 @@ class ProductRecalculateAsyncHandler extends AbstractProductHandler implements P
     public function __construct(
         ProducerInterface $producer,
         ProductRepository $repository,
-        ProductRecalculateHandler $recalculateHandler
+        ProductRecalculateHandler $recalculateHandler,
+        EntityManager $entityManager
     ) {
         $this->producer = $producer;
         $this->repository = $repository;
         $this->recalculateHandler = $recalculateHandler;
+        $this->entityManager = $entityManager;
     }
 
     /**
@@ -72,6 +82,9 @@ class ProductRecalculateAsyncHandler extends AbstractProductHandler implements P
         }
 
         $this->recalculateHandler->handle($product);
+
+        $this->entityManager->flush();
+        $this->entityManager->clear();
 
         return self::ACK;
     }
