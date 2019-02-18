@@ -5,9 +5,13 @@ declare(strict_types=1);
 namespace Setono\SyliusBulkSpecialsPlugin\EventSubscriber;
 
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
+use Setono\SyliusBulkSpecialsPlugin\Doctrine\ORM\ProductRepositoryInterface;
+use Setono\SyliusBulkSpecialsPlugin\Handler\ProductRecalculateHandlerInterface;
 use Setono\SyliusBulkSpecialsPlugin\Handler\SpecialRecalculateHandler;
 use Setono\SyliusBulkSpecialsPlugin\Handler\SpecialRecalculateHandlerInterface;
+use Setono\SyliusBulkSpecialsPlugin\Model\ProductInterface;
 use Setono\SyliusBulkSpecialsPlugin\Model\SpecialInterface;
 
 class SpecialDoctrineEventListener
@@ -18,17 +22,41 @@ class SpecialDoctrineEventListener
     protected $specialRecalculateHandler;
 
     /**
+     * @var ProductRecalculateHandlerInterface
+     */
+    protected $productRecalculateHandler;
+
+    /**
+     * @var ProductRepositoryInterface
+     */
+    protected $productRepository;
+
+    /**
+     * @var EntityManager
+     */
+    protected $productManager;
+
+    /**
      * @var array|SpecialInterface[]
      */
     private $specialsToRecalculate = [];
 
     /**
      * @param SpecialRecalculateHandlerInterface $specialRecalculateHandler
+     * @param ProductRecalculateHandlerInterface $productRecalculateHandler
+     * @param ProductRepositoryInterface $productRepository
+     * @param EntityManager $productManager
      */
     public function __construct(
-        SpecialRecalculateHandlerInterface $specialRecalculateHandler
+        SpecialRecalculateHandlerInterface $specialRecalculateHandler,
+        ProductRecalculateHandlerInterface $productRecalculateHandler,
+        ProductRepositoryInterface $productRepository,
+        EntityManager $productManager
     ) {
         $this->specialRecalculateHandler = $specialRecalculateHandler;
+        $this->productRecalculateHandler = $productRecalculateHandler;
+        $this->productRepository = $productRepository;
+        $this->productManager = $productManager;
     }
 
     /**
@@ -87,5 +115,31 @@ class SpecialDoctrineEventListener
         }
 
         $this->specialRecalculateHandler->handle($entity);
+    }
+
+    /**
+     * On Special remove - detach it from and recalculate all products related to it
+     *
+     * @param LifecycleEventArgs $args
+     */
+    public function preRemove(LifecycleEventArgs $args): void
+    {
+        $entity = $args->getObject();
+        if (!$entity instanceof SpecialInterface) {
+            return;
+        }
+
+        $iterableResult = $this->productRepository->findBySpecialQB($entity)->getQuery()->iterate();
+        foreach ($iterableResult as $productRow) {
+            /** @var ProductInterface $product */
+            $product = $productRow[0];
+
+            if ($product->hasSpecial($entity)) {
+                $product->removeSpecial($entity);
+                $this->productManager->persist($product);
+            }
+
+            $this->productRecalculateHandler->handleProduct($product);
+        }
     }
 }
