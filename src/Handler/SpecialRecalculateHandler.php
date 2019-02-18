@@ -4,20 +4,13 @@ declare(strict_types=1);
 
 namespace Setono\SyliusBulkSpecialsPlugin\Handler;
 
-use Doctrine\ORM\EntityManager;
+use Psr\Log\LoggerInterface;
 use Setono\SyliusBulkSpecialsPlugin\Doctrine\ORM\ProductRepositoryInterface;
 use Setono\SyliusBulkSpecialsPlugin\Model\ProductInterface;
 use Setono\SyliusBulkSpecialsPlugin\Model\SpecialInterface;
 
 class SpecialRecalculateHandler extends AbstractSpecialHandler
 {
-    /**
-     * Required for cleanup
-     *
-     * @var EntityManager
-     */
-    protected $entityManager;
-
     /**
      * @var ProductRepositoryInterface
      */
@@ -29,16 +22,17 @@ class SpecialRecalculateHandler extends AbstractSpecialHandler
     protected $productRecalculateHandler;
 
     /**
-     * @param EntityManager $entityManager
+     * @param LoggerInterface $logger
      * @param ProductRepositoryInterface $productRepository
      * @param ProductRecalculateHandlerInterface $productRecalculateHandler
      */
     public function __construct(
-        EntityManager $entityManager,
+        LoggerInterface $logger,
         ProductRepositoryInterface $productRepository,
         ProductRecalculateHandlerInterface $productRecalculateHandler
     ) {
-        $this->entityManager = $entityManager;
+        parent::__construct($logger);
+
         $this->productRepository = $productRepository;
         $this->productRecalculateHandler = $productRecalculateHandler;
     }
@@ -48,6 +42,11 @@ class SpecialRecalculateHandler extends AbstractSpecialHandler
      */
     public function handleSpecial(SpecialInterface $special): void
     {
+        $this->log(sprintf(
+            "Special '%s' recalculate started...",
+            (string) $special
+        ));
+
         // @see Good explanation at https://stackoverflow.com/a/26698814
         $iterableResult = $this->productRepository->findBySpecialQB($special)->getQuery()->iterate();
 
@@ -57,10 +56,23 @@ class SpecialRecalculateHandler extends AbstractSpecialHandler
 
             if (!$product->hasSpecial($special)) {
                 $product->addSpecial($special);
+
+                $this->log(sprintf(
+                    "Special '%s' assigned to Product '%s'",
+                    (string) $special,
+                    (string) $product
+                ));
+
                 $this->productRepository->add($product);
             }
 
             $this->productRecalculateHandler->handleProduct($product);
         }
+
+        $this->log(sprintf(
+            "Special '%s' recalculate finished.",
+            (string) $special
+        ));
     }
+
 }

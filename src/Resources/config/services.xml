@@ -21,6 +21,7 @@
         <service id="setono_sylius_bulk_specials.applicator.product_specials"
                  class="Setono\SyliusBulkSpecialsPlugin\Special\Applicator\ProductSpecialsApplicator">
             <argument type="service" id="sylius.repository.channel_pricing" />
+            <argument type="service" id="logger" />
         </service>
 
     </services>

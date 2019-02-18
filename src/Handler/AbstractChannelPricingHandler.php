@@ -6,7 +6,7 @@ namespace Setono\SyliusBulkSpecialsPlugin\Handler;
 
 use Sylius\Component\Core\Model\ChannelPricingInterface;
 
-abstract class AbstractChannelPricingHandler implements ChannelPricingRecalculateHandlerInterface
+abstract class AbstractChannelPricingHandler extends AbstractHandler implements ChannelPricingRecalculateHandlerInterface
 {
     /**
      * {@inheritdoc}

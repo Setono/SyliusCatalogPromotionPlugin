@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Setono\SyliusBulkSpecialsPlugin\Special\Applicator;
 
+use Psr\Log\LoggerInterface;
 use Setono\SyliusBulkSpecialsPlugin\Model\ProductInterface;
 use Setono\SyliusBulkSpecialsPlugin\Model\SpecialInterface;
 use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
@@ -19,12 +20,27 @@ class ProductSpecialsApplicator
     protected $channelPricingRepository;
 
     /**
+     * @var LoggerInterface
+     */
+    protected $logger;
+
+    /**
      * @param EntityRepository $channelPricingRepository
      */
     public function __construct(
-        EntityRepository $channelPricingRepository
+        EntityRepository $channelPricingRepository,
+        LoggerInterface $logger
     ) {
         $this->channelPricingRepository = $channelPricingRepository;
+        $this->logger = $logger;
+    }
+
+    /**
+     * @param string $message
+     */
+    protected function log(string $message): void
+    {
+        $this->logger->info($message);
     }
 
     /**
@@ -86,6 +102,14 @@ class ProductSpecialsApplicator
         $channelPricing->setPrice(
             (int) ($channelPricing->getOriginalPrice() * $multiplier)
         );
+
+        $this->log(sprintf(
+            "ChannelPricing for Product '%s': %s x %s = %s.",
+            (string) $channelPricing->getProductVariant(),
+            $channelPricing->getOriginalPrice(),
+            $multiplier,
+            $channelPricing->getPrice()
+        ));
     }
 
     /**

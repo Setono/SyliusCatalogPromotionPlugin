@@ -6,7 +6,7 @@ namespace Setono\SyliusBulkSpecialsPlugin\Handler;
 
 use Setono\SyliusBulkSpecialsPlugin\Model\ProductInterface;
 
-abstract class AbstractProductHandler implements ProductRecalculateHandlerInterface
+abstract class AbstractProductHandler extends AbstractHandler implements ProductRecalculateHandlerInterface
 {
     /**
      * {@inheritdoc}
