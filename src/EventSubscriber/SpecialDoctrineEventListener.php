@@ -73,7 +73,6 @@ class SpecialDoctrineEventListener
 
         if (($args->hasChangedField('actionType') && $args->getOldValue('actionType') !== $args->getNewValue('action_type')) ||
             ($args->hasChangedField('actionPercent') && $args->getOldValue('actionPercent') !== $args->getNewValue('actionPercent'))) {
-
             $this->specialsToRecalculate[$entity->getId()] = $entity;
         }
     }

@@ -74,5 +74,4 @@ class SpecialRecalculateHandler extends AbstractSpecialHandler
             $special->getCode()
         ));
     }
-
 }

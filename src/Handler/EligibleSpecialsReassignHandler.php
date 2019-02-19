@@ -72,7 +72,6 @@ class EligibleSpecialsReassignHandler extends AbstractProductHandler implements 
         /** @var Special $special */
         foreach ($specials as $special) {
             if ($this->specialEligibilityChecker->isEligible($product, $special)) {
-
                 $this->log(sprintf(
                     "Special '%s' is eligible for product '%s'. Adding...",
                     $special->getCode(),

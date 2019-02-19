@@ -63,5 +63,4 @@ class ChannelPricingDoctrineEventListener
             $this->channelPricingRecalculateHandler->handle($entity);
         }
     }
-
 }
