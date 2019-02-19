@@ -6,7 +6,6 @@ namespace Setono\SyliusBulkSpecialsPlugin\EventSubscriber;
 
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
-use Setono\SyliusBulkSpecialsPlugin\Handler\ChannelPricingRecalculateHandler;
 use Setono\SyliusBulkSpecialsPlugin\Handler\ChannelPricingRecalculateHandlerInterface;
 use Sylius\Component\Core\Model\ChannelPricingInterface;
 
@@ -44,14 +43,7 @@ class ChannelPricingDoctrineEventListener
         }
 
         if ($args->hasChangedField('originalPrice') && $args->getOldValue('originalPrice') !== $args->getNewValue('originalPrice')) {
-            if ($this->channelPricingRecalculateHandler instanceof ChannelPricingRecalculateHandler) {
-                // Store to recalculate after flush
-                $this->channelPricingsToRecalculate[$entity->getId()] = $entity;
-
-                return;
-            }
-
-            $this->channelPricingRecalculateHandler->handle($entity);
+            $this->channelPricingsToRecalculate[$entity->getId()] = $entity;
         }
     }
 
@@ -71,4 +63,5 @@ class ChannelPricingDoctrineEventListener
             $this->channelPricingRecalculateHandler->handle($entity);
         }
     }
+
 }

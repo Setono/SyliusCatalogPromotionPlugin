@@ -9,7 +9,6 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Setono\SyliusBulkSpecialsPlugin\Doctrine\ORM\ProductRepositoryInterface;
 use Setono\SyliusBulkSpecialsPlugin\Handler\ProductRecalculateHandlerInterface;
-use Setono\SyliusBulkSpecialsPlugin\Handler\SpecialRecalculateHandler;
 use Setono\SyliusBulkSpecialsPlugin\Handler\SpecialRecalculateHandlerInterface;
 use Setono\SyliusBulkSpecialsPlugin\Model\ProductInterface;
 use Setono\SyliusBulkSpecialsPlugin\Model\SpecialInterface;
@@ -74,13 +73,8 @@ class SpecialDoctrineEventListener
 
         if (($args->hasChangedField('actionType') && $args->getOldValue('actionType') !== $args->getNewValue('action_type')) ||
             ($args->hasChangedField('actionPercent') && $args->getOldValue('actionPercent') !== $args->getNewValue('actionPercent'))) {
-            if ($this->specialRecalculateHandler instanceof SpecialRecalculateHandler) {
-                $this->specialsToRecalculate[$entity->getId()] = $entity;
 
-                return;
-            }
-
-            $this->specialRecalculateHandler->handle($entity);
+            $this->specialsToRecalculate[$entity->getId()] = $entity;
         }
     }
 
@@ -93,7 +87,6 @@ class SpecialDoctrineEventListener
         if (!$entity instanceof SpecialInterface) {
             return;
         }
-
         if (isset($this->specialsToRecalculate[$entity->getId()])) {
             unset($this->specialsToRecalculate[$entity->getId()]);
 
