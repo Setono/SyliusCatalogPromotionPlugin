@@ -62,7 +62,7 @@ class EligibleSpecialsReassignHandler extends AbstractProductHandler implements 
     {
         $this->log(sprintf(
             "Product '%s' specials reassign started...",
-            (string) $product
+            $product->getCode()
         ));
 
         $specials = $this->specialRepository->findAll();
@@ -75,8 +75,8 @@ class EligibleSpecialsReassignHandler extends AbstractProductHandler implements 
 
                 $this->log(sprintf(
                     "Special '%s' is eligible for product '%s'. Adding...",
-                    (string) $special,
-                    (string) $product
+                    $special->getCode(),
+                    $product->getCode()
                 ));
 
                 $product->addSpecial($special);
@@ -88,7 +88,7 @@ class EligibleSpecialsReassignHandler extends AbstractProductHandler implements 
 
         $this->log(sprintf(
             "Product '%s' specials reassign finished.",
-            (string) $product
+            $product->getCode()
         ));
     }
 }

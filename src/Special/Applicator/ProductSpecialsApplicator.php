@@ -105,8 +105,8 @@ class ProductSpecialsApplicator
         );
 
         $this->log(sprintf(
-            "ChannelPricing for Product '%s': %s x %s = %s.",
-            (string) $channelPricing->getProductVariant(),
+            "ChannelPricing for ProductVariant '%s': %s x %s = %s.",
+            $channelPricing->getProductVariant()->getCode(),
             $channelPricing->getOriginalPrice(),
             $multiplier,
             $channelPricing->getPrice()

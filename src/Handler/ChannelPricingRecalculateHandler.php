@@ -35,14 +35,14 @@ class ChannelPricingRecalculateHandler extends AbstractChannelPricingHandler
     {
         $this->log(sprintf(
             "ChannelPricing for Product '%s' recalculate started...",
-            (string) $channelPricing->getProductVariant()
+            $channelPricing->getProductVariant()->getCode()
         ));
 
         $this->productSpecialsApplicator->applyToChannelPricing($channelPricing);
 
         $this->log(sprintf(
             "ChannelPricing for Product '%s' recalculate finished.",
-            (string) $channelPricing->getProductVariant()
+            $channelPricing->getProductVariant()->getCode()
         ));
     }
 }

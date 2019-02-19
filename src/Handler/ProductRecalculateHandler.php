@@ -35,14 +35,14 @@ class ProductRecalculateHandler extends AbstractProductHandler
     {
         $this->log(sprintf(
             "Product '%s' recalculate started...",
-            (string) $product
+            $product->getCode()
         ));
 
         $this->productSpecialsApplicator->applyToProduct($product);
 
         $this->log(sprintf(
             "Product '%s' recalculate finished.",
-            (string) $product
+            $product->getCode()
         ));
     }
 }

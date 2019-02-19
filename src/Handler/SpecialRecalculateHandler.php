@@ -44,7 +44,7 @@ class SpecialRecalculateHandler extends AbstractSpecialHandler
     {
         $this->log(sprintf(
             "Special '%s' recalculate started...",
-            (string) $special
+            $special->getCode()
         ));
 
         // @see Good explanation at https://stackoverflow.com/a/26698814
@@ -59,8 +59,8 @@ class SpecialRecalculateHandler extends AbstractSpecialHandler
 
                 $this->log(sprintf(
                     "Special '%s' assigned to Product '%s'",
-                    (string) $special,
-                    (string) $product
+                    $special->getCode(),
+                    $product->getCode()
                 ));
 
                 $this->productRepository->add($product);
@@ -71,7 +71,7 @@ class SpecialRecalculateHandler extends AbstractSpecialHandler
 
         $this->log(sprintf(
             "Special '%s' recalculate finished.",
-            (string) $special
+            $special->getCode()
         ));
     }
 
