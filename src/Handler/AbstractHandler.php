@@ -9,14 +9,14 @@ use Psr\Log\LoggerInterface;
 abstract class AbstractHandler
 {
     /**
-     * @var LoggerInterface
+     * @var LoggerInterface|null
      */
     protected $logger;
 
     /**
-     * @param LoggerInterface $logger
+     * @param LoggerInterface|null $logger
      */
-    public function __construct(LoggerInterface $logger)
+    public function __construct(?LoggerInterface $logger = null)
     {
         $this->logger = $logger;
     }
@@ -26,6 +26,8 @@ abstract class AbstractHandler
      */
     protected function log(string $message): void
     {
-        $this->logger->info($message);
+        if ($this->logger instanceof LoggerInterface) {
+            $this->logger->info($message);
+        }
     }
 }

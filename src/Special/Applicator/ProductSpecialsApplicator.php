@@ -104,9 +104,11 @@ class ProductSpecialsApplicator
             (int) ($channelPricing->getOriginalPrice() * $multiplier)
         );
 
+        /** @var ProductVariantInterface $productVariant */
+        $productVariant = $channelPricing->getProductVariant();
         $this->log(sprintf(
             "ChannelPricing for ProductVariant '%s': %s x %s = %s.",
-            $channelPricing->getProductVariant()->getCode(),
+            $productVariant->getCode(),
             $channelPricing->getOriginalPrice(),
             $multiplier,
             $channelPricing->getPrice()

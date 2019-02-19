@@ -42,7 +42,8 @@ class EligibleSpecialsReassignAsyncHandler extends AbstractProductHandler implem
     /**
      * @param ProducerInterface $producer
      * @param ProductRepository $repository
-     * @param EligibleSpecialsReassignHandler $handler
+     * @param EligibleSpecialsReassignHandler $eligibleSpecialsReassignHandler
+     * @param EntityManager $entityManager
      */
     public function __construct(
         ProducerInterface $producer,
@@ -50,6 +51,8 @@ class EligibleSpecialsReassignAsyncHandler extends AbstractProductHandler implem
         EligibleSpecialsReassignHandler $eligibleSpecialsReassignHandler,
         EntityManager $entityManager
     ) {
+        parent::__construct();
+
         $this->producer = $producer;
         $this->repository = $repository;
         $this->eligibleSpecialsReassignHandler = $eligibleSpecialsReassignHandler;

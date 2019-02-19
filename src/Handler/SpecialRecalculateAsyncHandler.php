@@ -51,6 +51,8 @@ class SpecialRecalculateAsyncHandler extends AbstractSpecialHandler implements P
         SpecialRecalculateHandler $recalculateHandler,
         EntityManager $entityManager
     ) {
+        parent::__construct();
+
         $this->producer = $producer;
         $this->repository = $repository;
         $this->recalculateHandler = $recalculateHandler;

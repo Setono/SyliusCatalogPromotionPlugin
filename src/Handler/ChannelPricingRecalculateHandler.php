@@ -7,6 +7,7 @@ namespace Setono\SyliusBulkSpecialsPlugin\Handler;
 use Psr\Log\LoggerInterface;
 use Setono\SyliusBulkSpecialsPlugin\Special\Applicator\ProductSpecialsApplicator;
 use Sylius\Component\Core\Model\ChannelPricingInterface;
+use Sylius\Component\Core\Model\ProductVariantInterface;
 
 class ChannelPricingRecalculateHandler extends AbstractChannelPricingHandler
 {
@@ -33,16 +34,18 @@ class ChannelPricingRecalculateHandler extends AbstractChannelPricingHandler
      */
     public function handleChannelPricing(ChannelPricingInterface $channelPricing): void
     {
+        /** @var ProductVariantInterface $productVariant */
+        $productVariant = $channelPricing->getProductVariant();
         $this->log(sprintf(
-            "ChannelPricing for Product '%s' recalculate started...",
-            $channelPricing->getProductVariant()->getCode()
+            "ChannelPricing for ProductVariant '%s' recalculate started...",
+            $productVariant->getCode()
         ));
 
         $this->productSpecialsApplicator->applyToChannelPricing($channelPricing);
 
         $this->log(sprintf(
             "ChannelPricing for Product '%s' recalculate finished.",
-            $channelPricing->getProductVariant()->getCode()
+            $productVariant->getCode()
         ));
     }
 }

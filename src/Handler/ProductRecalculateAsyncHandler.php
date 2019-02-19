@@ -43,6 +43,7 @@ class ProductRecalculateAsyncHandler extends AbstractProductHandler implements P
      * @param ProducerInterface $producer
      * @param ProductRepository $repository
      * @param ProductRecalculateHandler $recalculateHandler
+     * @param EntityManager $entityManager
      */
     public function __construct(
         ProducerInterface $producer,
@@ -50,6 +51,8 @@ class ProductRecalculateAsyncHandler extends AbstractProductHandler implements P
         ProductRecalculateHandler $recalculateHandler,
         EntityManager $entityManager
     ) {
+        parent::__construct();
+
         $this->producer = $producer;
         $this->repository = $repository;
         $this->recalculateHandler = $recalculateHandler;
