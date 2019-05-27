@@ -13,17 +13,11 @@ abstract class AbstractHandler
      */
     protected $logger;
 
-    /**
-     * @param LoggerInterface|null $logger
-     */
     public function __construct(?LoggerInterface $logger = null)
     {
         $this->logger = $logger;
     }
 
-    /**
-     * @param string $message
-     */
     protected function log(string $message): void
     {
         if ($this->logger instanceof LoggerInterface) {

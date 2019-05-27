@@ -14,7 +14,7 @@ interface SpecialRepositoryInterface extends RepositoryInterface
      *
      * @param \DateTimeInterface|null $date
      *
-     * @return array|SpecialInterface[]
+     * @return SpecialInterface[]
      */
     public function findAccidentallyDisabled(?\DateTimeInterface $date = null): array;
 
@@ -23,12 +23,12 @@ interface SpecialRepositoryInterface extends RepositoryInterface
      *
      * @param \DateTimeInterface|null $date
      *
-     * @return array|SpecialInterface[]
+     * @return SpecialInterface[]
      */
     public function findAccidentallyEnabled(?\DateTimeInterface $date = null): array;
 
     /**
-     * @return array|SpecialInterface[]
+     * @return SpecialInterface[]
      */
     public function findActive(): array;
 }

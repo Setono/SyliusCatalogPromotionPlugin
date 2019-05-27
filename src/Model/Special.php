@@ -118,9 +118,6 @@ class Special implements SpecialInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isSpecialActiveAt(\DateTime $now): bool
     {
         return
@@ -129,9 +126,6 @@ class Special implements SpecialInterface
             ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getChannelCodes(): array
     {
         return $this->channels->map(function (ChannelInterface $channel) {
@@ -147,10 +141,7 @@ class Special implements SpecialInterface
         $this->channels = new ArrayCollection();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function __toString()
+    public function __toString(): string
     {
         if (null === $this->getName()) {
             return (string) $this->getId();
@@ -159,169 +150,106 @@ class Special implements SpecialInterface
         return $this->getName();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCode(): ?string
     {
         return $this->code;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setCode(?string $code): void
     {
         $this->code = $code;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName(): ?string
     {
         return $this->name;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setName(?string $name): void
     {
         $this->name = $name;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setDescription(?string $description): void
     {
         $this->description = $description;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPriority(): int
     {
         return $this->priority;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setPriority(?int $priority): void
     {
         $this->priority = $priority ?? -1;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isExclusive(): bool
     {
         return $this->exclusive;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setExclusive(bool $exclusive): void
     {
         $this->exclusive = $exclusive;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getStartsAt(): ?\DateTimeInterface
     {
         return $this->startsAt;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setStartsAt(?\DateTimeInterface $startsAt): void
     {
         $this->startsAt = $startsAt;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getEndsAt(): ?\DateTimeInterface
     {
         return $this->endsAt;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setEndsAt(?\DateTimeInterface $endsAt): void
     {
         $this->endsAt = $endsAt;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isEnabled(): bool
     {
         return $this->enabled;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setEnabled(bool $enabled): void
     {
         $this->enabled = $enabled;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getRules(): Collection
     {
         return $this->rules;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function hasRules(): bool
     {
         return !$this->rules->isEmpty();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function hasRule(SpecialRuleInterface $rule): bool
     {
         return $this->rules->contains($rule);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function addRule(SpecialRuleInterface $rule): void
     {
         if (!$this->hasRule($rule)) {
@@ -330,58 +258,37 @@ class Special implements SpecialInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function removeRule(SpecialRuleInterface $rule): void
     {
         $rule->setSpecial(null);
         $this->rules->removeElement($rule);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getActionType(): string
     {
         return $this->actionType;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setActionType(string $actionType): void
     {
         $this->actionType = $actionType;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getActionPercent(): float
     {
         return $this->actionPercent;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setActionPercent(float $actionPercent): void
     {
         $this->actionPercent = $actionPercent;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getChannels(): Collection
     {
         return $this->channels;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function addChannel(BaseChannelInterface $channel): void
     {
         if (!$this->hasChannel($channel)) {
@@ -389,9 +296,6 @@ class Special implements SpecialInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function removeChannel(BaseChannelInterface $channel): void
     {
         if ($this->hasChannel($channel)) {
@@ -399,9 +303,6 @@ class Special implements SpecialInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function hasChannel(BaseChannelInterface $channel): bool
     {
         return $this->channels->contains($channel);

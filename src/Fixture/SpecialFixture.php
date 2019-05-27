@@ -9,17 +9,11 @@ use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 
 final class SpecialFixture extends AbstractResourceFixture
 {
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return 'special';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function configureResourceNode(ArrayNodeDefinition $resourceNode): void
     {
         $resourceNode

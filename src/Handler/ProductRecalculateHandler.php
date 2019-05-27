@@ -15,10 +15,6 @@ class ProductRecalculateHandler extends AbstractProductHandler
      */
     protected $productSpecialsApplicator;
 
-    /**
-     * @param LoggerInterface $logger
-     * @param ProductSpecialsApplicator $productSpecialsApplicator
-     */
     public function __construct(
         LoggerInterface $logger,
         ProductSpecialsApplicator $productSpecialsApplicator
@@ -28,9 +24,6 @@ class ProductRecalculateHandler extends AbstractProductHandler
         $this->productSpecialsApplicator = $productSpecialsApplicator;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handleProduct(ProductInterface $product): void
     {
         $this->log(sprintf(

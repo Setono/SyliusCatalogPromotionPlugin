@@ -39,12 +39,6 @@ class SpecialRecalculateAsyncHandler extends AbstractSpecialHandler implements P
      */
     protected $entityManager;
 
-    /**
-     * @param ProducerInterface $producer
-     * @param SpecialRepositoryInterface $repository
-     * @param SpecialRecalculateHandler $recalculateHandler
-     * @param EntityManager $entityManager
-     */
     public function __construct(
         ProducerInterface $producer,
         SpecialRepositoryInterface $repository,
@@ -59,9 +53,6 @@ class SpecialRecalculateAsyncHandler extends AbstractSpecialHandler implements P
         $this->entityManager = $entityManager;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handleSpecial(SpecialInterface $special): void
     {
         $this->producer->sendEvent(
@@ -70,9 +61,6 @@ class SpecialRecalculateAsyncHandler extends AbstractSpecialHandler implements P
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function process(PsrMessage $message, PsrContext $session)
     {
         /** @var SpecialInterface $special */
@@ -92,9 +80,6 @@ class SpecialRecalculateAsyncHandler extends AbstractSpecialHandler implements P
         return self::ACK;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getSubscribedTopics()
     {
         return [

@@ -8,9 +8,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 final class SpecialRuleType extends AbstractConfigurableSpecialElementType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options = []): void
     {
         parent::buildForm($builder, $options);
@@ -25,9 +22,6 @@ final class SpecialRuleType extends AbstractConfigurableSpecialElementType
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBlockPrefix(): string
     {
         return 'setono_sylius_bulk_specials_special_rule';

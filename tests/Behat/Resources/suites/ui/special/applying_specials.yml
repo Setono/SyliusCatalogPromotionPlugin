@@ -1,7 +1,7 @@
 default:
     suites:
         setono_sylius_bulk_specials_ui_applying_specials:
-            contexts_services:
+            contexts:
                 - sylius.behat.context.hook.doctrine_orm
 
                 - setono_sylius_bulk_specials.behat.context.product_pricing

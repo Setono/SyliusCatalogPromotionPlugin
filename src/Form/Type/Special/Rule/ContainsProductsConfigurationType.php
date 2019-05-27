@@ -16,17 +16,11 @@ final class ContainsProductsConfigurationType extends AbstractType
      */
     private $productsToCodesTransformer;
 
-    /**
-     * @param DataTransformerInterface $productsToCodesTransformer
-     */
     public function __construct(DataTransformerInterface $productsToCodesTransformer)
     {
         $this->productsToCodesTransformer = $productsToCodesTransformer;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -39,9 +33,6 @@ final class ContainsProductsConfigurationType extends AbstractType
         $builder->get('products')->addModelTransformer($this->productsToCodesTransformer);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBlockPrefix(): string
     {
         return 'setono_sylius_bulk_specials_special_rule_contains_products_configuration';

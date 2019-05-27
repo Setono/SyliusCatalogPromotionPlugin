@@ -37,9 +37,6 @@ class CheckActiveCommand extends Command implements CommandInterface
         parent::__construct(null);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function configure(): void
     {
         $this
@@ -50,9 +47,6 @@ class CheckActiveCommand extends Command implements CommandInterface
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $dryRun = $input->getOption('dry-run');

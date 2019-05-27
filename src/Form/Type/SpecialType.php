@@ -16,9 +16,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 final class SpecialType extends AbstractResourceType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -72,9 +69,6 @@ final class SpecialType extends AbstractResourceType
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBlockPrefix(): string
     {
         return 'setono_sylius_bulk_specials_special';

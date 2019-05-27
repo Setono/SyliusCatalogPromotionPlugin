@@ -8,9 +8,6 @@ use Setono\SyliusBulkSpecialsPlugin\Model\ProductInterface;
 
 abstract class AbstractProductHandler extends AbstractHandler implements ProductRecalculateHandlerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function handle($object): void
     {
         if (!$object instanceof ProductInterface) {

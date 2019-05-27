@@ -10,7 +10,6 @@
         <service id="setono_sylius_bulk_specials.behat.context.dump.special"
                  class="Tests\Setono\SyliusBulkSpecialsPlugin\Behat\Context\Dump\SpecialContext">
             <argument type="service" id="sylius.behat.shared_storage" />
-            <tag name="fob.context_service" />
         </service>
 
     </services>

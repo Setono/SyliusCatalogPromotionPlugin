@@ -12,9 +12,6 @@ use Webmozart\Assert\Assert;
 
 final class SpecialDateRangeValidator extends ConstraintValidator
 {
-    /**
-     * {@inheritdoc}
-     */
     public function validate($value, Constraint $constraint): void
     {
         if (null === $value) {

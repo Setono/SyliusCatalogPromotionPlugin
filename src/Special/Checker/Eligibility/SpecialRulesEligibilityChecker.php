@@ -25,9 +25,6 @@ final class SpecialRulesEligibilityChecker implements SpecialEligibilityCheckerI
         $this->ruleRegistry = $ruleRegistry;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isEligible(SpecialSubjectInterface $specialSubject, SpecialInterface $special): bool
     {
         if (!$special->hasRules()) {

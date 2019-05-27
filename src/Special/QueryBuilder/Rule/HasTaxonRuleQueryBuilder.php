@@ -10,9 +10,6 @@ class HasTaxonRuleQueryBuilder implements RuleQueryBuilderInterface
 {
     public const PARAMETER = 'taxons';
 
-    /**
-     * {@inheritdoc}
-     */
     public function addRulesWheres(QueryBuilder $queryBuilder, array $configuration, string $alias): QueryBuilder
     {
         static $index = 0;

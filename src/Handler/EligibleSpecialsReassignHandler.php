@@ -33,13 +33,6 @@ class EligibleSpecialsReassignHandler extends AbstractProductHandler implements 
      */
     private $productRecalculateHandler;
 
-    /**
-     * @param LoggerInterface $logger
-     * @param SpecialRepositoryInterface $specialRepository
-     * @param ProductRepository $productRepository
-     * @param SpecialEligibilityCheckerInterface $specialEligibilityChecker
-     * @param ProductRecalculateHandlerInterface $productRecalculateHandler
-     */
     public function __construct(
         LoggerInterface $logger,
         SpecialRepositoryInterface $specialRepository,
@@ -55,9 +48,6 @@ class EligibleSpecialsReassignHandler extends AbstractProductHandler implements 
         $this->productRecalculateHandler = $productRecalculateHandler;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handleProduct(ProductInterface $product): void
     {
         $this->log(sprintf(

@@ -10,9 +10,6 @@ use Symfony\Component\DependencyInjection\Reference;
 
 final class RegisterRuleCheckersPass implements CompilerPassInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function process(ContainerBuilder $container): void
     {
         $specialRuleCheckerRegistry = $container->getDefinition('setono_sylius_bulk_specials.registry_special_rule_checker');

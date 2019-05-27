@@ -10,9 +10,6 @@ use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 
 class SpecialRepository extends EntityRepository implements SpecialRepositoryInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function findAccidentallyDisabled(?\DateTimeInterface $date = null): array
     {
         return $this->createQueryBuilder('o')
@@ -25,9 +22,6 @@ class SpecialRepository extends EntityRepository implements SpecialRepositoryInt
             ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function findAccidentallyEnabled(?\DateTimeInterface $date = null): array
     {
         return $this->createQueryBuilder('o')
@@ -41,7 +35,7 @@ class SpecialRepository extends EntityRepository implements SpecialRepositoryInt
     }
 
     /**
-     * @return array|SpecialInterface[]
+     * @return SpecialInterface[]
      */
     public function findAll(): array
     {
@@ -51,7 +45,9 @@ class SpecialRepository extends EntityRepository implements SpecialRepositoryInt
     }
 
     /**
-     * {@inheritdoc}
+     * @return array
+     *
+     * @throws \Exception
      */
     public function findActive(): array
     {
@@ -67,6 +63,8 @@ class SpecialRepository extends EntityRepository implements SpecialRepositoryInt
      * @param \DateTimeInterface|null $date
      *
      * @return QueryBuilder
+     *
+     * @throws \Exception
      */
     protected function filterByActive(QueryBuilder $queryBuilder, ?\DateTimeInterface $date = null): QueryBuilder
     {

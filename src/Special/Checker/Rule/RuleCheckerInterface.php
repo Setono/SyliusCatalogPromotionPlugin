@@ -8,11 +8,5 @@ use Setono\SyliusBulkSpecialsPlugin\Model\SpecialSubjectInterface;
 
 interface RuleCheckerInterface
 {
-    /**
-     * @param SpecialSubjectInterface $subject
-     * @param array $configuration
-     *
-     * @return bool
-     */
     public function isEligible(SpecialSubjectInterface $subject, array $configuration): bool;
 }

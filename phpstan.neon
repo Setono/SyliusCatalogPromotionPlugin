@@ -23,4 +23,3 @@ parameters:
 
         # Plugin specific
         - '#Cannot call method getMultiplier\(\) on .+\\SpecialInterface\|null\.#'
-        - '#Cannot cast array\|string to string\.#'

@@ -40,12 +40,6 @@ class SpecialDoctrineEventListener
      */
     private $specialsToRecalculate = [];
 
-    /**
-     * @param SpecialRecalculateHandlerInterface $specialRecalculateHandler
-     * @param ProductRecalculateHandlerInterface $productRecalculateHandler
-     * @param ProductRepositoryInterface $productRepository
-     * @param EntityManager $productManager
-     */
     public function __construct(
         SpecialRecalculateHandlerInterface $specialRecalculateHandler,
         ProductRecalculateHandlerInterface $productRecalculateHandler,
@@ -77,9 +71,6 @@ class SpecialDoctrineEventListener
         }
     }
 
-    /**
-     * @param LifecycleEventArgs $args
-     */
     public function postUpdate(LifecycleEventArgs $args): void
     {
         $entity = $args->getObject();
@@ -113,6 +104,8 @@ class SpecialDoctrineEventListener
      * On Special remove - detach it from and recalculate all products related to it
      *
      * @param LifecycleEventArgs $args
+     *
+     * @throws \Doctrine\ORM\ORMException
      */
     public function preRemove(LifecycleEventArgs $args): void
     {

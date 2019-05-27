@@ -12,9 +12,6 @@ final class HasTaxonRuleChecker implements RuleCheckerInterface
 {
     public const TYPE = 'has_taxon';
 
-    /**
-     * {@inheritdoc}
-     */
     public function isEligible(SpecialSubjectInterface $subject, array $configuration): bool
     {
         if (!isset($configuration['taxons'])) {

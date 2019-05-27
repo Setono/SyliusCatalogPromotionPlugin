@@ -38,9 +38,6 @@ class ReassignCommand extends Command implements CommandInterface
         parent::__construct(null);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function configure(): void
     {
         $this
@@ -54,9 +51,6 @@ class ReassignCommand extends Command implements CommandInterface
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $identifier = $input->getArgument('identifier');

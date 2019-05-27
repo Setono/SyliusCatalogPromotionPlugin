@@ -18,17 +18,11 @@ final class ContainsProductConfigurationType extends AbstractType
      */
     private $productRepository;
 
-    /**
-     * @param RepositoryInterface $productRepository
-     */
     public function __construct(RepositoryInterface $productRepository)
     {
         $this->productRepository = $productRepository;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -42,9 +36,6 @@ final class ContainsProductConfigurationType extends AbstractType
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBlockPrefix(): string
     {
         return 'setono_sylius_bulk_specials_special_rule_contains_product_configuration';

@@ -21,11 +21,6 @@ class SpecialRecalculateHandler extends AbstractSpecialHandler
      */
     protected $productRecalculateHandler;
 
-    /**
-     * @param LoggerInterface $logger
-     * @param ProductRepositoryInterface $productRepository
-     * @param ProductRecalculateHandlerInterface $productRecalculateHandler
-     */
     public function __construct(
         LoggerInterface $logger,
         ProductRepositoryInterface $productRepository,
@@ -37,9 +32,6 @@ class SpecialRecalculateHandler extends AbstractSpecialHandler
         $this->productRecalculateHandler = $productRecalculateHandler;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handleSpecial(SpecialInterface $special): void
     {
         $this->log(sprintf(

@@ -6,8 +6,7 @@
 
         <service id="setono_sylius_bulk_specials.behat.context.transform.special"
                  class="Tests\Setono\SyliusBulkSpecialsPlugin\Behat\Context\Transform\SpecialContext">
-            <argument type="service" id="__symfony__.setono_sylius_bulk_specials.repository.special" />
-            <tag name="fob.context_service" />
+            <argument type="service" id="setono_sylius_bulk_specials.repository.special" />
         </service>
 
     </services>

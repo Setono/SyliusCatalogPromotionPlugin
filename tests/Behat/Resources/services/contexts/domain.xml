@@ -9,8 +9,7 @@
         <service id="setono_sylius_bulk_specials.behat.context.domain.managing_specials"
                  class="Tests\Setono\SyliusBulkSpecialsPlugin\Behat\Context\Domain\ManagingSpecialsContext">
             <argument type="service" id="sylius.behat.shared_storage" />
-            <argument type="service" id="__symfony__.setono_sylius_bulk_specials.repository.special" />
-            <tag name="fob.context_service" />
+            <argument type="service" id="setono_sylius_bulk_specials.repository.special" />
         </service>
 
     </services>

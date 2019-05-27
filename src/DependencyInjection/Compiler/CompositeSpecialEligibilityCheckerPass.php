@@ -10,9 +10,6 @@ use Symfony\Component\DependencyInjection\Reference;
 
 final class CompositeSpecialEligibilityCheckerPass implements CompilerPassInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function process(ContainerBuilder $container): void
     {
         $container->getDefinition('setono_sylius_bulk_specials.special_eligibility_checker')->setArguments([

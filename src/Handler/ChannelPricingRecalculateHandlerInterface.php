@@ -8,8 +8,5 @@ use Sylius\Component\Core\Model\ChannelPricingInterface;
 
 interface ChannelPricingRecalculateHandlerInterface extends HandlerInterface
 {
-    /**
-     * @param ChannelPricingInterface $channelPricing
-     */
     public function handleChannelPricing(ChannelPricingInterface $channelPricing): void;
 }
