@@ -1,28 +1,19 @@
-<p align="center">
-    <a href="https://sylius.com" target="_blank">
-        <img src="https://demo.sylius.com/assets/shop/img/logo.png" />
-    </a>
-</p>
+# Sylius Bulk Specials Plugin
 
-<h1 align="center">SetonoSyliusBulkSpecialsPlugin</h1>
-
-<p align="center">
-
-[![Latest Version on Packagist][ico-version]][link-packagist]
+[![Latest Version][ico-version]][link-packagist]
+[![Latest Unstable Version][ico-unstable-version]][link-packagist]
 [![Software License][ico-license]](LICENSE)
 [![Build Status][ico-travis]][link-travis]
 [![Quality Score][ico-code-quality]][link-code-quality]
 
-Plugin for Sylius 1.3 to define permanent or time-limited
-Specials (discounts) for Products and automatically update prices.
+Plugin for Sylius to define permanent or time-limited
+specials (discounts) for products and automatically update prices.
 
 Discounts calculated from `ChannelPrice`'s `originalPrice` field if it non-zero
 and applies to `price` field. 
 
 All calculations can be done immediately
 (if you have not much products in your store) or asynchronously via queues.
-
-</p>
 
 Menu:
 
@@ -448,9 +439,10 @@ or follow next steps manually:
     
         ```bash
         $ vendor/bin/behat --tags="@javascript"
- 
-[ico-version]: https://img.shields.io/packagist/v/setono/sylius-bulk-specials-plugin.svg?style=flat-square
-[ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
+
+[ico-version]: https://poser.pugx.org/setono/sylius-bulk-specials-plugin/v/stable
+[ico-unstable-version]: https://poser.pugx.org/setono/sylius-bulk-specials-plugin/v/unstable
+[ico-license]: https://poser.pugx.org/setono/sylius-bulk-specials-plugin/license
 [ico-travis]: https://img.shields.io/travis/Setono/SyliusBulkSpecialsPlugin/master.svg?style=flat-square
 [ico-code-quality]: https://img.shields.io/scrutinizer/g/Setono/SyliusBulkSpecialsPlugin.svg?style=flat-square
 
