@@ -52,9 +52,6 @@ class SpecialRuleFactory implements SpecialRuleFactoryInterface
         throw new \InvalidArgumentException('$type must be one of [' . HasTaxonRuleChecker::TYPE . ', ' . ContainsProductRuleChecker::TYPE . ', ' . ContainsProductsRuleChecker::TYPE . ']');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function createHasTaxon(array $taxons): SpecialRuleInterface
     {
         return $this->createSpecialRule(
@@ -63,9 +60,6 @@ class SpecialRuleFactory implements SpecialRuleFactoryInterface
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function createContainsProduct(string $productCode): SpecialRuleInterface
     {
         return $this->createSpecialRule(
@@ -74,9 +68,6 @@ class SpecialRuleFactory implements SpecialRuleFactoryInterface
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function createContainsProducts(array $productCodes): SpecialRuleInterface
     {
         return $this->createSpecialRule(

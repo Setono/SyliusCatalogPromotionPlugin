@@ -1,3 +1,0 @@
-imports:
-    - { resource: "@SetonoSyliusBulkSpecialsPlugin/Resources/config/grids/special.yml" }
-    - { resource: "@SetonoSyliusBulkSpecialsPlugin/Resources/config/grids/product.yml" }

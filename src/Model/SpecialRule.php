@@ -26,57 +26,36 @@ class SpecialRule implements SpecialRuleInterface
      */
     protected $special;
 
-    /**
-     * {@inheritdoc}
-     */
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getType(): ?string
     {
         return $this->type;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setType(string $type): void
     {
         $this->type = $type;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getConfiguration(): array
     {
         return $this->configuration;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setConfiguration(array $configuration): void
     {
         $this->configuration = $configuration;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSpecial(): ?SpecialInterface
     {
         return $this->special;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setSpecial(?SpecialInterface $special): void
     {
         $this->special = $special;

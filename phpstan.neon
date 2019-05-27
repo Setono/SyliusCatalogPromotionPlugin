@@ -7,7 +7,7 @@ parameters:
     reportUnmatchedIgnoredErrors: true
 
     symfony:
-        container_xml_path: tests/Application/var/cache/test/ApplicationTestDebugProjectContainer.xml
+        container_xml_path: tests/Application/var/cache/test/ApplicationTests_Setono_SyliusBulkSpecialsPlugin_Application_KernelTestDebugContainer.xml
 
     excludes_analyse:
         # Makes PHPStan crash
@@ -23,4 +23,3 @@ parameters:
 
         # Plugin specific
         - '#Cannot call method getMultiplier\(\) on .+\\SpecialInterface\|null\.#'
-        - '#Cannot cast array\|string to string\.#'

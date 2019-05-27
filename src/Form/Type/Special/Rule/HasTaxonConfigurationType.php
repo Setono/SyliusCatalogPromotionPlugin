@@ -16,17 +16,11 @@ final class HasTaxonConfigurationType extends AbstractType
      */
     private $taxonsToCodesTransformer;
 
-    /**
-     * @param DataTransformerInterface $taxonsToCodesTransformer
-     */
     public function __construct(DataTransformerInterface $taxonsToCodesTransformer)
     {
         $this->taxonsToCodesTransformer = $taxonsToCodesTransformer;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -39,9 +33,6 @@ final class HasTaxonConfigurationType extends AbstractType
         $builder->get('taxons')->addModelTransformer($this->taxonsToCodesTransformer);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBlockPrefix(): string
     {
         return 'setono_sylius_bulk_specials_special_rule_has_taxon_configuration';

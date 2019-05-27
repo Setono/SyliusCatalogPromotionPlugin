@@ -24,9 +24,6 @@ final class TestSpecialFactory implements TestSpecialFactoryInterface
         $this->specialFactory = $specialFactory;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function create(string $name): SpecialInterface
     {
         /** @var SpecialInterface $special */
@@ -40,9 +37,6 @@ final class TestSpecialFactory implements TestSpecialFactoryInterface
         return $special;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function createForChannel(string $name, ChannelInterface $channel): SpecialInterface
     {
         $special = $this->create($name);

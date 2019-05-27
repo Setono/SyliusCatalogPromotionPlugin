@@ -12,9 +12,6 @@ final class ContainsProductsRuleChecker implements RuleCheckerInterface
 {
     public const TYPE = 'contains_products';
 
-    /**
-     * {@inheritdoc}
-     */
     public function isEligible(SpecialSubjectInterface $subject, array $configuration): bool
     {
         if (!isset($configuration['products'])) {

@@ -26,9 +26,6 @@ final class CompositeSpecialEligibilityChecker implements SpecialEligibilityChec
         $this->specialEligibilityCheckers = $specialEligibilityCheckers;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isEligible(SpecialSubjectInterface $specialSubject, SpecialInterface $special): bool
     {
         foreach ($this->specialEligibilityCheckers as $specialEligibilityChecker) {

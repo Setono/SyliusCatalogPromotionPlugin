@@ -42,11 +42,6 @@ class SpecialExampleFactory extends AbstractExampleFactory
      */
     protected $optionsResolver;
 
-    /**
-     * @param ChannelRepositoryInterface $channelRepository
-     * @param Factory $specialFactory
-     * @param SpecialRuleExampleFactory $specialRuleExampleFactory
-     */
     public function __construct(
         ChannelRepositoryInterface $channelRepository,
         Factory $specialFactory,
@@ -62,9 +57,6 @@ class SpecialExampleFactory extends AbstractExampleFactory
         $this->configureOptions($this->optionsResolver);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function create(array $options = []): specialInterface
     {
         $options = $this->optionsResolver->resolve($options);
@@ -106,9 +98,6 @@ class SpecialExampleFactory extends AbstractExampleFactory
         return $special;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function configureOptions(OptionsResolver $resolver): void
     {
         $resolver

@@ -59,9 +59,6 @@ class ProductRecalculateAsyncHandler extends AbstractProductHandler implements P
         $this->entityManager = $entityManager;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handleProduct(ProductInterface $product): void
     {
         $this->producer->sendEvent(
@@ -70,9 +67,6 @@ class ProductRecalculateAsyncHandler extends AbstractProductHandler implements P
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function process(PsrMessage $message, PsrContext $session)
     {
         /** @var ProductInterface $product */
@@ -92,9 +86,6 @@ class ProductRecalculateAsyncHandler extends AbstractProductHandler implements P
         return self::ACK;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getSubscribedTopics()
     {
         return [

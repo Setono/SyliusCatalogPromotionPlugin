@@ -10,12 +10,11 @@
         <service id="setono_sylius_bulk_specials.behat.context.cli.commands"
                  class="Tests\Setono\SyliusBulkSpecialsPlugin\Behat\Context\Cli\CommandsContext">
             <argument type="service" id="sylius.behat.shared_storage" />
-            <argument type="service" id="__symfony__.kernel" />
-            <argument type="service" id="__symfony__.setono_sylius_bulk_specials.command.check_active" />
-            <argument type="service" id="__symfony__.setono_sylius_bulk_specials.command.reassign" />
-            <argument type="service" id="__symfony__.setono_sylius_bulk_specials.command.product_recalculate" />
-            <argument type="service" id="__symfony__.setono_sylius_bulk_specials.command.special_recalculate" />
-            <tag name="fob.context_service" />
+            <argument type="service" id="kernel" />
+            <argument type="service" id="setono_sylius_bulk_specials.command.check_active" />
+            <argument type="service" id="setono_sylius_bulk_specials.command.reassign" />
+            <argument type="service" id="setono_sylius_bulk_specials.command.product_recalculate" />
+            <argument type="service" id="setono_sylius_bulk_specials.command.special_recalculate" />
         </service>
     </services>
 </container>

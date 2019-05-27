@@ -15,12 +15,8 @@ class ProductDoctrineEventListener
      */
     protected $eligibleSpecialsReassignHandler;
 
-    /**
-     * @param EligibleSpecialsReassignHandlerInterface $eligibleSpecialsReassignHandler
-     */
-    public function __construct(
-        EligibleSpecialsReassignHandlerInterface $eligibleSpecialsReassignHandler
-    ) {
+    public function __construct(EligibleSpecialsReassignHandlerInterface $eligibleSpecialsReassignHandler)
+    {
         $this->eligibleSpecialsReassignHandler = $eligibleSpecialsReassignHandler;
     }
 

@@ -8,9 +8,6 @@ use Setono\SyliusBulkSpecialsPlugin\Model\SpecialInterface;
 
 abstract class AbstractSpecialHandler extends AbstractHandler implements SpecialRecalculateHandlerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function handle($object): void
     {
         if (!$object instanceof SpecialInterface) {

@@ -9,11 +9,10 @@
         <service id="setono_sylius_bulk_specials.behat.context.setup.special"
                  class="Tests\Setono\SyliusBulkSpecialsPlugin\Behat\Context\Setup\SpecialContext">
             <argument type="service" id="sylius.behat.shared_storage" />
-            <argument type="service" id="__symfony__.setono_sylius_bulk_specials.factory.special_rule" />
-            <argument type="service" id="__symfony__.setono_sylius_bulk_specials.test.factory.special" />
-            <argument type="service" id="__symfony__.setono_sylius_bulk_specials.repository.special" />
-            <argument type="service" id="__symfony__.doctrine.orm.entity_manager" />
-            <tag name="fob.context_service" />
+            <argument type="service" id="setono_sylius_bulk_specials.factory.special_rule" />
+            <argument type="service" id="setono_sylius_bulk_specials.test.factory.special" />
+            <argument type="service" id="setono_sylius_bulk_specials.repository.special" />
+            <argument type="service" id="doctrine.orm.entity_manager" />
         </service>
 
     </services>

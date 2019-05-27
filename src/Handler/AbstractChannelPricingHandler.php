@@ -8,9 +8,6 @@ use Sylius\Component\Core\Model\ChannelPricingInterface;
 
 abstract class AbstractChannelPricingHandler extends AbstractHandler implements ChannelPricingRecalculateHandlerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function handle($object): void
     {
         if (!$object instanceof ChannelPricingInterface) {

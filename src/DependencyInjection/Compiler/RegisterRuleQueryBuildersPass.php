@@ -10,9 +10,6 @@ use Symfony\Component\DependencyInjection\Reference;
 
 final class RegisterRuleQueryBuildersPass implements CompilerPassInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function process(ContainerBuilder $container): void
     {
         $specialRuleQueryBuilderRegistry = $container->getDefinition('setono_sylius_bulk_specials.registry.special_rule_query_builder');

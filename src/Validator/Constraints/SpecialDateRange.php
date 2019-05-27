@@ -13,17 +13,11 @@ final class SpecialDateRange extends Constraint
      */
     public $message = 'setono_sylius_bulk_specials.special.end_date_cannot_be_set_prior_start_date';
 
-    /**
-     * {@inheritdoc}
-     */
     public function getTargets(): string
     {
         return self::CLASS_CONSTRAINT;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function validatedBy(): string
     {
         return 'setono_sylius_bulk_specials_special_date_range_validator';

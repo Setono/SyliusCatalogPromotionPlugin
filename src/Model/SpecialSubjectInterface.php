@@ -9,34 +9,21 @@ use Sylius\Component\Resource\Model\ResourceInterface;
 
 interface SpecialSubjectInterface extends ResourceInterface
 {
-    /**
-     * @return string|null
-     */
-    public function __toString();
+    public function __toString(): string;
 
     /**
      * @return Collection|SpecialInterface[]
      */
     public function getActiveSpecials(): Collection;
 
-    /**
-     * @param string $channelCode
-     *
-     * @return bool
-     */
     public function hasExclusiveSpecialsForChannelCode(string $channelCode): bool;
 
-    /**
-     * @param string $channelCode
-     *
-     * @return SpecialInterface|null
-     */
     public function getFirstExclusiveSpecialForChannelCode(string $channelCode): ?SpecialInterface;
 
     /**
      * @param string $channelCode
      *
-     * @return Collection
+     * @return Collection|SpecialInterface[]
      */
     public function getExclusiveSpecialsForChannelCode(string $channelCode): Collection;
 
@@ -52,25 +39,11 @@ interface SpecialSubjectInterface extends ResourceInterface
      */
     public function getSpecials(): Collection;
 
-    /**
-     * @param SpecialInterface $special
-     *
-     * @return bool
-     */
     public function hasSpecial(SpecialInterface $special): bool;
 
-    /**
-     * @param SpecialInterface $special
-     */
     public function addSpecial(SpecialInterface $special): void;
 
-    /**
-     * Remove all specials from collection
-     */
     public function removeSpecials(): void;
 
-    /**
-     * @param SpecialInterface $special
-     */
     public function removeSpecial(SpecialInterface $special): void;
 }

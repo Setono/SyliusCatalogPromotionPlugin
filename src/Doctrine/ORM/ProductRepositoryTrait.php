@@ -17,9 +17,6 @@ trait ProductRepositoryTrait
      */
     protected $ruleQueryBuilders;
 
-    /**
-     * {@inheritdoc}
-     */
     public function setRuleQueryBuilder(RuleQueryBuilderServiceRegistry $ruleQueryBuilders): void
     {
         $this->ruleQueryBuilders = $ruleQueryBuilders;
@@ -61,9 +58,6 @@ trait ProductRepositoryTrait
             ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function findBySpecialQB(SpecialInterface $special): QueryBuilder
     {
         $alias = 'product';

@@ -20,9 +20,6 @@ abstract class AbstractConfigurableSpecialElementType extends AbstractResourceTy
      */
     private $formTypeRegistry;
 
-    /**
-     * {@inheritdoc}
-     */
     public function __construct(string $dataClass, array $validationGroups = [], FormTypeRegistryInterface $formTypeRegistry)
     {
         parent::__construct($dataClass, $validationGroups);
@@ -30,9 +27,6 @@ abstract class AbstractConfigurableSpecialElementType extends AbstractResourceTy
         $this->formTypeRegistry = $formTypeRegistry;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         parent::buildForm($builder, $options);
@@ -66,9 +60,6 @@ abstract class AbstractConfigurableSpecialElementType extends AbstractResourceTy
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
@@ -79,10 +70,6 @@ abstract class AbstractConfigurableSpecialElementType extends AbstractResourceTy
         ;
     }
 
-    /**
-     * @param FormInterface $form
-     * @param string $configurationType
-     */
     protected function addConfigurationFields(FormInterface $form, string $configurationType): void
     {
         $form->add('configuration', $configurationType, [
@@ -90,12 +77,6 @@ abstract class AbstractConfigurableSpecialElementType extends AbstractResourceTy
         ]);
     }
 
-    /**
-     * @param FormInterface $form
-     * @param mixed $data
-     *
-     * @return string|null
-     */
     protected function getRegistryIdentifier(FormInterface $form, $data = null): ?string
     {
         if ($data instanceof ConfigurableSpecialElementInterface && null !== $data->getType()) {

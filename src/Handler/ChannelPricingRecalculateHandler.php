@@ -16,22 +16,13 @@ class ChannelPricingRecalculateHandler extends AbstractChannelPricingHandler
      */
     protected $productSpecialsApplicator;
 
-    /**
-     * @param LoggerInterface $logger
-     * @param ProductSpecialsApplicator $productSpecialsApplicator
-     */
-    public function __construct(
-        LoggerInterface $logger,
-        ProductSpecialsApplicator $productSpecialsApplicator
-    ) {
+    public function __construct(LoggerInterface $logger, ProductSpecialsApplicator $productSpecialsApplicator)
+    {
         parent::__construct($logger);
 
         $this->productSpecialsApplicator = $productSpecialsApplicator;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handleChannelPricing(ChannelPricingInterface $channelPricing): void
     {
         /** @var ProductVariantInterface $productVariant */

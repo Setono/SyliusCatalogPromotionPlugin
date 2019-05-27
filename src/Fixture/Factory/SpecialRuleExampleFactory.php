@@ -27,14 +27,8 @@ class SpecialRuleExampleFactory extends AbstractExampleFactory
      */
     protected $optionsResolver;
 
-    /**
-     * @param SpecialRuleFactoryInterface $specialRuleFactory
-     * @param array $specialRules
-     */
-    public function __construct(
-        SpecialRuleFactoryInterface $specialRuleFactory,
-        array $specialRules
-    ) {
+    public function __construct(SpecialRuleFactoryInterface $specialRuleFactory, array $specialRules)
+    {
         $this->specialRuleFactory = $specialRuleFactory;
         $this->specialRules = $specialRules;
 
@@ -43,9 +37,6 @@ class SpecialRuleExampleFactory extends AbstractExampleFactory
         $this->configureOptions($this->optionsResolver);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function create(array $options = []): SpecialRuleInterface
     {
         $options = $this->optionsResolver->resolve($options);
@@ -56,9 +47,6 @@ class SpecialRuleExampleFactory extends AbstractExampleFactory
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function configureOptions(OptionsResolver $resolver): void
     {
         $resolver

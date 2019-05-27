@@ -10,9 +10,6 @@ class ContainsProductRuleQueryBuilder implements RuleQueryBuilderInterface
 {
     public const PARAMETER = 'product';
 
-    /**
-     * {@inheritdoc}
-     */
     public function addRulesWheres(QueryBuilder $queryBuilder, array $configuration, string $alias): QueryBuilder
     {
         static $index = 0;

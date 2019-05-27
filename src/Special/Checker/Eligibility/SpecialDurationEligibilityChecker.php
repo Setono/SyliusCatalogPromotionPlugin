@@ -9,9 +9,6 @@ use Setono\SyliusBulkSpecialsPlugin\Model\SpecialSubjectInterface;
 
 final class SpecialDurationEligibilityChecker implements SpecialEligibilityCheckerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function isEligible(SpecialSubjectInterface $specialSubject, SpecialInterface $special): bool
     {
         $now = new \DateTime();

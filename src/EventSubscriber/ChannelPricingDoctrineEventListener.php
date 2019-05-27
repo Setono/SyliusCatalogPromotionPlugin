@@ -21,12 +21,8 @@ class ChannelPricingDoctrineEventListener
      */
     private $channelPricingsToRecalculate = [];
 
-    /**
-     * @param ChannelPricingRecalculateHandlerInterface $channelPricingRecalculateHandler
-     */
-    public function __construct(
-        ChannelPricingRecalculateHandlerInterface $channelPricingRecalculateHandler
-    ) {
+    public function __construct(ChannelPricingRecalculateHandlerInterface $channelPricingRecalculateHandler)
+    {
         $this->channelPricingRecalculateHandler = $channelPricingRecalculateHandler;
     }
 
@@ -47,9 +43,6 @@ class ChannelPricingDoctrineEventListener
         }
     }
 
-    /**
-     * @param LifecycleEventArgs $args
-     */
     public function postUpdate(LifecycleEventArgs $args): void
     {
         $entity = $args->getObject();

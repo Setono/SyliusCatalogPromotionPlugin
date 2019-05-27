@@ -8,8 +8,5 @@ use Setono\SyliusBulkSpecialsPlugin\Model\ProductInterface;
 
 interface EligibleSpecialsReassignHandlerInterface extends HandlerInterface
 {
-    /**
-     * @param ProductInterface $product
-     */
     public function handleProduct(ProductInterface $product): void;
 }

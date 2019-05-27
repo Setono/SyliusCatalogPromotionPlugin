@@ -59,9 +59,6 @@ class ChannelPricingRecalculateAsyncHandler extends AbstractChannelPricingHandle
         $this->entityManager = $entityManager;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function handleChannelPricing(ChannelPricingInterface $subject): void
     {
         $this->producer->sendEvent(
@@ -70,9 +67,6 @@ class ChannelPricingRecalculateAsyncHandler extends AbstractChannelPricingHandle
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function process(PsrMessage $message, PsrContext $session)
     {
         /** @var ChannelPricingInterface $channelPricing */
@@ -92,9 +86,6 @@ class ChannelPricingRecalculateAsyncHandler extends AbstractChannelPricingHandle
         return self::ACK;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getSubscribedTopics()
     {
         return [
