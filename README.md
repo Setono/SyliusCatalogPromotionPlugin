@@ -361,6 +361,12 @@ Lets list what bulk actions we have to execute:
 - And run `Reassign Specials for all Products` &
   `Recalculate special prices for all Products`
 
+# Troubleshooting
+
+* `The "sylius.repository.product" service or alias has been removed or inlined when the container was compiled. You should either make it public, or stop using the container directly and use dependency injection instead.`
+  
+  See https://github.com/Sylius/Sylius/issues/10663
+
 # Contribution
 
 ## Installation
