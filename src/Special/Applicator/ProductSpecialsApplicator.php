@@ -94,7 +94,7 @@ class ProductSpecialsApplicator
         }
 
         $channelPricing->setPrice(
-            (int) ($channelPricing->getOriginalPrice() * $multiplier)
+            (int) round($channelPricing->getOriginalPrice() * $multiplier)
         );
 
         /** @var ProductVariantInterface $productVariant */

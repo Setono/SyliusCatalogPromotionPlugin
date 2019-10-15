@@ -7,27 +7,31 @@ namespace Setono\SyliusBulkSpecialsPlugin\Command;
 use Safe\Exceptions\StringsException;
 use function Safe\sprintf;
 use Setono\SyliusBulkSpecialsPlugin\Doctrine\ORM\ProductRepositoryInterface;
-use Setono\SyliusBulkSpecialsPlugin\Handler\EligibleSpecialsReassignHandlerInterface;
+use Setono\SyliusBulkSpecialsPlugin\Message\Command\AssignEligibleSpecials;
 use Setono\SyliusBulkSpecialsPlugin\Model\ProductInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Messenger\MessageBusInterface;
 
-class ReassignCommand extends Command
+/**
+ * This command will assign eligible specials to one or all products
+ */
+class AssignSpecialsCommand extends Command
 {
+    /** @var MessageBusInterface */
+    private $commandBus;
+
     /** @var ProductRepositoryInterface */
     protected $productRepository;
 
-    /** @var EligibleSpecialsReassignHandlerInterface */
-    protected $eligibleSpecialsReassignHandler;
-
     public function __construct(
-        ProductRepositoryInterface $productRepository,
-        EligibleSpecialsReassignHandlerInterface $eligibleSpecialsReassignHandler
+        MessageBusInterface $commandBus,
+        ProductRepositoryInterface $productRepository
     ) {
+        $this->commandBus = $commandBus;
         $this->productRepository = $productRepository;
-        $this->eligibleSpecialsReassignHandler = $eligibleSpecialsReassignHandler;
 
         parent::__construct();
     }
@@ -35,13 +39,13 @@ class ReassignCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setName('setono:sylius-bulk-specials:reassign')
+            ->setName('setono:sylius-bulk-specials:assign')
             ->addArgument(
                 'identifier',
                 InputArgument::OPTIONAL,
-                'Product identifier (ID or code)'
+                'Product identifier (id or code)'
             )
-            ->setDescription('Reassign specials to given Product or to all products')
+            ->setDescription('Assigns eligible specials to one or all products')
         ;
     }
 
@@ -60,16 +64,17 @@ class ReassignCommand extends Command
         }
 
         if (count($products) === 0) {
-            $output->writeln('<error>Products was not found</error>');
+            $output->writeln('<error>No products found</error>');
 
             return 0;
         }
 
         /** @var ProductInterface $product */
         foreach ($products as $product) {
-            $this->eligibleSpecialsReassignHandler->handleProduct($product);
+            $this->commandBus->dispatch(new AssignEligibleSpecials($product));
+
             $output->writeln(sprintf(
-                "<info>Eligible Specials was reassigned to Product '%s'</info>",
+                "<info>Eligible specials was assigned to product '%s'</info>",
                 (string) $product
             ));
         }

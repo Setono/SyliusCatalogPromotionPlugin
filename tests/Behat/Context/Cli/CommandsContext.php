@@ -6,7 +6,7 @@ namespace Tests\Setono\SyliusBulkSpecialsPlugin\Behat\Context\Cli;
 
 use Behat\Behat\Context\Context;
 use Setono\SyliusBulkSpecialsPlugin\Command\CheckActiveCommand;
-use Setono\SyliusBulkSpecialsPlugin\Command\ReassignCommand;
+use Setono\SyliusBulkSpecialsPlugin\Command\AssignSpecialsCommand;
 use Setono\SyliusBulkSpecialsPlugin\Command\RecalculateProductCommand;
 use Setono\SyliusBulkSpecialsPlugin\Command\RecalculateSpecialCommand;
 use Setono\SyliusBulkSpecialsPlugin\Model\ProductInterface;
@@ -52,7 +52,7 @@ final class CommandsContext implements Context
     private $checkActiveCommand;
 
     /**
-     * @var ReassignCommand
+     * @var AssignSpecialsCommand
      */
     private $reassignCommand;
 
@@ -71,7 +71,7 @@ final class CommandsContext implements Context
      * @param SharedStorage $sharedStorage
      * @param KernelInterface $kernel
      * @param CheckActiveCommand $checkActiveCommand
-     * @param ReassignCommand $reassignCommand
+     * @param AssignSpecialsCommand $reassignCommand
      * @param RecalculateProductCommand $recalculateProductCommand
      * @param RecalculateSpecialCommand $recalculateSpecialCommand
      */
@@ -79,7 +79,7 @@ final class CommandsContext implements Context
         SharedStorage $sharedStorage,
         KernelInterface $kernel,
         CheckActiveCommand $checkActiveCommand,
-        ReassignCommand $reassignCommand,
+        AssignSpecialsCommand $reassignCommand,
         RecalculateProductCommand $recalculateProductCommand,
         RecalculateSpecialCommand $recalculateSpecialCommand
     ) {

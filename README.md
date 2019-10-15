@@ -299,7 +299,7 @@ Lets list what bulk actions we have to execute:
 
 - `Reassign Specials for all Products`
   - Click `Admin > Products > Specials menu > Reassign Specials for all Products`.
-  - OR run: `bin/command setono:sylius-bulk-specials:reassign` 
+  - OR run: `bin/command setono:sylius-bulk-specials:assign` 
 
 - `Recalculate special prices for all Products`
   - Click`Admin > Products > Specials menu > Recalculate special prices for all Products`.
@@ -311,7 +311,7 @@ Lets list what bulk actions we have to execute:
 
 - `Reassign Specials to selected Products`
   - Click `Admin > Products > Bulk actions > Reassign Specials to selected Products`.
-  - OR run: `bin/command setono:sylius-bulk-specials:reassign PRODUCT_CODE`
+  - OR run: `bin/command setono:sylius-bulk-specials:assign PRODUCT_CODE`
 
 - `Recalculate prices for Products matching Special rules`
   - Select special rules you want to recalculate
