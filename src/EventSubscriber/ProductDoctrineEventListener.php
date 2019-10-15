@@ -5,17 +5,18 @@ declare(strict_types=1);
 namespace Setono\SyliusBulkSpecialsPlugin\EventSubscriber;
 
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
-use Setono\SyliusBulkSpecialsPlugin\Handler\EligibleSpecialsReassignHandlerInterface;
+use Setono\SyliusBulkSpecialsPlugin\Message\Command\AssignEligibleSpecials;
 use Setono\SyliusBulkSpecialsPlugin\Model\ProductInterface;
+use Symfony\Component\Messenger\MessageBusInterface;
 
 class ProductDoctrineEventListener
 {
-    /** @var EligibleSpecialsReassignHandlerInterface */
-    protected $eligibleSpecialsReassignHandler;
+    /** @var MessageBusInterface */
+    private $commandBus;
 
-    public function __construct(EligibleSpecialsReassignHandlerInterface $eligibleSpecialsReassignHandler)
+    public function __construct(MessageBusInterface $commandBus)
     {
-        $this->eligibleSpecialsReassignHandler = $eligibleSpecialsReassignHandler;
+        $this->commandBus = $commandBus;
     }
 
     /**
@@ -29,6 +30,6 @@ class ProductDoctrineEventListener
             return;
         }
 
-        $this->eligibleSpecialsReassignHandler->handleProduct($entity);
+        $this->commandBus->dispatch(new AssignEligibleSpecials($entity));
     }
 }

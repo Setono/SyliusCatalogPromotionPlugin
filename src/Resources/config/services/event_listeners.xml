@@ -17,7 +17,7 @@
 
         <service id="setono_sylius_bulk_specials.doctrine_event_listener.product"
                  class="Setono\SyliusBulkSpecialsPlugin\EventSubscriber\ProductDoctrineEventListener">
-            <argument type="service" id="setono_sylius_bulk_specials.handler.eligible_specials_reassign" />
+            <argument type="service" id="setono_sylius_bulk_specials.command_bus" />
 
             <tag name="doctrine.event_listener" event="postPersist" lazy="true" />
         </service>

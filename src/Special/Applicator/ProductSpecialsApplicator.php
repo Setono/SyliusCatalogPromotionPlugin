@@ -18,10 +18,10 @@ use Sylius\Component\Core\Model\ProductVariantInterface;
 final class ProductSpecialsApplicator implements ProductSpecialsApplicatorInterface
 {
     /** @var EntityManager */
-    protected $channelPricingManager;
+    private $channelPricingManager;
 
     /** @var LoggerInterface */
-    protected $logger;
+    private $logger;
 
     public function __construct(
         EntityManager $channelPricingManager,
@@ -31,7 +31,7 @@ final class ProductSpecialsApplicator implements ProductSpecialsApplicatorInterf
         $this->logger = $logger;
     }
 
-    protected function log(string $message): void
+    private function log(string $message): void
     {
         $this->logger->info($message);
     }
@@ -81,7 +81,7 @@ final class ProductSpecialsApplicator implements ProductSpecialsApplicatorInterf
     /**
      * @throws StringsException
      */
-    protected function applyMultiplierToChannelPricing(ChannelPricingInterface $channelPricing, float $multiplier): void
+    private function applyMultiplierToChannelPricing(ChannelPricingInterface $channelPricing, float $multiplier): void
     {
         if (!$channelPricing->getOriginalPrice()) {
             if (!$channelPricing->getPrice()) {
@@ -108,7 +108,7 @@ final class ProductSpecialsApplicator implements ProductSpecialsApplicatorInterf
         ));
     }
 
-    protected function getProductMultiplierForChannelCode(ProductInterface $product, string $channelCode): float
+    private function getProductMultiplierForChannelCode(ProductInterface $product, string $channelCode): float
     {
         if ($product->hasExclusiveSpecialsForChannelCode($channelCode)) {
             return $product->getFirstExclusiveSpecialForChannelCode($channelCode)->getMultiplier();

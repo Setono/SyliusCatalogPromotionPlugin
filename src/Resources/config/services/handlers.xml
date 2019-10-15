@@ -16,16 +16,6 @@
             <argument type="service" id="setono_sylius_bulk_specials.applicator.product_specials" />
         </service>
 
-        <service id="setono_sylius_bulk_specials.handler.eligible_specials_reassign"
-                 parent="setono_sylius_bulk_specials.handler.abstract"
-                 class="Setono\SyliusBulkSpecialsPlugin\Handler\EligibleSpecialsReassignHandler"
-                 public="true">
-            <argument type="service" id="setono_sylius_bulk_specials.repository.special" />
-            <argument type="service" id="sylius.repository.product" />
-            <argument type="service" id="setono_sylius_bulk_specials.special_eligibility_checker" />
-            <argument type="service" id="setono_sylius_bulk_specials.recalculate_handler.product" />
-        </service>
-
         <service id="setono_sylius_bulk_specials.recalculate_handler.product"
                  parent="setono_sylius_bulk_specials.handler.abstract"
                  class="Setono\SyliusBulkSpecialsPlugin\Handler\ProductRecalculateHandler"
