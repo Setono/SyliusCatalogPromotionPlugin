@@ -133,7 +133,7 @@ class Special implements SpecialInterface
         return $name;
     }
 
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }

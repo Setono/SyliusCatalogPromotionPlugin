@@ -18,7 +18,7 @@ class SpecialRule implements SpecialRuleInterface
     /** @var SpecialInterface|null */
     protected $special;
 
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }

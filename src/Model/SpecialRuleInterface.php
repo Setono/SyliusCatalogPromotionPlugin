@@ -8,7 +8,7 @@ use Sylius\Component\Resource\Model\ResourceInterface;
 
 interface SpecialRuleInterface extends ResourceInterface, ConfigurableSpecialElementInterface
 {
-    public function getId(): int;
+    public function getId(): ?int;
 
     public function setType(string $type): void;
 
