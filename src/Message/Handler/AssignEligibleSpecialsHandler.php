@@ -73,8 +73,8 @@ final class AssignEligibleSpecialsHandler extends AbstractHandler
             }
         }
 
-        $this->productRepository->add($product);
         $this->productRecalculateHandler->handle($product);
+        $this->productRepository->add($product);
 
         $this->logger->info(sprintf(
             "Product '%s' specials reassign finished.",
