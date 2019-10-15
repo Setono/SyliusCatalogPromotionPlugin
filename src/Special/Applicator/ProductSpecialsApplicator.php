@@ -15,7 +15,7 @@ use Sylius\Component\Core\Model\ChannelPricingInterface;
 use Sylius\Component\Core\Model\ProductVariant;
 use Sylius\Component\Core\Model\ProductVariantInterface;
 
-class ProductSpecialsApplicator
+final class ProductSpecialsApplicator implements ProductSpecialsApplicatorInterface
 {
     /** @var EntityManager */
     protected $channelPricingManager;
