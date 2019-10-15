@@ -124,9 +124,9 @@ class Special implements SpecialInterface
 
     public function __toString(): string
     {
-        $name = $this->getName();
+        $name = (string) $this->getName();
 
-        if (null === $name) {
+        if ('' === $name) {
             return (string) $this->getId();
         }
 
