@@ -57,7 +57,6 @@ return [
     FOS\OAuthServerBundle\FOSOAuthServerBundle::class => ['all' => true],
     Sylius\Bundle\AdminApiBundle\SyliusAdminApiBundle::class => ['all' => true],
 
-    Enqueue\Bundle\EnqueueBundle::class => ['dev' => true, 'test' => false, 'test_cached' => false],
     AppBundle\AppBundle::class => ['all' => true],
 
     Symfony\Bundle\DebugBundle\DebugBundle::class => ['dev' => true, 'test' => true, 'test_cached' => true],
