@@ -14,20 +14,12 @@ use Sylius\Component\Core\Model\ProductVariantInterface;
 
 class ProductSpecialsApplicator
 {
-    /**
-     * @var EntityManager
-     */
+    /** @var EntityManager */
     protected $channelPricingManager;
 
-    /**
-     * @var LoggerInterface
-     */
+    /** @var LoggerInterface */
     protected $logger;
 
-    /**
-     * @param EntityManager $channelPricingManager
-     * @param LoggerInterface $logger
-     */
     public function __construct(
         EntityManager $channelPricingManager,
         LoggerInterface $logger
@@ -36,17 +28,11 @@ class ProductSpecialsApplicator
         $this->logger = $logger;
     }
 
-    /**
-     * @param string $message
-     */
     protected function log(string $message): void
     {
         $this->logger->info($message);
     }
 
-    /**
-     * @param ProductInterface $product
-     */
     public function applyToProduct(ProductInterface $product): void
     {
         /** @var ProductVariant $variant */
@@ -58,9 +44,6 @@ class ProductSpecialsApplicator
         }
     }
 
-    /**
-     * @param ChannelPricingInterface $channelPricing
-     */
     public function applyToChannelPricing(ChannelPricingInterface $channelPricing): void
     {
         $productVariant = $channelPricing->getProductVariant();
@@ -84,10 +67,6 @@ class ProductSpecialsApplicator
         $this->channelPricingManager->persist($channelPricing);
     }
 
-    /**
-     * @param ChannelPricingInterface $channelPricing
-     * @param float $multiplier
-     */
     protected function applyMultiplierToChannelPricing(ChannelPricingInterface $channelPricing, float $multiplier): void
     {
         if (!$channelPricing->getOriginalPrice()) {
@@ -115,12 +94,6 @@ class ProductSpecialsApplicator
         ));
     }
 
-    /**
-     * @param ProductInterface $product
-     * @param string $channelCode
-     *
-     * @return float
-     */
     protected function getProductMultiplierForChannelCode(ProductInterface $product, string $channelCode): float
     {
         if ($product->hasExclusiveSpecialsForChannelCode($channelCode)) {

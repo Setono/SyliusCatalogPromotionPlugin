@@ -1,15 +1,19 @@
 {
     "name": "setono/sylius-bulk-specials-plugin",
     "type": "sylius-plugin",
-    "description": "Bulk specials plugin for Sylius.",
+    "description": "Bulk specials plugin for Sylius",
     "keywords": [
         "sylius",
-        "sylius-plugin"
+        "sylius-plugin",
+        "bulk",
+        "setono",
+        "specials"
     ],
     "license": "MIT",
     "require": {
         "php": "^7.2",
-        "sylius/sylius": "^1.3"
+        "sylius/sylius": "^1.3",
+        "symfony/messenger": "^4.3"
     },
     "require-dev": {
         "behat/behat": "^3.4",
@@ -26,20 +30,19 @@
         "lakion/mink-debug-extension": "^1.2.3",
         "localheinz/composer-normalize": "^1.1",
         "phpspec/phpspec": "^5.0",
-        "phpstan/phpstan-doctrine": "^0.10",
-        "phpstan/phpstan-shim": "^0.10",
-        "phpstan/phpstan-symfony": "^0.10",
-        "phpstan/phpstan-webmozart-assert": "^0.10",
+        "phpstan/phpstan": "^0.11",
+        "phpstan/phpstan-doctrine": "^0.11",
+        "phpstan/phpstan-webmozart-assert": "^0.11",
         "phpunit/phpunit": "^8.0",
         "roave/security-advisories": "dev-master",
         "sensiolabs/security-checker": "^5.0",
-        "sylius-labs/coding-standard": "^2.0",
-        "symfony/browser-kit": "^3.4 || ^4.1",
-        "symfony/debug-bundle": "^3.4 || ^4.1",
-        "symfony/dotenv": "^4.2",
-        "symfony/intl": "^3.4 || ^4.1",
-        "symfony/web-profiler-bundle": "^3.4 || ^4.1",
-        "symfony/web-server-bundle": "^3.4 || ^4.1"
+        "sylius-labs/coding-standard": "^3.0",
+        "symfony/browser-kit": "^3.4 || ^4.3",
+        "symfony/debug-bundle": "^3.4 || ^4.3",
+        "symfony/dotenv": "^4.3",
+        "symfony/intl": "^3.4 || ^4.3",
+        "symfony/web-profiler-bundle": "^3.4 || ^4.3",
+        "symfony/web-server-bundle": "^3.4 || ^4.3"
     },
     "config": {
         "sort-packages": true
@@ -69,10 +72,7 @@
             "composer checks",
             "composer tests"
         ],
-        "analyse": [
-            "composer ensure-test-container-exists",
-            "./vendor/bin/phpstan.phar analyse -c phpstan.neon -l max src tests/Application/src"
-        ],
+        "analyse": "vendor/bin/phpstan analyse -c phpstan.neon -l max src tests/Application/src",
         "assets": [
             "composer ensure-assets-installed",
             "composer ensure-assets-compiled"
@@ -82,7 +82,7 @@
             "SYMFONY_ENV=test composer ensure-schema-updated",
             "./vendor/bin/behat --tags=\"~@javascript\" --no-interaction --format=progress"
         ],
-        "check-style": "./vendor/bin/ecs check src tests/Application/src",
+        "check-style": "vendor/bin/ecs check src tests/Application/src",
         "checks": [
             "composer check-style",
             "composer analyse"
@@ -91,15 +91,14 @@
         "ensure-assets-installed": "[[ -d tests/Application/node_modules ]] || (cd tests/Application && yarn install)",
         "ensure-database-created": "(cd tests/Application && bin/console doctrine:database:create --if-not-exists -e ${SYMFONY_ENV:-'dev'})",
         "ensure-schema-updated": "(cd tests/Application && bin/console doctrine:schema:update --force -e ${SYMFONY_ENV:-'dev'})",
-        "ensure-test-container-exists": "[[ -f tests/Application/var/cache/test/ApplicationTests_Setono_SyliusBulkSpecialsPlugin_Application_KernelTestDebugContainer.xml ]] || (cd tests/Application && php -d memory_limit=-1 bin/console cache:clear --env=test)",
         "ensure-vendors-installed": "[[ -f vendor/autoload.php ]] || COMPOSER_MEMORY_LIMIT=-1 composer install",
-        "fix-style": "./vendor/bin/ecs check src tests/Application/src --fix",
+        "fix-style": "vendor/bin/ecs check src tests/Application/src --fix",
         "fixtures": [
             "composer ensure-database-created",
             "composer ensure-schema-updated",
             "(cd tests/Application && bin/console sylius:fixtures:load --no-interaction -e ${SYMFONY_ENV:-'dev'})"
         ],
-        "phpspec": "./vendor/bin/phpspec run -vvv",
+        "phpspec": "vendor/bin/phpspec run -vvv",
         "run": "(cd tests/Application && bin/console server:run -d public -e ${SYMFONY_ENV:-'dev'})",
         "tests": [
             "composer phpspec",

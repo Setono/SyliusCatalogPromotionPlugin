@@ -13,10 +13,6 @@ interface SpecialSubjectRepositoryInterface
 
     /**
      * Should be used to build some paginators
-     *
-     * @param SpecialInterface $special
-     *
-     * @return QueryBuilder
      */
     public function findBySpecialQB(SpecialInterface $special): QueryBuilder;
 }

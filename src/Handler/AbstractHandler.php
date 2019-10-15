@@ -8,9 +8,7 @@ use Psr\Log\LoggerInterface;
 
 abstract class AbstractHandler
 {
-    /**
-     * @var LoggerInterface|null
-     */
+    /** @var LoggerInterface|null */
     protected $logger;
 
     public function __construct(?LoggerInterface $logger = null)

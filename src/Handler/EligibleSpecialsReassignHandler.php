@@ -13,24 +13,16 @@ use Sylius\Bundle\CoreBundle\Doctrine\ORM\ProductRepository;
 
 class EligibleSpecialsReassignHandler extends AbstractProductHandler implements EligibleSpecialsReassignHandlerInterface
 {
-    /**
-     * @var SpecialRepositoryInterface
-     */
+    /** @var SpecialRepositoryInterface */
     private $specialRepository;
 
-    /**
-     * @var ProductRepository
-     */
+    /** @var ProductRepository */
     private $productRepository;
 
-    /**
-     * @var SpecialEligibilityCheckerInterface
-     */
+    /** @var SpecialEligibilityCheckerInterface */
     private $specialEligibilityChecker;
 
-    /**
-     * @var ProductRecalculateHandlerInterface
-     */
+    /** @var ProductRecalculateHandlerInterface */
     private $productRecalculateHandler;
 
     public function __construct(

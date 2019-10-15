@@ -14,20 +14,12 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class RecalculateProductCommand extends Command implements CommandInterface
 {
-    /**
-     * @var ProductRepositoryInterface
-     */
+    /** @var ProductRepositoryInterface */
     protected $productRepository;
 
-    /**
-     * @var ProductRecalculateHandlerInterface
-     */
+    /** @var ProductRecalculateHandlerInterface */
     protected $productRecalculateHandler;
 
-    /**
-     * @param ProductRepositoryInterface $productRepository
-     * @param ProductRecalculateHandlerInterface $productRecalculateHandler
-     */
     public function __construct(
         ProductRepositoryInterface $productRepository,
         ProductRecalculateHandlerInterface $productRecalculateHandler
@@ -51,7 +43,7 @@ class RecalculateProductCommand extends Command implements CommandInterface
         ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): void
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $identifier = $input->getArgument('identifier');
 
@@ -66,7 +58,7 @@ class RecalculateProductCommand extends Command implements CommandInterface
         if (!count($products)) {
             $output->writeln('<error>Products was not found</error>');
 
-            return;
+            return 0;
         }
 
         /** @var ProductInterface $product */
@@ -79,5 +71,7 @@ class RecalculateProductCommand extends Command implements CommandInterface
         }
 
         $output->writeln('Done');
+
+        return 0;
     }
 }

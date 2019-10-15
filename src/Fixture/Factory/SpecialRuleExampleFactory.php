@@ -12,19 +12,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SpecialRuleExampleFactory extends AbstractExampleFactory
 {
-    /**
-     * @var SpecialRuleFactoryInterface
-     */
+    /** @var SpecialRuleFactoryInterface */
     protected $specialRuleFactory;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $specialRules;
 
-    /**
-     * @var OptionsResolver
-     */
+    /** @var OptionsResolver */
     protected $optionsResolver;
 
     public function __construct(SpecialRuleFactoryInterface $specialRuleFactory, array $specialRules)

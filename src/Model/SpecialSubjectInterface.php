@@ -21,15 +21,11 @@ interface SpecialSubjectInterface extends ResourceInterface
     public function getFirstExclusiveSpecialForChannelCode(string $channelCode): ?SpecialInterface;
 
     /**
-     * @param string $channelCode
-     *
      * @return Collection|SpecialInterface[]
      */
     public function getExclusiveSpecialsForChannelCode(string $channelCode): Collection;
 
     /**
-     * @param string $channelCode
-     *
      * @return Collection|SpecialInterface[]
      */
     public function getActiveSpecialsForChannelCode(string $channelCode): Collection;

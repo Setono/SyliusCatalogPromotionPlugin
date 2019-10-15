@@ -10,9 +10,7 @@ use Setono\SyliusBulkSpecialsPlugin\Model\ProductInterface;
 
 class ProductDoctrineEventListener
 {
-    /**
-     * @var EligibleSpecialsReassignHandlerInterface
-     */
+    /** @var EligibleSpecialsReassignHandlerInterface */
     protected $eligibleSpecialsReassignHandler;
 
     public function __construct(EligibleSpecialsReassignHandlerInterface $eligibleSpecialsReassignHandler)
@@ -23,8 +21,6 @@ class ProductDoctrineEventListener
     /**
      * On Product creation - assign eligible specials
      * (it starts recalculate automatically)
-     *
-     * @param LifecycleEventArgs $args
      */
     public function postPersist(LifecycleEventArgs $args): void
     {

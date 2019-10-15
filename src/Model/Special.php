@@ -13,28 +13,21 @@ use Sylius\Component\Resource\Model\TimestampableTrait;
 class Special implements SpecialInterface
 {
     public const ACTION_TYPE_OFF = 'off';
+
     public const ACTION_TYPE_INCREASE = 'increase';
 
     use TimestampableTrait;
 
-    /**
-     * @var mixed
-     */
+    /** @var mixed */
     protected $id;
 
-    /**
-     * @var string|null
-     */
+    /** @var string|null */
     protected $code;
 
-    /**
-     * @var string|null
-     */
+    /** @var string|null */
     protected $name;
 
-    /**
-     * @var string|null
-     */
+    /** @var string|null */
     protected $description;
 
     /**
@@ -51,44 +44,27 @@ class Special implements SpecialInterface
      */
     protected $exclusive = false;
 
-    /**
-     * @var \DateTimeInterface|null
-     */
+    /** @var \DateTimeInterface|null */
     protected $startsAt;
 
-    /**
-     * @var \DateTimeInterface|null
-     */
+    /** @var \DateTimeInterface|null */
     protected $endsAt;
 
-    /**
-     * @var bool
-     */
+    /** @var bool */
     protected $enabled = false;
 
-    /**
-     * @var Collection|SpecialRuleInterface[]
-     */
+    /** @var Collection|SpecialRuleInterface[] */
     protected $rules;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $actionType = self::ACTION_TYPE_OFF;
 
-    /**
-     * @var float
-     */
+    /** @var float */
     protected $actionPercent = 0.0;
 
-    /**
-     * @var ChannelInterface[]|Collection
-     */
+    /** @var ChannelInterface[]|Collection */
     protected $channels;
 
-    /**
-     * @return array
-     */
     public static function getActionTypes(): array
     {
         return [

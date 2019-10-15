@@ -13,9 +13,7 @@ use Symfony\Component\Form\ReversedTransformer;
 
 final class ContainsProductConfigurationType extends AbstractType
 {
-    /**
-     * @var RepositoryInterface
-     */
+    /** @var RepositoryInterface */
     private $productRepository;
 
     public function __construct(RepositoryInterface $productRepository)

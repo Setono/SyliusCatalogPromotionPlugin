@@ -12,7 +12,6 @@ interface SpecialRepositoryInterface extends RepositoryInterface
     /**
      * Actually, that is not accidentally, just time going on...
      *
-     * @param \DateTimeInterface|null $date
      *
      * @return SpecialInterface[]
      */
@@ -21,7 +20,6 @@ interface SpecialRepositoryInterface extends RepositoryInterface
     /**
      * Actually, that is not accidentally, just time going on...
      *
-     * @param \DateTimeInterface|null $date
      *
      * @return SpecialInterface[]
      */

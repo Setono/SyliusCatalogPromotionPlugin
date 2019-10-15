@@ -17,19 +17,13 @@ class SpecialRecalculateAsyncHandler extends AbstractSpecialHandler implements P
 {
     public const EVENT = 'setono_sylius_bulk_specials_topic_special_recalculate';
 
-    /**
-     * @var ProducerInterface
-     */
+    /** @var ProducerInterface */
     protected $producer;
 
-    /**
-     * @var SpecialRepositoryInterface
-     */
+    /** @var SpecialRepositoryInterface */
     protected $repository;
 
-    /**
-     * @var SpecialRecalculateHandler
-     */
+    /** @var SpecialRecalculateHandler */
     protected $recalculateHandler;
 
     /**

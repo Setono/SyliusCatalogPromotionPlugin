@@ -11,9 +11,7 @@ use Sylius\Component\Core\Model\ProductVariantInterface;
 
 class ChannelPricingRecalculateHandler extends AbstractChannelPricingHandler
 {
-    /**
-     * @var ProductSpecialsApplicator
-     */
+    /** @var ProductSpecialsApplicator */
     protected $productSpecialsApplicator;
 
     public function __construct(LoggerInterface $logger, ProductSpecialsApplicator $productSpecialsApplicator)

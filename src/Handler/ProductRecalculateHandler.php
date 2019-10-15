@@ -10,9 +10,7 @@ use Setono\SyliusBulkSpecialsPlugin\Special\Applicator\ProductSpecialsApplicator
 
 class ProductRecalculateHandler extends AbstractProductHandler
 {
-    /**
-     * @var ProductSpecialsApplicator
-     */
+    /** @var ProductSpecialsApplicator */
     protected $productSpecialsApplicator;
 
     public function __construct(

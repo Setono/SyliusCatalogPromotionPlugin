@@ -15,29 +15,19 @@ use Setono\SyliusBulkSpecialsPlugin\Model\SpecialInterface;
 
 class SpecialDoctrineEventListener
 {
-    /**
-     * @var SpecialRecalculateHandlerInterface
-     */
+    /** @var SpecialRecalculateHandlerInterface */
     protected $specialRecalculateHandler;
 
-    /**
-     * @var ProductRecalculateHandlerInterface
-     */
+    /** @var ProductRecalculateHandlerInterface */
     protected $productRecalculateHandler;
 
-    /**
-     * @var ProductRepositoryInterface
-     */
+    /** @var ProductRepositoryInterface */
     protected $productRepository;
 
-    /**
-     * @var EntityManager
-     */
+    /** @var EntityManager */
     protected $productManager;
 
-    /**
-     * @var array|SpecialInterface[]
-     */
+    /** @var array|SpecialInterface[] */
     private $specialsToRecalculate = [];
 
     public function __construct(
@@ -55,8 +45,6 @@ class SpecialDoctrineEventListener
     /**
      * Recalculate special (all Products related to given Special)
      * if actionType or actionPercent changed
-     *
-     * @param PreUpdateEventArgs $args
      */
     public function preUpdate(PreUpdateEventArgs $args): void
     {
@@ -87,8 +75,6 @@ class SpecialDoctrineEventListener
     /**
      * On Special creation - recalculate
      * (this new special will be assigned to eligible products automatically)
-     *
-     * @param LifecycleEventArgs $args
      */
     public function postPersist(LifecycleEventArgs $args): void
     {
@@ -103,7 +89,6 @@ class SpecialDoctrineEventListener
     /**
      * On Special remove - detach it from and recalculate all products related to it
      *
-     * @param LifecycleEventArgs $args
      *
      * @throws \Doctrine\ORM\ORMException
      */

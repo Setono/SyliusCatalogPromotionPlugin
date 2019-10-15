@@ -11,14 +11,10 @@ use Setono\SyliusBulkSpecialsPlugin\Model\SpecialInterface;
 
 class SpecialRecalculateHandler extends AbstractSpecialHandler
 {
-    /**
-     * @var ProductRepositoryInterface
-     */
+    /** @var ProductRepositoryInterface */
     protected $productRepository;
 
-    /**
-     * @var ProductRecalculateHandlerInterface
-     */
+    /** @var ProductRecalculateHandlerInterface */
     protected $productRecalculateHandler;
 
     public function __construct(

@@ -10,9 +10,7 @@ use Webmozart\Assert\Assert;
 
 final class CompositeSpecialEligibilityChecker implements SpecialEligibilityCheckerInterface
 {
-    /**
-     * @var SpecialEligibilityCheckerInterface[]
-     */
+    /** @var SpecialEligibilityCheckerInterface[] */
     private $specialEligibilityCheckers;
 
     /**

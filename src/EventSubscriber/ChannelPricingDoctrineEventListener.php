@@ -11,14 +11,10 @@ use Sylius\Component\Core\Model\ChannelPricingInterface;
 
 class ChannelPricingDoctrineEventListener
 {
-    /**
-     * @var ChannelPricingRecalculateHandlerInterface
-     */
+    /** @var ChannelPricingRecalculateHandlerInterface */
     protected $channelPricingRecalculateHandler;
 
-    /**
-     * @var array|ChannelPricingInterface[]
-     */
+    /** @var array|ChannelPricingInterface[] */
     private $channelPricingsToRecalculate = [];
 
     public function __construct(ChannelPricingRecalculateHandlerInterface $channelPricingRecalculateHandler)
@@ -28,8 +24,6 @@ class ChannelPricingDoctrineEventListener
 
     /**
      * On ChannelPricing's originalPrice update
-     *
-     * @param PreUpdateEventArgs $args
      */
     public function preUpdate(PreUpdateEventArgs $args): void
     {
