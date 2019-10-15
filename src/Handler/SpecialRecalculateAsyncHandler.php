@@ -57,7 +57,7 @@ class SpecialRecalculateAsyncHandler extends AbstractSpecialHandler implements P
 
     public function process(PsrMessage $message, PsrContext $session)
     {
-        /** @var SpecialInterface $special */
+        /** @var SpecialInterface|null $special */
         $special = $this->repository->find(
             $message->getBody()
         );

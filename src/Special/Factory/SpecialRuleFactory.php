@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Setono\SyliusBulkSpecialsPlugin\Special\Factory;
 
+use InvalidArgumentException;
 use Setono\SyliusBulkSpecialsPlugin\Model\SpecialRuleInterface;
 use Setono\SyliusBulkSpecialsPlugin\Special\Checker\Rule\ContainsProductRuleChecker;
 use Setono\SyliusBulkSpecialsPlugin\Special\Checker\Rule\ContainsProductsRuleChecker;
@@ -20,12 +21,12 @@ class SpecialRuleFactory implements SpecialRuleFactoryInterface
         $this->decoratedFactory = $decoratedFactory;
     }
 
-    /**
-     * @return SpecialRuleInterface|object
-     */
-    public function createNew()
+    public function createNew(): SpecialRuleInterface
     {
-        return $this->decoratedFactory->createNew();
+        /** @var SpecialRuleInterface $obj */
+        $obj = $this->decoratedFactory->createNew();
+
+        return $obj;
     }
 
     /**
@@ -39,12 +40,16 @@ class SpecialRuleFactory implements SpecialRuleFactoryInterface
             case HasTaxonRuleChecker::TYPE:
                 return $this->createHasTaxon((array) $configuration);
             case ContainsProductRuleChecker::TYPE:
+                if (is_array($configuration)) {
+                    throw new InvalidArgumentException('The createContainsProduct method only accepts a string');
+                }
+
                 return $this->createContainsProduct((string) $configuration);
             case ContainsProductsRuleChecker::TYPE:
                 return $this->createContainsProducts((array) $configuration);
         }
 
-        throw new \InvalidArgumentException('$type must be one of [' . HasTaxonRuleChecker::TYPE . ', ' . ContainsProductRuleChecker::TYPE . ', ' . ContainsProductsRuleChecker::TYPE . ']');
+        throw new InvalidArgumentException('$type must be one of [' . HasTaxonRuleChecker::TYPE . ', ' . ContainsProductRuleChecker::TYPE . ', ' . ContainsProductsRuleChecker::TYPE . ']');
     }
 
     public function createHasTaxon(array $taxons): SpecialRuleInterface
@@ -73,7 +78,6 @@ class SpecialRuleFactory implements SpecialRuleFactoryInterface
 
     private function createSpecialRule(string $type, array $configuration): SpecialRuleInterface
     {
-        /** @var SpecialRuleInterface $rule */
         $rule = $this->createNew();
         $rule->setType($type);
         $rule->setConfiguration($configuration);

@@ -128,7 +128,7 @@ class SpecialExampleFactory extends AbstractExampleFactory
 
             ->setDefined('rules')
             ->setNormalizer('rules', function (Options $options, array $rules): array {
-                if (empty($rules)) {
+                if (count($rules) === 0) {
                     return [[]];
                 }
 

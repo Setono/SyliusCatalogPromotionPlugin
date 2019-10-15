@@ -75,13 +75,16 @@ abstract class AbstractConfigurableSpecialElementType extends AbstractResourceTy
         ]);
     }
 
+    /**
+     * @param ConfigurableSpecialElementInterface|null $data
+     */
     protected function getRegistryIdentifier(FormInterface $form, $data = null): ?string
     {
         if ($data instanceof ConfigurableSpecialElementInterface && null !== $data->getType()) {
             return $data->getType();
         }
 
-        if (null !== $form->getConfig()->hasOption('configuration_type')) {
+        if ($form->getConfig()->hasOption('configuration_type')) {
             return $form->getConfig()->getOption('configuration_type');
         }
 

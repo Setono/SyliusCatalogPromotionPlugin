@@ -28,7 +28,7 @@ abstract class ResourceController extends BaseResourceController
             throw new HttpException(Response::HTTP_FORBIDDEN, 'Invalid csrf token.');
         }
 
-        if (!count($resources)) {
+        if (count($resources) === 0) {
             $this->flashHelper->addErrorFlash($configuration, 'choose_bulk_action_items');
 
             return $this->redirectHandler->redirectToReferer($configuration);

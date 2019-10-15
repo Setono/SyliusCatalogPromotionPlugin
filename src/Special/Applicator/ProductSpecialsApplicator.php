@@ -6,6 +6,7 @@ namespace Setono\SyliusBulkSpecialsPlugin\Special\Applicator;
 
 use Doctrine\ORM\EntityManager;
 use Psr\Log\LoggerInterface;
+use function Safe\sprintf;
 use Setono\SyliusBulkSpecialsPlugin\Model\ProductInterface;
 use Setono\SyliusBulkSpecialsPlugin\Model\SpecialInterface;
 use Sylius\Component\Core\Model\ChannelPricingInterface;

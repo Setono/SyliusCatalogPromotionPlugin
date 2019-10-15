@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Setono\SyliusBulkSpecialsPlugin\Handler;
 
 use Psr\Log\LoggerInterface;
+use function Safe\sprintf;
 use Setono\SyliusBulkSpecialsPlugin\Doctrine\ORM\SpecialRepositoryInterface;
 use Setono\SyliusBulkSpecialsPlugin\Model\ProductInterface;
 use Setono\SyliusBulkSpecialsPlugin\Model\Special;

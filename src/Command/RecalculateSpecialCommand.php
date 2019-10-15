@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Setono\SyliusBulkSpecialsPlugin\Command;
 
+use function Safe\sprintf;
 use Setono\SyliusBulkSpecialsPlugin\Doctrine\ORM\SpecialRepositoryInterface;
 use Setono\SyliusBulkSpecialsPlugin\Handler\SpecialRecalculateHandlerInterface;
 use Setono\SyliusBulkSpecialsPlugin\Model\SpecialInterface;

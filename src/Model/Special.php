@@ -6,6 +6,7 @@ namespace Setono\SyliusBulkSpecialsPlugin\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use function Safe\sprintf;
 use Sylius\Component\Channel\Model\ChannelInterface as BaseChannelInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Resource\Model\TimestampableTrait;
@@ -104,7 +105,7 @@ class Special implements SpecialInterface
 
     public function getChannelCodes(): array
     {
-        return $this->channels->map(function (ChannelInterface $channel) {
+        return $this->channels->map(static function (ChannelInterface $channel) {
             return $channel->getCode();
         })->toArray();
     }
@@ -119,14 +120,16 @@ class Special implements SpecialInterface
 
     public function __toString(): string
     {
-        if (null === $this->getName()) {
+        $name = $this->getName();
+
+        if (null === $name) {
             return (string) $this->getId();
         }
 
-        return $this->getName();
+        return $name;
     }
 
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Setono\SyliusBulkSpecialsPlugin\Command;
 
+use function Safe\sprintf;
 use Setono\SyliusBulkSpecialsPlugin\Doctrine\ORM\ProductRepositoryInterface;
 use Setono\SyliusBulkSpecialsPlugin\Handler\ProductRecalculateHandlerInterface;
 use Setono\SyliusBulkSpecialsPlugin\Model\ProductInterface;
@@ -55,7 +56,7 @@ class RecalculateProductCommand extends Command implements CommandInterface
             ]);
         }
 
-        if (!count($products)) {
+        if (count($products) === 0) {
             $output->writeln('<error>Products was not found</error>');
 
             return 0;

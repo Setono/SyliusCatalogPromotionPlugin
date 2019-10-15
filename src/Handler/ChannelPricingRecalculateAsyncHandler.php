@@ -57,7 +57,7 @@ class ChannelPricingRecalculateAsyncHandler extends AbstractChannelPricingHandle
 
     public function process(PsrMessage $message, PsrContext $session)
     {
-        /** @var ChannelPricingInterface $channelPricing */
+        /** @var ChannelPricingInterface|null $channelPricing */
         $channelPricing = $this->repository->find(
             $message->getBody()
         );

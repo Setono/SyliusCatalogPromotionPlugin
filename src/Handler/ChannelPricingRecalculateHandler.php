@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Setono\SyliusBulkSpecialsPlugin\Handler;
 
 use Psr\Log\LoggerInterface;
+use function Safe\sprintf;
 use Setono\SyliusBulkSpecialsPlugin\Special\Applicator\ProductSpecialsApplicator;
 use Sylius\Component\Core\Model\ChannelPricingInterface;
 use Sylius\Component\Core\Model\ProductVariantInterface;

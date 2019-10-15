@@ -9,6 +9,9 @@ use Sylius\Component\Resource\Factory\FactoryInterface;
 
 interface SpecialRuleFactoryInterface extends FactoryInterface
 {
+    /**
+     * @param array|string|mixed $configuration
+     */
     public function createByType(string $type, $configuration): SpecialRuleInterface;
 
     public function createHasTaxon(array $taxons): SpecialRuleInterface;

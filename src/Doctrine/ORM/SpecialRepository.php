@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Setono\SyliusBulkSpecialsPlugin\Doctrine\ORM;
 
 use Doctrine\ORM\QueryBuilder;
+use Exception;
 use Setono\SyliusBulkSpecialsPlugin\Model\SpecialInterface;
 use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 
@@ -19,7 +20,7 @@ class SpecialRepository extends EntityRepository implements SpecialRepositoryInt
             ->andWhere('o.enabled = 0')
             ->getQuery()
             ->getResult()
-            ;
+        ;
     }
 
     public function findAccidentallyEnabled(?\DateTimeInterface $date = null): array
@@ -31,7 +32,7 @@ class SpecialRepository extends EntityRepository implements SpecialRepositoryInt
             ->andWhere('o.enabled = 1')
             ->getQuery()
             ->getResult()
-            ;
+        ;
     }
 
     /**
@@ -45,7 +46,9 @@ class SpecialRepository extends EntityRepository implements SpecialRepositoryInt
     }
 
     /**
-     * @throws \Exception
+     * @return SpecialInterface[]
+     *
+     * @throws Exception
      */
     public function findActive(): array
     {
@@ -53,11 +56,11 @@ class SpecialRepository extends EntityRepository implements SpecialRepositoryInt
             ->addOrderBy('o.priority', 'desc')
             ->getQuery()
             ->getResult()
-            ;
+        ;
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     protected function filterByActive(QueryBuilder $queryBuilder, ?\DateTimeInterface $date = null): QueryBuilder
     {
@@ -65,6 +68,6 @@ class SpecialRepository extends EntityRepository implements SpecialRepositoryInt
             ->andWhere('o.startsAt IS NULL OR o.startsAt < :date')
             ->andWhere('o.endsAt IS NULL OR o.endsAt > :date')
             ->setParameter('date', $date ?: new \DateTime())
-            ;
+        ;
     }
 }

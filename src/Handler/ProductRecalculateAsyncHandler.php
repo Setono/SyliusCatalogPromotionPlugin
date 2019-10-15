@@ -57,7 +57,7 @@ class ProductRecalculateAsyncHandler extends AbstractProductHandler implements P
 
     public function process(PsrMessage $message, PsrContext $session)
     {
-        /** @var ProductInterface $product */
+        /** @var ProductInterface|null $product */
         $product = $this->repository->find(
             $message->getBody()
         );

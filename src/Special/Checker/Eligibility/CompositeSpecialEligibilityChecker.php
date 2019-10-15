@@ -14,7 +14,7 @@ final class CompositeSpecialEligibilityChecker implements SpecialEligibilityChec
     private $specialEligibilityCheckers;
 
     /**
-     * @param SpecialEligibilityCheckerInterface[] $specialEligibilityCheckers
+     * @param SpecialEligibilityCheckerInterface[]|mixed[] $specialEligibilityCheckers
      */
     public function __construct(array $specialEligibilityCheckers)
     {

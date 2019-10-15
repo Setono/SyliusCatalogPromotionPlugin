@@ -6,7 +6,7 @@ namespace Setono\SyliusBulkSpecialsPlugin\Model;
 
 class SpecialRule implements SpecialRuleInterface
 {
-    /** @var mixed */
+    /** @var int */
     protected $id;
 
     /** @var string */
@@ -18,7 +18,7 @@ class SpecialRule implements SpecialRuleInterface
     /** @var SpecialInterface|null */
     protected $special;
 
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }

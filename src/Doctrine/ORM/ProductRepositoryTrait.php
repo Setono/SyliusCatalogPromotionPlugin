@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Setono\SyliusBulkSpecialsPlugin\Doctrine\ORM;
 
 use Doctrine\ORM\QueryBuilder;
+use function Safe\sprintf;
 use Setono\SyliusBulkSpecialsPlugin\Model\SpecialInterface;
 use Setono\SyliusBulkSpecialsPlugin\Model\SpecialRuleInterface;
 use Setono\SyliusBulkSpecialsPlugin\Special\QueryBuilder\Rule\RuleQueryBuilderInterface;
