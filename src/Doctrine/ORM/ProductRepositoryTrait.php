@@ -43,7 +43,7 @@ trait ProductRepositoryTrait
             ->addOrderBy(sprintf('%s.id', $alias), 'ASC')
             ->getQuery()
             ->getResult()
-            ;
+        ;
     }
 
     /**
@@ -53,23 +53,23 @@ trait ProductRepositoryTrait
      */
     public function findBySpecial(SpecialInterface $special): array
     {
-        return $this->findBySpecialQB($special)
+        return $this->findBySpecialQueryBuilder($special)
             ->getQuery()
             ->getResult()
-            ;
+        ;
     }
 
     /**
      * @throws StringsException
      */
-    public function findBySpecialQB(SpecialInterface $special): QueryBuilder
+    public function findBySpecialQueryBuilder(SpecialInterface $special): QueryBuilder
     {
         $alias = 'product';
 
         return $this->addRulesWheres($this->createQueryBuilder($alias), $special, $alias)
             ->distinct()
             ->addOrderBy(sprintf('%s.id', $alias), 'ASC')
-            ;
+        ;
     }
 
     protected function addRulesWheres(QueryBuilder $queryBuilder, SpecialInterface $special, string $alias): QueryBuilder

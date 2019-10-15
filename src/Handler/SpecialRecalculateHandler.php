@@ -41,7 +41,7 @@ class SpecialRecalculateHandler extends AbstractSpecialHandler
         ));
 
         // @see Good explanation at https://stackoverflow.com/a/26698814
-        $iterableResult = $this->productRepository->findBySpecialQB($special)->getQuery()->iterate();
+        $iterableResult = $this->productRepository->findBySpecialQueryBuilder($special)->getQuery()->iterate();
 
         foreach ($iterableResult as $productRow) {
             /** @var ProductInterface $product */

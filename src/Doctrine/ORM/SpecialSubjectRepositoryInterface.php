@@ -14,5 +14,5 @@ interface SpecialSubjectRepositoryInterface
     /**
      * Should be used to build some paginators
      */
-    public function findBySpecialQB(SpecialInterface $special): QueryBuilder;
+    public function findBySpecialQueryBuilder(SpecialInterface $special): QueryBuilder;
 }

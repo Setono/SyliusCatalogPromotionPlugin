@@ -100,7 +100,7 @@ class SpecialDoctrineEventListener
             return;
         }
 
-        $iterableResult = $this->productRepository->findBySpecialQB($entity)->getQuery()->iterate();
+        $iterableResult = $this->productRepository->findBySpecialQueryBuilder($entity)->getQuery()->iterate();
         foreach ($iterableResult as $productRow) {
             /** @var ProductInterface $product */
             $product = $productRow[0];
