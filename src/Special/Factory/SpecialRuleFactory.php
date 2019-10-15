@@ -12,14 +12,9 @@ use Sylius\Component\Resource\Factory\FactoryInterface;
 
 class SpecialRuleFactory implements SpecialRuleFactoryInterface
 {
-    /**
-     * @var FactoryInterface
-     */
+    /** @var FactoryInterface */
     private $decoratedFactory;
 
-    /**
-     * @param FactoryInterface $decoratedFactory
-     */
     public function __construct(FactoryInterface $decoratedFactory)
     {
         $this->decoratedFactory = $decoratedFactory;
@@ -76,12 +71,6 @@ class SpecialRuleFactory implements SpecialRuleFactoryInterface
         );
     }
 
-    /**
-     * @param string $type
-     * @param array $configuration
-     *
-     * @return SpecialRuleInterface
-     */
     private function createSpecialRule(string $type, array $configuration): SpecialRuleInterface
     {
         /** @var SpecialRuleInterface $rule */

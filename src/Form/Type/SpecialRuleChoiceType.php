@@ -10,9 +10,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class SpecialRuleChoiceType extends AbstractType
 {
-    /**
-     * @var array
-     */
+    /** @var array */
     private $rules;
 
     public function __construct(array $rules)

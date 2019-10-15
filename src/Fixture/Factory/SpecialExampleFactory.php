@@ -17,29 +17,19 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SpecialExampleFactory extends AbstractExampleFactory
 {
-    /**
-     * @var ChannelRepositoryInterface
-     */
+    /** @var ChannelRepositoryInterface */
     protected $channelRepository;
 
-    /**
-     * @var Factory
-     */
+    /** @var Factory */
     protected $specialFactory;
 
-    /**
-     * @var SpecialRuleExampleFactory
-     */
+    /** @var SpecialRuleExampleFactory */
     protected $specialRuleExampleFactory;
 
-    /**
-     * @var \Faker\Generator
-     */
+    /** @var \Faker\Generator */
     protected $faker;
 
-    /**
-     * @var OptionsResolver
-     */
+    /** @var OptionsResolver */
     protected $optionsResolver;
 
     public function __construct(

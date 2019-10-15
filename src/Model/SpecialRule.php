@@ -6,24 +6,16 @@ namespace Setono\SyliusBulkSpecialsPlugin\Model;
 
 class SpecialRule implements SpecialRuleInterface
 {
-    /**
-     * @var mixed
-     */
+    /** @var mixed */
     protected $id;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $type;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $configuration = [];
 
-    /**
-     * @var SpecialInterface|null
-     */
+    /** @var SpecialInterface|null */
     protected $special;
 
     public function getId()

@@ -13,13 +13,7 @@ interface ConfigurableSpecialElementInterface extends ResourceInterface
      */
     public function getType(): ?string;
 
-    /**
-     * @return array
-     */
     public function getConfiguration(): array;
 
-    /**
-     * @return SpecialInterface|null
-     */
     public function getSpecial(): ?SpecialInterface;
 }

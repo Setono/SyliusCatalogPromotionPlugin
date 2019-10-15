@@ -17,19 +17,13 @@ class EligibleSpecialsReassignAsyncHandler extends AbstractProductHandler implem
 {
     public const EVENT = 'setono_sylius_bulk_specials_topic_reassign_specials';
 
-    /**
-     * @var ProducerInterface
-     */
+    /** @var ProducerInterface */
     protected $producer;
 
-    /**
-     * @var ProductRepository
-     */
+    /** @var ProductRepository */
     protected $repository;
 
-    /**
-     * @var EligibleSpecialsReassignHandler
-     */
+    /** @var EligibleSpecialsReassignHandler */
     protected $eligibleSpecialsReassignHandler;
 
     /**
@@ -39,12 +33,6 @@ class EligibleSpecialsReassignAsyncHandler extends AbstractProductHandler implem
      */
     protected $entityManager;
 
-    /**
-     * @param ProducerInterface $producer
-     * @param ProductRepository $repository
-     * @param EligibleSpecialsReassignHandler $eligibleSpecialsReassignHandler
-     * @param EntityManager $entityManager
-     */
     public function __construct(
         ProducerInterface $producer,
         ProductRepository $repository,

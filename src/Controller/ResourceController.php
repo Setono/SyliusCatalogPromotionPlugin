@@ -14,14 +14,6 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 
 abstract class ResourceController extends BaseResourceController
 {
-    /**
-     * @param HandlerInterface $handler
-     * @param string $bulkActionId
-     * @param string $actionId
-     * @param Request $request
-     *
-     * @return Response
-     */
     protected function bulkAction(HandlerInterface $handler, string $bulkActionId, string $actionId, Request $request): Response
     {
         $configuration = $this->requestConfigurationFactory->create($this->metadata, $request);

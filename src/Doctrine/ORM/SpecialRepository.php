@@ -45,8 +45,6 @@ class SpecialRepository extends EntityRepository implements SpecialRepositoryInt
     }
 
     /**
-     * @return array
-     *
      * @throws \Exception
      */
     public function findActive(): array
@@ -59,11 +57,6 @@ class SpecialRepository extends EntityRepository implements SpecialRepositoryInt
     }
 
     /**
-     * @param QueryBuilder $queryBuilder
-     * @param \DateTimeInterface|null $date
-     *
-     * @return QueryBuilder
-     *
      * @throws \Exception
      */
     protected function filterByActive(QueryBuilder $queryBuilder, ?\DateTimeInterface $date = null): QueryBuilder

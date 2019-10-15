@@ -17,19 +17,13 @@ class ProductRecalculateAsyncHandler extends AbstractProductHandler implements P
 {
     public const EVENT = 'setono_sylius_bulk_specials_topic_product_recalculate';
 
-    /**
-     * @var ProducerInterface
-     */
+    /** @var ProducerInterface */
     protected $producer;
 
-    /**
-     * @var ProductRepository
-     */
+    /** @var ProductRepository */
     protected $repository;
 
-    /**
-     * @var ProductRecalculateHandler
-     */
+    /** @var ProductRecalculateHandler */
     protected $recalculateHandler;
 
     /**
@@ -39,12 +33,6 @@ class ProductRecalculateAsyncHandler extends AbstractProductHandler implements P
      */
     protected $entityManager;
 
-    /**
-     * @param ProducerInterface $producer
-     * @param ProductRepository $repository
-     * @param ProductRecalculateHandler $recalculateHandler
-     * @param EntityManager $entityManager
-     */
     public function __construct(
         ProducerInterface $producer,
         ProductRepository $repository,

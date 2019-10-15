@@ -17,19 +17,13 @@ class ChannelPricingRecalculateAsyncHandler extends AbstractChannelPricingHandle
 {
     public const EVENT = 'setono_sylius_bulk_specials_topic_channel_pricing_recalculate';
 
-    /**
-     * @var ProducerInterface
-     */
+    /** @var ProducerInterface */
     protected $producer;
 
-    /**
-     * @var EntityRepository
-     */
+    /** @var EntityRepository */
     protected $repository;
 
-    /**
-     * @var ChannelPricingRecalculateHandler
-     */
+    /** @var ChannelPricingRecalculateHandler */
     protected $recalculateHandler;
 
     /**
@@ -39,12 +33,6 @@ class ChannelPricingRecalculateAsyncHandler extends AbstractChannelPricingHandle
      */
     protected $entityManager;
 
-    /**
-     * @param ProducerInterface $producer
-     * @param EntityRepository $repository
-     * @param ChannelPricingRecalculateHandler $recalculateHandler
-     * @param EntityManager $entityManager
-     */
     public function __construct(
         ProducerInterface $producer,
         EntityRepository $repository,

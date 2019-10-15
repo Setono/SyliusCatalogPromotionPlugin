@@ -10,9 +10,7 @@ use Doctrine\Common\Collections\Criteria;
 
 trait SpecialSubjectTrait
 {
-    /**
-     * @var Collection|SpecialInterface[]
-     */
+    /** @var Collection|SpecialInterface[] */
     protected $specials;
 
     /**
@@ -35,29 +33,17 @@ trait SpecialSubjectTrait
         });
     }
 
-    /**
-     * @param string $channelCode
-     *
-     * @return bool
-     */
     public function hasExclusiveSpecialsForChannelCode(string $channelCode): bool
     {
         return null !== $this->getFirstExclusiveSpecialForChannelCode($channelCode);
     }
 
-    /**
-     * @param string $channelCode
-     *
-     * @return SpecialInterface|null
-     */
     public function getFirstExclusiveSpecialForChannelCode(string $channelCode): ?SpecialInterface
     {
         return $this->getExclusiveSpecialsForChannelCode($channelCode)->first() ?: null;
     }
 
     /**
-     * @param string $channelCode
-     *
      * @return Collection|SpecialInterface[]
      */
     public function getExclusiveSpecialsForChannelCode(string $channelCode): Collection
@@ -68,8 +54,6 @@ trait SpecialSubjectTrait
     }
 
     /**
-     * @param string $channelCode
-     *
      * @return Collection|SpecialInterface[]
      */
     public function getActiveSpecialsForChannelCode(string $channelCode): Collection
@@ -101,19 +85,11 @@ trait SpecialSubjectTrait
         return $this->specials;
     }
 
-    /**
-     * @param SpecialInterface $special
-     *
-     * @return bool
-     */
     public function hasSpecial(SpecialInterface $special): bool
     {
         return $this->specials->contains($special);
     }
 
-    /**
-     * @param SpecialInterface $special
-     */
     public function addSpecial(SpecialInterface $special): void
     {
         if (!$this->hasSpecial($special)) {
@@ -126,9 +102,6 @@ trait SpecialSubjectTrait
         $this->specials->clear();
     }
 
-    /**
-     * @param SpecialInterface $special
-     */
     public function removeSpecial(SpecialInterface $special): void
     {
         if ($this->hasSpecial($special)) {

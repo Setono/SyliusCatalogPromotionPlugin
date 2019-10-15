@@ -12,14 +12,9 @@ use Sylius\Component\Registry\ServiceRegistryInterface;
 
 final class SpecialRulesEligibilityChecker implements SpecialEligibilityCheckerInterface
 {
-    /**
-     * @var ServiceRegistryInterface
-     */
+    /** @var ServiceRegistryInterface */
     private $ruleRegistry;
 
-    /**
-     * @param ServiceRegistryInterface $ruleRegistry
-     */
     public function __construct(ServiceRegistryInterface $ruleRegistry)
     {
         $this->ruleRegistry = $ruleRegistry;
@@ -40,12 +35,6 @@ final class SpecialRulesEligibilityChecker implements SpecialEligibilityCheckerI
         return true;
     }
 
-    /**
-     * @param SpecialSubjectInterface $specialSubject
-     * @param SpecialRuleInterface $rule
-     *
-     * @return bool
-     */
     private function isEligibleToRule(SpecialSubjectInterface $specialSubject, SpecialRuleInterface $rule): bool
     {
         /** @var RuleCheckerInterface $checker */

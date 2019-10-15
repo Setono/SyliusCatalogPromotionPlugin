@@ -14,20 +14,12 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ReassignCommand extends Command implements CommandInterface
 {
-    /**
-     * @var ProductRepositoryInterface
-     */
+    /** @var ProductRepositoryInterface */
     protected $productRepository;
 
-    /**
-     * @var EligibleSpecialsReassignHandlerInterface
-     */
+    /** @var EligibleSpecialsReassignHandlerInterface */
     protected $eligibleSpecialsReassignHandler;
 
-    /**
-     * @param ProductRepositoryInterface $productRepository
-     * @param EligibleSpecialsReassignHandlerInterface $eligibleSpecialsReassignHandler
-     */
     public function __construct(
         ProductRepositoryInterface $productRepository,
         EligibleSpecialsReassignHandlerInterface $eligibleSpecialsReassignHandler
@@ -51,7 +43,7 @@ class ReassignCommand extends Command implements CommandInterface
         ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): void
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $identifier = $input->getArgument('identifier');
         if (null === $identifier) {
@@ -65,7 +57,7 @@ class ReassignCommand extends Command implements CommandInterface
         if (!count($products)) {
             $output->writeln('<error>Products was not found</error>');
 
-            return;
+            return 0;
         }
 
         /** @var ProductInterface $product */
@@ -78,5 +70,7 @@ class ReassignCommand extends Command implements CommandInterface
         }
 
         $output->writeln('Done');
+
+        return 0;
     }
 }

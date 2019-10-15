@@ -11,14 +11,9 @@ use Sylius\Component\Resource\Factory\FactoryInterface;
 
 final class TestSpecialFactory implements TestSpecialFactoryInterface
 {
-    /**
-     * @var FactoryInterface
-     */
+    /** @var FactoryInterface */
     private $specialFactory;
 
-    /**
-     * @param FactoryInterface $specialFactory
-     */
     public function __construct(FactoryInterface $specialFactory)
     {
         $this->specialFactory = $specialFactory;

@@ -14,20 +14,12 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class RecalculateSpecialCommand extends Command implements CommandInterface
 {
-    /**
-     * @var SpecialRepositoryInterface
-     */
+    /** @var SpecialRepositoryInterface */
     protected $specialRepository;
 
-    /**
-     * @var SpecialRecalculateHandlerInterface
-     */
+    /** @var SpecialRecalculateHandlerInterface */
     protected $specialRecalculateHandler;
 
-    /**
-     * @param SpecialRepositoryInterface $specialRepository
-     * @param SpecialRecalculateHandlerInterface $specialRecalculateHandler
-     */
     public function __construct(
         SpecialRepositoryInterface $specialRepository,
         SpecialRecalculateHandlerInterface $specialRecalculateHandler
@@ -51,7 +43,7 @@ class RecalculateSpecialCommand extends Command implements CommandInterface
         ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): void
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $identifier = $input->getArgument('identifier');
         $special = $this->specialRepository->findOneBy([
@@ -64,7 +56,7 @@ class RecalculateSpecialCommand extends Command implements CommandInterface
                 $identifier
             ));
 
-            return;
+            return 0;
         }
 
         $this->specialRecalculateHandler->handleSpecial($special);
@@ -74,5 +66,7 @@ class RecalculateSpecialCommand extends Command implements CommandInterface
         ));
 
         $output->writeln('Done');
+
+        return 0;
     }
 }

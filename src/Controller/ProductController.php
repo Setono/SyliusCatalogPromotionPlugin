@@ -10,11 +10,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ProductController extends ResourceController
 {
-    /**
-     * @param Request $request
-     *
-     * @return Response
-     */
     public function bulkReassignAction(Request $request): Response
     {
         return $this->bulkAction(
@@ -25,11 +20,6 @@ class ProductController extends ResourceController
         );
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return Response
-     */
     public function bulkRecalculateAction(Request $request): Response
     {
         return $this->bulkAction(

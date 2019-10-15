@@ -12,9 +12,7 @@ use Setono\SyliusBulkSpecialsPlugin\Special\QueryBuilder\Rule\RuleQueryBuilderSe
 
 trait ProductRepositoryTrait
 {
-    /**
-     * @var RuleQueryBuilderServiceRegistry
-     */
+    /** @var RuleQueryBuilderServiceRegistry */
     protected $ruleQueryBuilders;
 
     public function setRuleQueryBuilder(RuleQueryBuilderServiceRegistry $ruleQueryBuilders): void
@@ -24,10 +22,6 @@ trait ProductRepositoryTrait
 
     /**
      * Find Products, assigned to given Special
-     *
-     * @param SpecialInterface $special
-     *
-     * @return array
      */
     public function findAssignedBySpecial(SpecialInterface $special): array
     {
@@ -45,10 +39,6 @@ trait ProductRepositoryTrait
 
     /**
      * Find all Products that match given Special's Rules
-     *
-     * @param SpecialInterface $special
-     *
-     * @return array
      */
     public function findBySpecial(SpecialInterface $special): array
     {
@@ -68,13 +58,6 @@ trait ProductRepositoryTrait
             ;
     }
 
-    /**
-     * @param QueryBuilder $queryBuilder
-     * @param SpecialInterface $special
-     * @param string $alias
-     *
-     * @return QueryBuilder
-     */
     protected function addRulesWheres(QueryBuilder $queryBuilder, SpecialInterface $special, string $alias): QueryBuilder
     {
         /** @var SpecialRuleInterface $rule */

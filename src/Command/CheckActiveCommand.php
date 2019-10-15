@@ -13,20 +13,12 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class CheckActiveCommand extends Command implements CommandInterface
 {
-    /**
-     * @var SpecialRepositoryInterface
-     */
+    /** @var SpecialRepositoryInterface */
     protected $specialRepository;
 
-    /**
-     * @var SpecialRecalculateHandlerInterface
-     */
+    /** @var SpecialRecalculateHandlerInterface */
     protected $specialRecalculateHandler;
 
-    /**
-     * @param SpecialRepositoryInterface $specialRepository
-     * @param SpecialRecalculateHandlerInterface $specialRecalculateHandler
-     */
     public function __construct(
         SpecialRepositoryInterface $specialRepository,
         SpecialRecalculateHandlerInterface $specialRecalculateHandler
