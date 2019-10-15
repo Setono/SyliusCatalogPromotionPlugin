@@ -13,7 +13,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class CheckActiveCommand extends Command implements CommandInterface
+class CheckActiveCommand extends Command
 {
     /** @var SpecialRepositoryInterface */
     protected $specialRepository;

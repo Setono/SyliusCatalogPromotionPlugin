@@ -6,7 +6,6 @@ namespace Tests\Setono\SyliusBulkSpecialsPlugin\Behat\Context\Cli;
 
 use Behat\Behat\Context\Context;
 use Setono\SyliusBulkSpecialsPlugin\Command\CheckActiveCommand;
-use Setono\SyliusBulkSpecialsPlugin\Command\CommandInterface;
 use Setono\SyliusBulkSpecialsPlugin\Command\ReassignCommand;
 use Setono\SyliusBulkSpecialsPlugin\Command\RecalculateProductCommand;
 use Setono\SyliusBulkSpecialsPlugin\Command\RecalculateSpecialCommand;
@@ -14,9 +13,8 @@ use Setono\SyliusBulkSpecialsPlugin\Model\ProductInterface;
 use Setono\SyliusBulkSpecialsPlugin\Model\SpecialInterface;
 use Sylius\Behat\Service\SharedStorage;
 use Sylius\Behat\Service\SharedStorageInterface;
-use Sylius\Component\Core\Model\ChannelPricingInterface;
-use Sylius\Component\Core\Model\ProductVariantInterface;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Webmozart\Assert\Assert;
@@ -188,7 +186,7 @@ final class CommandsContext implements Context
     /**
      * @param array $parameters
      */
-    private function executeCommand(CommandInterface $command, array $parameters = [])
+    private function executeCommand(Command $command, array $parameters = [])
     {
         $this->command = $command;
         $this->application = new Application($this->kernel);

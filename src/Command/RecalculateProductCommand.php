@@ -14,7 +14,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class RecalculateProductCommand extends Command implements CommandInterface
+class RecalculateProductCommand extends Command
 {
     /** @var ProductRepositoryInterface */
     protected $productRepository;

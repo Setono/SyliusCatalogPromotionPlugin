@@ -14,7 +14,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class RecalculateSpecialCommand extends Command implements CommandInterface
+class RecalculateSpecialCommand extends Command
 {
     /** @var SpecialRepositoryInterface */
     protected $specialRepository;
