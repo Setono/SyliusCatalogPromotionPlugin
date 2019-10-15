@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Setono\SyliusBulkSpecialsPlugin\DependencyInjection\Compiler;
 
+use InvalidArgumentException;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
@@ -18,7 +19,7 @@ final class RegisterRuleCheckersPass implements CompilerPassInterface
         $specialRuleCheckerTypeToLabelMap = [];
         foreach ($container->findTaggedServiceIds('setono_sylius_bulk_specials.special_rule_checker') as $id => $attributes) {
             if (!isset($attributes[0]['type'], $attributes[0]['label'], $attributes[0]['form_type'])) {
-                throw new \InvalidArgumentException('Tagged rule checker `' . $id . '` needs to have `type`, `form_type` and `label` attributes.');
+                throw new InvalidArgumentException('Tagged rule checker `' . $id . '` needs to have `type`, `form_type` and `label` attributes.');
             }
 
             $specialRuleCheckerTypeToLabelMap[$attributes[0]['type']] = $attributes[0]['label'];

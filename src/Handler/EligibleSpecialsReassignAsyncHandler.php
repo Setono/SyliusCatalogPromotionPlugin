@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace Setono\SyliusBulkSpecialsPlugin\Handler;
 
+use Doctrine\Common\Persistence\Mapping\MappingException;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 use Enqueue\Client\ProducerInterface;
 use Enqueue\Client\TopicSubscriberInterface;
 use Interop\Queue\PsrContext;
@@ -55,7 +58,12 @@ class EligibleSpecialsReassignAsyncHandler extends AbstractProductHandler implem
         );
     }
 
-    public function process(PsrMessage $message, PsrContext $session)
+    /**
+     * @throws MappingException
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
+    public function process(PsrMessage $message, PsrContext $session): string
     {
         /** @var ProductInterface|null $product */
         $product = $this->repository->find(

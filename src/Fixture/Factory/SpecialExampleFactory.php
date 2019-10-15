@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace Setono\SyliusBulkSpecialsPlugin\Fixture\Factory;
 
+use DateTime;
+use DateTimeInterface;
+use Exception;
+use Faker\Generator;
 use Setono\SyliusBulkSpecialsPlugin\Model\Special;
 use Setono\SyliusBulkSpecialsPlugin\Model\SpecialInterface;
 use Setono\SyliusBulkSpecialsPlugin\Model\SpecialRuleInterface;
@@ -26,7 +30,7 @@ class SpecialExampleFactory extends AbstractExampleFactory
     /** @var SpecialRuleExampleFactory */
     protected $specialRuleExampleFactory;
 
-    /** @var \Faker\Generator */
+    /** @var Generator */
     protected $faker;
 
     /** @var OptionsResolver */
@@ -47,6 +51,9 @@ class SpecialExampleFactory extends AbstractExampleFactory
         $this->configureOptions($this->optionsResolver);
     }
 
+    /**
+     * @throws Exception
+     */
     public function create(array $options = []): specialInterface
     {
         $options = $this->optionsResolver->resolve($options);
@@ -61,11 +68,11 @@ class SpecialExampleFactory extends AbstractExampleFactory
         $special->setExclusive($options['exclusive']);
 
         if (isset($options['starts_at'])) {
-            $special->setStartsAt(new \DateTime($options['starts_at']));
+            $special->setStartsAt(new DateTime($options['starts_at']));
         }
 
         if (isset($options['ends_at'])) {
-            $special->setEndsAt(new \DateTime($options['ends_at']));
+            $special->setEndsAt(new DateTime($options['ends_at']));
         }
         $special->setEnabled($options['enabled']);
 
@@ -91,7 +98,7 @@ class SpecialExampleFactory extends AbstractExampleFactory
     protected function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
-            ->setDefault('code', function (Options $options): string {
+            ->setDefault('code', static function (Options $options): string {
                 return StringInflector::nameToCode($options['name']);
             })
             ->setDefault('name', $this->faker->words(3, true))
@@ -106,28 +113,28 @@ class SpecialExampleFactory extends AbstractExampleFactory
             ->setAllowedTypes('starts_at', ['null', 'string'])
             ->setDefault('ends_at', null)
             ->setAllowedTypes('ends_at', ['null', 'string'])
-            ->setDefault('enabled', function (Options $options): bool {
+            ->setDefault('enabled', function (): bool {
                 return $this->faker->boolean(90);
             })
             ->setAllowedTypes('enabled', 'bool')
 
-            ->setDefault('action_type', function (Options $options) {
+            ->setDefault('action_type', static function () {
                 $actionTypes = Special::getActionTypes();
 
                 return $actionTypes[array_rand($actionTypes)];
             })
-            ->setDefault('action_percent', function (Options $options): int {
+            ->setDefault('action_percent', static function (): int {
                 return 10 * random_int(1, 9);
             })
             ->setAllowedTypes('action_percent', 'int')
 
             ->setDefault('created_at', null)
-            ->setAllowedTypes('created_at', ['null', \DateTimeInterface::class])
+            ->setAllowedTypes('created_at', ['null', DateTimeInterface::class])
             ->setDefault('updated_at', null)
-            ->setAllowedTypes('updated_at', ['null', \DateTimeInterface::class])
+            ->setAllowedTypes('updated_at', ['null', DateTimeInterface::class])
 
             ->setDefined('rules')
-            ->setNormalizer('rules', function (Options $options, array $rules): array {
+            ->setNormalizer('rules', static function (Options $options, array $rules): array {
                 if (count($rules) === 0) {
                     return [[]];
                 }

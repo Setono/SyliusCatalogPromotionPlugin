@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Setono\SyliusBulkSpecialsPlugin\Doctrine\ORM;
 
 use Doctrine\ORM\QueryBuilder;
+use Safe\Exceptions\StringsException;
 use function Safe\sprintf;
 use Setono\SyliusBulkSpecialsPlugin\Model\SpecialInterface;
 use Setono\SyliusBulkSpecialsPlugin\Model\SpecialRuleInterface;
@@ -16,6 +17,11 @@ trait ProductRepositoryTrait
     /** @var RuleQueryBuilderServiceRegistry */
     protected $ruleQueryBuilders;
 
+    /**
+     * @return QueryBuilder
+     */
+    abstract public function createQueryBuilder($alias, $indexBy = null);
+
     public function setRuleQueryBuilder(RuleQueryBuilderServiceRegistry $ruleQueryBuilders): void
     {
         $this->ruleQueryBuilders = $ruleQueryBuilders;
@@ -23,6 +29,8 @@ trait ProductRepositoryTrait
 
     /**
      * Find Products, assigned to given Special
+     *
+     * @throws StringsException
      */
     public function findAssignedBySpecial(SpecialInterface $special): array
     {
@@ -40,6 +48,8 @@ trait ProductRepositoryTrait
 
     /**
      * Find all Products that match given Special's Rules
+     *
+     * @throws StringsException
      */
     public function findBySpecial(SpecialInterface $special): array
     {
@@ -49,6 +59,9 @@ trait ProductRepositoryTrait
             ;
     }
 
+    /**
+     * @throws StringsException
+     */
     public function findBySpecialQB(SpecialInterface $special): QueryBuilder
     {
         $alias = 'product';

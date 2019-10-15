@@ -7,6 +7,7 @@ namespace Setono\SyliusBulkSpecialsPlugin\EventSubscriber;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
+use Doctrine\ORM\ORMException;
 use Setono\SyliusBulkSpecialsPlugin\Doctrine\ORM\ProductRepositoryInterface;
 use Setono\SyliusBulkSpecialsPlugin\Handler\ProductRecalculateHandlerInterface;
 use Setono\SyliusBulkSpecialsPlugin\Handler\SpecialRecalculateHandlerInterface;
@@ -90,7 +91,7 @@ class SpecialDoctrineEventListener
      * On Special remove - detach it from and recalculate all products related to it
      *
      *
-     * @throws \Doctrine\ORM\ORMException
+     * @throws ORMException
      */
     public function preRemove(LifecycleEventArgs $args): void
     {

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Setono\SyliusBulkSpecialsPlugin\Model;
 
+use DateTime;
+use DateTimeInterface;
 use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Channel\Model\ChannelsAwareInterface;
 use Sylius\Component\Resource\Model\CodeAwareInterface;
@@ -16,7 +18,7 @@ interface SpecialInterface extends ChannelsAwareInterface, CodeAwareInterface, T
 
     public function getMultiplier(): float;
 
-    public function isSpecialActiveAt(\DateTime $now): bool;
+    public function isSpecialActiveAt(DateTime $now): bool;
 
     /**
      * @return string[]
@@ -39,13 +41,13 @@ interface SpecialInterface extends ChannelsAwareInterface, CodeAwareInterface, T
 
     public function setExclusive(bool $exclusive): void;
 
-    public function getStartsAt(): ?\DateTimeInterface;
+    public function getStartsAt(): ?DateTimeInterface;
 
-    public function setStartsAt(?\DateTimeInterface $startsAt): void;
+    public function setStartsAt(?DateTimeInterface $startsAt): void;
 
-    public function getEndsAt(): ?\DateTimeInterface;
+    public function getEndsAt(): ?DateTimeInterface;
 
-    public function setEndsAt(?\DateTimeInterface $endsAt): void;
+    public function setEndsAt(?DateTimeInterface $endsAt): void;
 
     public function isEnabled(): bool;
 

@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace Setono\SyliusBulkSpecialsPlugin\Handler;
 
+use Doctrine\Common\Persistence\Mapping\MappingException;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 use Enqueue\Client\ProducerInterface;
 use Enqueue\Client\TopicSubscriberInterface;
 use Interop\Queue\PsrContext;
@@ -55,6 +58,13 @@ class SpecialRecalculateAsyncHandler extends AbstractSpecialHandler implements P
         );
     }
 
+    /**
+     * @return object|string
+     *
+     * @throws MappingException
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
     public function process(PsrMessage $message, PsrContext $session)
     {
         /** @var SpecialInterface|null $special */

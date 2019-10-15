@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Setono\SyliusBulkSpecialsPlugin\DependencyInjection;
 
+use function method_exists;
 use Setono\SyliusBulkSpecialsPlugin\Controller\SpecialController;
 use Setono\SyliusBulkSpecialsPlugin\Form\Type\SpecialRuleType;
 use Setono\SyliusBulkSpecialsPlugin\Form\Type\SpecialType;
@@ -23,7 +24,7 @@ final class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder('setono_sylius_bulk_specials');
-        if (\method_exists($treeBuilder, 'getRootNode')) {
+        if (method_exists($treeBuilder, 'getRootNode')) {
             $rootNode = $treeBuilder->getRootNode();
         } else {
             // BC layer for symfony/config 4.1 and older

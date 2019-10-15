@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Setono\SyliusBulkSpecialsPlugin\Command;
 
+use Safe\Exceptions\StringsException;
 use function Safe\sprintf;
 use Setono\SyliusBulkSpecialsPlugin\Doctrine\ORM\SpecialRepositoryInterface;
 use Setono\SyliusBulkSpecialsPlugin\Handler\SpecialRecalculateHandlerInterface;
@@ -27,7 +28,7 @@ class CheckActiveCommand extends Command implements CommandInterface
         $this->specialRepository = $specialRepository;
         $this->specialRecalculateHandler = $specialRecalculateHandler;
 
-        parent::__construct(null);
+        parent::__construct();
     }
 
     protected function configure(): void
@@ -40,7 +41,10 @@ class CheckActiveCommand extends Command implements CommandInterface
         ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    /**
+     * @throws StringsException
+     */
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $dryRun = $input->getOption('dry-run');
 
@@ -85,5 +89,7 @@ class CheckActiveCommand extends Command implements CommandInterface
         }
 
         $output->writeln('Done');
+
+        return 0;
     }
 }

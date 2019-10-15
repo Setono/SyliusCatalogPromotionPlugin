@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Setono\SyliusBulkSpecialsPlugin\Special\Applicator;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\ORMException;
 use Psr\Log\LoggerInterface;
+use Safe\Exceptions\StringsException;
 use function Safe\sprintf;
 use Setono\SyliusBulkSpecialsPlugin\Model\ProductInterface;
 use Setono\SyliusBulkSpecialsPlugin\Model\SpecialInterface;
@@ -34,6 +36,10 @@ class ProductSpecialsApplicator
         $this->logger->info($message);
     }
 
+    /**
+     * @throws ORMException
+     * @throws StringsException
+     */
     public function applyToProduct(ProductInterface $product): void
     {
         /** @var ProductVariant $variant */
@@ -45,6 +51,10 @@ class ProductSpecialsApplicator
         }
     }
 
+    /**
+     * @throws ORMException
+     * @throws StringsException
+     */
     public function applyToChannelPricing(ChannelPricingInterface $channelPricing): void
     {
         $productVariant = $channelPricing->getProductVariant();
@@ -68,6 +78,9 @@ class ProductSpecialsApplicator
         $this->channelPricingManager->persist($channelPricing);
     }
 
+    /**
+     * @throws StringsException
+     */
     protected function applyMultiplierToChannelPricing(ChannelPricingInterface $channelPricing, float $multiplier): void
     {
         if (!$channelPricing->getOriginalPrice()) {

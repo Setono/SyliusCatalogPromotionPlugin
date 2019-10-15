@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Setono\SyliusBulkSpecialsPlugin\Handler;
 
 use Psr\Log\LoggerInterface;
+use Safe\Exceptions\StringsException;
 use function Safe\sprintf;
 use Setono\SyliusBulkSpecialsPlugin\Doctrine\ORM\ProductRepositoryInterface;
 use Setono\SyliusBulkSpecialsPlugin\Model\ProductInterface;
@@ -29,6 +30,9 @@ class SpecialRecalculateHandler extends AbstractSpecialHandler
         $this->productRecalculateHandler = $productRecalculateHandler;
     }
 
+    /**
+     * @throws StringsException
+     */
     public function handleSpecial(SpecialInterface $special): void
     {
         $this->log(sprintf(

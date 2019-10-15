@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Setono\SyliusBulkSpecialsPlugin\Command;
 
+use Safe\Exceptions\StringsException;
 use function Safe\sprintf;
 use Setono\SyliusBulkSpecialsPlugin\Doctrine\ORM\ProductRepositoryInterface;
 use Setono\SyliusBulkSpecialsPlugin\Handler\ProductRecalculateHandlerInterface;
@@ -28,7 +29,7 @@ class RecalculateProductCommand extends Command implements CommandInterface
         $this->productRepository = $productRepository;
         $this->productRecalculateHandler = $productRecalculateHandler;
 
-        parent::__construct(null);
+        parent::__construct();
     }
 
     protected function configure(): void
@@ -44,6 +45,9 @@ class RecalculateProductCommand extends Command implements CommandInterface
         ;
     }
 
+    /**
+     * @throws StringsException
+     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $identifier = $input->getArgument('identifier');

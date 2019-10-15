@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Setono\SyliusBulkSpecialsPlugin\DependencyInjection;
 
+use Enqueue\Bundle\EnqueueBundle;
 use Exception;
+use RuntimeException;
 use function Safe\sprintf;
 use Sylius\Bundle\ResourceBundle\DependencyInjection\Extension\AbstractResourceExtension;
 use Symfony\Component\Config\FileLocator;
@@ -27,8 +29,8 @@ final class SetonoSyliusBulkSpecialsExtension extends AbstractResourceExtension
         $this->registerResources('setono_sylius_bulk_specials', $config['driver'], $config['resources'], $container);
 
         if ($config['queue']) {
-            if (!class_exists('Enqueue\Bundle\EnqueueBundle')) {
-                throw new \RuntimeException('Unable to use queues as the enqueue/enqueue-bundle is not installed.');
+            if (!class_exists(EnqueueBundle::class)) {
+                throw new RuntimeException('Unable to use queues as the enqueue/enqueue-bundle is not installed.');
             }
 
             // Load handler decorators to work asynchronously via enqueue

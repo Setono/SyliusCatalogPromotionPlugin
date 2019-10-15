@@ -14,7 +14,7 @@ final class CompositeSpecialEligibilityCheckerPass implements CompilerPassInterf
     {
         $container->getDefinition('setono_sylius_bulk_specials.special_eligibility_checker')->setArguments([
             array_map(
-                function ($id) {
+                static function ($id) {
                     return new Reference($id);
                 },
                 array_keys($container->findTaggedServiceIds('setono_sylius_bulk_specials.special_eligibility_checker'))

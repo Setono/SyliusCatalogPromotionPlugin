@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Setono\SyliusBulkSpecialsPlugin\Handler;
 
+use Doctrine\ORM\ORMException;
 use Psr\Log\LoggerInterface;
+use Safe\Exceptions\StringsException;
 use function Safe\sprintf;
 use Setono\SyliusBulkSpecialsPlugin\Special\Applicator\ProductSpecialsApplicator;
 use Sylius\Component\Core\Model\ChannelPricingInterface;
@@ -22,6 +24,10 @@ class ChannelPricingRecalculateHandler extends AbstractChannelPricingHandler
         $this->productSpecialsApplicator = $productSpecialsApplicator;
     }
 
+    /**
+     * @throws StringsException
+     * @throws ORMException
+     */
     public function handleChannelPricing(ChannelPricingInterface $channelPricing): void
     {
         /** @var ProductVariantInterface $productVariant */

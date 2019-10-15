@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace Setono\SyliusBulkSpecialsPlugin\Model;
 
+use DateTime;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Exception;
+use InvalidArgumentException;
 use function Safe\sprintf;
 use Sylius\Component\Channel\Model\ChannelInterface as BaseChannelInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
@@ -45,10 +49,10 @@ class Special implements SpecialInterface
      */
     protected $exclusive = false;
 
-    /** @var \DateTimeInterface|null */
+    /** @var DateTimeInterface|null */
     protected $startsAt;
 
-    /** @var \DateTimeInterface|null */
+    /** @var DateTimeInterface|null */
     protected $endsAt;
 
     /** @var bool */
@@ -77,7 +81,7 @@ class Special implements SpecialInterface
     /**
      * {@inheritdoc}
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function getMultiplier(): float
     {
@@ -87,7 +91,7 @@ class Special implements SpecialInterface
             case self::ACTION_TYPE_INCREASE:
                 return (100 + $this->getActionPercent()) / 100;
             default:
-                throw new \Exception(sprintf(
+                throw new InvalidArgumentException(sprintf(
                     "Unknown actionType '%s'. Expected one of: %s",
                     $this->getActionType(),
                     implode(' ,', self::getActionTypes())
@@ -95,7 +99,7 @@ class Special implements SpecialInterface
         }
     }
 
-    public function isSpecialActiveAt(\DateTime $now): bool
+    public function isSpecialActiveAt(DateTime $now): bool
     {
         return
             (null === $this->getStartsAt() || $now->getTimestamp() > $this->getStartsAt()->getTimestamp()) &&
@@ -112,7 +116,7 @@ class Special implements SpecialInterface
 
     public function __construct()
     {
-        $this->createdAt = new \DateTime();
+        $this->createdAt = new DateTime();
 
         $this->rules = new ArrayCollection();
         $this->channels = new ArrayCollection();
@@ -184,22 +188,22 @@ class Special implements SpecialInterface
         $this->exclusive = $exclusive;
     }
 
-    public function getStartsAt(): ?\DateTimeInterface
+    public function getStartsAt(): ?DateTimeInterface
     {
         return $this->startsAt;
     }
 
-    public function setStartsAt(?\DateTimeInterface $startsAt): void
+    public function setStartsAt(?DateTimeInterface $startsAt): void
     {
         $this->startsAt = $startsAt;
     }
 
-    public function getEndsAt(): ?\DateTimeInterface
+    public function getEndsAt(): ?DateTimeInterface
     {
         return $this->endsAt;
     }
 
-    public function setEndsAt(?\DateTimeInterface $endsAt): void
+    public function setEndsAt(?DateTimeInterface $endsAt): void
     {
         $this->endsAt = $endsAt;
     }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Setono\SyliusBulkSpecialsPlugin\Test\Factory;
 
+use DateTime;
 use Setono\SyliusBulkSpecialsPlugin\Model\SpecialInterface;
 use Sylius\Component\Core\Formatter\StringInflector;
 use Sylius\Component\Core\Model\ChannelInterface;
@@ -26,8 +27,8 @@ final class TestSpecialFactory implements TestSpecialFactoryInterface
 
         $special->setName($name);
         $special->setCode(StringInflector::nameToLowercaseCode($name));
-        $special->setStartsAt(new \DateTime('-3 days'));
-        $special->setEndsAt(new \DateTime('+3 days'));
+        $special->setStartsAt(new DateTime('-3 days'));
+        $special->setEndsAt(new DateTime('+3 days'));
 
         return $special;
     }

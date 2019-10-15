@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Setono\SyliusBulkSpecialsPlugin\Special\Checker\Rule;
 
+use function in_array;
 use Setono\SyliusBulkSpecialsPlugin\Model\SpecialSubjectInterface;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Resource\Exception\UnexpectedTypeException;
@@ -28,7 +29,7 @@ final class HasTaxonRuleChecker implements RuleCheckerInterface
     private function hasProductValidTaxon(ProductInterface $product, array $configuration): bool
     {
         foreach ($product->getTaxons() as $taxon) {
-            if (\in_array($taxon->getCode(), $configuration['taxons'], true)) {
+            if (in_array($taxon->getCode(), $configuration['taxons'], true)) {
                 return true;
             }
         }
