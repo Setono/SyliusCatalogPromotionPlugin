@@ -11,6 +11,16 @@ use Sylius\Component\Resource\Repository\RepositoryInterface;
 interface SpecialRepositoryInterface extends RepositoryInterface
 {
     /**
+     * @return SpecialInterface[]
+     */
+    public function findNonExclusiveEnabledWithAtLeastOneChannel(): array;
+
+    /**
+     * @return SpecialInterface[]
+     */
+    public function findExclusiveEnabledWithAtLeastOneChannelOrderedByPriorityAscending(): array;
+
+    /**
      * Actually, that is not accidentally, just time going on...
      *
      *

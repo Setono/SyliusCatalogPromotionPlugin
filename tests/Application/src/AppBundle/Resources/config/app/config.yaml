@@ -1,6 +1,13 @@
 imports:
     - { resource: "@AppBundle/Resources/config/app/fixtures.yaml" }
 
+sylius_core:
+    resources:
+        channel_pricing:
+            classes:
+                model: AppBundle\Model\ChannelPricing
+                repository: AppBundle\Doctrine\ORM\ChannelPricingRepository
+
 sylius_product:
     resources:
         product:

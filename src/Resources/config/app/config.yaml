@@ -2,6 +2,12 @@ imports:
     - { resource: "@SetonoSyliusBulkSpecialsPlugin/Resources/config/grids/special.yaml" }
     - { resource: "@SetonoSyliusBulkSpecialsPlugin/Resources/config/grids/product.yaml" }
 
+doctrine:
+    orm:
+        dql:
+            numeric_functions:
+                round: DoctrineExtensions\Query\Mysql\Round
+
 framework:
     messenger:
         buses:

@@ -13,6 +13,25 @@ use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 
 class SpecialRepository extends EntityRepository implements SpecialRepositoryInterface
 {
+    public function findNonExclusiveEnabledWithAtLeastOneChannel(): array
+    {
+        return $this->enabledWithAtLeastOneChannelQueryBuilder()
+            ->andWhere('o.exclusive = false')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function findExclusiveEnabledWithAtLeastOneChannelOrderedByPriorityAscending(): array
+    {
+        return $this->enabledWithAtLeastOneChannelQueryBuilder()
+            ->andWhere('o.exclusive = true')
+            ->addOrderBy('o.priority', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     public function findAccidentallyDisabled(?DateTimeInterface $date = null): array
     {
         return $this->createQueryBuilder('o')
@@ -58,6 +77,14 @@ class SpecialRepository extends EntityRepository implements SpecialRepositoryInt
             ->addOrderBy('o.priority', 'desc')
             ->getQuery()
             ->getResult()
+        ;
+    }
+
+    protected function enabledWithAtLeastOneChannelQueryBuilder(): QueryBuilder
+    {
+        return $this->createQueryBuilder('o')
+            ->andWhere('o.enabled = true')
+            ->andWhere('SIZE(o.channels) > 0')
         ;
     }
 

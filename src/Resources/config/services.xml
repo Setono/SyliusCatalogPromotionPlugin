@@ -12,6 +12,7 @@
         <import resource="services/forms.xml"/>
         <import resource="services/handlers.xml"/>
         <import resource="services/message.xml"/>
+        <import resource="services/registry.xml"/>
         <import resource="services/rule_checkers.xml"/>
         <import resource="services/rule_query_builders.xml"/>
         <import resource="services/validators.xml"/>

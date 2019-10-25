@@ -9,12 +9,12 @@ use Safe\Exceptions\StringsException;
 use function Safe\sprintf;
 use Setono\SyliusBulkSpecialsPlugin\Model\SpecialInterface;
 use Setono\SyliusBulkSpecialsPlugin\Model\SpecialRuleInterface;
-use Setono\SyliusBulkSpecialsPlugin\Special\QueryBuilder\Rule\RuleQueryBuilderInterface;
-use Setono\SyliusBulkSpecialsPlugin\Special\QueryBuilder\Rule\RuleQueryBuilderServiceRegistry;
+use Setono\SyliusBulkSpecialsPlugin\QueryBuilder\Rule\QueryBuilderRuleInterface;
+use Setono\SyliusBulkSpecialsPlugin\Registry\QueryBuilderRuleServiceRegistry;
 
 trait ProductRepositoryTrait
 {
-    /** @var RuleQueryBuilderServiceRegistry */
+    /** @var QueryBuilderRuleServiceRegistry */
     protected $ruleQueryBuilders;
 
     /**
@@ -22,7 +22,7 @@ trait ProductRepositoryTrait
      */
     abstract public function createQueryBuilder($alias, $indexBy = null);
 
-    public function setRuleQueryBuilder(RuleQueryBuilderServiceRegistry $ruleQueryBuilders): void
+    public function setRuleQueryBuilder(QueryBuilderRuleServiceRegistry $ruleQueryBuilders): void
     {
         $this->ruleQueryBuilders = $ruleQueryBuilders;
     }
@@ -76,7 +76,7 @@ trait ProductRepositoryTrait
     {
         /** @var SpecialRuleInterface $rule */
         foreach ($special->getRules() as $rule) {
-            /** @var RuleQueryBuilderInterface $ruleQueryBuilder */
+            /** @var QueryBuilderRuleInterface $ruleQueryBuilder */
             $ruleQueryBuilder = $this->ruleQueryBuilders->get($rule->getType());
             $ruleQueryBuilder->addRulesWheres(
                 $queryBuilder,

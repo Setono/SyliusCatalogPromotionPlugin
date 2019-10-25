@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                                      http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <mapped-superclass name="AppBundle\Model\ChannelPricing" table="sylius_channel_pricing">
+        <field name="multiplier" type="float">
+            <options>
+                <option name="default">1</option>
+            </options>
+        </field>
+    </mapped-superclass>
+
+</doctrine-mapping>

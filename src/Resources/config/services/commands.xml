@@ -4,6 +4,15 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
+        <service id="Setono\SyliusBulkSpecialsPlugin\Command\ProcessSpecialsCommand">
+            <argument type="service" id="sylius.repository.channel_pricing" />
+            <argument type="service" id="sylius.repository.product_variant" />
+            <argument type="service" id="setono_sylius_bulk_specials.repository.special" />
+            <argument type="service" id="setono_sylius_bulk_specials.registry.query_builder_rule" />
+
+            <tag name="console.command" />
+        </service>
+
         <service id="setono_sylius_bulk_specials.command.check_active"
                  class="Setono\SyliusBulkSpecialsPlugin\Command\CheckActiveCommand">
             <argument type="service" id="setono_sylius_bulk_specials.repository.special" />

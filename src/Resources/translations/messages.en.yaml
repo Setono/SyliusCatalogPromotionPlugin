@@ -9,14 +9,14 @@ setono_sylius_bulk_specials:
         main_action:
             specials: Specials
             product:
-                reassign_all: Reassign Specials for all Products
-                recalculate_all: Recalculate special prices for all Products
+                reassign_all: Reassign specials for all products
+                recalculate_all: Recalculate special prices for all products
         bulk_action:
             product:
-                reassign: Reassign Specials to selected Products
-                recalculate: Recalculate selected Products prices
+                reassign: Reassign specials to selected products
+                recalculate: Recalculate selected products prices
             special:
-                recalculate: Recalculate prices for Products matching Special rules
+                recalculate: Recalculate prices for products matching special rules
     menu:
         admin:
             main:

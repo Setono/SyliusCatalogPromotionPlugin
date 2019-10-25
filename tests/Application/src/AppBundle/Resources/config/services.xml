@@ -11,7 +11,7 @@
             <factory service="doctrine.orm.default_entity_manager" method="getRepository" />
             <argument>%sylius.model.product.class%</argument>
             <call method="setRuleQueryBuilder">
-                <argument type="service" id="setono_sylius_bulk_specials.registry.special_rule_query_builder" />
+                <argument type="service" id="setono_sylius_bulk_specials.registry.query_builder_rule" />
             </call>
         </service>
     </services>
