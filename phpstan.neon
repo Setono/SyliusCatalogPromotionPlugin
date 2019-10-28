@@ -21,7 +21,3 @@ parameters:
 	ignoreErrors:
 		- '#Parameter \#1 $configuration of method Symfony\Component\DependencyInjection\Extension\Extension::processConfiguration() expects Symfony\Component\Config\Definition\ConfigurationInterface, Symfony\Component\Config\Definition\ConfigurationInterface|null given.#'
 		- '#Cannot call method .+ on .+\\NodeParentInterface\|null\.#'
-		- '#Method .+ should return .+\\Response but returns .+\\Response\|null\.#'
-
-		# Plugin specific
-		- '#Cannot call method getMultiplier\(\) on .+\\SpecialInterface\|null\.#'

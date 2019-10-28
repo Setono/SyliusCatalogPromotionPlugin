@@ -1,6 +1,5 @@
 imports:
     - { resource: "@SetonoSyliusBulkSpecialsPlugin/Resources/config/grids/special.yaml" }
-    - { resource: "@SetonoSyliusBulkSpecialsPlugin/Resources/config/grids/product.yaml" }
 
 doctrine:
     orm:

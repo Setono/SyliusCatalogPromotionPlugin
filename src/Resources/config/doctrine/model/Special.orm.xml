@@ -1,37 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
-                  xmlns:gedmo="http://gediminasm.org/schemas/orm/doctrine-extensions-mapping"
+<doctrine-mapping xmlns:gedmo="http://gediminasm.org/schemas/orm/doctrine-extensions-mapping"
                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                                       http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd"
 >
-
-    <mapped-superclass name="Setono\SyliusBulkSpecialsPlugin\Model\Special" table="setono_sylius_bulk_specials_special">
+    <mapped-superclass name="Setono\SyliusBulkSpecialsPlugin\Model\Special"
+                       table="setono_sylius_bulk_specials__special">
         <id name="id" type="integer">
-            <generator strategy="AUTO" />
+            <generator strategy="AUTO"/>
         </id>
 
-        <field name="code" type="string" unique="true" />
-        <field name="name" type="string" />
-        <field name="description" type="string" nullable="true" />
+        <field name="code" type="string" unique="true"/>
+        <field name="name" type="string"/>
+        <field name="description" type="string" nullable="true"/>
 
         <field name="priority" type="integer">
             <gedmo:sortable-position/>
         </field>
-        <field name="exclusive" type="boolean" nullable="false" />
-
+        <field name="exclusive" type="boolean"/>
+        <field name="manuallyDiscountedProductsExcluded" type="boolean"/>
         <field name="startsAt" column="starts_at" type="datetime" nullable="true"/>
         <field name="endsAt" column="ends_at" type="datetime" nullable="true"/>
-        <field name="enabled" type="boolean" nullable="false" />
-        <one-to-many field="rules" target-entity="Setono\SyliusBulkSpecialsPlugin\Model\SpecialRuleInterface" mapped-by="special" orphan-removal="true">
+        <field name="enabled" type="boolean"/>
+        <one-to-many field="rules" target-entity="Setono\SyliusBulkSpecialsPlugin\Model\SpecialRuleInterface"
+                     mapped-by="special" orphan-removal="true">
             <cascade>
-                <cascade-all />
+                <cascade-all/>
             </cascade>
         </one-to-many>
 
-        <field name="actionType" column="action_type" type="string" nullable="false" />
-        <field name="actionPercent" column="action_percent" type="float" nullable="false" />
+        <field name="actionType" column="action_type" type="string" nullable="false"/>
+        <field name="actionPercent" column="action_percent" type="float" nullable="false"/>
 
         <field name="createdAt" column="created_at" type="datetime">
             <gedmo:timestampable on="create"/>
@@ -41,15 +42,14 @@
         </field>
 
         <many-to-many field="channels" target-entity="Sylius\Component\Channel\Model\ChannelInterface">
-            <join-table name="setono_sylius_bulk_specials_special_channels">
+            <join-table name="setono_sylius_bulk_specials__special_channels">
                 <join-columns>
-                    <join-column name="special_id" referenced-column-name="id" nullable="false" on-delete="CASCADE" />
+                    <join-column name="special_id" referenced-column-name="id" nullable="false" on-delete="CASCADE"/>
                 </join-columns>
                 <inverse-join-columns>
-                    <join-column name="channel_id" referenced-column-name="id" nullable="false" on-delete="CASCADE" />
+                    <join-column name="channel_id" referenced-column-name="id" nullable="false" on-delete="CASCADE"/>
                 </inverse-join-columns>
             </join-table>
         </many-to-many>
     </mapped-superclass>
-
 </doctrine-mapping>

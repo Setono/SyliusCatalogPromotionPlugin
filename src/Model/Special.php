@@ -43,11 +43,14 @@ class Special implements SpecialInterface
     protected $priority = 0;
 
     /**
-     * Cannot be applied together with other promotions
+     * Cannot be applied together with other specials
      *
      * @var bool
      */
     protected $exclusive = false;
+
+    /** @var bool */
+    protected $manuallyDiscountedProductsExcluded = true;
 
     /** @var DateTimeInterface|null */
     protected $startsAt;
@@ -186,6 +189,16 @@ class Special implements SpecialInterface
     public function setExclusive(bool $exclusive): void
     {
         $this->exclusive = $exclusive;
+    }
+
+    public function isManuallyDiscountedProductsExcluded(): bool
+    {
+        return $this->manuallyDiscountedProductsExcluded;
+    }
+
+    public function setManuallyDiscountedProductsExcluded(bool $manuallyDiscountedProductsExcluded): void
+    {
+        $this->manuallyDiscountedProductsExcluded = $manuallyDiscountedProductsExcluded;
     }
 
     public function getStartsAt(): ?DateTimeInterface

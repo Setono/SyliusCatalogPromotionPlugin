@@ -13,16 +13,22 @@ final class RegisterQueryBuilderRulesPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container): void
     {
-        $specialRuleQueryBuilderRegistry = $container->getDefinition('setono_sylius_bulk_specials.registry.query_builder_rule');
+        $registry = $container->getDefinition('setono_sylius_bulk_specials.registry.query_builder_rule');
+        $formRegistry = $container->getDefinition('setono_sylius_bulk_specials.form_registry.query_builder_rule');
+        $formToLabelMap = [];
 
         foreach ($container->findTaggedServiceIds('setono_sylius_bulk_specials.query_builder_rule') as $id => $tagged) {
             foreach ($tagged as $attributes) {
-                if (!isset($attributes['type'])) {
-                    throw new InvalidArgumentException('Tagged rule query builder `' . $id . '` needs to have `type` attribute.');
+                if (!isset($attributes['type'], $attributes['label'], $attributes['form_type'])) {
+                    throw new InvalidArgumentException('Tagged query builder rule `' . $id . '` needs to have `type`, `form_type` and `label` attributes.');
                 }
 
-                $specialRuleQueryBuilderRegistry->addMethodCall('register', [$attributes['type'], new Reference($id)]);
+                $formToLabelMap[$attributes['type']] = $attributes['label'];
+                $registry->addMethodCall('register', [$attributes['type'], new Reference($id)]);
+                $formRegistry->addMethodCall('add', [$attributes['type'], 'default', $attributes['form_type']]);
             }
         }
+
+        $container->setParameter('setono_sylius_bulk_specials.special_rules', $formToLabelMap);
     }
 }

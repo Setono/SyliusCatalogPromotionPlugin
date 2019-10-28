@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Setono\SyliusBulkSpecialsPlugin;
 
-use Setono\SyliusBulkSpecialsPlugin\DependencyInjection\Compiler\CompositeSpecialEligibilityCheckerPass;
 use Setono\SyliusBulkSpecialsPlugin\DependencyInjection\Compiler\RegisterQueryBuilderRulesPass;
-use Setono\SyliusBulkSpecialsPlugin\DependencyInjection\Compiler\RegisterRuleCheckersPass;
 use Sylius\Bundle\CoreBundle\Application\SyliusPluginTrait;
 use Sylius\Bundle\ResourceBundle\AbstractResourceBundle;
 use Sylius\Bundle\ResourceBundle\SyliusResourceBundle;
@@ -27,8 +25,6 @@ final class SetonoSyliusBulkSpecialsPlugin extends AbstractResourceBundle
     {
         parent::build($container);
 
-        $container->addCompilerPass(new CompositeSpecialEligibilityCheckerPass());
-        $container->addCompilerPass(new RegisterRuleCheckersPass());
         $container->addCompilerPass(new RegisterQueryBuilderRulesPass());
     }
 }

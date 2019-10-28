@@ -43,6 +43,13 @@ interface SpecialInterface extends ChannelsAwareInterface, CodeAwareInterface, T
 
     public function setExclusive(bool $exclusive): void;
 
+    /**
+     * @return bool If true products which are already discounted will not be further discounted
+     */
+    public function isManuallyDiscountedProductsExcluded(): bool;
+
+    public function setManuallyDiscountedProductsExcluded(bool $manuallyDiscountedProductsExcluded): void;
+
     public function getStartsAt(): ?DateTimeInterface;
 
     public function setStartsAt(?DateTimeInterface $startsAt): void;

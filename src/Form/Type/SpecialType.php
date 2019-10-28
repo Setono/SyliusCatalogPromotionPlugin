@@ -42,6 +42,9 @@ final class SpecialType extends AbstractResourceType
             ->add('exclusive', CheckboxType::class, [
                 'label' => 'setono_sylius_bulk_specials.form.special.exclusive',
             ])
+            ->add('manuallyDiscountedProductsExcluded', CheckboxType::class, [
+                'label' => 'setono_sylius_bulk_specials.form.special.manually_discounted_products_excluded',
+            ])
             ->add('startsAt', DateTimeType::class, [
                 'label' => 'setono_sylius_bulk_specials.form.special.starts_at',
                 'date_widget' => 'single_text',

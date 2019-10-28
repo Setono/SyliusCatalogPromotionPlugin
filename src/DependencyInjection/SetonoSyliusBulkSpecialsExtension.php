@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Setono\SyliusBulkSpecialsPlugin\DependencyInjection;
 
 use Exception;
-use function Safe\sprintf;
 use Sylius\Bundle\ResourceBundle\DependencyInjection\Extension\AbstractResourceExtension;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -22,7 +21,6 @@ final class SetonoSyliusBulkSpecialsExtension extends AbstractResourceExtension
 
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.xml');
-        $loader->load(sprintf('services/integrations/%s.xml', $config['driver']));
 
         $this->registerResources('setono_sylius_bulk_specials', $config['driver'], $config['resources'], $container);
 

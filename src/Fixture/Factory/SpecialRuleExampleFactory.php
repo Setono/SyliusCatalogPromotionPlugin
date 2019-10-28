@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Setono\SyliusBulkSpecialsPlugin\Fixture\Factory;
 
+use Setono\SyliusBulkSpecialsPlugin\Factory\SpecialRuleFactoryInterface;
 use Setono\SyliusBulkSpecialsPlugin\Model\SpecialRuleInterface;
-use Setono\SyliusBulkSpecialsPlugin\Special\Factory\SpecialRuleFactoryInterface;
 use Sylius\Bundle\CoreBundle\Fixture\Factory\AbstractExampleFactory;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 

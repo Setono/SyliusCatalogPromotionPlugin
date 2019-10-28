@@ -12,6 +12,7 @@ sylius_product:
     resources:
         product:
             classes:
-                model: AppBundle\Model\Product
                 repository: AppBundle\Doctrine\ORM\ProductRepository
-                controller: Setono\SyliusBulkSpecialsPlugin\Controller\ProductController
+        product_variant:
+            classes:
+                repository: AppBundle\Doctrine\ORM\ProductVariantRepository

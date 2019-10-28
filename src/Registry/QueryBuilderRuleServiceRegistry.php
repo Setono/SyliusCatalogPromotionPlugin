@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Setono\SyliusBulkSpecialsPlugin\Registry;
 
-use Setono\SyliusBulkSpecialsPlugin\QueryBuilder\Rule\QueryBuilderRuleInterface;
+use Setono\SyliusBulkSpecialsPlugin\QueryBuilderRule\QueryBuilderRuleInterface;
 use Sylius\Component\Registry\ServiceRegistry;
 
 class QueryBuilderRuleServiceRegistry extends ServiceRegistry

@@ -26,6 +26,7 @@ setono_sylius_bulk_specials:
         special:
             channels: Apply to channels
             name: Name
+            manually_discounted_products_excluded: Manually discounted products excluded
             description: Description
             exclusive: Exclusive
             priority: Priority

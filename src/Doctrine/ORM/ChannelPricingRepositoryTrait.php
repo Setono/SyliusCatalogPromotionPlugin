@@ -4,23 +4,29 @@ declare(strict_types=1);
 
 namespace Setono\SyliusBulkSpecialsPlugin\Doctrine\ORM;
 
+use DateTimeInterface;
 use Doctrine\ORM\QueryBuilder;
 use Safe\Exceptions\StringsException;
 use function Safe\sprintf;
 
 trait ChannelPricingRepositoryTrait
 {
+    use HasAnyBeenUpdatedSinceTrait;
+
     /**
      * @return QueryBuilder
      */
     abstract public function createQueryBuilder($alias, $indexBy = null);
 
-    public function resetMultiplier(): void
+    public function resetMultiplier(DateTimeInterface $dateTime): void
     {
         $this
             ->createQueryBuilder('o')
             ->update()
             ->set('o.multiplier', 1)
+            ->set('o.updatedAt', ':updatedAt')
+            ->andWhere('o.multiplier != 1')
+            ->setParameter('updatedAt', $dateTime)
             ->getQuery()
             ->execute()
         ;
@@ -33,11 +39,15 @@ trait ChannelPricingRepositoryTrait
         float $multiplier,
         QueryBuilder $productVariantQueryBuilder,
         array $channelCodes,
+        DateTimeInterface $dateTime,
         bool $exclusive = false
     ): void {
         if (count($channelCodes) === 0) {
             return;
         }
+
+        // if the same association were added multiple times this will remove any duplicates of product variants
+        $productVariantQueryBuilder->distinct();
 
         $qb = $this->createQueryBuilder('channelPricing');
 
@@ -47,7 +57,9 @@ trait ChannelPricingRepositoryTrait
         $qb->update()
             ->andWhere(sprintf('channelPricing.productVariant IN (%s)', $productVariantQueryBuilder->getDQL()))
             ->andWhere('channelPricing.channelCode IN (:channelCodes)')
+            ->set('channelPricing.updatedAt', ':date')
             ->setParameter('channelCodes', $channelCodes)
+            ->setParameter('date', $dateTime)
         ;
 
         if ($exclusive) {
@@ -61,31 +73,37 @@ trait ChannelPricingRepositoryTrait
         $qb->getQuery()->execute();
     }
 
-    public function updatePrices(): void
+    public function updatePrices(DateTimeInterface $dateTime): void
     {
-        $this->createQueryBuilder('channelPricing')
+        $this->createQueryBuilder('o')
             ->update()
-            ->set('channelPricing.price', 'ROUND(channelPricing.originalPrice * channelPricing.multiplier)')
-            ->andWhere('channelPricing.originalPrice is not null')
+            ->set('o.price', 'ROUND(o.originalPrice * o.multiplier)')
+            ->andWhere('o.originalPrice is not null')
+            ->andWhere('o.updatedAt >= :date')
+            ->setParameter('date', $dateTime)
             ->getQuery()
             ->execute()
         ;
 
-        $this->createQueryBuilder('channelPricing')
+        $this->createQueryBuilder('o')
             ->update()
-            ->set('channelPricing.originalPrice', 'channelPricing.price')
-            ->set('channelPricing.price', 'ROUND(channelPricing.price * channelPricing.multiplier)')
-            ->andWhere('channelPricing.originalPrice is null')
-            ->andWhere('channelPricing.multiplier > 1 OR channelPricing.multiplier < 1')
+            ->set('o.originalPrice', 'o.price')
+            ->set('o.price', 'ROUND(o.price * o.multiplier)')
+            ->andWhere('o.originalPrice is null')
+            ->andWhere('o.multiplier != 1')
+            ->andWhere('o.updatedAt >= :date')
+            ->setParameter('date', $dateTime)
             ->getQuery()
             ->execute()
         ;
 
-        $this->createQueryBuilder('channelPricing')
+        $this->createQueryBuilder('o')
             ->update()
-            ->set('channelPricing.originalPrice', ':originalPrice')
-            ->andWhere('channelPricing.price = channelPricing.originalPrice')
+            ->set('o.originalPrice', ':originalPrice')
+            ->andWhere('o.price = o.originalPrice')
+            ->andWhere('o.updatedAt >= :date')
             ->setParameter('originalPrice', null)
+            ->setParameter('date', $dateTime)
             ->getQuery()
             ->execute()
         ;
