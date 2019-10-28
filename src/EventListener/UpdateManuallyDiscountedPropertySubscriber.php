@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Setono\SyliusBulkSpecialsPlugin\EventListener;
+namespace Setono\SyliusBulkDiscountPlugin\EventListener;
 
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Events;
-use Setono\SyliusBulkSpecialsPlugin\Model\ChannelPricingInterface;
+use Setono\SyliusBulkDiscountPlugin\Model\ChannelPricingInterface;
 
 final class UpdateManuallyDiscountedPropertySubscriber implements EventSubscriber
 {

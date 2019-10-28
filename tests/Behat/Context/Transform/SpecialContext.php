@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Tests\Setono\SyliusBulkSpecialsPlugin\Behat\Context\Transform;
+namespace Tests\Setono\SyliusBulkDiscountPlugin\Behat\Context\Transform;
 
 use Behat\Behat\Context\Context;
-use Setono\SyliusBulkSpecialsPlugin\Doctrine\ORM\SpecialRepositoryInterface;
+use Setono\SyliusBulkDiscountPlugin\Doctrine\ORM\SpecialRepositoryInterface;
 use Webmozart\Assert\Assert;
 
 final class SpecialContext implements Context

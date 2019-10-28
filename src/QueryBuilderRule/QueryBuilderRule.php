@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Setono\SyliusBulkSpecialsPlugin\QueryBuilderRule;
+namespace Setono\SyliusBulkDiscountPlugin\QueryBuilderRule;
 
 use Doctrine\ORM\QueryBuilder;
 use InvalidArgumentException;

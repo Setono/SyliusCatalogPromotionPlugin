@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Tests\Setono\SyliusBulkSpecialsPlugin\Behat\Context\Domain;
+namespace Tests\Setono\SyliusBulkDiscountPlugin\Behat\Context\Domain;
 
 use Behat\Behat\Context\Context;
 use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
-use Setono\SyliusBulkSpecialsPlugin\Doctrine\ORM\SpecialRepositoryInterface;
-use Setono\SyliusBulkSpecialsPlugin\Model\SpecialInterface;
+use Setono\SyliusBulkDiscountPlugin\Doctrine\ORM\SpecialRepositoryInterface;
+use Setono\SyliusBulkDiscountPlugin\Model\DiscountInterface;
 use Sylius\Behat\Service\SharedStorageInterface;
 use Webmozart\Assert\Assert;
 
@@ -38,7 +38,7 @@ final class ManagingSpecialsContext implements Context
     /**
      * @When /^I delete a ("([^"]+)" special)$/
      */
-    public function iDeleteSpecial(SpecialInterface $special)
+    public function iDeleteSpecial(DiscountInterface $special)
     {
         $this->specialRepository->remove($special);
     }
@@ -46,7 +46,7 @@ final class ManagingSpecialsContext implements Context
     /**
      * @When /^I try to delete a ("([^"]+)" special)$/
      */
-    public function iTryToDeleteSpecial(SpecialInterface $special)
+    public function iTryToDeleteSpecial(DiscountInterface $special)
     {
         try {
             $this->specialRepository->remove($special);
@@ -58,7 +58,7 @@ final class ManagingSpecialsContext implements Context
     /**
      * @Then /^(this special) should no longer exist in the special registry$/
      */
-    public function specialShouldNotExistInTheRegistry(SpecialInterface $special)
+    public function specialShouldNotExistInTheRegistry(DiscountInterface $special)
     {
         Assert::null($this->specialRepository->findOneBy(['code' => $special->getCode()]));
     }
@@ -66,7 +66,7 @@ final class ManagingSpecialsContext implements Context
     /**
      * @Then special :special should still exist in the registry
      */
-    public function specialShouldStillExistInTheRegistry(SpecialInterface $special)
+    public function specialShouldStillExistInTheRegistry(DiscountInterface $special)
     {
         Assert::notNull($this->specialRepository->find($special->getId()));
     }

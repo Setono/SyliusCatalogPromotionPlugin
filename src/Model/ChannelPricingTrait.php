@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Setono\SyliusBulkSpecialsPlugin\Model;
+namespace Setono\SyliusBulkDiscountPlugin\Model;
 
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;

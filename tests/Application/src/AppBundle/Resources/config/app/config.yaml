@@ -1,5 +1,5 @@
-imports:
-    - { resource: "@AppBundle/Resources/config/app/fixtures.yaml" }
+#imports:
+#    - { resource: "@AppBundle/Resources/config/app/fixtures.yaml" }
 
 sylius_core:
     resources:

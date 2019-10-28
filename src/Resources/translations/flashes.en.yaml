@@ -1,5 +1,0 @@
-sylius:
-    resource:
-        bulk_recalculate_special: Recalculation for checked specials started
-        bulk_reassign_product: Reassign process started
-        choose_bulk_action_items: Choose at least one list item to run bulk action on them

@@ -1,4 +1,4 @@
-@setono_sylius_bulk_specials_commands
+@setono_sylius_bulk_discount_commands
 Feature: Special CLI feature
     In order to enable/disable specials via CLI
     As a Developer

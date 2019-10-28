@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Setono\SyliusBulkSpecialsPlugin\DependencyInjection\Compiler;
+namespace Setono\SyliusBulkDiscountPlugin\DependencyInjection\Compiler;
 
 use InvalidArgumentException;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
@@ -13,11 +13,11 @@ final class RegisterQueryBuilderRulesPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container): void
     {
-        $registry = $container->getDefinition('setono_sylius_bulk_specials.registry.query_builder_rule');
-        $formRegistry = $container->getDefinition('setono_sylius_bulk_specials.form_registry.query_builder_rule');
+        $registry = $container->getDefinition('setono_sylius_bulk_discount.registry.query_builder_rule');
+        $formRegistry = $container->getDefinition('setono_sylius_bulk_discount.form_registry.query_builder_rule');
         $formToLabelMap = [];
 
-        foreach ($container->findTaggedServiceIds('setono_sylius_bulk_specials.query_builder_rule') as $id => $tagged) {
+        foreach ($container->findTaggedServiceIds('setono_sylius_bulk_discount.query_builder_rule') as $id => $tagged) {
             foreach ($tagged as $attributes) {
                 if (!isset($attributes['type'], $attributes['label'], $attributes['form_type'])) {
                     throw new InvalidArgumentException('Tagged query builder rule `' . $id . '` needs to have `type`, `form_type` and `label` attributes.');
@@ -29,6 +29,6 @@ final class RegisterQueryBuilderRulesPass implements CompilerPassInterface
             }
         }
 
-        $container->setParameter('setono_sylius_bulk_specials.special_rules', $formToLabelMap);
+        $container->setParameter('setono_sylius_bulk_discount.discount_rules', $formToLabelMap);
     }
 }

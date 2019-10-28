@@ -1,5 +1,5 @@
 imports:
-    - { resource: "@SetonoSyliusBulkSpecialsPlugin/Resources/config/grids/special.yaml" }
+    - { resource: "@SetonoSyliusBulkDiscountPlugin/Resources/config/grids/discount.yaml" }
 
 doctrine:
     orm:
@@ -10,4 +10,4 @@ doctrine:
 framework:
     messenger:
         buses:
-            setono_sylius_bulk_specials.command_bus: ~
+            setono_sylius_bulk_discount.command_bus: ~

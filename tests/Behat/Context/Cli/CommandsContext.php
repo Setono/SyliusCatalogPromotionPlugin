@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Tests\Setono\SyliusBulkSpecialsPlugin\Behat\Context\Cli;
+namespace Tests\Setono\SyliusBulkDiscountPlugin\Behat\Context\Cli;
 
 use Behat\Behat\Context\Context;
-use Setono\SyliusBulkSpecialsPlugin\Command\CheckActiveCommand;
-use Setono\SyliusBulkSpecialsPlugin\Command\AssignSpecialsCommand;
-use Setono\SyliusBulkSpecialsPlugin\Command\RecalculateProductCommand;
-use Setono\SyliusBulkSpecialsPlugin\Command\RecalculateSpecialCommand;
-use Setono\SyliusBulkSpecialsPlugin\Model\ProductInterface;
-use Setono\SyliusBulkSpecialsPlugin\Model\SpecialInterface;
+use Setono\SyliusBulkDiscountPlugin\Command\CheckActiveCommand;
+use Setono\SyliusBulkDiscountPlugin\Command\AssignSpecialsCommand;
+use Setono\SyliusBulkDiscountPlugin\Command\RecalculateProductCommand;
+use Setono\SyliusBulkDiscountPlugin\Command\RecalculateSpecialCommand;
+use Setono\SyliusBulkDiscountPlugin\Model\ProductInterface;
+use Setono\SyliusBulkDiscountPlugin\Model\DiscountInterface;
 use Sylius\Behat\Service\SharedStorage;
 use Sylius\Behat\Service\SharedStorageInterface;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
@@ -137,7 +137,7 @@ final class CommandsContext implements Context
      * @When I recalculate prices of products related to special :special
      * @When I recalculate prices of products related to this special
      */
-    public function iRunRecalculateSpecialCommand(?SpecialInterface $special = null): void
+    public function iRunRecalculateSpecialCommand(?DiscountInterface $special = null): void
     {
         if (null === $special) {
             $special = $this->sharedStorage->get('special');

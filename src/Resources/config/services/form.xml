@@ -5,59 +5,59 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd"
 >
     <parameters>
-        <parameter key="setono_sylius_bulk_specials.form.type.special.validation_groups" type="collection">
-            <parameter>setono_sylius_bulk_specials</parameter>
+        <parameter key="setono_sylius_bulk_discount.form.type.discount.validation_groups" type="collection">
+            <parameter>setono_sylius_bulk_discount</parameter>
         </parameter>
-        <parameter key="setono_sylius_bulk_specials.form.type.special_rule.validation_groups" type="collection">
-            <parameter>setono_sylius_bulk_specials</parameter>
+        <parameter key="setono_sylius_bulk_discount.form.type.discount_rule.validation_groups" type="collection">
+            <parameter>setono_sylius_bulk_discount</parameter>
         </parameter>
     </parameters>
 
     <services>
-        <service id="setono_sylius_bulk_specials.form_registry.query_builder_rule" class="Sylius\Bundle\ResourceBundle\Form\Registry\FormTypeRegistry" />
+        <service id="setono_sylius_bulk_discount.form_registry.query_builder_rule" class="Sylius\Bundle\ResourceBundle\Form\Registry\FormTypeRegistry" />
 
-        <service id="setono_sylius_bulk_specials.form.type.special"
-                 class="Setono\SyliusBulkSpecialsPlugin\Form\Type\SpecialType">
-            <argument>%setono_sylius_bulk_specials.model.special.class%</argument>
-            <argument>%setono_sylius_bulk_specials.form.type.special.validation_groups%</argument>
+        <service id="setono_sylius_bulk_discount.form.type.discount"
+                 class="Setono\SyliusBulkDiscountPlugin\Form\Type\DiscountType">
+            <argument>%setono_sylius_bulk_discount.model.discount.class%</argument>
+            <argument>%setono_sylius_bulk_discount.form.type.discount.validation_groups%</argument>
             <tag name="form.type" />
         </service>
 
-        <service id="setono_sylius_bulk_specials.form.type.special_rule"
-                 class="Setono\SyliusBulkSpecialsPlugin\Form\Type\SpecialRuleType">
-            <argument>%setono_sylius_bulk_specials.model.special_rule.class%</argument>
-            <argument>%setono_sylius_bulk_specials.form.type.special_rule.validation_groups%</argument>
-            <argument type="service" id="setono_sylius_bulk_specials.form_registry.query_builder_rule" />
+        <service id="setono_sylius_bulk_discount.form.type.discount_rule"
+                 class="Setono\SyliusBulkDiscountPlugin\Form\Type\DiscountRuleType">
+            <argument>%setono_sylius_bulk_discount.model.discount_rule.class%</argument>
+            <argument>%setono_sylius_bulk_discount.form.type.discount_rule.validation_groups%</argument>
+            <argument type="service" id="setono_sylius_bulk_discount.form_registry.query_builder_rule" />
             <tag name="form.type" />
         </service>
 
-        <service id="setono_sylius_bulk_specials.form.type.special_rule.collection"
-                 class="Setono\SyliusBulkSpecialsPlugin\Form\Type\SpecialRuleCollectionType">
-            <argument type="service" id="setono_sylius_bulk_specials.registry.query_builder_rule" />
+        <service id="setono_sylius_bulk_discount.form.type.discount_rule.collection"
+                 class="Setono\SyliusBulkDiscountPlugin\Form\Type\DiscountRuleCollectionType">
+            <argument type="service" id="setono_sylius_bulk_discount.registry.query_builder_rule" />
             <tag name="form.type" />
         </service>
 
-        <service id="setono_sylius_bulk_specials.form.type.special_rule_choice"
-                 class="Setono\SyliusBulkSpecialsPlugin\Form\Type\SpecialRuleChoiceType">
-            <argument>%setono_sylius_bulk_specials.special_rules%</argument>
+        <service id="setono_sylius_bulk_discount.form.type.discount_rule_choice"
+                 class="Setono\SyliusBulkDiscountPlugin\Form\Type\DiscountRuleChoiceType">
+            <argument>%setono_sylius_bulk_discount.discount_rules%</argument>
             <tag name="form.type" />
         </service>
 
         <!-- Rules -->
-        <service id="sylius.form.type.special_rule.has_taxon_configuration"
-                 class="Setono\SyliusBulkSpecialsPlugin\Form\Type\Special\Rule\HasTaxonConfigurationType">
+        <service id="sylius.form.type.discount_rule.has_taxon_configuration"
+                 class="Setono\SyliusBulkDiscountPlugin\Form\Type\Discount\Rule\HasTaxonConfigurationType">
             <argument type="service" id="sylius.form.type.data_transformer.taxons_to_codes" />
             <tag name="form.type" />
         </service>
 
-        <service id="sylius.form.type.special_rule.contains_products_configuration"
-                 class="Setono\SyliusBulkSpecialsPlugin\Form\Type\Special\Rule\ContainsProductsConfigurationType">
+        <service id="sylius.form.type.discount_rule.contains_products_configuration"
+                 class="Setono\SyliusBulkDiscountPlugin\Form\Type\Discount\Rule\ContainsProductsConfigurationType">
             <argument type="service" id="sylius.form.type.data_transformer.products_to_codes" />
             <tag name="form.type" />
         </service>
 
-        <service id="sylius.form.type.special_rule.contains_product_configuration"
-                 class="Setono\SyliusBulkSpecialsPlugin\Form\Type\Special\Rule\ContainsProductConfigurationType">
+        <service id="sylius.form.type.discount_rule.contains_product_configuration"
+                 class="Setono\SyliusBulkDiscountPlugin\Form\Type\Discount\Rule\ContainsProductConfigurationType">
             <argument type="service" id="sylius.repository.product" />
             <tag name="form.type" />
         </service>

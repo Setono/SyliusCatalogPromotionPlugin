@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Setono\SyliusBulkSpecialsPlugin\Registry;
+namespace Setono\SyliusBulkDiscountPlugin\Registry;
 
-use Setono\SyliusBulkSpecialsPlugin\QueryBuilderRule\QueryBuilderRuleInterface;
+use Setono\SyliusBulkDiscountPlugin\QueryBuilderRule\QueryBuilderRuleInterface;
 use Sylius\Component\Registry\ServiceRegistry;
 
 class QueryBuilderRuleServiceRegistry extends ServiceRegistry

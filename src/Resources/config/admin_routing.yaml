@@ -1,36 +1,36 @@
 # Routes (listed for better navigation):
-# - setono_sylius_bulk_specials_admin_special_index
-# - setono_sylius_bulk_specials_admin_special_create
-# - setono_sylius_bulk_specials_admin_special_update
-# - setono_sylius_bulk_specials_admin_special_bulk_delete
-# - setono_sylius_bulk_specials_admin_special_delete
+# - setono_sylius_bulk_discount_admin_discount_index
+# - setono_sylius_bulk_discount_admin_discount_create
+# - setono_sylius_bulk_discount_admin_discount_update
+# - setono_sylius_bulk_discount_admin_discount_bulk_delete
+# - setono_sylius_bulk_discount_admin_discount_delete
 
-setono_sylius_bulk_specials_admin_special:
+setono_sylius_bulk_discount_admin_discount:
     resource: |
-        alias: setono_sylius_bulk_specials.special
+        alias: setono_sylius_bulk_discount.discount
         section: admin
         templates: SyliusAdminBundle:Crud
         except: ['show']
         redirect: update
-        grid: setono_sylius_bulk_specials_admin_special
+        grid: setono_sylius_bulk_discount_admin_discount
         permission: true
         vars:
             all:
-                subheader: setono_sylius_bulk_specials.ui.manage_specials
+                subheader: setono_sylius_bulk_discount.ui.manage_discounts
                 templates:
-                    form: "@SetonoSyliusBulkSpecialsPlugin/Admin/Special/_form.html.twig"
+                    form: "@SetonoSyliusBulkDiscountPlugin/Admin/Discount/_form.html.twig"
             index:
                 icon: in cart
             update:
                 templates:
-                    form: "@SetonoSyliusBulkSpecialsPlugin/Admin/Special/_form.html.twig"
+                    form: "@SetonoSyliusBulkDiscountPlugin/Admin/Discount/_form.html.twig"
     type: sylius.resource
 
-setono_sylius_bulk_specials_admin_special_bulk_recalculate:
-    path: /specials/bulk-recalculate/checked
+setono_sylius_bulk_discount_admin_discount_bulk_recalculate:
+    path: /discounts/bulk-recalculate/checked
     methods: [GET,POST]
     defaults:
-        _controller: setono_sylius_bulk_specials.controller.special:bulkRecalculateAction
+        _controller: setono_sylius_bulk_discount.controller.discount:bulkRecalculateAction
         _sylius:
             csrf_protection: false
             section: admin
@@ -41,7 +41,7 @@ setono_sylius_bulk_specials_admin_special_bulk_recalculate:
                 method: findById
                 arguments: [$ids]
 
-setono_sylius_bulk_specials_admin_product_bulk_recalculate:
+setono_sylius_bulk_discount_admin_product_bulk_recalculate:
     path: /products/bulk-recalculate/checked
     methods: [GET,POST]
     defaults:
@@ -56,7 +56,7 @@ setono_sylius_bulk_specials_admin_product_bulk_recalculate:
                 method: findById
                 arguments: [$ids]
 
-setono_sylius_bulk_specials_admin_product_bulk_recalculate_all:
+setono_sylius_bulk_discount_admin_product_bulk_recalculate_all:
     path: /products/bulk-recalculate/all
     methods: [GET]
     defaults:
@@ -70,7 +70,7 @@ setono_sylius_bulk_specials_admin_product_bulk_recalculate_all:
             repository:
                 method: findAll
 
-setono_sylius_bulk_specials_admin_product_bulk_reassign:
+setono_sylius_bulk_discount_admin_product_bulk_reassign:
     path: /products/bulk-reassign/checked
     methods: [GET,POST]
     defaults:
@@ -85,7 +85,7 @@ setono_sylius_bulk_specials_admin_product_bulk_reassign:
                 method: findById
                 arguments: [$ids]
 
-setono_sylius_bulk_specials_admin_product_bulk_reassign_all:
+setono_sylius_bulk_discount_admin_product_bulk_reassign_all:
     path: /products/bulk-reassign/all
     methods: [GET]
     defaults:

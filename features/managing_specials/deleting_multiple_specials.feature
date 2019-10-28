@@ -1,4 +1,4 @@
-@setono_sylius_bulk_specials_managing_specials
+@setono_sylius_bulk_discount_managing_specials
 Feature: Deleting multiple specials
     In order to remove test, obsolete or incorrect specials in an efficient way
     As an Administrator

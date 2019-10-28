@@ -1,29 +1,17 @@
-setono_sylius_bulk_specials:
+setono_sylius_bulk_discount:
     ui:
-        special: Special
-        specials: Specials
-        manage_specials: Manage specials
-        new_special: Create new special
-        edit_special: Edit special
-        product_specials: Specials
-        main_action:
-            specials: Specials
-            product:
-                reassign_all: Reassign specials for all products
-                recalculate_all: Recalculate special prices for all products
-        bulk_action:
-            product:
-                reassign: Reassign specials to selected products
-                recalculate: Recalculate selected products prices
-            special:
-                recalculate: Recalculate prices for products matching special rules
+        discount: Discount
+        discounts: Discounts
+        manage_discounts: Manage discounts
+        new_discount: Create new discount
+        edit_discount: Edit discount
     menu:
         admin:
             main:
                 marketing:
-                    specials: Specials
+                    discounts: Discounts
     form:
-        special:
+        discount:
             channels: Apply to channels
             name: Name
             manually_discounted_products_excluded: Manually discounted products excluded
@@ -37,7 +25,7 @@ setono_sylius_bulk_specials:
             add_rule: Add rule
             action_type: Action type
             action_percent: Action percent
-        special_rule:
+        discount_rule:
             contains_product: Product is
             contains_product_configuration:
                 product: Product
@@ -49,7 +37,7 @@ setono_sylius_bulk_specials:
                 taxons: Taxons
             taxonomy: Taxonomy
             type: Type
-        special_action_type:
+        discount_action_type:
             choice:
                 off: Make a discount
                 increase: Make a margin (increase price)

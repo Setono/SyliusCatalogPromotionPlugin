@@ -1,4 +1,4 @@
-@setono_sylius_bulk_specials_managing_specials
+@setono_sylius_bulk_discount_managing_specials
 Feature: Adding a new special with action
     In order to give possibility to pay specifically less price for some goods
     As an Administrator

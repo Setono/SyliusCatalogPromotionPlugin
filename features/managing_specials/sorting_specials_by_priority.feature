@@ -1,4 +1,4 @@
-@setono_sylius_bulk_specials_managing_specials
+@setono_sylius_bulk_discount_managing_specials
 Feature: Sorting listed specials by priority
     In order to change the order by which specials are used
     As an Administrator

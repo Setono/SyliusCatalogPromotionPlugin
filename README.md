@@ -1,4 +1,4 @@
-# Sylius Bulk Specials Plugin
+# Sylius Bulk Discount Plugin
 
 [![Latest Version][ico-version]][link-packagist]
 [![Latest Unstable Version][ico-unstable-version]][link-packagist]
@@ -25,7 +25,7 @@ Products admin page actions:
 ### Add plugin to composer.json
 
 ```bash
-composer require setono/sylius-bulk-specials-plugin
+composer require setono/sylius-bulk-discount-plugin
 ```
 
 ### Register plugin
@@ -36,18 +36,18 @@ composer require setono/sylius-bulk-specials-plugin
 
 return [
     // ...
-    Setono\SyliusBulkSpecialsPlugin\SetonoSyliusBulkSpecialsPlugin::class => ['all' => true],
+    Setono\SyliusBulkDiscountPlugin\SetonoSyliusBulkDiscountPlugin::class => ['all' => true],
     Sylius\Bundle\GridBundle\SyliusGridBundle::class => ['all' => true],
     // ...
 ];
 
 ```
 
-**Note**, that we MUST define `SetonoSyliusBulkSpecialsPlugin` BEFORE `SyliusGridBundle`.
+**Note**, that we MUST define `SetonoSyliusBulkDiscountPlugin` BEFORE `SyliusGridBundle`.
 Otherwise you'll see exception like this:
 
 ```bash
-You have requested a non-existent parameter "setono_sylius_bulk_specials.model.special.class".  
+You have requested a non-existent parameter "setono_sylius_bulk_discount.model.special.class".  
 ```
 
 ### Add config
@@ -55,15 +55,15 @@ You have requested a non-existent parameter "setono_sylius_bulk_specials.model.s
 ```yaml
 # config/packages/_sylius.yaml
 imports:
-    - { resource: "@SetonoSyliusBulkSpecialsPlugin/Resources/config/app/config.yaml" }
+    - { resource: "@SetonoSyliusBulkDiscountPlugin/Resources/config/app/config.yaml" }
 ```
 
 ### Add routing
 
 ```yaml
 # config/routes.yaml
-setono_sylius_bulk_specials_admin:
-    resource: "@SetonoSyliusBulkSpecialsPlugin/Resources/config/admin_routing.yaml"
+setono_sylius_bulk_discount_admin:
+    resource: "@SetonoSyliusBulkDiscountPlugin/Resources/config/admin_routing.yaml"
     prefix: /admin
 ```
 
@@ -92,8 +92,8 @@ setono_sylius_bulk_specials_admin:
     
     namespace AppBundle\Model;
     
-    use Setono\SyliusBulkSpecialsPlugin\Model\ProductInterface;
-    use Setono\SyliusBulkSpecialsPlugin\Model\SpecialSubjectTrait;
+    use Setono\SyliusBulkDiscountPlugin\Model\ProductInterface;
+    use Setono\SyliusBulkDiscountPlugin\Model\SpecialSubjectTrait;
     use Sylius\Component\Core\Model\Product as BaseProduct;
     
     /**
@@ -120,20 +120,19 @@ setono_sylius_bulk_specials_admin:
     <?xml version="1.0" encoding="UTF-8"?>
     
     <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
-                      xmlns:gedmo="http://gediminasm.org/schemas/orm/doctrine-extensions-mapping"
                       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                       xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                                           http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
     
         <mapped-superclass name="AppBundle\Model\Product">
-            <many-to-many field="specials" target-entity="Setono\SyliusBulkSpecialsPlugin\Model\SpecialInterface">
+            <many-to-many field="specials" target-entity="Setono\SyliusBulkDiscountPlugin\Model\SpecialInterface">
                 <cascade>
                     <cascade-persist />
                 </cascade>
                 <order-by>
                     <order-by-field name="priority" direction="DESC" />
                 </order-by>
-                <join-table name="setono_sylius_bulk_specials_products">
+                <join-table name="setono_sylius_bulk_discount_products">
                     <join-columns>
                         <join-column name="special_id" referenced-column-name="id" nullable="false" on-delete="CASCADE" />
                     </join-columns>
@@ -158,9 +157,9 @@ setono_sylius_bulk_specials_admin:
     
     namespace AppBundle\Doctrine\ORM;
     
-    use Setono\SyliusBulkSpecialsPlugin\Doctrine\ORM\ProductRepositoryTrait;
-    use Setono\SyliusBulkSpecialsPlugin\Doctrine\ORM\ProductRepositoryInterface;
-    use Setono\SyliusBulkSpecialsPlugin\Special\QueryBuilder\Rule\RuleQueryBuilderAwareInterface;
+    use Setono\SyliusBulkDiscountPlugin\Doctrine\ORM\ProductRepositoryTrait;
+    use Setono\SyliusBulkDiscountPlugin\Doctrine\ORM\ProductRepositoryInterface;
+    use Setono\SyliusBulkDiscountPlugin\Special\QueryBuilder\Rule\RuleQueryBuilderAwareInterface;
     use Sylius\Bundle\CoreBundle\Doctrine\ORM\ProductRepository as BaseProductRepository;
     
     /**
@@ -182,7 +181,7 @@ setono_sylius_bulk_specials_admin:
         <factory service="doctrine.orm.default_entity_manager" method="getRepository" />
         <argument>%sylius.model.product.class%</argument>
         <call method="setRuleQueryBuilder">
-            <argument type="service" id="setono_sylius_bulk_specials.registry.special_rule_query_builder" />
+            <argument type="service" id="setono_sylius_bulk_discount.registry.special_rule_query_builder" />
         </call>
     </service>
   ```
@@ -194,7 +193,7 @@ setono_sylius_bulk_specials_admin:
          arguments:
            - "%sylius.model.product.class%"
          calls:
-           - ["setRuleQueryBuilder", ["@setono_sylius_bulk_specials.registry.special_rule_query_builder"]]
+           - ["setRuleQueryBuilder", ["@setono_sylius_bulk_discount.registry.special_rule_query_builder"]]
   ```
 
 ### Update your schema
@@ -327,12 +326,12 @@ or follow next steps manually:
         ```bash
         $ vendor/bin/behat --tags="@javascript"
 
-[ico-version]: https://poser.pugx.org/setono/sylius-bulk-specials-plugin/v/stable
-[ico-unstable-version]: https://poser.pugx.org/setono/sylius-bulk-specials-plugin/v/unstable
-[ico-license]: https://poser.pugx.org/setono/sylius-bulk-specials-plugin/license
-[ico-travis]: https://img.shields.io/travis/Setono/SyliusBulkSpecialsPlugin/master.svg?style=flat-square
-[ico-code-quality]: https://img.shields.io/scrutinizer/g/Setono/SyliusBulkSpecialsPlugin.svg?style=flat-square
+[ico-version]: https://poser.pugx.org/setono/sylius-bulk-discount-plugin/v/stable
+[ico-unstable-version]: https://poser.pugx.org/setono/sylius-bulk-discount-plugin/v/unstable
+[ico-license]: https://poser.pugx.org/setono/sylius-bulk-discount-plugin/license
+[ico-travis]: https://img.shields.io/travis/Setono/SyliusBulkDiscountPlugin/master.svg?style=flat-square
+[ico-code-quality]: https://img.shields.io/scrutinizer/g/Setono/SyliusBulkDiscountPlugin.svg?style=flat-square
 
-[link-packagist]: https://packagist.org/packages/setono/sylius-bulk-specials-plugin
-[link-travis]: https://travis-ci.org/Setono/SyliusBulkSpecialsPlugin
-[link-code-quality]: https://scrutinizer-ci.com/g/Setono/SyliusBulkSpecialsPlugin
+[link-packagist]: https://packagist.org/packages/setono/sylius-bulk-discount-plugin
+[link-travis]: https://travis-ci.org/Setono/SyliusBulkDiscountPlugin
+[link-code-quality]: https://scrutinizer-ci.com/g/Setono/SyliusBulkDiscountPlugin

@@ -1,4 +1,4 @@
-@setono_sylius_bulk_specials_managing_specials
+@setono_sylius_bulk_discount_managing_specials
 Feature: Adding a new special
     In order to sell more by creating discount incentives for customers
     As an Administrator

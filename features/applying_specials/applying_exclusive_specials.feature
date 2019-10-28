@@ -1,4 +1,4 @@
-@setono_sylius_bulk_specials_applying_specials
+@setono_sylius_bulk_discount_applying_specials
 Feature: Receiving discount from most prioritized exclusive special
     As an Administrator
     I want exclusive specials applied in prioritized order

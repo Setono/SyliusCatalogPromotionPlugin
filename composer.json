@@ -1,13 +1,13 @@
 {
-    "name": "setono/sylius-bulk-specials-plugin",
+    "name": "setono/sylius-bulk-discount-plugin",
     "type": "sylius-plugin",
-    "description": "Bulk specials plugin for Sylius",
+    "description": "Bulk discount plugin for Sylius",
     "keywords": [
         "sylius",
         "sylius-plugin",
         "bulk",
         "setono",
-        "specials"
+        "discount"
     ],
     "license": "MIT",
     "require": {
@@ -57,8 +57,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Setono\\SyliusBulkSpecialsPlugin\\": "src/",
-            "Tests\\Setono\\SyliusBulkSpecialsPlugin\\": "tests/"
+            "Setono\\SyliusBulkDiscountPlugin\\": "src/",
+            "Tests\\Setono\\SyliusBulkDiscountPlugin\\": "tests/"
         }
     },
     "autoload-dev": {

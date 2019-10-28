@@ -4,9 +4,9 @@
     <services>
         <defaults public="true" />
 
-        <service id="setono_sylius_bulk_specials.behat.context.transform.special"
-                 class="Tests\Setono\SyliusBulkSpecialsPlugin\Behat\Context\Transform\SpecialContext">
-            <argument type="service" id="setono_sylius_bulk_specials.repository.special" />
+        <service id="setono_sylius_bulk_discount.behat.context.transform.special"
+                 class="Tests\Setono\SyliusBulkDiscountPlugin\Behat\Context\Transform\SpecialContext">
+            <argument type="service" id="setono_sylius_bulk_discount.repository.special" />
         </service>
 
     </services>

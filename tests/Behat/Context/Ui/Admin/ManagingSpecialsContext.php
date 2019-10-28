@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Tests\Setono\SyliusBulkSpecialsPlugin\Behat\Context\Ui\Admin;
+namespace Tests\Setono\SyliusBulkDiscountPlugin\Behat\Context\Ui\Admin;
 
 use Behat\Behat\Context\Context;
-use Setono\SyliusBulkSpecialsPlugin\Model\Special;
-use Setono\SyliusBulkSpecialsPlugin\Model\SpecialInterface;
+use Setono\SyliusBulkDiscountPlugin\Model\Discount;
+use Setono\SyliusBulkDiscountPlugin\Model\DiscountInterface;
 use Sylius\Behat\NotificationType;
 use Sylius\Behat\Service\NotificationCheckerInterface;
 use Sylius\Behat\Service\Resolver\CurrentPageResolverInterface;
 use Sylius\Behat\Service\SharedStorageInterface;
-use Tests\Setono\SyliusBulkSpecialsPlugin\Behat\Page\Admin\Special\CreatePageInterface;
-use Tests\Setono\SyliusBulkSpecialsPlugin\Behat\Page\Admin\Special\IndexPageInterface;
-use Tests\Setono\SyliusBulkSpecialsPlugin\Behat\Page\Admin\Special\UpdatePageInterface;
+use Tests\Setono\SyliusBulkDiscountPlugin\Behat\Page\Admin\Special\CreatePageInterface;
+use Tests\Setono\SyliusBulkDiscountPlugin\Behat\Page\Admin\Special\IndexPageInterface;
+use Tests\Setono\SyliusBulkDiscountPlugin\Behat\Page\Admin\Special\UpdatePageInterface;
 use Webmozart\Assert\Assert;
 
 final class ManagingSpecialsContext implements Context
@@ -104,7 +104,7 @@ final class ManagingSpecialsContext implements Context
      */
     public function iSpecifyItsDiscount($discount = null)
     {
-        $this->createPage->specifyActionType(Special::ACTION_TYPE_OFF);
+        $this->createPage->specifyActionType(Discount::ACTION_TYPE_OFF);
         $this->createPage->specifyActionPercent(floatval($discount));
     }
 
@@ -114,7 +114,7 @@ final class ManagingSpecialsContext implements Context
      */
     public function iSpecifyItsMargin($margin = null)
     {
-        $this->createPage->specifyActionType(Special::ACTION_TYPE_INCREASE);
+        $this->createPage->specifyActionType(Discount::ACTION_TYPE_INCREASE);
         $this->createPage->specifyActionPercent(floatval($margin));
     }
 
@@ -280,7 +280,7 @@ final class ManagingSpecialsContext implements Context
     /**
      * @Then the :special special should be exclusive
      */
-    public function theSpecialShouldBeExclusive(SpecialInterface $special)
+    public function theSpecialShouldBeExclusive(DiscountInterface $special)
     {
         $this->assertIfFieldIsTrue($special, 'exclusive');
     }
@@ -299,7 +299,7 @@ final class ManagingSpecialsContext implements Context
     /**
      * @Then the :special special should be applicable for the :channelName channel
      */
-    public function theSpecialShouldBeApplicableForTheChannel(SpecialInterface $special, $channelName)
+    public function theSpecialShouldBeApplicableForTheChannel(DiscountInterface $special, $channelName)
     {
         $this->iWantToModifyASpecial($special);
 
@@ -311,7 +311,7 @@ final class ManagingSpecialsContext implements Context
      * @Given /^I want to modify (this special)$/
      * @Then I should be able to modify a :special special
      */
-    public function iWantToModifyASpecial(SpecialInterface $special)
+    public function iWantToModifyASpecial(DiscountInterface $special)
     {
         $this->updatePage->open(['id' => $special->getId()]);
     }
@@ -337,7 +337,7 @@ final class ManagingSpecialsContext implements Context
      * @When /^I delete a ("([^"]+)" special)$/
      * @When /^I try to delete a ("([^"]+)" special)$/
      */
-    public function iDeleteSpecial(SpecialInterface $special)
+    public function iDeleteSpecial(DiscountInterface $special)
     {
         $this->sharedStorage->set('special', $special);
 
@@ -348,7 +348,7 @@ final class ManagingSpecialsContext implements Context
     /**
      * @Then /^(this special) should no longer exist in the special registry$/
      */
-    public function specialShouldNotExistInTheRegistry(SpecialInterface $special)
+    public function specialShouldNotExistInTheRegistry(DiscountInterface $special)
     {
         $this->indexPage->open();
 
@@ -381,7 +381,7 @@ final class ManagingSpecialsContext implements Context
     /**
      * @Then the :special special should be available from :startsDate to :endsDate
      */
-    public function theSpecialShouldBeAvailableFromTo(SpecialInterface $special, \DateTimeInterface $startsDate, \DateTimeInterface $endsDate)
+    public function theSpecialShouldBeAvailableFromTo(DiscountInterface $special, \DateTimeInterface $startsDate, \DateTimeInterface $endsDate)
     {
         $this->iWantToModifyASpecial($special);
 
@@ -482,7 +482,7 @@ final class ManagingSpecialsContext implements Context
     /**
      * @Given the :special special should have priority :priority
      */
-    public function theSpecialsShouldHavePriority(SpecialInterface $special, $priority)
+    public function theSpecialsShouldHavePriority(DiscountInterface $special, $priority)
     {
         $this->iWantToModifyASpecial($special);
 
@@ -502,10 +502,10 @@ final class ManagingSpecialsContext implements Context
     }
 
     /**
-     * @param SpecialInterface $special
+     * @param DiscountInterface $special
      * @param string $field
      */
-    private function assertIfFieldIsTrue(SpecialInterface $special, $field)
+    private function assertIfFieldIsTrue(DiscountInterface $special, $field)
     {
         $this->iWantToModifyASpecial($special);
 

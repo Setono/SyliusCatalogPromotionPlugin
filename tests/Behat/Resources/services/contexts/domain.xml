@@ -6,10 +6,10 @@
     <services>
         <defaults public="true" />
 
-        <service id="setono_sylius_bulk_specials.behat.context.domain.managing_specials"
-                 class="Tests\Setono\SyliusBulkSpecialsPlugin\Behat\Context\Domain\ManagingSpecialsContext">
+        <service id="setono_sylius_bulk_discount.behat.context.domain.managing_specials"
+                 class="Tests\Setono\SyliusBulkDiscountPlugin\Behat\Context\Domain\ManagingSpecialsContext">
             <argument type="service" id="sylius.behat.shared_storage" />
-            <argument type="service" id="setono_sylius_bulk_specials.repository.special" />
+            <argument type="service" id="setono_sylius_bulk_discount.repository.special" />
         </service>
 
     </services>

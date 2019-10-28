@@ -5,23 +5,23 @@
 
     <services>
 
-        <service id="setono_sylius_bulk_specials.fixture.example_factory.special_rule"
-                 class="Setono\SyliusBulkSpecialsPlugin\Fixture\Factory\SpecialRuleExampleFactory">
-            <argument type="service" id="setono_sylius_bulk_specials.custom_factory.special_rule" />
-            <argument>%setono_sylius_bulk_specials.special_rules%</argument>
+        <service id="setono_sylius_bulk_discount.fixture.example_factory.discount_rule"
+                 class="Setono\SyliusBulkDiscountPlugin\Fixture\Factory\DiscountRuleExampleFactory">
+            <argument type="service" id="setono_sylius_bulk_discount.custom_factory.discount_rule" />
+            <argument>%setono_sylius_bulk_discount.discount_rules%</argument>
         </service>
 
-        <service id="setono_sylius_bulk_specials.fixture.example_factory.special"
-                 class="Setono\SyliusBulkSpecialsPlugin\Fixture\Factory\SpecialExampleFactory">
+        <service id="setono_sylius_bulk_discount.fixture.example_factory.discount"
+                 class="Setono\SyliusBulkDiscountPlugin\Fixture\Factory\DiscountExampleFactory">
             <argument type="service" id="sylius.repository.channel" />
-            <argument type="service" id="setono_sylius_bulk_specials.factory.special" />
-            <argument type="service" id="setono_sylius_bulk_specials.fixture.example_factory.special_rule" />
+            <argument type="service" id="setono_sylius_bulk_discount.factory.discount" />
+            <argument type="service" id="setono_sylius_bulk_discount.fixture.example_factory.discount_rule" />
         </service>
 
-        <service id="setono_sylius_bulk_specials.fixture.special"
-                 class="Setono\SyliusBulkSpecialsPlugin\Fixture\SpecialFixture">
-            <argument type="service" id="setono_sylius_bulk_specials.manager.special" />
-            <argument type="service" id="setono_sylius_bulk_specials.fixture.example_factory.special" />
+        <service id="setono_sylius_bulk_discount.fixture.discount"
+                 class="Setono\SyliusBulkDiscountPlugin\Fixture\DiscountFixture">
+            <argument type="service" id="setono_sylius_bulk_discount.manager.discount" />
+            <argument type="service" id="setono_sylius_bulk_discount.fixture.example_factory.discount" />
 
             <tag name="sylius_fixtures.fixture" />
         </service>
