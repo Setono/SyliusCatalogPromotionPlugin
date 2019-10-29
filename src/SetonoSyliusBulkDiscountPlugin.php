@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Setono\SyliusBulkDiscountPlugin;
 
-use Setono\SyliusBulkDiscountPlugin\DependencyInjection\Compiler\RegisterQueryBuilderRulesPass;
+use Setono\SyliusBulkDiscountPlugin\DependencyInjection\Compiler\RegisterRulesPass;
 use Sylius\Bundle\CoreBundle\Application\SyliusPluginTrait;
 use Sylius\Bundle\ResourceBundle\AbstractResourceBundle;
 use Sylius\Bundle\ResourceBundle\SyliusResourceBundle;
@@ -25,6 +25,6 @@ final class SetonoSyliusBulkDiscountPlugin extends AbstractResourceBundle
     {
         parent::build($container);
 
-        $container->addCompilerPass(new RegisterQueryBuilderRulesPass());
+        $container->addCompilerPass(new RegisterRulesPass());
     }
 }

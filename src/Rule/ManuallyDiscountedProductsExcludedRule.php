@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Setono\SyliusBulkDiscountPlugin\QueryBuilderRule;
+namespace Setono\SyliusBulkDiscountPlugin\Rule;
 
 use Doctrine\ORM\QueryBuilder;
 use Safe\Exceptions\StringsException;
 use function Safe\sprintf;
 
-final class ManuallyDiscountedProductsExcludedQueryBuilderRule extends QueryBuilderRule
+final class ManuallyDiscountedProductsExcludedRule extends Rule
 {
     /**
      * @throws StringsException

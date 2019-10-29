@@ -2,28 +2,28 @@
 
 declare(strict_types=1);
 
-namespace Setono\SyliusBulkDiscountPlugin\QueryBuilderRule;
+namespace Setono\SyliusBulkDiscountPlugin\Rule;
 
 use Doctrine\ORM\QueryBuilder;
 use Safe\Exceptions\StringsException;
 use function Safe\sprintf;
 
-final class ContainsProductQueryBuilderRule extends QueryBuilderRule
+final class ContainsProductsRule extends Rule
 {
-    public const TYPE = 'contains_product';
+    public const TYPE = 'contains_products';
 
     /**
      * @throws StringsException
      */
     public function filter(QueryBuilder $queryBuilder, array $configuration): void
     {
-        $value = self::getConfigurationValue('product', $configuration);
+        $value = self::getConfigurationValue('products', $configuration);
         $alias = $this->getRootAlias($queryBuilder);
-        $parameter = self::generateParameter('product_code');
+        $parameter = self::generateParameter('product_codes');
 
         $queryBuilder
             ->join(sprintf('%s.product', $alias), self::generateAlias('product'))
-            ->andWhere(sprintf('%s.code = :%s', $alias, $parameter))
+            ->andWhere(sprintf('%s.code IN (:%s)', $alias, $parameter))
             ->setParameter($parameter, $value)
         ;
     }

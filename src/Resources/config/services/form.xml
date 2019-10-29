@@ -14,7 +14,7 @@
     </parameters>
 
     <services>
-        <service id="setono_sylius_bulk_discount.form_registry.query_builder_rule" class="Sylius\Bundle\ResourceBundle\Form\Registry\FormTypeRegistry" />
+        <service id="setono_sylius_bulk_discount.form_registry.rule" class="Sylius\Bundle\ResourceBundle\Form\Registry\FormTypeRegistry" />
 
         <service id="setono_sylius_bulk_discount.form.type.discount"
                  class="Setono\SyliusBulkDiscountPlugin\Form\Type\DiscountType">
@@ -27,13 +27,13 @@
                  class="Setono\SyliusBulkDiscountPlugin\Form\Type\DiscountRuleType">
             <argument>%setono_sylius_bulk_discount.model.discount_rule.class%</argument>
             <argument>%setono_sylius_bulk_discount.form.type.discount_rule.validation_groups%</argument>
-            <argument type="service" id="setono_sylius_bulk_discount.form_registry.query_builder_rule" />
+            <argument type="service" id="setono_sylius_bulk_discount.form_registry.rule" />
             <tag name="form.type" />
         </service>
 
         <service id="setono_sylius_bulk_discount.form.type.discount_rule.collection"
                  class="Setono\SyliusBulkDiscountPlugin\Form\Type\DiscountRuleCollectionType">
-            <argument type="service" id="setono_sylius_bulk_discount.registry.query_builder_rule" />
+            <argument type="service" id="setono_sylius_bulk_discount.registry.rule" />
             <tag name="form.type" />
         </service>
 

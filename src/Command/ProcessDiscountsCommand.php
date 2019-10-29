@@ -13,12 +13,12 @@ use function Safe\file_get_contents;
 use function Safe\file_put_contents;
 use function Safe\sprintf;
 use Setono\SyliusBulkDiscountPlugin\Model\DiscountInterface;
-use Setono\SyliusBulkDiscountPlugin\QueryBuilderRule\ManuallyDiscountedProductsExcludedQueryBuilderRule;
-use Setono\SyliusBulkDiscountPlugin\QueryBuilderRule\QueryBuilderRuleInterface;
 use Setono\SyliusBulkDiscountPlugin\Repository\ChannelPricingRepositoryInterface;
+use Setono\SyliusBulkDiscountPlugin\Repository\DiscountRepositoryInterface;
 use Setono\SyliusBulkDiscountPlugin\Repository\ProductRepositoryInterface;
 use Setono\SyliusBulkDiscountPlugin\Repository\ProductVariantRepositoryInterface;
-use Setono\SyliusBulkDiscountPlugin\Repository\DiscountRepositoryInterface;
+use Setono\SyliusBulkDiscountPlugin\Rule\ManuallyDiscountedProductsExcludedRule;
+use Setono\SyliusBulkDiscountPlugin\Rule\RuleInterface;
 use Sylius\Component\Registry\ServiceRegistryInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Command\LockableTrait;
@@ -45,7 +45,7 @@ final class ProcessDiscountsCommand extends Command
     private $discountRepository;
 
     /** @var ServiceRegistryInterface */
-    private $queryBuilderRuleRegistry;
+    private $ruleRegistry;
 
     /** @var string */
     private $logsDir;
@@ -55,7 +55,7 @@ final class ProcessDiscountsCommand extends Command
         ProductRepositoryInterface $productRepository,
         ProductVariantRepositoryInterface $productVariantRepository,
         DiscountRepositoryInterface $discountRepository,
-        ServiceRegistryInterface $queryBuilderRuleRegistry,
+        ServiceRegistryInterface $ruleRegistry,
         string $logsDir
     ) {
         parent::__construct();
@@ -64,7 +64,7 @@ final class ProcessDiscountsCommand extends Command
         $this->productRepository = $productRepository;
         $this->productVariantRepository = $productVariantRepository;
         $this->discountRepository = $discountRepository;
-        $this->queryBuilderRuleRegistry = $queryBuilderRuleRegistry;
+        $this->ruleRegistry = $ruleRegistry;
         $this->logsDir = $logsDir;
     }
 
@@ -118,7 +118,7 @@ final class ProcessDiscountsCommand extends Command
         foreach ($discounts as $discount) {
             $qb = $this->productVariantRepository->createQueryBuilder('o');
             if ($discount->isManuallyDiscountedProductsExcluded()) {
-                (new ManuallyDiscountedProductsExcludedQueryBuilderRule())->filter($qb, []);
+                (new ManuallyDiscountedProductsExcludedRule())->filter($qb, []);
             }
 
             foreach ($discount->getRules() as $rule) {
@@ -126,13 +126,13 @@ final class ProcessDiscountsCommand extends Command
                     continue;
                 }
 
-                if (!$this->queryBuilderRuleRegistry->has($rule->getType())) {
+                if (!$this->ruleRegistry->has($rule->getType())) {
                     // todo should this throw an exception or give an error somewhere?
                     continue;
                 }
 
-                /** @var QueryBuilderRuleInterface $ruleQueryBuilder */
-                $ruleQueryBuilder = $this->queryBuilderRuleRegistry->get($rule->getType());
+                /** @var RuleInterface $ruleQueryBuilder */
+                $ruleQueryBuilder = $this->ruleRegistry->get($rule->getType());
 
                 $ruleQueryBuilder->filter($qb, $rule->getConfiguration());
             }

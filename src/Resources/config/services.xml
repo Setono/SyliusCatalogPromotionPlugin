@@ -11,7 +11,7 @@
         <import resource="services/form.xml"/>
         <import resource="services/menu.xml"/>
         <import resource="services/registry.xml"/>
-        <import resource="services/query_builder_rule.xml"/>
+        <import resource="services/rule.xml"/>
         <import resource="services/validator.xml"/>
     </imports>
 </container>

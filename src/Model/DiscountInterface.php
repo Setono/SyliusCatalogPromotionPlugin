@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Setono\SyliusBulkDiscountPlugin\Model;
 
-use DateTime;
 use DateTimeInterface;
 use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Channel\Model\ChannelsAwareInterface;

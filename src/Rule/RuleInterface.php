@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Setono\SyliusBulkDiscountPlugin\QueryBuilderRule;
+namespace Setono\SyliusBulkDiscountPlugin\Rule;
 
 use Doctrine\ORM\QueryBuilder;
 
-interface QueryBuilderRuleInterface
+interface RuleInterface
 {
     public function filter(QueryBuilder $queryBuilder, array $configuration): void;
 }

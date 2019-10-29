@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Setono\SyliusBulkDiscountPlugin\Registry;
 
-use Setono\SyliusBulkDiscountPlugin\QueryBuilderRule\QueryBuilderRuleInterface;
+use Setono\SyliusBulkDiscountPlugin\Rule\RuleInterface;
 use Sylius\Component\Registry\ServiceRegistry;
 
-class QueryBuilderRuleServiceRegistry extends ServiceRegistry
+class RuleServiceRegistry extends ServiceRegistry
 {
     public function __construct()
     {
         parent::__construct(
-            QueryBuilderRuleInterface::class,
+            RuleInterface::class,
             'query builder rule'
         );
     }

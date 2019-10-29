@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Setono\SyliusBulkDiscountPlugin\QueryBuilderRule;
+namespace Setono\SyliusBulkDiscountPlugin\Rule;
 
 use Doctrine\ORM\QueryBuilder;
 use InvalidArgumentException;
@@ -10,7 +10,7 @@ use RuntimeException;
 use Safe\Exceptions\StringsException;
 use function Safe\sprintf;
 
-abstract class QueryBuilderRule implements QueryBuilderRuleInterface
+abstract class Rule implements RuleInterface
 {
     /** @var int */
     private static $aliasIndex = 0;
