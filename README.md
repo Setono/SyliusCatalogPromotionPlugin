@@ -220,7 +220,7 @@ final class Version20191028134956 extends AbstractMigration
         // ...
         
         // append this line
-        $this->addSql('UPDATE sylius_channel_pricing SET manuallyDiscounted = 1 WHERE original_price IS NOT NULL AND price != original_price');
+        $this->addSql('UPDATE sylius_channel_pricing SET manually_discounted = 1 WHERE original_price IS NOT NULL AND price != original_price');
     }
 
     public function down(Schema $schema) : void
