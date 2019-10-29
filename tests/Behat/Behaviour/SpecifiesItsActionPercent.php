@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Setono\SyliusBulkSpecialsPlugin\Behat\Behaviour;
+namespace Tests\Setono\SyliusBulkDiscountPlugin\Behat\Behaviour;
 
 use Sylius\Behat\Behaviour\DocumentAccessor;
 

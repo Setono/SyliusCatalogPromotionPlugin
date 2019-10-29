@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Tests\Setono\SyliusBulkSpecialsPlugin\Behat\Context\Setup;
+namespace Tests\Setono\SyliusBulkDiscountPlugin\Behat\Context\Setup;
 
 use Behat\Behat\Context\Context;
 use Doctrine\Common\Persistence\ObjectManager;
-use Setono\SyliusBulkSpecialsPlugin\Doctrine\ORM\SpecialRepositoryInterface;
-use Setono\SyliusBulkSpecialsPlugin\Model\Special;
-use Setono\SyliusBulkSpecialsPlugin\Model\SpecialInterface;
-use Setono\SyliusBulkSpecialsPlugin\Model\SpecialRuleInterface;
-use Setono\SyliusBulkSpecialsPlugin\Special\Factory\SpecialRuleFactoryInterface;
-use Setono\SyliusBulkSpecialsPlugin\Test\Factory\TestSpecialFactoryInterface;
+use Setono\SyliusBulkDiscountPlugin\Doctrine\ORM\SpecialRepositoryInterface;
+use Setono\SyliusBulkDiscountPlugin\Model\Discount;
+use Setono\SyliusBulkDiscountPlugin\Model\DiscountInterface;
+use Setono\SyliusBulkDiscountPlugin\Model\DiscountRuleInterface;
+use Setono\SyliusBulkDiscountPlugin\Special\Factory\SpecialRuleFactoryInterface;
+use Setono\SyliusBulkDiscountPlugin\Test\Factory\TestSpecialFactoryInterface;
 use Sylius\Behat\Service\SharedStorageInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\ProductInterface;
@@ -123,7 +123,7 @@ final class SpecialContext implements Context
     /**
      * @Given /^(this special) was disabled$/
      */
-    public function thisSpecialDisabled(SpecialInterface $special)
+    public function thisSpecialDisabled(DiscountInterface $special)
     {
         $special->setEnabled(false);
 
@@ -133,7 +133,7 @@ final class SpecialContext implements Context
     /**
      * @Given /^(this special) was enabled$/
      */
-    public function thisSpecialEnabled(SpecialInterface $special)
+    public function thisSpecialEnabled(DiscountInterface $special)
     {
         $special->setEnabled(true);
 
@@ -143,7 +143,7 @@ final class SpecialContext implements Context
     /**
      * @Given /^(this special) has already expired$/
      */
-    public function thisSpecialHasExpired(SpecialInterface $special)
+    public function thisSpecialHasExpired(DiscountInterface $special)
     {
         $special->setEndsAt(new \DateTime('1 day ago'));
 
@@ -153,7 +153,7 @@ final class SpecialContext implements Context
     /**
      * @Given /^(this special) expires tomorrow$/
      */
-    public function thisSpecialExpiresTomorrow(SpecialInterface $special)
+    public function thisSpecialExpiresTomorrow(DiscountInterface $special)
     {
         $special->setEndsAt(new \DateTime('tomorrow'));
 
@@ -163,7 +163,7 @@ final class SpecialContext implements Context
     /**
      * @Given /^(this special) has started yesterday$/
      */
-    public function thisSpecialHasStartedYesterday(SpecialInterface $special)
+    public function thisSpecialHasStartedYesterday(DiscountInterface $special)
     {
         $special->setStartsAt(new \DateTime('1 day ago'));
 
@@ -173,7 +173,7 @@ final class SpecialContext implements Context
     /**
      * @Given /^(this special) starts tomorrow$/
      */
-    public function thisSpecialStartsTomorrow(SpecialInterface $special)
+    public function thisSpecialStartsTomorrow(DiscountInterface $special)
     {
         $special->setStartsAt(new \DateTime('tomorrow'));
 
@@ -183,7 +183,7 @@ final class SpecialContext implements Context
     /**
      * @Given /^([^"]+) gives ("[^"]+%") discount$/
      */
-    public function itGivesPercentageDiscount(SpecialInterface $special, $discount)
+    public function itGivesPercentageDiscount(DiscountInterface $special, $discount)
     {
         $this->persistSpecial(
             $this->setPercentageDiscount($special, $discount)
@@ -193,7 +193,7 @@ final class SpecialContext implements Context
     /**
      * @Given /^([^"]+) gives ("[^"]+%") margin$/
      */
-    public function itGivesPercentageMargin(SpecialInterface $special, $margin)
+    public function itGivesPercentageMargin(DiscountInterface $special, $margin)
     {
         $this->persistSpecial(
             $this->setPercentageMargin($special, $margin)
@@ -204,7 +204,7 @@ final class SpecialContext implements Context
      * @Given /^([^"]+) gives(?:| another) ("[^"]+%") off on every product (classified as "[^"]+")$/
      */
     public function itGivesPercentageOffEveryProductClassifiedAs(
-        SpecialInterface $special,
+        DiscountInterface $special,
         $discount,
         TaxonInterface $taxon
     ) {
@@ -221,7 +221,7 @@ final class SpecialContext implements Context
      * @Given /^([^"]+) gives ("[^"]+%") off on every product (classified as "[^"]+" or "[^"]+")$/
      */
     public function itGivesOffOnEveryProductClassifiedAs(
-        SpecialInterface $special,
+        DiscountInterface $special,
         $discount,
         array $discountTaxons
     ) {
@@ -238,7 +238,7 @@ final class SpecialContext implements Context
      * @Given /^([^"]+) gives ("[^"]+%") off on that product$/
      */
     public function itGivesPercentageDiscountOffOnAProduct(
-        SpecialInterface $special,
+        DiscountInterface $special,
         $discount,
         ?ProductInterface $product = null
     ) {
@@ -257,7 +257,7 @@ final class SpecialContext implements Context
      * @Given /^([^"]+) gives ("[^"]+%") off on a ("[^"]+" or "[^"]+" product)$/
      */
     public function itGivesPercentageDiscountOffOnAProducts(
-        SpecialInterface $special,
+        DiscountInterface $special,
         $discount,
         array $products
     ) {
@@ -273,7 +273,7 @@ final class SpecialContext implements Context
      * @Given /^(this special) applicable for (all channels)$/
      * @Given /^special :special applicable for (all channels)$/
      */
-    public function specialApplicableForAllChannels(SpecialInterface $special, array $channels)
+    public function specialApplicableForAllChannels(DiscountInterface $special, array $channels)
     {
         foreach ($channels as $channel) {
             $special->addChannel($channel);
@@ -285,7 +285,7 @@ final class SpecialContext implements Context
     /**
      * @Given /^(the special) was disabled for the (channel "[^"]+")$/
      */
-    public function theSpecialWasDisabledForTheChannel(SpecialInterface $special, ChannelInterface $channel)
+    public function theSpecialWasDisabledForTheChannel(DiscountInterface $special, ChannelInterface $channel)
     {
         $special->removeChannel($channel);
 
@@ -293,14 +293,14 @@ final class SpecialContext implements Context
     }
 
     /**
-     * @param SpecialInterface $special
+     * @param DiscountInterface $special
      * @param float $discount
-     * @param SpecialRuleInterface $rule
+     * @param DiscountRuleInterface $rule
      */
     private function createPercentageSpecial(
-        SpecialInterface $special,
+        DiscountInterface $special,
         $discount,
-        SpecialRuleInterface $rule = null
+        DiscountRuleInterface $rule = null
     ) {
         $this->persistSpecial(
             $this->setPercentageDiscount($special, $discount),
@@ -309,12 +309,12 @@ final class SpecialContext implements Context
     }
 
     /**
-     * @param SpecialInterface $special
+     * @param DiscountInterface $special
      * @param int $actionPercent
      * @param string $actionType
-     * @param SpecialRuleInterface|null $rule
+     * @param DiscountRuleInterface|null $rule
      */
-    private function persistSpecial(SpecialInterface $special, SpecialRuleInterface $rule = null)
+    private function persistSpecial(DiscountInterface $special, DiscountRuleInterface $rule = null)
     {
         if (null !== $rule) {
             $special->addRule($rule);
@@ -324,26 +324,26 @@ final class SpecialContext implements Context
     }
 
     /**
-     * @param SpecialInterface $special
+     * @param DiscountInterface $special
      * @param float $discount
-     * @return SpecialInterface
+     * @return DiscountInterface
      */
-    private function setPercentageDiscount(SpecialInterface $special, float $discount): SpecialInterface
+    private function setPercentageDiscount(DiscountInterface $special, float $discount): DiscountInterface
     {
-        $special->setActionType(Special::ACTION_TYPE_OFF);
+        $special->setActionType(Discount::ACTION_TYPE_OFF);
         $special->setActionPercent($discount * 100);
 
         return $special;
     }
 
     /**
-     * @param SpecialInterface $special
+     * @param DiscountInterface $special
      * @param float $margin
-     * @return SpecialInterface
+     * @return DiscountInterface
      */
-    private function setPercentageMargin(SpecialInterface $special, float $margin): SpecialInterface
+    private function setPercentageMargin(DiscountInterface $special, float $margin): DiscountInterface
     {
-        $special->setActionType(Special::ACTION_TYPE_INCREASE);
+        $special->setActionType(Discount::ACTION_TYPE_INCREASE);
         $special->setActionPercent($margin * 100);
 
         return $special;

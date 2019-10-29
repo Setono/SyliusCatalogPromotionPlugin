@@ -1,4 +1,4 @@
-@setono_sylius_bulk_specials_applying_specials
+@setono_sylius_bulk_discount_applying_specials
 Feature: Receiving percentage discount on specific products
     As an Administrator
     I want assign discounts to specific products

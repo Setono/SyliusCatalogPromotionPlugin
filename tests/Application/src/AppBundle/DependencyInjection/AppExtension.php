@@ -18,6 +18,6 @@ final class AppExtension extends Extension
     public function load(array $config, ContainerBuilder $container): void
     {
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
-        $loader->load('services.xml');
+//        $loader->load('services.xml');
     }
 }

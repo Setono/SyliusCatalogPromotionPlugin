@@ -1,4 +1,4 @@
-@setono_sylius_bulk_specials_applying_specials
+@setono_sylius_bulk_discount_applying_specials
 Feature: Applying multiple specials to one product
     As an Administrator
     I product's price decrease based on all specials matching it

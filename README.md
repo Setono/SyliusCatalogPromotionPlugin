@@ -1,4 +1,4 @@
-# Sylius Bulk Specials Plugin
+# Sylius Bulk Discount Plugin
 
 [![Latest Version][ico-version]][link-packagist]
 [![Latest Unstable Version][ico-unstable-version]][link-packagist]
@@ -6,14 +6,7 @@
 [![Build Status][ico-travis]][link-travis]
 [![Quality Score][ico-code-quality]][link-code-quality]
 
-Plugin for Sylius to define permanent or time-limited
-specials (discounts) for products and automatically update prices.
-
-Discounts calculated from `ChannelPrice`'s `originalPrice` field if it non-zero
-and applies to `price` field. 
-
-All calculations can be done immediately
-(if you have not much products in your store) or asynchronously via queues.
+Plugin for Sylius to define permanent or time-limited discounts for products and automatically update prices.
 
 Menu:
 
@@ -32,19 +25,10 @@ Products admin page actions:
 ### Add plugin to composer.json
 
 ```bash
-composer require setono/sylius-bulk-specials-plugin
+composer require setono/sylius-bulk-discount-plugin
 ```
 
-#### (optional) Add transport for enqueue bundle
-
-(see https://github.com/php-enqueue/enqueue-dev/blob/master/docs/bundle/quick_tour.md
-for more details)
-
-```bash
-composer require enqueue/fs
-```
-
-### Register plugin and enqueue bundle at AppKernel.php
+### Register plugin
 
 ```php
 <?php
@@ -52,23 +36,18 @@ composer require enqueue/fs
 
 return [
     // ...
-    // Its important to instantiate SetonoSyliusBulkSpecialsPlugin
-    // before calling parent::registerBundles()
-    Setono\SyliusBulkSpecialsPlugin\SetonoSyliusBulkSpecialsPlugin::class => ['all' => true],
+    Setono\SyliusBulkDiscountPlugin\SetonoSyliusBulkDiscountPlugin::class => ['all' => true],
     Sylius\Bundle\GridBundle\SyliusGridBundle::class => ['all' => true],
-    // ...
-    // Uncomment if you want to use queues
-    // Enqueue\Bundle\EnqueueBundle::class => ['all' => true],
     // ...
 ];
 
 ```
 
-**Note**, that we MUST define `SetonoSyliusBulkSpecialsPlugin` BEFORE `SyliusGridBundle`.
+**Note**, that we MUST define `SetonoSyliusBulkDiscountPlugin` BEFORE `SyliusGridBundle`.
 Otherwise you'll see exception like this:
 
 ```bash
-You have requested a non-existent parameter "setono_sylius_bulk_specials.model.special.class".  
+You have requested a non-existent parameter "setono_sylius_bulk_discount.model.special.class".  
 ```
 
 ### Add config
@@ -76,48 +55,21 @@ You have requested a non-existent parameter "setono_sylius_bulk_specials.model.s
 ```yaml
 # config/packages/_sylius.yaml
 imports:
-    - { resource: "@SetonoSyliusBulkSpecialsPlugin/Resources/config/app/config.yml" }
-```
-
-#### (optional) Add proper enqueue bundle configuration
-
-```yaml
-# config/packages/_sylius.yaml
-
-setono_sylius_bulk_specials:
-    # If you want to use enqueue bundle to asynchronously handle
-    # bulk actions - you should set `queue` parameter to true
-    # and install/configure enqueue/enqueue-bundle with transport implementation
-    queue: true
-
-    # If your store have not more than 1000 products - you can use
-    # plugin without any additional configuration or set `queue`
-    # to default value (false)
-    # queue: false
-
-enqueue:
-    transport:
-        # Here we use enqueue/fs for testing as most simple transport implementation
-        # @see https://enqueue.readthedocs.io/en/latest/transport/filesystem/
-        default: fs
-        fs:
-            dsn: "file://%kernel.project_dir%/var/queue"
-    client:
-        traceable_producer: true
+    - { resource: "@SetonoSyliusBulkDiscountPlugin/Resources/config/app/config.yaml" }
 ```
 
 ### Add routing
 
 ```yaml
 # config/routes.yaml
-setono_sylius_bulk_specials_admin:
-    resource: "@SetonoSyliusBulkSpecialsPlugin/Resources/config/admin_routing.yml"
+setono_sylius_bulk_discount_admin:
+    resource: "@SetonoSyliusBulkDiscountPlugin/Resources/config/admin_routing.yaml"
     prefix: /admin
 ```
 
 ### Extend `Product` model and `ProductRepository`
 
-(see [test/Application](test/Application) for more details how to configure)
+(see [tests/Application](tests/Application) for more details how to configure)
 
 * Override config
 
@@ -129,7 +81,6 @@ setono_sylius_bulk_specials_admin:
                 classes:
                     model: AppBundle\Model\Product
                     repository: AppBundle\Doctrine\ORM\ProductRepository
-                    controller: Setono\SyliusBulkSpecialsPlugin\Controller\ProductController
     ```
 
 * Override model
@@ -141,8 +92,8 @@ setono_sylius_bulk_specials_admin:
     
     namespace AppBundle\Model;
     
-    use Setono\SyliusBulkSpecialsPlugin\Model\ProductInterface;
-    use Setono\SyliusBulkSpecialsPlugin\Model\SpecialSubjectTrait;
+    use Setono\SyliusBulkDiscountPlugin\Model\ProductInterface;
+    use Setono\SyliusBulkDiscountPlugin\Model\SpecialSubjectTrait;
     use Sylius\Component\Core\Model\Product as BaseProduct;
     
     /**
@@ -169,20 +120,19 @@ setono_sylius_bulk_specials_admin:
     <?xml version="1.0" encoding="UTF-8"?>
     
     <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
-                      xmlns:gedmo="http://gediminasm.org/schemas/orm/doctrine-extensions-mapping"
                       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                       xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                                           http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
     
         <mapped-superclass name="AppBundle\Model\Product">
-            <many-to-many field="specials" target-entity="Setono\SyliusBulkSpecialsPlugin\Model\SpecialInterface">
+            <many-to-many field="specials" target-entity="Setono\SyliusBulkDiscountPlugin\Model\SpecialInterface">
                 <cascade>
                     <cascade-persist />
                 </cascade>
                 <order-by>
                     <order-by-field name="priority" direction="DESC" />
                 </order-by>
-                <join-table name="setono_sylius_bulk_specials_products">
+                <join-table name="setono_sylius_bulk_discount_products">
                     <join-columns>
                         <join-column name="special_id" referenced-column-name="id" nullable="false" on-delete="CASCADE" />
                     </join-columns>
@@ -207,9 +157,9 @@ setono_sylius_bulk_specials_admin:
     
     namespace AppBundle\Doctrine\ORM;
     
-    use Setono\SyliusBulkSpecialsPlugin\Doctrine\ORM\ProductRepositoryTrait;
-    use Setono\SyliusBulkSpecialsPlugin\Doctrine\ORM\ProductRepositoryInterface;
-    use Setono\SyliusBulkSpecialsPlugin\Special\QueryBuilder\Rule\RuleQueryBuilderAwareInterface;
+    use Setono\SyliusBulkDiscountPlugin\Doctrine\ORM\ProductRepositoryTrait;
+    use Setono\SyliusBulkDiscountPlugin\Doctrine\ORM\ProductRepositoryInterface;
+    use Setono\SyliusBulkDiscountPlugin\Special\QueryBuilder\Rule\RuleQueryBuilderAwareInterface;
     use Sylius\Bundle\CoreBundle\Doctrine\ORM\ProductRepository as BaseProductRepository;
     
     /**
@@ -231,7 +181,7 @@ setono_sylius_bulk_specials_admin:
         <factory service="doctrine.orm.default_entity_manager" method="getRepository" />
         <argument>%sylius.model.product.class%</argument>
         <call method="setRuleQueryBuilder">
-            <argument type="service" id="setono_sylius_bulk_specials.registry.special_rule_query_builder" />
+            <argument type="service" id="setono_sylius_bulk_discount.registry.special_rule_query_builder" />
         </call>
     </service>
   ```
@@ -243,17 +193,46 @@ setono_sylius_bulk_specials_admin:
          arguments:
            - "%sylius.model.product.class%"
          calls:
-           - ["setRuleQueryBuilder", ["@setono_sylius_bulk_specials.registry.special_rule_query_builder"]]
+           - ["setRuleQueryBuilder", ["@setono_sylius_bulk_discount.registry.special_rule_query_builder"]]
   ```
 
-### Update your schema (for existing project)
+### Update your schema
+
+Create migration file:
 
 ```bash
-# Generate and edit migration
-bin/console doctrine:migrations:diff
+$ php bin/console doctrine:migrations:diff
+```
 
-# Then apply migration
-bin/console doctrine:migrations:migrate
+If you have existing discounted products you should append this line to the `up` method in the migration file:
+```php
+<?php
+namespace DoctrineMigrations;
+
+use Doctrine\DBAL\Schema\Schema;
+use Doctrine\Migrations\AbstractMigration;
+
+final class Version20191028134956 extends AbstractMigration
+{
+    public function up(Schema $schema) : void
+    {
+        // The generated SQL will be here
+        // ...
+        
+        // append this line
+        $this->addSql('UPDATE sylius_channel_pricing SET manuallyDiscounted = 1 WHERE original_price IS NOT NULL AND price != original_price');
+    }
+
+    public function down(Schema $schema) : void
+    {
+        // ...
+    }
+}
+```
+
+Execute migration file:
+```bash
+$ php bin/console doctrine:migrations:migrate
 ```
 
 ### Install assets
@@ -267,105 +246,6 @@ bin/console sylius:install:assets
 ```bash
 bin/console setono:sylius-bulk-specials:check-active
 ```
-
-This required to enable/disable Specials that have `startsAt`/`endsAt` defined.
-
-### (optional) Configure `supervisord` on production if you use queues 
-
-Make sure next command always in run state:
-
-```bash
-bin/console enqueue:consume 
-```
-
-This can be done with `supervisord`
-(see [docs](https://enqueue.readthedocs.io/en/latest/bundle/production_settings/) for details):
-
-```
-[program:enqueue_message_consumer]
-command=/path/to/app/console --env=prod --no-debug --time-limit="now + 5 minutes" enqueue:consume
-process_name=%(program_name)s_%(process_num)02d
-numprocs=4
-autostart=true
-autorestart=true
-startsecs=0
-user=apache
-redirect_stderr=true
-```
-
-# How to use
-
-Lets list what bulk actions we have to execute:
-
-- `Reassign Specials for all Products`
-  - Click `Admin > Products > Specials menu > Reassign Specials for all Products`.
-  - OR run: `bin/command setono:sylius-bulk-specials:reassign` 
-
-- `Recalculate special prices for all Products`
-  - Click`Admin > Products > Specials menu > Recalculate special prices for all Products`.
-  - OR run: `bin/command setono:sylius-bulk-specials:recalculate-product`
-
-- `Recalculate selected Products prices`
-  - Click `Admin > Products > Bulk actions > Recalculate selected Products prices`.
-  - OR run: `bin/command setono:sylius-bulk-specials:recalculate-product PRODUCT_CODE`
-
-- `Reassign Specials to selected Products`
-  - Click `Admin > Products > Bulk actions > Reassign Specials to selected Products`.
-  - OR run: `bin/command setono:sylius-bulk-specials:reassign PRODUCT_CODE`
-
-- `Recalculate prices for Products matching Special rules`
-  - Select special rules you want to recalculate
-    and click `Admin > Specials > Bulk actions > Recalculate prices for Products matching Special rules`.
-  - OR run: `bin/command setono:sylius-bulk-specials:recalculate-special SPECIAL_CODE`
-
-### After new Bulk Special created
-
-- Special will be automatically assigned to Products
-  matching Special's rules (via Doctrine Lifecycle Events Listener).
-
-### After Bulk Special updated
-
-- If `action type` or `action percent` was changed -
-  all Products assigned to updated Special will be recalculated
-  automatically
-
-- If `channels` list was changed - you should recalculate prices
-  for this Special
-  (see `Recalculate prices for Products matching Special rules`)
-
-- If `rules` updated - you should reassign Products to updated Special.
-
-  This can be done by executing `Reassign Specials for all Products` action.
-
-  After reassigning - you should recalculate prices for all Products
-  (see `Recalculate special prices for all Products`).
-
-  Why we need to recalculate all - because some products potentially
-  still have inactual prices based on old Special rules.
-
-### After new Product created
-
-- Specials (that have rules matching this new Product)
-  will be automatically assigned to it
-  and then prices will be automatically recalculated.
-
-
-### After Product's `originalPrice` updated
-
-- Special price will be recalculated automatically based on previously
-  assigned Specials (via Doctrine Lifecycle Events Listener).
-
-### If you not getting expected result
-
-- Please, bugreport this
-- And run `Reassign Specials for all Products` &
-  `Recalculate special prices for all Products`
-
-# Troubleshooting
-
-* `The "sylius.repository.product" service or alias has been removed or inlined when the container was compiled. You should either make it public, or stop using the container directly and use dependency injection instead.`
-  
-  See https://github.com/Sylius/Sylius/issues/10663
 
 # Contribution
 
@@ -446,12 +326,12 @@ or follow next steps manually:
         ```bash
         $ vendor/bin/behat --tags="@javascript"
 
-[ico-version]: https://poser.pugx.org/setono/sylius-bulk-specials-plugin/v/stable
-[ico-unstable-version]: https://poser.pugx.org/setono/sylius-bulk-specials-plugin/v/unstable
-[ico-license]: https://poser.pugx.org/setono/sylius-bulk-specials-plugin/license
-[ico-travis]: https://img.shields.io/travis/Setono/SyliusBulkSpecialsPlugin/master.svg?style=flat-square
-[ico-code-quality]: https://img.shields.io/scrutinizer/g/Setono/SyliusBulkSpecialsPlugin.svg?style=flat-square
+[ico-version]: https://poser.pugx.org/setono/sylius-bulk-discount-plugin/v/stable
+[ico-unstable-version]: https://poser.pugx.org/setono/sylius-bulk-discount-plugin/v/unstable
+[ico-license]: https://poser.pugx.org/setono/sylius-bulk-discount-plugin/license
+[ico-travis]: https://img.shields.io/travis/Setono/SyliusBulkDiscountPlugin/master.svg?style=flat-square
+[ico-code-quality]: https://img.shields.io/scrutinizer/g/Setono/SyliusBulkDiscountPlugin.svg?style=flat-square
 
-[link-packagist]: https://packagist.org/packages/setono/sylius-bulk-specials-plugin
-[link-travis]: https://travis-ci.org/Setono/SyliusBulkSpecialsPlugin
-[link-code-quality]: https://scrutinizer-ci.com/g/Setono/SyliusBulkSpecialsPlugin
+[link-packagist]: https://packagist.org/packages/setono/sylius-bulk-discount-plugin
+[link-travis]: https://travis-ci.org/Setono/SyliusBulkDiscountPlugin
+[link-code-quality]: https://scrutinizer-ci.com/g/Setono/SyliusBulkDiscountPlugin

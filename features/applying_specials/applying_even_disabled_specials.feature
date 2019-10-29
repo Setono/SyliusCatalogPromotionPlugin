@@ -1,4 +1,4 @@
-@setono_sylius_bulk_specials_applying_specials
+@setono_sylius_bulk_discount_applying_specials
 Feature: Applying valid specials even if they accidentally disabled
     As an Administrator
     I want valid specials applied even if they accidentally disabled

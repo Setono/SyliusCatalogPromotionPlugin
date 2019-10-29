@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Setono\SyliusBulkSpecialsPlugin\Menu;
+namespace Setono\SyliusBulkDiscountPlugin\Menu;
 
 use Knp\Menu\ItemInterface;
 use Sylius\Bundle\UiBundle\Menu\Event\MenuBuilderEvent;
@@ -19,11 +19,11 @@ final class AdminMenuListener
         }
 
         $marketingSubmenu
-            ->addChild('specials', [
-                'route' => 'setono_sylius_bulk_specials_admin_special_index',
+            ->addChild('discounts', [
+                'route' => 'setono_sylius_bulk_discount_admin_discount_index',
             ])
             ->setAttribute('type', 'link')
-            ->setLabel('setono_sylius_bulk_specials.menu.admin.main.marketing.specials')
+            ->setLabel('setono_sylius_bulk_discount.menu.admin.main.marketing.discounts')
             ->setLabelAttributes([
                 'icon' => 'tasks',
             ])

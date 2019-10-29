@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns="http://symfony.com/schema/dic/services"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service id="Setono\SyliusBulkDiscountPlugin\Command\ProcessDiscountsCommand">
+            <argument type="service" id="sylius.repository.channel_pricing"/>
+            <argument type="service" id="sylius.repository.product"/>
+            <argument type="service" id="sylius.repository.product_variant"/>
+            <argument type="service" id="setono_sylius_bulk_discount.repository.discount"/>
+            <argument type="service" id="setono_sylius_bulk_discount.registry.rule"/>
+            <argument>%kernel.logs_dir%</argument>
+
+            <tag name="console.command"/>
+        </service>
+    </services>
+</container>

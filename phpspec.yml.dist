@@ -1,4 +1,4 @@
 suites:
     main:
-        namespace: Setono\SyliusBulkSpecialsPlugin
-        psr4_prefix: Setono\SyliusBulkSpecialsPlugin
+        namespace: Setono\SyliusBulkDiscountPlugin
+        psr4_prefix: Setono\SyliusBulkDiscountPlugin

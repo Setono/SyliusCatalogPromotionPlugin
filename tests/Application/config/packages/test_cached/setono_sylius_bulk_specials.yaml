@@ -1,2 +1,2 @@
-setono_sylius_bulk_specials:
+setono_sylius_bulk_discount:
     queue: false

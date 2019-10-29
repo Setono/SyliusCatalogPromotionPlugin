@@ -1,6 +1,6 @@
 <?php
 
-use Tests\Setono\SyliusBulkSpecialsPlugin\Application\Kernel;
+use Tests\Setono\SyliusBulkDiscountPlugin\Application\Kernel;
 use Symfony\Component\Debug\Debug;
 use Symfony\Component\HttpFoundation\Request;
 

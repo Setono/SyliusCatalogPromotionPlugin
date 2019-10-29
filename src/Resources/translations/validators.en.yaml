@@ -1,21 +1,21 @@
-setono_sylius_bulk_specials:
-    special:
+setono_sylius_bulk_discount:
+    discount:
         code:
-            unique: The special with given code already exists.
-            regex: Special code can only be comprised of letters, numbers, dashes and underscores.
-            not_blank: Please enter special code.
+            unique: The discount with given code already exists.
+            regex: Discount code can only be comprised of letters, numbers, dashes and underscores.
+            not_blank: Please enter discount code.
         name:
-            max_length: Special name must not be longer than 1 character.|Special name must not be longer than {{ limit }} characters.
-            min_length: Special name must be at least 1 character long.|Special name must be at least {{ limit }} characters long.
-            not_blank: Please enter special name.
+            max_length: Discount name must not be longer than 1 character.|Discount name must not be longer than {{ limit }} characters.
+            min_length: Discount name must be at least 1 character long.|Discount name must be at least {{ limit }} characters long.
+            not_blank: Please enter discount name.
         description:
-            max_length: Special description must not be longer than 1 character.|Special description must not be longer than {{ limit }} characters.
-            min_length: Special description must be at least 1 character long.|Special description must be at least {{ limit }} characters long.
-            not_blank: Please enter special description.
+            max_length: Discount description must not be longer than 1 character.|Discount description must not be longer than {{ limit }} characters.
+            min_length: Discount description must be at least 1 character long.|Discount description must be at least {{ limit }} characters long.
+            not_blank: Please enter discount description.
         action_type:
             not_blank: Please choose action type.
         action_percent:
             not_blank: Please enter action percent.
-            min: The value of discount must be at least 0%.
+            min: The value of discount must be at least 1%.
             max: The maximum value of discount is 100%.
         end_date_cannot_be_set_prior_start_date: End date cannot be set prior start date.

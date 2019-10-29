@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Tests\Setono\SyliusBulkSpecialsPlugin\Behat\Context\Dump;
+namespace Tests\Setono\SyliusBulkDiscountPlugin\Behat\Context\Dump;
 
 use Behat\Behat\Context\Context;
-use Setono\SyliusBulkSpecialsPlugin\Model\SpecialInterface;
+use Setono\SyliusBulkDiscountPlugin\Model\DiscountInterface;
 use Sylius\Behat\Service\SharedStorage;
 use Sylius\Behat\Service\SharedStorageInterface;
 
@@ -30,7 +30,7 @@ final class SpecialContext implements Context
      * @Then echo details of that special
      * @Then echo details of special :special
      */
-    public function echoSpecialDetails(?SpecialInterface $special = null)
+    public function echoSpecialDetails(?DiscountInterface $special = null)
     {
         if (null === $special) {
             $special = $this->sharedStorage->get('special');
