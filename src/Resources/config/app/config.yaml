@@ -6,8 +6,3 @@ doctrine:
         dql:
             numeric_functions:
                 round: DoctrineExtensions\Query\Mysql\Round
-
-framework:
-    messenger:
-        buses:
-            setono_sylius_bulk_discount.command_bus: ~
