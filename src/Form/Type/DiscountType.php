@@ -23,6 +23,7 @@ final class DiscountType extends AbstractResourceType
                 'multiple' => true,
                 'expanded' => true,
                 'label' => 'setono_sylius_bulk_discount.form.discount.channels',
+                'required' => false,
             ])
             ->add('name', TextType::class, [
                 'label' => 'setono_sylius_bulk_discount.form.discount.name',
@@ -41,9 +42,11 @@ final class DiscountType extends AbstractResourceType
             ])
             ->add('exclusive', CheckboxType::class, [
                 'label' => 'setono_sylius_bulk_discount.form.discount.exclusive',
+                'required' => false,
             ])
             ->add('manuallyDiscountedProductsExcluded', CheckboxType::class, [
                 'label' => 'setono_sylius_bulk_discount.form.discount.manually_discounted_products_excluded',
+                'required' => false,
             ])
             ->add('startsAt', DateTimeType::class, [
                 'label' => 'setono_sylius_bulk_discount.form.discount.starts_at',
@@ -59,6 +62,7 @@ final class DiscountType extends AbstractResourceType
             ])
             ->add('enabled', CheckboxType::class, [
                 'label' => 'setono_sylius_bulk_discount.form.discount.enabled',
+                'required' => false,
             ])
             ->add('priority', IntegerType::class, [
                 'label' => 'setono_sylius_bulk_discount.form.discount.priority',
@@ -67,6 +71,7 @@ final class DiscountType extends AbstractResourceType
             ->add('rules', DiscountRuleCollectionType::class, [
                 'label' => 'setono_sylius_bulk_discount.form.discount.rules',
                 'button_add_label' => 'setono_sylius_bulk_discount.form.discount.add_rule',
+                'required' => false,
             ])
             ->addEventSubscriber(new AddCodeFormSubscriber())
         ;

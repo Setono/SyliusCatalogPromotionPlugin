@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Setono\SyliusBulkDiscountPlugin\Form\Type\Discount\Rule;
+namespace Setono\SyliusBulkDiscountPlugin\Form\Type\Rule;
 
 use Sylius\Bundle\ProductBundle\Form\Type\ProductAutocompleteChoiceType;
 use Sylius\Bundle\ResourceBundle\Form\DataTransformer\ResourceToIdentifierTransformer;

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
-                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<constraint-mapping xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xmlns="http://symfony.com/schema/dic/constraint-mapping"
                     xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/services/constraint-mapping-1.0.xsd"
 >
     <class name="Setono\SyliusBulkDiscountPlugin\Model\Discount">
@@ -59,7 +59,7 @@
                 <option name="groups">setono_sylius_bulk_discount</option>
             </constraint>
             <constraint name="Range">
-                <option name="min">0</option>
+                <option name="min">1</option>
                 <option name="max">100</option>
                 <option name="minMessage">setono_sylius_bulk_discount.discount.action_percent.min</option>
                 <option name="maxMessage">setono_sylius_bulk_discount.discount.action_percent.max</option>
@@ -67,7 +67,7 @@
             </constraint>
         </property>
         <property name="rules">
-            <constraint name="Valid" />
+            <constraint name="Valid"/>
         </property>
     </class>
 </constraint-mapping>

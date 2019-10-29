@@ -45,19 +45,19 @@
 
         <!-- Rules -->
         <service id="sylius.form.type.discount_rule.has_taxon_configuration"
-                 class="Setono\SyliusBulkDiscountPlugin\Form\Type\Discount\Rule\HasTaxonConfigurationType">
+                 class="Setono\SyliusBulkDiscountPlugin\Form\Type\Rule\HasTaxonConfigurationType">
             <argument type="service" id="sylius.form.type.data_transformer.taxons_to_codes" />
             <tag name="form.type" />
         </service>
 
         <service id="sylius.form.type.discount_rule.contains_products_configuration"
-                 class="Setono\SyliusBulkDiscountPlugin\Form\Type\Discount\Rule\ContainsProductsConfigurationType">
+                 class="Setono\SyliusBulkDiscountPlugin\Form\Type\Rule\ContainsProductsConfigurationType">
             <argument type="service" id="sylius.form.type.data_transformer.products_to_codes" />
             <tag name="form.type" />
         </service>
 
         <service id="sylius.form.type.discount_rule.contains_product_configuration"
-                 class="Setono\SyliusBulkDiscountPlugin\Form\Type\Discount\Rule\ContainsProductConfigurationType">
+                 class="Setono\SyliusBulkDiscountPlugin\Form\Type\Rule\ContainsProductConfigurationType">
             <argument type="service" id="sylius.repository.product" />
             <tag name="form.type" />
         </service>

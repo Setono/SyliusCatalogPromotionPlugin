@@ -5,6 +5,7 @@ setono_sylius_bulk_discount:
         manage_discounts: Manage discounts
         new_discount: Create new discount
         edit_discount: Edit discount
+        rules_explanation: If you don't add any rules, the discount will be applied to all products
     menu:
         admin:
             main:

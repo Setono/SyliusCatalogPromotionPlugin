@@ -206,7 +206,8 @@ final class ProcessDiscountsCommand extends Command
      */
     private function getExecutionLogFilename(): string
     {
-        return sprintf('%s/%s.log', $this->logsDir,
-            Container::underscore(str_replace('\\', '', get_class($this))));
+        return sprintf('%s/%s.log',
+            $this->logsDir, Container::underscore(str_replace('\\', '', get_class($this)))
+        );
     }
 }
