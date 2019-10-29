@@ -18,12 +18,13 @@ final class ContainsProductRule extends Rule
     public function filter(QueryBuilder $queryBuilder, array $configuration): void
     {
         $value = self::getConfigurationValue('product', $configuration);
-        $alias = $this->getRootAlias($queryBuilder);
+        $rootAlias = $this->getRootAlias($queryBuilder);
+        $productAlias = self::generateAlias('product');
         $parameter = self::generateParameter('product_code');
 
         $queryBuilder
-            ->join(sprintf('%s.product', $alias), self::generateAlias('product'))
-            ->andWhere(sprintf('%s.code = :%s', $alias, $parameter))
+            ->join(sprintf('%s.product', $rootAlias), $productAlias)
+            ->andWhere(sprintf('%s.code = :%s', $productAlias, $parameter))
             ->setParameter($parameter, $value)
         ;
     }
