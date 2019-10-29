@@ -11,6 +11,11 @@
             <generator strategy="AUTO"/>
         </id>
 
+        <indexes>
+            <index columns="created_at"/>
+            <index columns="updated_at"/>
+        </indexes>
+
         <field name="code" type="string" unique="true"/>
         <field name="name" type="string"/>
         <field name="description" type="string" nullable="true"/>

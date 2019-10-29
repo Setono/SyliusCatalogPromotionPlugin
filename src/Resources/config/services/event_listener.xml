@@ -12,7 +12,9 @@
         <service id="setono_sylius_bulk_discount.event_listener.add_timestampable_indices"
                  class="Setono\SyliusBulkDiscountPlugin\EventListener\AddTimestampableIndicesSubscriber">
             <argument type="collection">
+                <argument>%sylius.model.channel_pricing.class%</argument>
                 <argument>%sylius.model.product.class%</argument>
+                <argument>%sylius.model.product_variant.class%</argument>
             </argument>
             <tag name="doctrine.event_subscriber"/>
         </service>
