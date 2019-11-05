@@ -32,6 +32,8 @@ final class ProcessDiscountsCommand extends Command
 {
     use LockableTrait;
 
+    protected static $defaultName = 'setono:sylius-bulk-discount:process';
+
     /** @var ChannelPricingRepositoryInterface */
     private $channelPricingRepository;
 
@@ -71,7 +73,6 @@ final class ProcessDiscountsCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setName('setono:sylius-bulk-discount:process')
             ->setDescription('Processes all discounts')
             ->addOption('force', 'f', InputOption::VALUE_NONE, 'Force the computation of discounts')
         ;
