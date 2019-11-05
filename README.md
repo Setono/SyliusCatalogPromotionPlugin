@@ -8,17 +8,7 @@
 
 Plugin for Sylius to define permanent or time-limited discounts for products and automatically update prices.
 
-Menu:
-
-![Screenshot showing admin menu](docs/admin-menu.png)
-
-Specials admin page:
-
-![Screenshot showing specials admin page](docs/admin-specials.png)
-
-Products admin page actions:
-
-![Screenshot showing products admin actions](docs/admin-products-actions.png)
+![Screenshot showing specials admin page](docs/admin-create.png)
 
 ## Install
 
@@ -67,138 +57,104 @@ setono_sylius_bulk_discount_admin:
     prefix: /admin
 ```
 
-### Extend `Product` model and `ProductRepository`
+### Extend core classes
+#### Extend `ChannelPricing`
+```php
+<?php
 
-(see [tests/Application](tests/Application) for more details how to configure)
+declare(strict_types=1);
 
-* Override config
+namespace App\Entity;
 
-    ```yaml
-    # app/config/config.yml
-    sylius_product:
-        resources:
-            product:
-                classes:
-                    model: AppBundle\Model\Product
-                    repository: AppBundle\Doctrine\ORM\ProductRepository
-    ```
+use Setono\SyliusBulkDiscountPlugin\Model\ChannelPricingInterface;
+use Setono\SyliusBulkDiscountPlugin\Model\ChannelPricingTrait;
+use Sylius\Component\Core\Model\ChannelPricing as BaseChannelPricing;
 
-* Override model
+class ChannelPricing extends BaseChannelPricing implements ChannelPricingInterface
+{
+    use ChannelPricingTrait;
+}
+```
 
-    ```php
-    <?php
-    
-    declare(strict_types=1);
-    
-    namespace AppBundle\Model;
-    
-    use Setono\SyliusBulkDiscountPlugin\Model\ProductInterface;
-    use Setono\SyliusBulkDiscountPlugin\Model\SpecialSubjectTrait;
-    use Sylius\Component\Core\Model\Product as BaseProduct;
-    
-    /**
-     * Class Product
-     */
-    class Product extends BaseProduct implements ProductInterface
-    {
-        use SpecialSubjectTrait {
-            SpecialSubjectTrait::__construct as private __specialSubjectTraitConstruct;
-        }
-    
-        public function __construct()
-        {
-            $this->__specialSubjectTraitConstruct();
-    
-            parent::__construct();
-        }
-    }
-    ```
-    
-* Override mapping
+#### Extend `ChannelPricingRepository`
+```php
+<?php
 
-    ```xml
-    <?xml version="1.0" encoding="UTF-8"?>
-    
-    <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
-                      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                      xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
-                                          http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-    
-        <mapped-superclass name="AppBundle\Model\Product">
-            <many-to-many field="specials" target-entity="Setono\SyliusBulkDiscountPlugin\Model\SpecialInterface">
-                <cascade>
-                    <cascade-persist />
-                </cascade>
-                <order-by>
-                    <order-by-field name="priority" direction="DESC" />
-                </order-by>
-                <join-table name="setono_sylius_bulk_discount_products">
-                    <join-columns>
-                        <join-column name="special_id" referenced-column-name="id" nullable="false" on-delete="CASCADE" />
-                    </join-columns>
-                    <inverse-join-columns>
-                        <join-column name="channel_id" referenced-column-name="id" nullable="false" on-delete="CASCADE" />
-                    </inverse-join-columns>
-                </join-table>
-            </many-to-many>
-        </mapped-superclass>
-    
-    </doctrine-mapping>
-    
-    ```
+declare(strict_types=1);
 
-* Override repository
+namespace App\Repository;
 
-    ```php
-    <?php
-    # Doctrine/ORM/ProductRepository.php
-    
-    declare(strict_types=1);
-    
-    namespace AppBundle\Doctrine\ORM;
-    
-    use Setono\SyliusBulkDiscountPlugin\Doctrine\ORM\ProductRepositoryTrait;
-    use Setono\SyliusBulkDiscountPlugin\Doctrine\ORM\ProductRepositoryInterface;
-    use Setono\SyliusBulkDiscountPlugin\Special\QueryBuilder\Rule\RuleQueryBuilderAwareInterface;
-    use Sylius\Bundle\CoreBundle\Doctrine\ORM\ProductRepository as BaseProductRepository;
-    
-    /**
-     * Class ProductRepository
-     */
-    class ProductRepository extends BaseProductRepository
-        implements ProductRepositoryInterface, RuleQueryBuilderAwareInterface
-    {
-        use ProductRepositoryTrait;
-    }
-    ``` 
+use Setono\SyliusBulkDiscountPlugin\Doctrine\ORM\ChannelPricingRepositoryTrait;
+use Setono\SyliusBulkDiscountPlugin\Repository\ChannelPricingRepositoryInterface;
+use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 
-* Override `ProductRepository` service definition as it shown at 
-  [tests/Application/src/AppBundle/Resources/config/services.xml](tests/Application/src/AppBundle/Resources/config/services.xml).
+class ChannelPricingRepository extends EntityRepository implements ChannelPricingRepositoryInterface
+{
+    use ChannelPricingRepositoryTrait;
+}
+```
 
-  ```xml
-    <service id="sylius.repository.product"
-             class="%sylius.repository.product.class%">
-        <factory service="doctrine.orm.default_entity_manager" method="getRepository" />
-        <argument>%sylius.model.product.class%</argument>
-        <call method="setRuleQueryBuilder">
-            <argument type="service" id="setono_sylius_bulk_discount.registry.special_rule_query_builder" />
-        </call>
-    </service>
-  ```
+#### Extend `ProductRepository`
+```php
+<?php
 
-  ```yaml
-     sylius.repository.product:
-         class: "%sylius.repository.product.class%"
-         factory: ["@doctrine.orm.default_entity_manager", "getRepository"]
-         arguments:
-           - "%sylius.model.product.class%"
-         calls:
-           - ["setRuleQueryBuilder", ["@setono_sylius_bulk_discount.registry.special_rule_query_builder"]]
-  ```
+declare(strict_types=1);
+
+namespace App\Repository;
+
+use Setono\SyliusBulkDiscountPlugin\Doctrine\ORM\ProductRepositoryTrait;
+use Setono\SyliusBulkDiscountPlugin\Repository\ProductRepositoryInterface;
+use Sylius\Bundle\CoreBundle\Doctrine\ORM\ProductRepository as BaseProductRepository;
+
+class ProductRepository extends BaseProductRepository implements ProductRepositoryInterface
+{
+    use ProductRepositoryTrait;
+}
+```
+
+#### Extend `ProductVariantRepository`
+```php
+<?php
+
+declare(strict_types=1);
+
+namespace App\Repository;
+
+use Setono\SyliusBulkDiscountPlugin\Doctrine\ORM\ProductVariantRepositoryTrait;
+use Setono\SyliusBulkDiscountPlugin\Repository\ProductVariantRepositoryInterface;
+use Sylius\Bundle\CoreBundle\Doctrine\ORM\ProductVariantRepository as BaseProductVariantRepository;
+
+class ProductVariantRepository extends BaseProductVariantRepository implements ProductVariantRepositoryInterface
+{
+    use ProductVariantRepositoryTrait;
+}
+```
+
+#### Update config with extended classes
+In your `config/packages/_sylius.yaml` file update the configured classes:
+
+```yaml
+sylius_core:
+    resources:
+        channel_pricing:
+            classes:
+                model: App\Entity\ChannelPricing
+                repository: App\Repository\ChannelPricingRepository
+
+sylius_product:
+    resources:
+        product:
+            classes:
+                repository: App\Repository\ProductRepository
+        product_variant:
+            classes:
+                repository: App\Repository\ProductVariantRepository
+
+```
 
 ### Update your schema
 
-Create migration file:
+Create a migration file:
 
 ```bash
 $ php bin/console doctrine:migrations:diff
@@ -244,87 +200,8 @@ bin/console sylius:install:assets
 ### Configure CRON to run next command every minute
 
 ```bash
-bin/console setono:sylius-bulk-specials:check-active
+$ php bin/console setono:sylius-bulk-discount:process
 ```
-
-# Contribution
-
-## Installation
-
-To automatically execute installation steps, load fixtures 
-and run server with just one command, run:
-
-```bash
-# Optional step, if 5 mins enough for webserver to try
-# @see https://getcomposer.org/doc/06-config.md#process-timeout
-composer config --global process-timeout 0
-
-composer try
-```
-
-or follow next steps manually:
-
-* Initialize:
-
-    ```bash
-    SYMFONY_ENV=test
-    (cd tests/Application && yarn install) && \
-        (cd tests/Application && yarn build) && \
-        (cd tests/Application && bin/console assets:install public -e $SYMFONY_ENV) && \
-        (cd tests/Application && bin/console doctrine:database:create -e $SYMFONY_ENV) && \
-        (cd tests/Application && bin/console doctrine:schema:create -e $SYMFONY_ENV)
-    ```
-
-* If you want to manually play with plugin test app, run:
-
-    ```bash
-    SYMFONY_ENV=test
-    (cd tests/Application && bin/console sylius:fixtures:load --no-interaction -e $SYMFONY_ENV && \
-        (cd tests/Application && bin/console server:run -d public -e $SYMFONY_ENV)
-    ```
-
-## Running plugin tests
-
-  - PHPSpec
-
-    ```bash
-    $ composer phpspec
-    ```
-
-  - Behat (non-JS scenarios)
-
-    ```bash
-    $ composer behat
-    ```
-
-  - All tests (phpspec & behat)
-
-    ```bash
-    $ composer test
-    ```
-
-  - Behat (JS scenarios)
- 
-    1. Download [Chromedriver](https://sites.google.com/a/chromium.org/chromedriver/)
-    
-    2. Download [Selenium Standalone Server](https://www.seleniumhq.org/download/).
-    
-    2. Run Selenium server with previously downloaded Chromedriver:
-    
-        ```bash
-        $ java -Dwebdriver.chrome.driver=chromedriver -jar selenium-server-standalone.jar
-        ```
-        
-    3. Run test application's webserver on `localhost:8080`:
-    
-        ```bash
-        $ (cd tests/Application && bin/console server:run localhost:8080 -d public -e test)
-        ```
-    
-    4. Run Behat:
-    
-        ```bash
-        $ vendor/bin/behat --tags="@javascript"
 
 [ico-version]: https://poser.pugx.org/setono/sylius-bulk-discount-plugin/v/stable
 [ico-unstable-version]: https://poser.pugx.org/setono/sylius-bulk-discount-plugin/v/unstable
