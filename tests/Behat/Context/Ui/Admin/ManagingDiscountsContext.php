@@ -417,14 +417,14 @@ final class ManagingDiscountsContext implements Context
     }
 
     /**
-     * @Then I should be notified that discount value must be at least 0%
+     * @Then I should be notified that discount value must be at least 1%
      */
     public function iShouldBeNotifiedThatDiscountValueMustBeAtLeast0(): void
     {
         /** @var CreatePageInterface|UpdatePageInterface $currentPage */
         $currentPage = $this->currentPageResolver->getCurrentPageWithForm([$this->createPage, $this->updatePage]);
 
-        Assert::same($currentPage->getValidationMessage('action_percent'), 'The value of discount must be at least 0%.');
+        Assert::same($currentPage->getValidationMessage('action_percent'), 'The value of discount must be at least 1%.');
     }
 
     /**

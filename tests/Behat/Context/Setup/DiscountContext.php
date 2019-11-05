@@ -91,6 +91,7 @@ final class DiscountContext implements Context
         ;
 
         $discount->setPriority((int) $priority);
+        $discount->setActionPercent(1); // todo should be moved to another method
 
         $this->discountRepository->add($discount);
         $this->sharedStorage->set('discount', $discount);
