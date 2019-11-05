@@ -3,7 +3,7 @@
 [![Latest Version][ico-version]][link-packagist]
 [![Latest Unstable Version][ico-unstable-version]][link-packagist]
 [![Software License][ico-license]](LICENSE)
-[![Build Status][ico-travis]][link-travis]
+[![Build Status][ico-github-actions]][link-github-actions]
 [![Quality Score][ico-code-quality]][link-code-quality]
 
 Plugin for Sylius to define permanent or time-limited discounts for products and automatically update prices.
@@ -47,7 +47,7 @@ return [
 Otherwise you'll see exception like this:
 
 ```bash
-You have requested a non-existent parameter "setono_sylius_bulk_discount.model.special.class".  
+You have requested a non-existent parameter "setono_sylius_bulk_discount.model.discount.class".  
 ```
 
 ### Add config
@@ -329,9 +329,9 @@ or follow next steps manually:
 [ico-version]: https://poser.pugx.org/setono/sylius-bulk-discount-plugin/v/stable
 [ico-unstable-version]: https://poser.pugx.org/setono/sylius-bulk-discount-plugin/v/unstable
 [ico-license]: https://poser.pugx.org/setono/sylius-bulk-discount-plugin/license
-[ico-travis]: https://img.shields.io/travis/Setono/SyliusBulkDiscountPlugin/master.svg?style=flat-square
+[ico-github-actions]: https://github.com/Setono/SyliusRedirectPlugin/workflows/CI/badge.svg
 [ico-code-quality]: https://img.shields.io/scrutinizer/g/Setono/SyliusBulkDiscountPlugin.svg?style=flat-square
 
 [link-packagist]: https://packagist.org/packages/setono/sylius-bulk-discount-plugin
-[link-travis]: https://travis-ci.org/Setono/SyliusBulkDiscountPlugin
+[link-github-actions]: https://github.com/Setono/SyliusRedirectPlugin/actions
 [link-code-quality]: https://scrutinizer-ci.com/g/Setono/SyliusBulkDiscountPlugin
