@@ -11,12 +11,12 @@ use Sylius\Behat\NotificationType;
 use Sylius\Behat\Service\NotificationCheckerInterface;
 use Sylius\Behat\Service\Resolver\CurrentPageResolverInterface;
 use Sylius\Behat\Service\SharedStorageInterface;
-use Tests\Setono\SyliusBulkDiscountPlugin\Behat\Page\Admin\Special\CreatePageInterface;
-use Tests\Setono\SyliusBulkDiscountPlugin\Behat\Page\Admin\Special\IndexPageInterface;
-use Tests\Setono\SyliusBulkDiscountPlugin\Behat\Page\Admin\Special\UpdatePageInterface;
+use Tests\Setono\SyliusBulkDiscountPlugin\Behat\Page\Admin\Discount\CreatePageInterface;
+use Tests\Setono\SyliusBulkDiscountPlugin\Behat\Page\Admin\Discount\IndexPageInterface;
+use Tests\Setono\SyliusBulkDiscountPlugin\Behat\Page\Admin\Discount\UpdatePageInterface;
 use Webmozart\Assert\Assert;
 
-final class ManagingSpecialsContext implements Context
+final class ManagingDiscountsContext implements Context
 {
     /**
      * @var SharedStorageInterface
@@ -48,14 +48,6 @@ final class ManagingSpecialsContext implements Context
      */
     private $notificationChecker;
 
-    /**
-     * @param SharedStorageInterface $sharedStorage
-     * @param IndexPageInterface $indexPage
-     * @param CreatePageInterface $createPage
-     * @param UpdatePageInterface $updatePage
-     * @param CurrentPageResolverInterface $currentPageResolver
-     * @param NotificationCheckerInterface $notificationChecker
-     */
     public function __construct(
         SharedStorageInterface $sharedStorage,
         IndexPageInterface $indexPage,
@@ -73,18 +65,18 @@ final class ManagingSpecialsContext implements Context
     }
 
     /**
-     * @When I want to create a new special
+     * @When I want to create a new discount
      */
-    public function iWantToCreateANewSpecial()
+    public function iWantToCreateANewDiscount(): void
     {
         $this->createPage->open();
     }
 
     /**
-     * @Given I want to browse specials
-     * @When I browse specials
+     * @Given I want to browse discounts
+     * @When I browse discounts
      */
-    public function iWantToBrowseSpecials()
+    public function iWantToBrowseDiscounts(): void
     {
         $this->indexPage->open();
     }
@@ -93,16 +85,16 @@ final class ManagingSpecialsContext implements Context
      * @When I specify :actionPercent% action percent
      * @When I do not specify its action percent
      */
-    public function iSpecifyItsActionPercent($actionPercent = null)
+    public function iSpecifyItsActionPercent($actionPercent = null): void
     {
-        $this->createPage->specifyActionPercent(floatval($actionPercent));
+        $this->createPage->specifyActionPercent((float)$actionPercent);
     }
 
     /**
      * @When I specify :discount% discount
      * @When I do not specify discount
      */
-    public function iSpecifyItsDiscount($discount = null)
+    public function iSpecifyItsDiscount($discount = null): void
     {
         $this->createPage->specifyActionType(Discount::ACTION_TYPE_OFF);
         $this->createPage->specifyActionPercent(floatval($discount));
@@ -112,7 +104,7 @@ final class ManagingSpecialsContext implements Context
      * @When I specify :margin% margin
      * @When I do not specify margin
      */
-    public function iSpecifyItsMargin($margin = null)
+    public function iSpecifyItsMargin($margin = null): void
     {
         $this->createPage->specifyActionType(Discount::ACTION_TYPE_INCREASE);
         $this->createPage->specifyActionPercent(floatval($margin));
@@ -122,7 +114,7 @@ final class ManagingSpecialsContext implements Context
      * @When I specify its code as :code
      * @When I do not specify its code
      */
-    public function iSpecifyItsCodeAs($code = null)
+    public function iSpecifyItsCodeAs($code = null): void
     {
         $this->createPage->specifyCode($code ?? '');
     }
@@ -132,7 +124,7 @@ final class ManagingSpecialsContext implements Context
      * @When I do not name it
      * @When I remove its name
      */
-    public function iNameIt($name = null)
+    public function iNameIt($name = null): void
     {
         $this->createPage->nameIt($name ?? '');
     }
@@ -140,30 +132,30 @@ final class ManagingSpecialsContext implements Context
     /**
      * @When I remove its priority
      */
-    public function iRemoveItsPriority()
+    public function iRemoveItsPriority(): void
     {
         $this->updatePage->setPriority(null);
     }
 
     /**
-     * @Then I should see the special :specialName in the list
-     * @Then the :specialName special should appear in the registry
-     * @Then the :specialName special should exist in the registry
-     * @Then this special should still be named :specialName
-     * @Then special :specialName should still exist in the registry
+     * @Then I should see the discount :discountName in the list
+     * @Then the :discountName discount should appear in the registry
+     * @Then the :discountName discount should exist in the registry
+     * @Then this discount should still be named :discountName
+     * @Then discount :discountName should still exist in the registry
      */
-    public function theSpecialShouldAppearInTheRegistry(string $specialName): void
+    public function theDiscountShouldAppearInTheRegistry(string $discountName): void
     {
         $this->indexPage->open();
 
-        Assert::true($this->indexPage->isSingleResourceOnPage(['name' => $specialName]));
+        Assert::true($this->indexPage->isSingleResourceOnPage(['name' => $discountName]));
     }
 
     /**
      * @When I add it
      * @When I try to add it
      */
-    public function iAddIt()
+    public function iAddIt(): void
     {
         $this->createPage->create();
     }
@@ -172,7 +164,7 @@ final class ManagingSpecialsContext implements Context
      * @When I add the "Product having one of taxons" rule configured with :firstTaxon
      * @When I add the "Product having one of taxons" rule configured with :firstTaxon or :secondTaxon
      */
-    public function iAddTheHasTaxonRuleConfiguredWith(...$taxons)
+    public function iAddTheHasTaxonRuleConfiguredWith(...$taxons): void
     {
         $this->createPage->addRule('Product having one of taxons');
         $this->createPage->selectAutocompleteRuleOption('Taxons', $taxons, true);
@@ -182,7 +174,7 @@ final class ManagingSpecialsContext implements Context
      * @When I add the "Product is one of" rule configured with the :productName product
      * @When I add the "Product is one of" rule configured with the :firstProductName or :secondProductName product
      */
-    public function iAddTheRuleConfiguredWithTheProducts(...$productNames)
+    public function iAddTheRuleConfiguredWithTheProducts(...$productNames): void
     {
         $this->createPage->addRule('Product is one of');
         $this->createPage->selectAutocompleteRuleOption('Products', $productNames, true);
@@ -191,18 +183,18 @@ final class ManagingSpecialsContext implements Context
     /**
      * @When I add the "Product is" rule configured with the :productName product
      */
-    public function iAddTheRuleConfiguredWithTheProduct($productName)
+    public function iAddTheRuleConfiguredWithTheProduct($productName): void
     {
         $this->createPage->addRule('Product is');
         $this->createPage->selectAutocompleteRuleOption('Product', $productName);
     }
 
     /**
-     * @When I check (also) the :specialName special
+     * @When I check (also) the :discountName discount
      */
-    public function iCheckTheSpecial(string $specialName): void
+    public function iCheckTheDiscount(string $discountName): void
     {
-        $this->indexPage->checkResourceOnPage(['name' => $specialName]);
+        $this->indexPage->checkResourceOnPage(['name' => $discountName]);
     }
 
     /**
@@ -214,10 +206,10 @@ final class ManagingSpecialsContext implements Context
     }
 
     /**
-     * @Then I should see a single special in the list
-     * @Then there should be :amount specials
+     * @Then I should see a single discount in the list
+     * @Then there should be :amount discounts
      */
-    public function thereShouldBeSpecial(int $amount = 1): void
+    public function thereShouldBeDiscount(int $amount = 1): void
     {
         Assert::same($amount, $this->indexPage->countItems());
     }
@@ -225,31 +217,31 @@ final class ManagingSpecialsContext implements Context
     /**
      * @Then I should be notified that :element is required
      */
-    public function iShouldBeNotifiedThatIsRequired($element)
+    public function iShouldBeNotifiedThatIsRequired($element): void
     {
-        $this->assertFieldValidationMessage($element, sprintf('Please enter special %s.', $element));
+        $this->assertFieldValidationMessage($element, sprintf('Please enter discount %s.', $element));
     }
 
     /**
      * @Then I should be notified that a :element value should be a numeric value
      */
-    public function iShouldBeNotifiedThatAMinimalValueShouldBeNumeric($element)
+    public function iShouldBeNotifiedThatAMinimalValueShouldBeNumeric($element): void
     {
         $this->assertFieldValidationMessage($element, 'This value is not valid.');
     }
 
     /**
-     * @Then I should be notified that special with this code already exists
+     * @Then I should be notified that discount with this code already exists
      */
-    public function iShouldBeNotifiedThatSpecialWithThisCodeAlreadyExists()
+    public function iShouldBeNotifiedThatDiscountWithThisCodeAlreadyExists(): void
     {
-        Assert::same($this->createPage->getValidationMessage('code'), 'The special with given code already exists.');
+        Assert::same($this->createPage->getValidationMessage('code'), 'The discount with given code already exists.');
     }
 
     /**
-     * @Then special with :element :name should not be added
+     * @Then discount with :element :name should not be added
      */
-    public function specialWithElementValueShouldNotBeAdded($element, $name)
+    public function discountWithElementValueShouldNotBeAdded($element, $name): void
     {
         $this->indexPage->open();
 
@@ -257,9 +249,9 @@ final class ManagingSpecialsContext implements Context
     }
 
     /**
-     * @Then there should still be only one special with :element :value
+     * @Then there should still be only one discount with :element :value
      */
-    public function thereShouldStillBeOnlyOneSpecialWith($element, $value)
+    public function thereShouldStillBeOnlyOneDiscountWith($element, $value): void
     {
         $this->indexPage->open();
 
@@ -269,7 +261,7 @@ final class ManagingSpecialsContext implements Context
     /**
      * @When I make it exclusive
      */
-    public function iMakeItExclusive()
+    public function iMakeItExclusive(): void
     {
         /** @var CreatePageInterface|UpdatePageInterface $currentPage */
         $currentPage = $this->currentPageResolver->getCurrentPageWithForm([$this->createPage, $this->updatePage]);
@@ -278,17 +270,17 @@ final class ManagingSpecialsContext implements Context
     }
 
     /**
-     * @Then the :special special should be exclusive
+     * @Then the :discount discount should be exclusive
      */
-    public function theSpecialShouldBeExclusive(DiscountInterface $special)
+    public function theDiscountShouldBeExclusive(DiscountInterface $discount): void
     {
-        $this->assertIfFieldIsTrue($special, 'exclusive');
+        $this->assertIfFieldIsTrue($discount, 'exclusive');
     }
 
     /**
      * @When I make it applicable for the :channelName channel
      */
-    public function iMakeItApplicableForTheChannel($channelName)
+    public function iMakeItApplicableForTheChannel($channelName): void
     {
         /** @var CreatePageInterface|UpdatePageInterface $currentPage */
         $currentPage = $this->currentPageResolver->getCurrentPageWithForm([$this->createPage, $this->updatePage]);
@@ -297,29 +289,29 @@ final class ManagingSpecialsContext implements Context
     }
 
     /**
-     * @Then the :special special should be applicable for the :channelName channel
+     * @Then the :discount discount should be applicable for the :channelName channel
      */
-    public function theSpecialShouldBeApplicableForTheChannel(DiscountInterface $special, $channelName)
+    public function theDiscountShouldBeApplicableForTheChannel(DiscountInterface $discount, $channelName): void
     {
-        $this->iWantToModifyASpecial($special);
+        $this->iWantToModifyADiscount($discount);
 
         Assert::true($this->updatePage->checkChannelsState($channelName));
     }
 
     /**
-     * @Given I want to modify a :special special
-     * @Given /^I want to modify (this special)$/
-     * @Then I should be able to modify a :special special
+     * @Given I want to modify a :discount discount
+     * @Given /^I want to modify (this discount)$/
+     * @Then I should be able to modify a :discount discount
      */
-    public function iWantToModifyASpecial(DiscountInterface $special)
+    public function iWantToModifyADiscount(DiscountInterface $discount): void
     {
-        $this->updatePage->open(['id' => $special->getId()]);
+        $this->updatePage->open(['id' => $discount->getId()]);
     }
 
     /**
      * @Then the code field should be disabled
      */
-    public function theCodeFieldShouldBeDisabled()
+    public function theCodeFieldShouldBeDisabled(): void
     {
         Assert::true($this->updatePage->isCodeDisabled());
     }
@@ -328,40 +320,40 @@ final class ManagingSpecialsContext implements Context
      * @When I save my changes
      * @When I try to save my changes
      */
-    public function iSaveMyChanges()
+    public function iSaveMyChanges(): void
     {
         $this->updatePage->saveChanges();
     }
 
     /**
-     * @When /^I delete a ("([^"]+)" special)$/
-     * @When /^I try to delete a ("([^"]+)" special)$/
+     * @When /^I delete a ("([^"]+)" discount)$/
+     * @When /^I try to delete a ("([^"]+)" discount)$/
      */
-    public function iDeleteSpecial(DiscountInterface $special)
+    public function iDeleteDiscount(DiscountInterface $discount): void
     {
-        $this->sharedStorage->set('special', $special);
+        $this->sharedStorage->set('discount', $discount);
 
         $this->indexPage->open();
-        $this->indexPage->deleteResourceOnPage(['name' => $special->getName()]);
+        $this->indexPage->deleteResourceOnPage(['name' => $discount->getName()]);
     }
 
     /**
-     * @Then /^(this special) should no longer exist in the special registry$/
+     * @Then /^(this discount) should no longer exist in the discount registry$/
      */
-    public function specialShouldNotExistInTheRegistry(DiscountInterface $special)
+    public function discountShouldNotExistInTheRegistry(DiscountInterface $discount): void
     {
         $this->indexPage->open();
 
-        Assert::false($this->indexPage->isSingleResourceOnPage(['code' => $special->getCode()]));
+        Assert::false($this->indexPage->isSingleResourceOnPage(['code' => $discount->getCode()]));
     }
 
     /**
      * @Then I should be notified that it is in use and cannot be deleted
      */
-    public function iShouldBeNotifiedOfFailure()
+    public function iShouldBeNotifiedOfFailure(): void
     {
         $this->notificationChecker->checkNotification(
-            'Cannot delete, the special is in use.',
+            'Cannot delete, the discount is in use.',
             NotificationType::failure()
         );
     }
@@ -369,7 +361,7 @@ final class ManagingSpecialsContext implements Context
     /**
      * @When I make it available from :startsDate to :endsDate
      */
-    public function iMakeItAvailableFromTo(\DateTimeInterface $startsDate, \DateTimeInterface $endsDate)
+    public function iMakeItAvailableFromTo(\DateTimeInterface $startsDate, \DateTimeInterface $endsDate): void
     {
         /** @var CreatePageInterface|UpdatePageInterface $currentPage */
         $currentPage = $this->currentPageResolver->getCurrentPageWithForm([$this->createPage, $this->updatePage]);
@@ -379,11 +371,11 @@ final class ManagingSpecialsContext implements Context
     }
 
     /**
-     * @Then the :special special should be available from :startsDate to :endsDate
+     * @Then the :discount discount should be available from :startsDate to :endsDate
      */
-    public function theSpecialShouldBeAvailableFromTo(DiscountInterface $special, \DateTimeInterface $startsDate, \DateTimeInterface $endsDate)
+    public function theDiscountShouldBeAvailableFromTo(DiscountInterface $discount, \DateTimeInterface $startsDate, \DateTimeInterface $endsDate): void
     {
-        $this->iWantToModifyASpecial($special);
+        $this->iWantToModifyADiscount($discount);
 
         Assert::true($this->updatePage->hasStartsAt($startsDate));
 
@@ -391,9 +383,9 @@ final class ManagingSpecialsContext implements Context
     }
 
     /**
-     * @Then I should be notified that special cannot end before it start
+     * @Then I should be notified that discount cannot end before it start
      */
-    public function iShouldBeNotifiedThatSpecialCannotEndBeforeItsEvenStart()
+    public function iShouldBeNotifiedThatDiscountCannotEndBeforeItsEvenStart(): void
     {
         /** @var CreatePageInterface|UpdatePageInterface $currentPage */
         $currentPage = $this->currentPageResolver->getCurrentPageWithForm([$this->createPage, $this->updatePage]);
@@ -404,7 +396,7 @@ final class ManagingSpecialsContext implements Context
     /**
      * @Then I should be notified that this value should not be blank
      */
-    public function iShouldBeNotifiedThatThisValueShouldNotBeBlank()
+    public function iShouldBeNotifiedThatThisValueShouldNotBeBlank(): void
     {
         Assert::same(
             $this->createPage->getValidationMessageForAction(),
@@ -415,7 +407,7 @@ final class ManagingSpecialsContext implements Context
     /**
      * @Then I should be notified that the maximum value of discount is 100%
      */
-    public function iShouldBeNotifiedThatTheMaximumValueOfDiscountIs100()
+    public function iShouldBeNotifiedThatTheMaximumValueOfDiscountIs100(): void
     {
         /** @var CreatePageInterface|UpdatePageInterface $currentPage */
         $currentPage = $this->currentPageResolver->getCurrentPageWithForm([$this->createPage, $this->updatePage]);
@@ -427,7 +419,7 @@ final class ManagingSpecialsContext implements Context
     /**
      * @Then I should be notified that discount value must be at least 0%
      */
-    public function iShouldBeNotifiedThatDiscountValueMustBeAtLeast0()
+    public function iShouldBeNotifiedThatDiscountValueMustBeAtLeast0(): void
     {
         /** @var CreatePageInterface|UpdatePageInterface $currentPage */
         $currentPage = $this->currentPageResolver->getCurrentPageWithForm([$this->createPage, $this->updatePage]);
@@ -436,23 +428,23 @@ final class ManagingSpecialsContext implements Context
     }
 
     /**
-     * @Then I should see :count specials on the list
+     * @Then I should see :count discounts on the list
      */
-    public function iShouldSeeSpecialsOnTheList($count)
+    public function iShouldSeeDiscountsOnTheList($count): void
     {
         $actualCount = $this->indexPage->countItems();
 
         Assert::same(
             (int) $count,
             $actualCount,
-            'There should be %s special, but there\'s %2$s.'
+            'There should be %s discount, but there\'s %2$s.'
         );
     }
 
     /**
-     * @Then the first special on the list should have :field :value
+     * @Then the first discount on the list should have :field :value
      */
-    public function theFirstSpecialOnTheListShouldHave($field, $value)
+    public function theFirstDiscountOnTheListShouldHave($field, $value): void
     {
         $fields = $this->indexPage->getColumnFields($field);
         $actualValue = reset($fields);
@@ -460,14 +452,14 @@ final class ManagingSpecialsContext implements Context
         Assert::same(
             $actualValue,
             $value,
-            sprintf('Expected first special\'s %s to be "%s", but it is "%s".', $field, $value, $actualValue)
+            sprintf('Expected first discount\'s %s to be "%s", but it is "%s".', $field, $value, $actualValue)
         );
     }
 
     /**
-     * @Then the last special on the list should have :field :value
+     * @Then the last discount on the list should have :field :value
      */
-    public function theLastSpecialOnTheListShouldHave($field, $value)
+    public function theLastDiscountOnTheListShouldHave($field, $value): void
     {
         $fields = $this->indexPage->getColumnFields($field);
         $actualValue = end($fields);
@@ -475,16 +467,16 @@ final class ManagingSpecialsContext implements Context
         Assert::same(
             $actualValue,
             $value,
-            sprintf('Expected last special\'s %s to be "%s", but it is "%s".', $field, $value, $actualValue)
+            sprintf('Expected last discount\'s %s to be "%s", but it is "%s".', $field, $value, $actualValue)
         );
     }
 
     /**
-     * @Given the :special special should have priority :priority
+     * @Given the :discount discount should have priority :priority
      */
-    public function theSpecialsShouldHavePriority(DiscountInterface $special, $priority)
+    public function theDiscountsShouldHavePriority(DiscountInterface $discount, $priority): void
     {
-        $this->iWantToModifyASpecial($special);
+        $this->iWantToModifyADiscount($discount);
 
         Assert::same($this->updatePage->getPriority(), $priority);
     }
@@ -493,7 +485,7 @@ final class ManagingSpecialsContext implements Context
      * @param string $element
      * @param string $expectedMessage
      */
-    private function assertFieldValidationMessage($element, $expectedMessage)
+    private function assertFieldValidationMessage($element, $expectedMessage): void
     {
         /** @var CreatePageInterface|UpdatePageInterface $currentPage */
         $currentPage = $this->currentPageResolver->getCurrentPageWithForm([$this->createPage, $this->updatePage]);
@@ -502,12 +494,12 @@ final class ManagingSpecialsContext implements Context
     }
 
     /**
-     * @param DiscountInterface $special
+     * @param DiscountInterface $discount
      * @param string $field
      */
-    private function assertIfFieldIsTrue(DiscountInterface $special, $field)
+    private function assertIfFieldIsTrue(DiscountInterface $discount, $field): void
     {
-        $this->iWantToModifyASpecial($special);
+        $this->iWantToModifyADiscount($discount);
 
         Assert::true($this->updatePage->hasResourceValues([$field => 1]));
     }

@@ -7,6 +7,7 @@ namespace Tests\Setono\SyliusBulkDiscountPlugin\Behat\Context\Cli;
 use Behat\Behat\Context\Context;
 use Setono\SyliusBulkDiscountPlugin\Command\CheckActiveCommand;
 use Setono\SyliusBulkDiscountPlugin\Command\AssignSpecialsCommand;
+use Setono\SyliusBulkDiscountPlugin\Command\ProcessDiscountsCommand;
 use Setono\SyliusBulkDiscountPlugin\Command\RecalculateProductCommand;
 use Setono\SyliusBulkDiscountPlugin\Command\RecalculateSpecialCommand;
 use Setono\SyliusBulkDiscountPlugin\Model\ProductInterface;
@@ -42,112 +43,34 @@ final class CommandsContext implements Context
     private $tester;
 
     /**
-     * @var CheckActiveCommand
+     * @var ProcessDiscountsCommand
      */
-    private $command;
-
-    /**
-     * @var CheckActiveCommand
-     */
-    private $checkActiveCommand;
-
-    /**
-     * @var AssignSpecialsCommand
-     */
-    private $reassignCommand;
-
-    /**
-     * @var RecalculateProductCommand
-     */
-    private $recalculateProductCommand;
-
-    /**
-     * @var RecalculateSpecialCommand
-     */
-    private $recalculateSpecialCommand;
+    private $processDiscountsCommand;
 
     /**
      * CommandsContext constructor.
      * @param SharedStorage $sharedStorage
      * @param KernelInterface $kernel
-     * @param CheckActiveCommand $checkActiveCommand
-     * @param AssignSpecialsCommand $reassignCommand
-     * @param RecalculateProductCommand $recalculateProductCommand
-     * @param RecalculateSpecialCommand $recalculateSpecialCommand
+     * @param ProcessDiscountsCommand $processDiscountsCommand
      */
     public function __construct(
         SharedStorage $sharedStorage,
         KernelInterface $kernel,
-        CheckActiveCommand $checkActiveCommand,
-        AssignSpecialsCommand $reassignCommand,
-        RecalculateProductCommand $recalculateProductCommand,
-        RecalculateSpecialCommand $recalculateSpecialCommand
+        ProcessDiscountsCommand $processDiscountsCommand
     ) {
         $this->sharedStorage = $sharedStorage;
 
         $this->kernel = $kernel;
-        $this->checkActiveCommand = $checkActiveCommand;
-        $this->reassignCommand = $reassignCommand;
-        $this->recalculateProductCommand = $recalculateProductCommand;
-        $this->recalculateSpecialCommand = $recalculateSpecialCommand;
+        $this->checkActiveCommand = $processDiscountsCommand;
     }
 
     /**
-     * @When I run check active CLI command
+     * @When I run process discounts CLI command
      */
-    public function iRunCheckActiveCommand(): void
+    public function iRunProcessDiscountsCommand(): void
     {
         $this->executeCommand(
-            $this->checkActiveCommand
-        );
-    }
-
-    /**
-     * @Given specials was reassigned
-     * @When I reassign specials
-     * @When I run reassign CLI command
-     */
-    public function iRunReassignCommand(): void
-    {
-        $this->executeCommand(
-            $this->reassignCommand
-        );
-    }
-
-    /**
-     * @Given products prices was recalculated based on specials
-     * @When I recalculate special price for product :product
-     * @When I recalculate special prices for all products
-     */
-    public function iRunRecalculateProductCommand(?ProductInterface $product = null): void
-    {
-        $this->executeCommand(
-            $this->recalculateProductCommand,
-            [
-                'identifier' => $product ? $product->getId() : null
-            ]
-        );
-
-        if ($product) {
-            $this->sharedStorage->set('product', $product);
-        }
-    }
-
-    /**
-     * @When I recalculate prices of products related to special :special
-     * @When I recalculate prices of products related to this special
-     */
-    public function iRunRecalculateSpecialCommand(?DiscountInterface $special = null): void
-    {
-        if (null === $special) {
-            $special = $this->sharedStorage->get('special');
-        }
-
-        $this->executeCommand(
-            $this->recalculateSpecialCommand,
-            [
-                'identifier' => $special->getId()
-            ]
+            $this->processDiscountsCommand
         );
     }
 
@@ -188,14 +111,14 @@ final class CommandsContext implements Context
      */
     private function executeCommand(Command $command, array $parameters = [])
     {
-        $this->command = $command;
+        $this->processDiscountsCommand = $command;
         $this->application = new Application($this->kernel);
         $this->application->add(
-            $this->command
+            $this->processDiscountsCommand
         );
-        $this->tester = new CommandTester($this->command);
+        $this->tester = new CommandTester($this->processDiscountsCommand);
         $this->tester->execute([
-            'command' => $this->command->getName()
+            'command' => $this->processDiscountsCommand->getName()
         ] + $parameters);
     }
 }

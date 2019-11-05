@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+<container xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://symfony.com/schema/dic/services"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
-        <defaults public="true" />
+        <defaults public="true"/>
 
-        <service id="setono_sylius_bulk_discount.behat.context.transform.special"
-                 class="Tests\Setono\SyliusBulkDiscountPlugin\Behat\Context\Transform\SpecialContext">
-            <argument type="service" id="setono_sylius_bulk_discount.repository.special" />
+        <service id="setono_sylius_bulk_discount.behat.context.transform.discount"
+                 class="Tests\Setono\SyliusBulkDiscountPlugin\Behat\Context\Transform\DiscountContext">
+            <argument type="service" id="setono_sylius_bulk_discount.repository.discount"/>
         </service>
 
     </services>

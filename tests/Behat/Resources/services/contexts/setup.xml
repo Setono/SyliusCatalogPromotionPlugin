@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<container xmlns="http://symfony.com/schema/dic/services"
-           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<container xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns="http://symfony.com/schema/dic/services"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
-        <defaults public="true" />
+        <defaults public="true"/>
 
-        <service id="setono_sylius_bulk_discount.behat.context.setup.special"
-                 class="Tests\Setono\SyliusBulkDiscountPlugin\Behat\Context\Setup\SpecialContext">
-            <argument type="service" id="sylius.behat.shared_storage" />
-            <argument type="service" id="setono_sylius_bulk_discount.factory.special_rule" />
-            <argument type="service" id="setono_sylius_bulk_discount.test.factory.special" />
-            <argument type="service" id="setono_sylius_bulk_discount.repository.special" />
-            <argument type="service" id="doctrine.orm.entity_manager" />
+        <service id="setono_sylius_bulk_discount.behat.context.setup.discount"
+                 class="Tests\Setono\SyliusBulkDiscountPlugin\Behat\Context\Setup\DiscountContext">
+            <argument type="service" id="sylius.behat.shared_storage"/>
+            <argument type="service" id="setono_sylius_bulk_discount.factory.discount_rule"/>
+            <argument type="service" id="setono_sylius_bulk_discount.test.factory.discount"/>
+            <argument type="service" id="setono_sylius_bulk_discount.repository.discount"/>
+            <argument type="service" id="doctrine.orm.entity_manager"/>
         </service>
 
     </services>

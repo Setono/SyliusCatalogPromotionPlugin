@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Setono\SyliusBulkDiscountPlugin\Behat\Page\Admin\Special;
+namespace Tests\Setono\SyliusBulkDiscountPlugin\Behat\Page\Admin\Discount;
 
 use Behat\Mink\Element\NodeElement;
 use Behat\Mink\Exception\ElementNotFoundException;
@@ -20,25 +20,16 @@ class UpdatePage extends BaseUpdatePage implements UpdatePageInterface
     use ChecksCodeImmutability;
     use PageDefinedElements;
 
-    /**
-     * {@inheritdoc}
-     */
     public function setPriority($priority)
     {
         $this->getDocument()->fillField('Priority', $priority);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPriority()
     {
         return $this->getElement('priority')->getValue();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function checkChannelsState($channelName)
     {
         $field = $this->getDocument()->findField($channelName);
@@ -56,31 +47,22 @@ class UpdatePage extends BaseUpdatePage implements UpdatePageInterface
         $this->getDocument()->checkField($name);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setStartsAt(\DateTimeInterface $dateTime)
     {
         $timestamp = $dateTime->getTimestamp();
 
-        $this->getDocument()->fillField('setono_sylius_bulk_discount_special_startsAt_date', date('Y-m-d', $timestamp));
-        $this->getDocument()->fillField('setono_sylius_bulk_discount_special_startsAt_time', date('H:i', $timestamp));
+        $this->getDocument()->fillField('setono_sylius_bulk_discount_discount_startsAt_date', date('Y-m-d', $timestamp));
+        $this->getDocument()->fillField('setono_sylius_bulk_discount_discount_startsAt_time', date('H:i', $timestamp));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setEndsAt(\DateTimeInterface $dateTime)
     {
         $timestamp = $dateTime->getTimestamp();
 
-        $this->getDocument()->fillField('setono_sylius_bulk_discount_special_endsAt_date', date('Y-m-d', $timestamp));
-        $this->getDocument()->fillField('setono_sylius_bulk_discount_special_endsAt_time', date('H:i', $timestamp));
+        $this->getDocument()->fillField('setono_sylius_bulk_discount_discount_endsAt_date', date('Y-m-d', $timestamp));
+        $this->getDocument()->fillField('setono_sylius_bulk_discount_discount_endsAt_time', date('H:i', $timestamp));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function hasStartsAt(\DateTimeInterface $dateTime): bool
     {
         $timestamp = $dateTime->getTimestamp();
@@ -89,9 +71,6 @@ class UpdatePage extends BaseUpdatePage implements UpdatePageInterface
             && $this->getElement('starts_at_time')->getValue() === date('H:i', $timestamp);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function hasEndsAt(\DateTimeInterface $dateTime): bool
     {
         $timestamp = $dateTime->getTimestamp();

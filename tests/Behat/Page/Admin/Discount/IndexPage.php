@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Setono\SyliusBulkDiscountPlugin\Behat\Page\Admin\Special;
+namespace Tests\Setono\SyliusBulkDiscountPlugin\Behat\Page\Admin\Discount;
 
 use Behat\Mink\Element\NodeElement;
 use Setono\SyliusBulkDiscountPlugin\Model\DiscountInterface;

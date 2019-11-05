@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<container xmlns="http://symfony.com/schema/dic/services"
-           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<container xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns="http://symfony.com/schema/dic/services"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <imports>
-        <import resource="contexts/cli.xml" />
-        <import resource="contexts/domain.xml" />
-        <import resource="contexts/dump.xml" />
-        <import resource="contexts/setup.xml" />
-        <import resource="contexts/transform.xml" />
-        <import resource="contexts/ui.xml" />
+        <import resource="contexts/cli.xml"/>
+        <import resource="contexts/domain.xml"/>
+        <import resource="contexts/dump.xml"/>
+        <import resource="contexts/setup.xml"/>
+        <import resource="contexts/transform.xml"/>
+        <import resource="contexts/ui.xml"/>
     </imports>
 
     <services>
-        <defaults public="true" />
+        <defaults public="true"/>
 
         <service id="setono_sylius_bulk_discount.behat.context.product_pricing"
                  class="Tests\Setono\SyliusBulkDiscountPlugin\Behat\Context\ProductPricingContext">
-            <argument type="service" id="sylius.behat.shared_storage" />
-            <tag name="fob.context_service" />
+            <argument type="service" id="sylius.behat.shared_storage"/>
+            <tag name="fob.context_service"/>
         </service>
 
     </services>

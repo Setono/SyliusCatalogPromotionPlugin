@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Setono\SyliusBulkDiscountPlugin\Behat\Page\Admin\Special;
+namespace Tests\Setono\SyliusBulkDiscountPlugin\Behat\Page\Admin\Discount;
 
 use Behat\Mink\Element\NodeElement;
 use Sylius\Behat\Behaviour\NamesIt;
@@ -21,9 +21,6 @@ class CreatePage extends BaseCreatePage implements CreatePageInterface
     use SpecifiesItsActionPercent;
     use PageDefinedElements;
 
-    /**
-     * {@inheritdoc}
-     */
     public function addRule($ruleName)
     {
         $count = count($this->getCollectionItems('rules'));
@@ -37,17 +34,11 @@ class CreatePage extends BaseCreatePage implements CreatePageInterface
         $this->selectRuleOption('Type', $ruleName);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function selectRuleOption($option, $value, $multiple = false)
     {
         $this->getLastCollectionItem('rules')->find('named', ['select', $option])->selectOption($value, $multiple);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function selectAutocompleteRuleOption($option, $value, $multiple = false)
     {
         $option = strtolower(str_replace(' ', '_', $option));
@@ -67,9 +58,6 @@ class CreatePage extends BaseCreatePage implements CreatePageInterface
         AutocompleteHelper::chooseValue($this->getSession(), $ruleAutocomplete, $value);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function fillRuleOption($option, $value)
     {
         $this->getLastCollectionItem('rules')->fillField($option, $value);
@@ -85,26 +73,20 @@ class CreatePage extends BaseCreatePage implements CreatePageInterface
         $this->getDocument()->checkField($name);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setStartsAt(\DateTimeInterface $dateTime)
     {
         $timestamp = $dateTime->getTimestamp();
 
-        $this->getDocument()->fillField('setono_sylius_bulk_discount_special_startsAt_date', date('Y-m-d', $timestamp));
-        $this->getDocument()->fillField('setono_sylius_bulk_discount_special_startsAt_time', date('H:i', $timestamp));
+        $this->getDocument()->fillField('setono_sylius_bulk_discount_discount_startsAt_date', date('Y-m-d', $timestamp));
+        $this->getDocument()->fillField('setono_sylius_bulk_discount_discount_startsAt_time', date('H:i', $timestamp));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setEndsAt(\DateTimeInterface $dateTime)
     {
         $timestamp = $dateTime->getTimestamp();
 
-        $this->getDocument()->fillField('setono_sylius_bulk_discount_special_endsAt_date', date('Y-m-d', $timestamp));
-        $this->getDocument()->fillField('setono_sylius_bulk_discount_special_endsAt_time', date('H:i', $timestamp));
+        $this->getDocument()->fillField('setono_sylius_bulk_discount_discount_endsAt_date', date('Y-m-d', $timestamp));
+        $this->getDocument()->fillField('setono_sylius_bulk_discount_discount_endsAt_time', date('H:i', $timestamp));
     }
 
     /**
