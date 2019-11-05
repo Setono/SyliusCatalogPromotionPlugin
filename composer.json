@@ -101,6 +101,7 @@
             "(cd tests/Application && bin/console sylius:fixtures:load --no-interaction -e ${SYMFONY_ENV:-'dev'})"
         ],
         "phpspec": "vendor/bin/phpspec run -vvv",
+        "phpunit": "vendor/bin/phpunit",
         "run": "(cd tests/Application && bin/console server:run -d public -e ${SYMFONY_ENV:-'dev'})",
         "tests": [
             "composer phpspec",
