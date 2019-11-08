@@ -120,6 +120,7 @@ final class ProcessDiscountsCommand extends Command
         foreach ($discounts as $discount) {
             $qb = $this->productVariantRepository->createQueryBuilder('o');
             $qb->select('o.id');
+            $qb->distinct();
 
             if ($discount->isManuallyDiscountedProductsExcluded()) {
                 (new ManuallyDiscountedProductsExcludedRule())->filter($qb, []);
