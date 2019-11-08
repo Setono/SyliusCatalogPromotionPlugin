@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Setono\SyliusBulkDiscountPlugin\Repository;
 
 use DateTimeInterface;
-use Doctrine\ORM\QueryBuilder;
 
 interface ChannelPricingRepositoryInterface extends HasAnyBeenUpdatedSinceRepositoryInterface
 {
@@ -19,7 +18,7 @@ interface ChannelPricingRepositoryInterface extends HasAnyBeenUpdatedSinceReposi
      */
     public function updateMultiplier(
         float $multiplier,
-        QueryBuilder $productVariantQueryBuilder,
+        array $productVariantIds,
         array $channelCodes,
         DateTimeInterface $dateTime,
         bool $exclusive = false

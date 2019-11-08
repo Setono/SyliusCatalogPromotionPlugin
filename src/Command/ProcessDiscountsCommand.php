@@ -26,7 +26,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\Container;
-use Webmozart\Assert\Assert;
 
 final class ProcessDiscountsCommand extends Command
 {
@@ -84,7 +83,9 @@ final class ProcessDiscountsCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        Assert::isInstanceOf($this->productVariantRepository, EntityRepository::class);
+        if (!$this->productVariantRepository instanceof EntityRepository) {
+            throw new \RuntimeException(sprintf('The product variant repository is not an instance of %s', EntityRepository::class));
+        }
 
         if (!$this->lock()) {
             $output->writeln('The command is already running in another process.');
@@ -118,6 +119,8 @@ final class ProcessDiscountsCommand extends Command
 
         foreach ($discounts as $discount) {
             $qb = $this->productVariantRepository->createQueryBuilder('o');
+            $qb->select('o.id');
+
             if ($discount->isManuallyDiscountedProductsExcluded()) {
                 (new ManuallyDiscountedProductsExcludedRule())->filter($qb, []);
             }
@@ -138,9 +141,21 @@ final class ProcessDiscountsCommand extends Command
                 $ruleQueryBuilder->filter($qb, $rule->getConfiguration());
             }
 
-            $this->channelPricingRepository->updateMultiplier(
-                $discount->getMultiplier(), $qb, $discount->getChannelCodes(), $startTime, $discount->isExclusive()
-            );
+            $bulkSize = 100;
+            $qb->setMaxResults($bulkSize);
+            $i = 0;
+
+            do {
+                $qb->setFirstResult($i * $bulkSize);
+                $productVariantIds = $qb->getQuery()->getResult();
+
+                $this->channelPricingRepository->updateMultiplier(
+                    $discount->getMultiplier(), $productVariantIds, $discount->getChannelCodes(), $startTime,
+                    $discount->isExclusive()
+                );
+
+                ++$i;
+            } while (count($productVariantIds) !== 0);
         }
 
         $this->channelPricingRepository->updatePrices($startTime);

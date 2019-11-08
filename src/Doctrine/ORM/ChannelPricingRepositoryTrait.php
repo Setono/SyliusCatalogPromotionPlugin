@@ -6,8 +6,6 @@ namespace Setono\SyliusBulkDiscountPlugin\Doctrine\ORM;
 
 use DateTimeInterface;
 use Doctrine\ORM\QueryBuilder;
-use Safe\Exceptions\StringsException;
-use function Safe\sprintf;
 
 trait ChannelPricingRepositoryTrait
 {
@@ -32,32 +30,24 @@ trait ChannelPricingRepositoryTrait
         ;
     }
 
-    /**
-     * @throws StringsException
-     */
     public function updateMultiplier(
         float $multiplier,
-        QueryBuilder $productVariantQueryBuilder,
+        array $productVariantIds,
         array $channelCodes,
         DateTimeInterface $dateTime,
         bool $exclusive = false
     ): void {
-        if (count($channelCodes) === 0) {
+        if (count($channelCodes) === 0 || count($productVariantIds) === 0) {
             return;
         }
 
-        // if the same association were added multiple times this will remove any duplicates of product variants
-        $productVariantQueryBuilder->distinct();
-
         $qb = $this->createQueryBuilder('channelPricing');
 
-        // This copies parameters from the product variant query builder so we can use them
-        // when we do the sub query later
-        $qb->setParameters($productVariantQueryBuilder->getParameters());
         $qb->update()
-            ->andWhere(sprintf('channelPricing.productVariant IN (%s)', $productVariantQueryBuilder->getDQL()))
+            ->andWhere('channelPricing.productVariant IN (:productVariantIds)')
             ->andWhere('channelPricing.channelCode IN (:channelCodes)')
             ->set('channelPricing.updatedAt', ':date')
+            ->setParameter('productVariantIds', $productVariantIds)
             ->setParameter('channelCodes', $channelCodes)
             ->setParameter('date', $dateTime)
         ;
