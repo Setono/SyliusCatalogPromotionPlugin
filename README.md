@@ -206,9 +206,9 @@ $ php bin/console setono:sylius-bulk-discount:process
 [ico-version]: https://poser.pugx.org/setono/sylius-bulk-discount-plugin/v/stable
 [ico-unstable-version]: https://poser.pugx.org/setono/sylius-bulk-discount-plugin/v/unstable
 [ico-license]: https://poser.pugx.org/setono/sylius-bulk-discount-plugin/license
-[ico-github-actions]: https://github.com/Setono/SyliusRedirectPlugin/workflows/CI/badge.svg
+[ico-github-actions]: https://github.com/Setono/SyliusBulkDiscountPlugin/workflows/CI/badge.svg
 [ico-code-quality]: https://img.shields.io/scrutinizer/g/Setono/SyliusBulkDiscountPlugin.svg?style=flat-square
 
 [link-packagist]: https://packagist.org/packages/setono/sylius-bulk-discount-plugin
-[link-github-actions]: https://github.com/Setono/SyliusRedirectPlugin/actions
+[link-github-actions]: https://github.com/Setono/SyliusBulkDiscountPlugin/actions
 [link-code-quality]: https://scrutinizer-ci.com/g/Setono/SyliusBulkDiscountPlugin
