@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Tests\Setono\SyliusBulkDiscountPlugin\Behat\Behaviour;
+namespace Tests\Setono\SyliusCatalogPromotionsPlugin\Behat\Behaviour;
 
-use Setono\SyliusBulkDiscountPlugin\Model\Discount;
+use Setono\SyliusCatalogPromotionsPlugin\Model\Promotion;
 use Sylius\Behat\Behaviour\DocumentAccessor;
 use Webmozart\Assert\Assert;
 
@@ -17,7 +17,7 @@ trait SpecifiesItsActionType
      */
     public function specifyActionType($actionType)
     {
-        Assert::oneOf($actionType, [Discount::ACTION_TYPE_OFF, Discount::ACTION_TYPE_INCREASE]);
+        Assert::oneOf($actionType, [Promotion::ACTION_TYPE_OFF, Promotion::ACTION_TYPE_INCREASE]);
         $this->getDocument()->fillField('Action type', $actionType);
     }
 }

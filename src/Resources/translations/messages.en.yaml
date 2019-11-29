@@ -1,18 +1,18 @@
-setono_sylius_bulk_discount:
+setono_sylius_catalog_promotions:
     ui:
-        discount: Discount
-        discounts: Discounts
-        manage_discounts: Manage discounts
-        new_discount: Create new discount
-        edit_discount: Edit discount
-        rules_explanation: If you don't add any rules, the discount will be applied to all products
+        promotion: Catalog promotion
+        promotions: Catalog promotions
+        manage_promotions: Manage catalog promotions
+        new_promotion: Create new catalog promotion
+        edit_promotion: Edit catalog promotion
+        rules_explanation: If you don't add any rules, the promotion will be applied to all products
     menu:
         admin:
             main:
                 marketing:
-                    discounts: Discounts
+                    promotions: Catalog promotions
     form:
-        discount:
+        promotion:
             channels: Apply to channels
             name: Name
             manually_discounted_products_excluded: Manually discounted products excluded
@@ -26,7 +26,7 @@ setono_sylius_bulk_discount:
             add_rule: Add rule
             action_type: Action type
             action_percent: Action percent
-        discount_rule:
+        promotion_rule:
             contains_product: Product is
             contains_product_configuration:
                 product: Product
@@ -38,7 +38,7 @@ setono_sylius_bulk_discount:
                 taxons: Taxons
             taxonomy: Taxonomy
             type: Type
-        discount_action_type:
+        promotion_action_type:
             choice:
                 off: Make a discount
                 increase: Make a margin (increase price)

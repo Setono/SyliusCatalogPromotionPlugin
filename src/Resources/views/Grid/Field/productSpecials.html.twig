@@ -1,8 +1,8 @@
 <ul style="margin: 0; padding: 0;">
-    {% for discount in data %}
+    {% for promotion in data %}
         <li style="list-style-type: none;">
-            {{ loop.index }}. <a href="{{ path('setono_sylius_bulk_discount_admin_discount_update', { 'id': discount.id }) }}">
-                {{ discount.name }}
+            {{ loop.index }}. <a href="{{ path('setono_sylius_catalog_promotions_admin_promotion_update', { 'id': promotion.id }) }}">
+                {{ promotion.name }}
             </a>
         </li>
     {% endfor %}

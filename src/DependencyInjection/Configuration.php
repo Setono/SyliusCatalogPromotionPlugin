@@ -2,14 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Setono\SyliusBulkDiscountPlugin\DependencyInjection;
+namespace Setono\SyliusCatalogPromotionsPlugin\DependencyInjection;
 
 use function method_exists;
-use Setono\SyliusBulkDiscountPlugin\Doctrine\ORM\DiscountRepository;
-use Setono\SyliusBulkDiscountPlugin\Form\Type\DiscountRuleType;
-use Setono\SyliusBulkDiscountPlugin\Form\Type\DiscountType;
-use Setono\SyliusBulkDiscountPlugin\Model\Discount;
-use Setono\SyliusBulkDiscountPlugin\Model\DiscountRule;
+use Setono\SyliusCatalogPromotionsPlugin\Doctrine\ORM\PromotionRepository;
+use Setono\SyliusCatalogPromotionsPlugin\Form\Type\PromotionRuleType;
+use Setono\SyliusCatalogPromotionsPlugin\Form\Type\PromotionType;
+use Setono\SyliusCatalogPromotionsPlugin\Model\Promotion;
+use Setono\SyliusCatalogPromotionsPlugin\Model\PromotionInterface;
+use Setono\SyliusCatalogPromotionsPlugin\Model\PromotionRule;
+use Setono\SyliusCatalogPromotionsPlugin\Model\PromotionRuleInterface;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceController;
 use Sylius\Bundle\ResourceBundle\SyliusResourceBundle;
 use Sylius\Component\Resource\Factory\Factory;
@@ -21,12 +23,12 @@ final class Configuration implements ConfigurationInterface
 {
     public function getConfigTreeBuilder(): TreeBuilder
     {
-        $treeBuilder = new TreeBuilder('setono_sylius_bulk_discount');
+        $treeBuilder = new TreeBuilder('setono_sylius_catalog_promotions');
         if (method_exists($treeBuilder, 'getRootNode')) {
             $rootNode = $treeBuilder->getRootNode();
         } else {
             // BC layer for symfony/config 4.1 and older
-            $rootNode = $treeBuilder->root('setono_sylius_bulk_discount');
+            $rootNode = $treeBuilder->root('setono_sylius_catalog_promotions');
         }
 
         $rootNode
@@ -48,34 +50,36 @@ final class Configuration implements ConfigurationInterface
                 ->arrayNode('resources')
                     ->addDefaultsIfNotSet()
                     ->children()
-                        ->arrayNode('discount')
+                        ->arrayNode('promotion')
                             ->addDefaultsIfNotSet()
                             ->children()
                                 ->variableNode('options')->end()
                                 ->arrayNode('classes')
                                     ->addDefaultsIfNotSet()
                                     ->children()
-                                        ->scalarNode('model')->defaultValue(Discount::class)->cannotBeEmpty()->end()
+                                        ->scalarNode('model')->defaultValue(Promotion::class)->cannotBeEmpty()->end()
+                                        ->scalarNode('interface')->defaultValue(PromotionInterface::class)->cannotBeEmpty()->end()
                                         ->scalarNode('controller')->defaultValue(ResourceController::class)->cannotBeEmpty()->end()
-                                        ->scalarNode('repository')->defaultValue(DiscountRepository::class)->cannotBeEmpty()->end()
+                                        ->scalarNode('repository')->defaultValue(PromotionRepository::class)->cannotBeEmpty()->end()
                                         ->scalarNode('factory')->defaultValue(Factory::class)->end()
-                                        ->scalarNode('form')->defaultValue(DiscountType::class)->cannotBeEmpty()->end()
+                                        ->scalarNode('form')->defaultValue(PromotionType::class)->cannotBeEmpty()->end()
                                     ->end()
                                 ->end()
                             ->end()
                         ->end()
-                        ->arrayNode('discount_rule')
+                        ->arrayNode('promotion_rule')
                             ->addDefaultsIfNotSet()
                             ->children()
                                 ->variableNode('options')->end()
                                 ->arrayNode('classes')
                                     ->addDefaultsIfNotSet()
                                     ->children()
-                                        ->scalarNode('model')->defaultValue(DiscountRule::class)->cannotBeEmpty()->end()
+                                        ->scalarNode('model')->defaultValue(PromotionRule::class)->cannotBeEmpty()->end()
+                                        ->scalarNode('interface')->defaultValue(PromotionRuleInterface::class)->cannotBeEmpty()->end()
                                         ->scalarNode('controller')->defaultValue(ResourceController::class)->cannotBeEmpty()->end()
                                         ->scalarNode('repository')->cannotBeEmpty()->end()
                                         ->scalarNode('factory')->defaultValue(Factory::class)->end()
-                                        ->scalarNode('form')->defaultValue(DiscountRuleType::class)->cannotBeEmpty()->end()
+                                        ->scalarNode('form')->defaultValue(PromotionRuleType::class)->cannotBeEmpty()->end()
                                     ->end()
                                 ->end()
                             ->end()

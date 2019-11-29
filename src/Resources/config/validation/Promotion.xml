@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<constraint-mapping xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xmlns="http://symfony.com/schema/dic/constraint-mapping"
+                    xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/services/constraint-mapping-1.0.xsd"
+>
+    <class name="Setono\SyliusCatalogPromotionsPlugin\Model\Promotion">
+        <constraint name="Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity">
+            <option name="fields">code</option>
+            <option name="message">setono_sylius_catalog_promotions.promotion.code.unique</option>
+            <option name="groups">setono_sylius_catalog_promotions</option>
+        </constraint>
+        <constraint name="Setono\SyliusCatalogPromotionsPlugin\Validator\Constraints\PromotionDateRange">
+            <option name="message">setono_sylius_catalog_promotions.promotion.end_date_cannot_be_set_prior_start_date</option>
+            <option name="groups">setono_sylius_catalog_promotions</option>
+        </constraint>
+        <property name="code">
+            <constraint name="NotBlank">
+                <option name="message">setono_sylius_catalog_promotions.promotion.code.not_blank</option>
+                <option name="groups">setono_sylius_catalog_promotions</option>
+            </constraint>
+            <constraint name="Regex">
+                <option name="message">setono_sylius_catalog_promotions.promotion.code.regex</option>
+                <option name="pattern">/^[\w-]*$/</option>
+                <option name="groups">setono_sylius_catalog_promotions</option>
+            </constraint>
+        </property>
+        <property name="name">
+            <constraint name="NotBlank">
+                <option name="message">setono_sylius_catalog_promotions.promotion.name.not_blank</option>
+                <option name="groups">setono_sylius_catalog_promotions</option>
+            </constraint>
+            <constraint name="Length">
+                <option name="min">2</option>
+                <option name="max">255</option>
+                <option name="minMessage">setono_sylius_catalog_promotions.promotion.name.min_length</option>
+                <option name="maxMessage">setono_sylius_catalog_promotions.promotion.name.max_length</option>
+                <option name="groups">setono_sylius_catalog_promotions</option>
+            </constraint>
+        </property>
+        <property name="description">
+            <constraint name="Length">
+                <option name="min">2</option>
+                <option name="max">255</option>
+                <option name="minMessage">setono_sylius_catalog_promotions.promotion.description.min_length</option>
+                <option name="maxMessage">setono_sylius_catalog_promotions.promotion.description.max_length</option>
+                <option name="groups">setono_sylius_catalog_promotions</option>
+            </constraint>
+        </property>
+        <property name="actionType">
+            <constraint name="NotBlank">
+                <option name="message">setono_sylius_catalog_promotions.promotion.action_type.not_blank</option>
+                <option name="groups">setono_sylius_catalog_promotions</option>
+            </constraint>
+        </property>
+        <property name="actionPercent">
+            <constraint name="NotBlank">
+                <option name="message">setono_sylius_catalog_promotions.promotion.action_percent.not_blank</option>
+                <option name="groups">setono_sylius_catalog_promotions</option>
+            </constraint>
+            <constraint name="Range">
+                <option name="min">1</option>
+                <option name="max">100</option>
+                <option name="minMessage">setono_sylius_catalog_promotions.promotion.action_percent.min</option>
+                <option name="maxMessage">setono_sylius_catalog_promotions.promotion.action_percent.max</option>
+                <option name="groups">setono_sylius_catalog_promotions</option>
+            </constraint>
+        </property>
+        <property name="rules">
+            <constraint name="Valid"/>
+        </property>
+    </class>
+</constraint-mapping>

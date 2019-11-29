@@ -1,0 +1,150 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Setono\SyliusCatalogPromotionsPlugin\Fixture\Factory;
+
+use DateTime;
+use DateTimeInterface;
+use Exception;
+use Faker\Generator;
+use Setono\SyliusCatalogPromotionsPlugin\Model\Promotion;
+use Setono\SyliusCatalogPromotionsPlugin\Model\PromotionInterface;
+use Setono\SyliusCatalogPromotionsPlugin\Model\PromotionRuleInterface;
+use Sylius\Bundle\CoreBundle\Fixture\Factory\AbstractExampleFactory;
+use Sylius\Bundle\CoreBundle\Fixture\OptionsResolver\LazyOption;
+use Sylius\Component\Channel\Repository\ChannelRepositoryInterface;
+use Sylius\Component\Core\Formatter\StringInflector;
+use Sylius\Component\Resource\Factory\Factory;
+use Symfony\Component\OptionsResolver\Options;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
+class PromotionExampleFactory extends AbstractExampleFactory
+{
+    /** @var ChannelRepositoryInterface */
+    protected $channelRepository;
+
+    /** @var Factory */
+    protected $promotionFactory;
+
+    /** @var PromotionRuleExampleFactory */
+    protected $promotionRuleExampleFactory;
+
+    /** @var Generator */
+    protected $faker;
+
+    /** @var OptionsResolver */
+    protected $optionsResolver;
+
+    public function __construct(
+        ChannelRepositoryInterface $channelRepository,
+        Factory $promotionFactory,
+        PromotionRuleExampleFactory $promotionRuleExampleFactory
+    ) {
+        $this->channelRepository = $channelRepository;
+        $this->promotionFactory = $promotionFactory;
+        $this->promotionRuleExampleFactory = $promotionRuleExampleFactory;
+
+        $this->faker = \Faker\Factory::create();
+        $this->optionsResolver = new OptionsResolver();
+
+        $this->configureOptions($this->optionsResolver);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function create(array $options = []): PromotionInterface
+    {
+        $options = $this->optionsResolver->resolve($options);
+
+        /** @var PromotionInterface $promotion */
+        $promotion = $this->promotionFactory->createNew();
+        $promotion->setCode($options['code']);
+        $promotion->setName($options['name']);
+        $promotion->setDescription($options['description']);
+
+        $promotion->setPriority((int) $options['priority']);
+        $promotion->setExclusive($options['exclusive']);
+
+        if (isset($options['starts_at'])) {
+            $promotion->setStartsAt(new DateTime($options['starts_at']));
+        }
+
+        if (isset($options['ends_at'])) {
+            $promotion->setEndsAt(new DateTime($options['ends_at']));
+        }
+        $promotion->setEnabled($options['enabled']);
+
+        foreach ($options['channels'] as $channel) {
+            $promotion->addChannel($channel);
+        }
+
+        foreach ($options['rules'] as $ruleOptions) {
+            /** @var PromotionRuleInterface $promotionRule */
+            $promotionRule = $this->promotionRuleExampleFactory->create($ruleOptions);
+            $promotion->addRule($promotionRule);
+        }
+
+        $promotion->setActionType($options['action_type']);
+        $promotion->setActionPercent($options['action_percent']);
+
+        $promotion->setCreatedAt($options['created_at']);
+        $promotion->setUpdatedAt($options['updated_at']);
+
+        return $promotion;
+    }
+
+    protected function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver
+            ->setDefault('code', static function (Options $options): string {
+                return StringInflector::nameToCode($options['name']);
+            })
+            ->setDefault('name', $this->faker->words(3, true))
+            ->setDefault('description', $this->faker->sentence())
+
+            ->setDefault('priority', 0)
+            ->setAllowedTypes('priority', 'int')
+            ->setDefault('exclusive', $this->faker->boolean(25))
+            ->setAllowedTypes('exclusive', 'bool')
+
+            ->setDefault('starts_at', null)
+            ->setAllowedTypes('starts_at', ['null', 'string'])
+            ->setDefault('ends_at', null)
+            ->setAllowedTypes('ends_at', ['null', 'string'])
+            ->setDefault('enabled', function (): bool {
+                return $this->faker->boolean(90);
+            })
+            ->setAllowedTypes('enabled', 'bool')
+
+            ->setDefault('action_type', static function () {
+                $actionTypes = Promotion::getActionTypes();
+
+                return $actionTypes[array_rand($actionTypes)];
+            })
+            ->setDefault('action_percent', static function (): int {
+                return 10 * random_int(1, 9);
+            })
+            ->setAllowedTypes('action_percent', 'int')
+
+            ->setDefault('created_at', null)
+            ->setAllowedTypes('created_at', ['null', DateTimeInterface::class])
+            ->setDefault('updated_at', null)
+            ->setAllowedTypes('updated_at', ['null', DateTimeInterface::class])
+
+            ->setDefined('rules')
+            ->setNormalizer('rules', static function (Options $options, array $rules): array {
+                if (count($rules) === 0) {
+                    return [[]];
+                }
+
+                return $rules;
+            })
+
+            ->setDefault('channels', LazyOption::all($this->channelRepository))
+            ->setAllowedTypes('channels', 'array')
+            ->setNormalizer('channels', LazyOption::findBy($this->channelRepository, 'code'))
+        ;
+    }
+}

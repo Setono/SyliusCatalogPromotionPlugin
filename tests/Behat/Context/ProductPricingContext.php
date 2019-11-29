@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Tests\Setono\SyliusBulkDiscountPlugin\Behat\Context;
+namespace Tests\Setono\SyliusCatalogPromotionsPlugin\Behat\Context;
 
 use Behat\Behat\Context\Context;
-use Setono\SyliusBulkDiscountPlugin\Model\ProductInterface;
+use Setono\SyliusCatalogPromotionsPlugin\Model\ProductInterface;
 use Sylius\Behat\Service\SharedStorage;
 use Sylius\Behat\Service\SharedStorageInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
@@ -15,14 +15,11 @@ use Webmozart\Assert\Assert;
 
 final class ProductPricingContext implements Context
 {
-    /**
-     * @var SharedStorageInterface
-     */
+    /** @var SharedStorageInterface */
     private $sharedStorage;
 
     /**
      * CommandsContext constructor.
-     * @param SharedStorage $sharedStorage
      */
     public function __construct(
         SharedStorage $sharedStorage
@@ -35,11 +32,6 @@ final class ProductPricingContext implements Context
         return (int) round((float) str_replace(['€', '£', '$'], '', $price) * 100, 2);
     }
 
-    /**
-     * @param ProductInterface $product
-     * @param null|ChannelInterface $channel
-     * @return ChannelPricingInterface
-     */
     private function getProductsFirstChannelPricing(ProductInterface $product, ?ChannelInterface $channel = null): ChannelPricingInterface
     {
         /** @var ProductVariantInterface $productVariant */
@@ -104,5 +96,4 @@ final class ProductPricingContext implements Context
             $this->getPriceFromString($originalPrice)
         );
     }
-
 }

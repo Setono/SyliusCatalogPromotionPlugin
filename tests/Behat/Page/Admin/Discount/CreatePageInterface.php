@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-namespace Tests\Setono\SyliusBulkDiscountPlugin\Behat\Page\Admin\Discount;
+namespace Tests\Setono\SyliusCatalogPromotionsPlugin\Behat\Page\Admin\Discount;
 
-use Behat\Mink\Exception\ElementNotFoundException;
 use Sylius\Behat\Page\Admin\Crud\CreatePageInterface as BaseCreatePageInterface;
 
 interface CreatePageInterface extends BaseCreatePageInterface
@@ -19,14 +18,8 @@ interface CreatePageInterface extends BaseCreatePageInterface
      */
     public function specifyActionType($actionType);
 
-    /**
-     * @param string $code
-     */
     public function specifyCode(string $code): void;
 
-    /**
-     * @param string $name
-     */
     public function nameIt(string $name): void;
 
     /**
@@ -61,14 +54,7 @@ interface CreatePageInterface extends BaseCreatePageInterface
      */
     public function checkChannel($name);
 
-    /**
-     * @param \DateTimeInterface $dateTime
-     */
     public function setStartsAt(\DateTimeInterface $dateTime);
 
-    /**
-     * @param \DateTimeInterface $dateTime
-     */
     public function setEndsAt(\DateTimeInterface $dateTime);
-
 }

@@ -1,4 +1,4 @@
-@setono_sylius_bulk_discount_managing_discounts
+@setono_sylius_catalog_promotions_managing_discounts
 Feature: discount validation
     In order to avoid making mistakes when managing a discount
     As an Administrator

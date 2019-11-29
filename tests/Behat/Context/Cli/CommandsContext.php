@@ -2,16 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Tests\Setono\SyliusBulkDiscountPlugin\Behat\Context\Cli;
+namespace Tests\Setono\SyliusCatalogPromotionsPlugin\Behat\Context\Cli;
 
 use Behat\Behat\Context\Context;
-use Setono\SyliusBulkDiscountPlugin\Command\CheckActiveCommand;
-use Setono\SyliusBulkDiscountPlugin\Command\AssignSpecialsCommand;
-use Setono\SyliusBulkDiscountPlugin\Command\ProcessDiscountsCommand;
-use Setono\SyliusBulkDiscountPlugin\Command\RecalculateProductCommand;
-use Setono\SyliusBulkDiscountPlugin\Command\RecalculateSpecialCommand;
-use Setono\SyliusBulkDiscountPlugin\Model\ProductInterface;
-use Setono\SyliusBulkDiscountPlugin\Model\DiscountInterface;
+use Setono\SyliusCatalogPromotionsPlugin\Command\ProcessPromotionsCommand;
 use Sylius\Behat\Service\SharedStorage;
 use Sylius\Behat\Service\SharedStorageInterface;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
@@ -22,41 +16,28 @@ use Webmozart\Assert\Assert;
 
 final class CommandsContext implements Context
 {
-    /**
-     * @var SharedStorageInterface
-     */
+    /** @var SharedStorageInterface */
     private $sharedStorage;
 
-    /**
-     * @var KernelInterface
-     */
+    /** @var KernelInterface */
     private $kernel;
 
-    /**
-     * @var Application
-     */
+    /** @var Application */
     private $application;
 
-    /**
-     * @var CommandTester
-     */
+    /** @var CommandTester */
     private $tester;
 
-    /**
-     * @var ProcessDiscountsCommand
-     */
+    /** @var ProcessPromotionsCommand */
     private $processDiscountsCommand;
 
     /**
      * CommandsContext constructor.
-     * @param SharedStorage $sharedStorage
-     * @param KernelInterface $kernel
-     * @param ProcessDiscountsCommand $processDiscountsCommand
      */
     public function __construct(
         SharedStorage $sharedStorage,
         KernelInterface $kernel,
-        ProcessDiscountsCommand $processDiscountsCommand
+        ProcessPromotionsCommand $processDiscountsCommand
     ) {
         $this->sharedStorage = $sharedStorage;
 
@@ -106,9 +87,6 @@ final class CommandsContext implements Context
         Assert::notContains($this->tester->getDisplay(), $text);
     }
 
-    /**
-     * @param array $parameters
-     */
     private function executeCommand(Command $command, array $parameters = [])
     {
         $this->processDiscountsCommand = $command;
@@ -118,7 +96,7 @@ final class CommandsContext implements Context
         );
         $this->tester = new CommandTester($this->processDiscountsCommand);
         $this->tester->execute([
-            'command' => $this->processDiscountsCommand->getName()
+            'command' => $this->processDiscountsCommand->getName(),
         ] + $parameters);
     }
 }

@@ -1,13 +1,13 @@
 {
-    "name": "setono/sylius-bulk-discount-plugin",
+    "name": "setono/sylius-catalog-promotions-plugin",
     "type": "sylius-plugin",
-    "description": "Bulk discount plugin for Sylius",
+    "description": "Catalog promotions plugin for Sylius",
     "keywords": [
         "sylius",
         "sylius-plugin",
-        "bulk",
+        "catalog",
         "setono",
-        "discount"
+        "promotions"
     ],
     "license": "MIT",
     "require": {
@@ -56,8 +56,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Setono\\SyliusBulkDiscountPlugin\\": "src/",
-            "Tests\\Setono\\SyliusBulkDiscountPlugin\\": "tests/"
+            "Setono\\SyliusCatalogPromotionsPlugin\\": "src/",
+            "Tests\\Setono\\SyliusCatalogPromotionsPlugin\\": "tests/"
         }
     },
     "autoload-dev": {
@@ -84,7 +84,7 @@
             "SYMFONY_ENV=test composer ensure-schema-updated",
             "./vendor/bin/behat --tags=\"~@javascript\" --no-interaction --format=progress"
         ],
-        "check-style": "vendor/bin/ecs check src tests/Application/src",
+        "check-style": "vendor/bin/ecs check src/ tests/",
         "checks": [
             "composer check-style",
             "composer analyse"
@@ -94,7 +94,7 @@
         "ensure-database-created": "(cd tests/Application && bin/console doctrine:database:create --if-not-exists -e ${SYMFONY_ENV:-'dev'})",
         "ensure-schema-updated": "(cd tests/Application && bin/console doctrine:schema:update --force -e ${SYMFONY_ENV:-'dev'})",
         "ensure-vendors-installed": "[[ -f vendor/autoload.php ]] || COMPOSER_MEMORY_LIMIT=-1 composer install",
-        "fix-style": "vendor/bin/ecs check src tests/Application/src --fix",
+        "fix-style": "vendor/bin/ecs check src/ tests/ --fix",
         "fixtures": [
             "composer ensure-database-created",
             "composer ensure-schema-updated",

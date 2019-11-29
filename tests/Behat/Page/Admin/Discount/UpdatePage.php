@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Tests\Setono\SyliusBulkDiscountPlugin\Behat\Page\Admin\Discount;
+namespace Tests\Setono\SyliusCatalogPromotionsPlugin\Behat\Page\Admin\Discount;
 
 use Behat\Mink\Element\NodeElement;
 use Behat\Mink\Exception\ElementNotFoundException;
 use Sylius\Behat\Behaviour\ChecksCodeImmutability;
 use Sylius\Behat\Behaviour\NamesIt;
 use Sylius\Behat\Page\Admin\Crud\UpdatePage as BaseUpdatePage;
-use Tests\Setono\SyliusBulkDiscountPlugin\Behat\Behaviour\SpecifiesItsActionPercent;
-use Tests\Setono\SyliusBulkDiscountPlugin\Behat\Behaviour\SpecifiesItsActionType;
+use Tests\Setono\SyliusCatalogPromotionsPlugin\Behat\Behaviour\SpecifiesItsActionPercent;
+use Tests\Setono\SyliusCatalogPromotionsPlugin\Behat\Behaviour\SpecifiesItsActionType;
 
 class UpdatePage extends BaseUpdatePage implements UpdatePageInterface
 {
@@ -51,16 +51,16 @@ class UpdatePage extends BaseUpdatePage implements UpdatePageInterface
     {
         $timestamp = $dateTime->getTimestamp();
 
-        $this->getDocument()->fillField('setono_sylius_bulk_discount_discount_startsAt_date', date('Y-m-d', $timestamp));
-        $this->getDocument()->fillField('setono_sylius_bulk_discount_discount_startsAt_time', date('H:i', $timestamp));
+        $this->getDocument()->fillField('setono_sylius_catalog_promotions_discount_startsAt_date', date('Y-m-d', $timestamp));
+        $this->getDocument()->fillField('setono_sylius_catalog_promotions_discount_startsAt_time', date('H:i', $timestamp));
     }
 
     public function setEndsAt(\DateTimeInterface $dateTime)
     {
         $timestamp = $dateTime->getTimestamp();
 
-        $this->getDocument()->fillField('setono_sylius_bulk_discount_discount_endsAt_date', date('Y-m-d', $timestamp));
-        $this->getDocument()->fillField('setono_sylius_bulk_discount_discount_endsAt_time', date('H:i', $timestamp));
+        $this->getDocument()->fillField('setono_sylius_catalog_promotions_discount_endsAt_date', date('Y-m-d', $timestamp));
+        $this->getDocument()->fillField('setono_sylius_catalog_promotions_discount_endsAt_time', date('H:i', $timestamp));
     }
 
     public function hasStartsAt(\DateTimeInterface $dateTime): bool

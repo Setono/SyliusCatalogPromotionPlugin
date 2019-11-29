@@ -1,4 +1,4 @@
-@setono_sylius_bulk_discount_managing_discounts
+@setono_sylius_catalog_promotions_managing_discounts
 Feature: Adding a new discount with rule
     In order to give possibility to pay less for some goods based on specific configuration
     As an Administrator

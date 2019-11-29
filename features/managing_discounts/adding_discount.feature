@@ -1,4 +1,4 @@
-@setono_sylius_bulk_discount_managing_discounts
+@setono_sylius_catalog_promotions_managing_discounts
 Feature: Adding a new discount
   In order to sell more by creating discount incentives for customers
   As an Administrator

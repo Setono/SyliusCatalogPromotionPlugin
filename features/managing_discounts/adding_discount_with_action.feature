@@ -1,4 +1,4 @@
-@setono_sylius_bulk_discount_managing_discounts
+@setono_sylius_catalog_promotions_managing_discounts
 Feature: Adding a new discount with action
     In order to give possibility to pay specifically less price for some goods
     As an Administrator

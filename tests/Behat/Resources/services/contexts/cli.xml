@@ -7,11 +7,11 @@
     <services>
         <defaults public="true"/>
 
-        <service id="setono_sylius_bulk_discount.behat.context.cli.commands"
-                 class="Tests\Setono\SyliusBulkDiscountPlugin\Behat\Context\Cli\CommandsContext">
+        <service id="setono_sylius_catalog_promotions.behat.context.cli.commands"
+                 class="Tests\Setono\SyliusCatalogPromotionsPlugin\Behat\Context\Cli\CommandsContext">
             <argument type="service" id="sylius.behat.shared_storage"/>
             <argument type="service" id="kernel"/>
-            <argument type="service" id="setono_sylius_bulk_discount.command.process_discounts"/>
+            <argument type="service" id="setono_sylius_catalog_promotions.command.process_discounts"/>
         </service>
     </services>
 </container>

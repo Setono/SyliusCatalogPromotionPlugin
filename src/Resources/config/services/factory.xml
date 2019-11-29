@@ -4,12 +4,12 @@
            xmlns="http://symfony.com/schema/dic/services"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
-        <service id="setono_sylius_bulk_discount.custom_factory.discount_rule"
-                 class="Setono\SyliusBulkDiscountPlugin\Factory\DiscountRuleFactory"
-                 decorates="setono_sylius_bulk_discount.factory.discount_rule"
+        <service id="setono_sylius_catalog_promotions.custom_factory.promotion_rule"
+                 class="Setono\SyliusCatalogPromotionsPlugin\Factory\PromotionRuleFactory"
+                 decorates="setono_sylius_catalog_promotions.factory.promotion_rule"
                  decoration-priority="256"
                  public="false">
-            <argument type="service" id="setono_sylius_bulk_discount.custom_factory.discount_rule.inner"/>
+            <argument type="service" id="setono_sylius_catalog_promotions.custom_factory.promotion_rule.inner"/>
         </service>
     </services>
 </container>

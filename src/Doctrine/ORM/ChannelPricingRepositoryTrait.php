@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Setono\SyliusBulkDiscountPlugin\Doctrine\ORM;
+namespace Setono\SyliusCatalogPromotionsPlugin\Doctrine\ORM;
 
 use DateTimeInterface;
 use Doctrine\ORM\QueryBuilder;
