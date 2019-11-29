@@ -1,20 +1,21 @@
-setono_sylius_bulk_discount_admin_discount:
+setono_sylius_catalog_promotions_admin_promotion:
     resource: |
-        alias: setono_sylius_bulk_discount.discount
+        alias: setono_sylius_catalog_promotions.promotion
+        path: catalog-promotions
         section: admin
         templates: SyliusAdminBundle:Crud
         except: ['show']
         redirect: update
-        grid: setono_sylius_bulk_discount_admin_discount
+        grid: setono_sylius_catalog_promotions_admin_promotion
         permission: true
         vars:
             all:
-                subheader: setono_sylius_bulk_discount.ui.manage_discounts
+                subheader: setono_sylius_catalog_promotions.ui.manage_promotions
                 templates:
-                    form: "@SetonoSyliusBulkDiscountPlugin/Admin/Discount/_form.html.twig"
+                    form: "@SetonoSyliusCatalogPromotionsPlugin/Admin/Promotion/_form.html.twig"
             index:
                 icon: in cart
             update:
                 templates:
-                    form: "@SetonoSyliusBulkDiscountPlugin/Admin/Discount/_form.html.twig"
+                    form: "@SetonoSyliusCatalogPromotionsPlugin/Admin/Promotion/_form.html.twig"
     type: sylius.resource

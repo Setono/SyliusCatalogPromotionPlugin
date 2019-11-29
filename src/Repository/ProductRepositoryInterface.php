@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Setono\SyliusBulkDiscountPlugin\Repository;
+namespace Setono\SyliusCatalogPromotionsPlugin\Repository;
 
 use Sylius\Component\Core\Repository\ProductRepositoryInterface as BaseProductRepositoryInterface;
 

@@ -1,25 +1,25 @@
 default:
     suites:
-        setono_sylius_bulk_discount_commands:
+        setono_sylius_catalog_promotions_commands:
             contexts:
                 - sylius.behat.context.hook.doctrine_orm
 
-                - setono_sylius_bulk_discount.behat.context.product_pricing
-                - setono_sylius_bulk_discount.behat.context.cli.commands
+                - setono_sylius_catalog_promotions.behat.context.product_pricing
+                - setono_sylius_catalog_promotions.behat.context.cli.commands
 
                 - sylius.behat.context.transform.lexical
                 - sylius.behat.context.transform.shared_storage
                 - sylius.behat.context.transform.channel
                 - sylius.behat.context.transform.product
                 - sylius.behat.context.transform.taxon
-                - setono_sylius_bulk_discount.behat.context.transform.discount
+                - setono_sylius_catalog_promotions.behat.context.transform.discount
 
                 - sylius.behat.context.setup.channel
                 - sylius.behat.context.setup.currency
                 - sylius.behat.context.setup.product
                 - sylius.behat.context.setup.product_taxon
                 - sylius.behat.context.setup.taxonomy
-                - setono_sylius_bulk_discount.behat.context.setup.discount
+                - setono_sylius_catalog_promotions.behat.context.setup.discount
 
             filters:
-                tags: "@setono_sylius_bulk_discount_commands"
+                tags: "@setono_sylius_catalog_promotions_commands"

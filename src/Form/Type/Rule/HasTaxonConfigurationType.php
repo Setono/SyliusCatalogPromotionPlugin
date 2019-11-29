@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Setono\SyliusBulkDiscountPlugin\Form\Type\Rule;
+namespace Setono\SyliusCatalogPromotionsPlugin\Form\Type\Rule;
 
 use Sylius\Bundle\TaxonomyBundle\Form\Type\TaxonAutocompleteChoiceType;
 use Symfony\Component\Form\AbstractType;
@@ -23,7 +23,7 @@ final class HasTaxonConfigurationType extends AbstractType
     {
         $builder
             ->add('taxons', TaxonAutocompleteChoiceType::class, [
-                'label' => 'setono_sylius_bulk_discount.form.discount_rule.has_taxon_configuration.taxons',
+                'label' => 'setono_sylius_catalog_promotions.form.promotion_rule.has_taxon_configuration.taxons',
                 'multiple' => true,
             ])
         ;
@@ -33,6 +33,6 @@ final class HasTaxonConfigurationType extends AbstractType
 
     public function getBlockPrefix(): string
     {
-        return 'setono_sylius_bulk_discount_discount_rule_has_taxon_configuration';
+        return 'setono_sylius_catalog_promotions_promotion_rule_has_taxon_configuration';
     }
 }

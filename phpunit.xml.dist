@@ -5,7 +5,7 @@
          colors="true"
          bootstrap="tests/Application/config/bootstrap.php">
     <testsuites>
-        <testsuite name="SetonoSyliusBulkDiscountPlugin Test Suite">
+        <testsuite name="SetonoSyliusCatalogPromotionsPlugin Test Suite">
             <directory>tests</directory>
         </testsuite>
     </testsuites>

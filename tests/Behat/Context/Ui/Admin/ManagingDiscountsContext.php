@@ -2,50 +2,38 @@
 
 declare(strict_types=1);
 
-namespace Tests\Setono\SyliusBulkDiscountPlugin\Behat\Context\Ui\Admin;
+namespace Tests\Setono\SyliusCatalogPromotionsPlugin\Behat\Context\Ui\Admin;
 
 use Behat\Behat\Context\Context;
-use Setono\SyliusBulkDiscountPlugin\Model\Discount;
-use Setono\SyliusBulkDiscountPlugin\Model\DiscountInterface;
+use Setono\SyliusCatalogPromotionsPlugin\Model\Promotion;
+use Setono\SyliusCatalogPromotionsPlugin\Model\PromotionInterface;
 use Sylius\Behat\NotificationType;
 use Sylius\Behat\Service\NotificationCheckerInterface;
 use Sylius\Behat\Service\Resolver\CurrentPageResolverInterface;
 use Sylius\Behat\Service\SharedStorageInterface;
-use Tests\Setono\SyliusBulkDiscountPlugin\Behat\Page\Admin\Discount\CreatePageInterface;
-use Tests\Setono\SyliusBulkDiscountPlugin\Behat\Page\Admin\Discount\IndexPageInterface;
-use Tests\Setono\SyliusBulkDiscountPlugin\Behat\Page\Admin\Discount\UpdatePageInterface;
+use Tests\Setono\SyliusCatalogPromotionsPlugin\Behat\Page\Admin\Discount\CreatePageInterface;
+use Tests\Setono\SyliusCatalogPromotionsPlugin\Behat\Page\Admin\Discount\IndexPageInterface;
+use Tests\Setono\SyliusCatalogPromotionsPlugin\Behat\Page\Admin\Discount\UpdatePageInterface;
 use Webmozart\Assert\Assert;
 
 final class ManagingDiscountsContext implements Context
 {
-    /**
-     * @var SharedStorageInterface
-     */
+    /** @var SharedStorageInterface */
     private $sharedStorage;
 
-    /**
-     * @var IndexPageInterface
-     */
+    /** @var IndexPageInterface */
     private $indexPage;
 
-    /**
-     * @var CreatePageInterface
-     */
+    /** @var CreatePageInterface */
     private $createPage;
 
-    /**
-     * @var UpdatePageInterface
-     */
+    /** @var UpdatePageInterface */
     private $updatePage;
 
-    /**
-     * @var CurrentPageResolverInterface
-     */
+    /** @var CurrentPageResolverInterface */
     private $currentPageResolver;
 
-    /**
-     * @var NotificationCheckerInterface
-     */
+    /** @var NotificationCheckerInterface */
     private $notificationChecker;
 
     public function __construct(
@@ -87,7 +75,7 @@ final class ManagingDiscountsContext implements Context
      */
     public function iSpecifyItsActionPercent($actionPercent = null): void
     {
-        $this->createPage->specifyActionPercent((float)$actionPercent);
+        $this->createPage->specifyActionPercent((float) $actionPercent);
     }
 
     /**
@@ -96,8 +84,8 @@ final class ManagingDiscountsContext implements Context
      */
     public function iSpecifyItsDiscount($discount = null): void
     {
-        $this->createPage->specifyActionType(Discount::ACTION_TYPE_OFF);
-        $this->createPage->specifyActionPercent(floatval($discount));
+        $this->createPage->specifyActionType(Promotion::ACTION_TYPE_OFF);
+        $this->createPage->specifyActionPercent((float) $discount);
     }
 
     /**
@@ -106,8 +94,8 @@ final class ManagingDiscountsContext implements Context
      */
     public function iSpecifyItsMargin($margin = null): void
     {
-        $this->createPage->specifyActionType(Discount::ACTION_TYPE_INCREASE);
-        $this->createPage->specifyActionPercent(floatval($margin));
+        $this->createPage->specifyActionType(Promotion::ACTION_TYPE_INCREASE);
+        $this->createPage->specifyActionPercent((float) $margin);
     }
 
     /**
@@ -272,7 +260,7 @@ final class ManagingDiscountsContext implements Context
     /**
      * @Then the :discount discount should be exclusive
      */
-    public function theDiscountShouldBeExclusive(DiscountInterface $discount): void
+    public function theDiscountShouldBeExclusive(PromotionInterface $discount): void
     {
         $this->assertIfFieldIsTrue($discount, 'exclusive');
     }
@@ -291,7 +279,7 @@ final class ManagingDiscountsContext implements Context
     /**
      * @Then the :discount discount should be applicable for the :channelName channel
      */
-    public function theDiscountShouldBeApplicableForTheChannel(DiscountInterface $discount, $channelName): void
+    public function theDiscountShouldBeApplicableForTheChannel(PromotionInterface $discount, $channelName): void
     {
         $this->iWantToModifyADiscount($discount);
 
@@ -303,7 +291,7 @@ final class ManagingDiscountsContext implements Context
      * @Given /^I want to modify (this discount)$/
      * @Then I should be able to modify a :discount discount
      */
-    public function iWantToModifyADiscount(DiscountInterface $discount): void
+    public function iWantToModifyADiscount(PromotionInterface $discount): void
     {
         $this->updatePage->open(['id' => $discount->getId()]);
     }
@@ -329,7 +317,7 @@ final class ManagingDiscountsContext implements Context
      * @When /^I delete a ("([^"]+)" discount)$/
      * @When /^I try to delete a ("([^"]+)" discount)$/
      */
-    public function iDeleteDiscount(DiscountInterface $discount): void
+    public function iDeleteDiscount(PromotionInterface $discount): void
     {
         $this->sharedStorage->set('discount', $discount);
 
@@ -340,7 +328,7 @@ final class ManagingDiscountsContext implements Context
     /**
      * @Then /^(this discount) should no longer exist in the discount registry$/
      */
-    public function discountShouldNotExistInTheRegistry(DiscountInterface $discount): void
+    public function discountShouldNotExistInTheRegistry(PromotionInterface $discount): void
     {
         $this->indexPage->open();
 
@@ -373,7 +361,7 @@ final class ManagingDiscountsContext implements Context
     /**
      * @Then the :discount discount should be available from :startsDate to :endsDate
      */
-    public function theDiscountShouldBeAvailableFromTo(DiscountInterface $discount, \DateTimeInterface $startsDate, \DateTimeInterface $endsDate): void
+    public function theDiscountShouldBeAvailableFromTo(PromotionInterface $discount, \DateTimeInterface $startsDate, \DateTimeInterface $endsDate): void
     {
         $this->iWantToModifyADiscount($discount);
 
@@ -413,7 +401,6 @@ final class ManagingDiscountsContext implements Context
         $currentPage = $this->currentPageResolver->getCurrentPageWithForm([$this->createPage, $this->updatePage]);
 
         Assert::same($currentPage->getValidationMessage('action_percent'), 'The maximum value of discount is 100%.');
-
     }
 
     /**
@@ -474,7 +461,7 @@ final class ManagingDiscountsContext implements Context
     /**
      * @Given the :discount discount should have priority :priority
      */
-    public function theDiscountsShouldHavePriority(DiscountInterface $discount, $priority): void
+    public function theDiscountsShouldHavePriority(PromotionInterface $discount, $priority): void
     {
         $this->iWantToModifyADiscount($discount);
 
@@ -494,10 +481,9 @@ final class ManagingDiscountsContext implements Context
     }
 
     /**
-     * @param DiscountInterface $discount
      * @param string $field
      */
-    private function assertIfFieldIsTrue(DiscountInterface $discount, $field): void
+    private function assertIfFieldIsTrue(PromotionInterface $discount, $field): void
     {
         $this->iWantToModifyADiscount($discount);
 

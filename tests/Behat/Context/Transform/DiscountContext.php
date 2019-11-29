@@ -2,21 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Tests\Setono\SyliusBulkDiscountPlugin\Behat\Context\Transform;
+namespace Tests\Setono\SyliusCatalogPromotionsPlugin\Behat\Context\Transform;
 
 use Behat\Behat\Context\Context;
-use Setono\SyliusBulkDiscountPlugin\Model\DiscountInterface;
-use Setono\SyliusBulkDiscountPlugin\Repository\DiscountRepositoryInterface;
+use Setono\SyliusCatalogPromotionsPlugin\Model\PromotionInterface;
+use Setono\SyliusCatalogPromotionsPlugin\Repository\PromotionRepositoryInterface;
 use Webmozart\Assert\Assert;
 
 final class DiscountContext implements Context
 {
-    /**
-     * @var DiscountRepositoryInterface
-     */
+    /** @var PromotionRepositoryInterface */
     private $discountRepository;
 
-    public function __construct(DiscountRepositoryInterface $discountRepository) {
+    public function __construct(PromotionRepositoryInterface $discountRepository)
+    {
         $this->discountRepository = $discountRepository;
     }
 
@@ -25,9 +24,9 @@ final class DiscountContext implements Context
      * @Transform /^"([^"]+)" discount/
      * @Transform :discount
      */
-    public function getDiscountByName($discountName): DiscountInterface
+    public function getDiscountByName($discountName): PromotionInterface
     {
-        /** @var DiscountInterface $discount */
+        /** @var PromotionInterface $discount */
         $discount = $this->discountRepository->findOneBy(['name' => $discountName]);
 
         Assert::notNull($discount, sprintf('Discount with name "%s" does not exist', $discountName));

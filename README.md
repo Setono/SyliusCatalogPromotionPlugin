@@ -1,4 +1,4 @@
-# Sylius Bulk Discount Plugin
+# Sylius Catalog Promotions Plugin
 
 [![Latest Version][ico-version]][link-packagist]
 [![Latest Unstable Version][ico-unstable-version]][link-packagist]
@@ -6,7 +6,7 @@
 [![Build Status][ico-github-actions]][link-github-actions]
 [![Quality Score][ico-code-quality]][link-code-quality]
 
-Plugin for Sylius to define permanent or time-limited discounts for products and automatically update prices.
+Plugin for Sylius to define permanent or time-limited promotions for products and automatically update prices.
 
 ![Screenshot showing specials admin page](docs/admin-create.png)
 
@@ -15,7 +15,7 @@ Plugin for Sylius to define permanent or time-limited discounts for products and
 ### Add plugin to composer.json
 
 ```bash
-composer require setono/sylius-bulk-discount-plugin
+composer require setono/sylius-catalog-promotions-plugin
 ```
 
 ### Register plugin
@@ -26,18 +26,18 @@ composer require setono/sylius-bulk-discount-plugin
 
 return [
     // ...
-    Setono\SyliusBulkDiscountPlugin\SetonoSyliusBulkDiscountPlugin::class => ['all' => true],
+    Setono\SyliusCatalogPromotionsPlugin\SetonoSyliusCatalogPromotionsPlugin::class => ['all' => true],
     Sylius\Bundle\GridBundle\SyliusGridBundle::class => ['all' => true],
     // ...
 ];
 
 ```
 
-**Note**, that we MUST define `SetonoSyliusBulkDiscountPlugin` BEFORE `SyliusGridBundle`.
+**Note**, that we MUST define `SetonoSyliusCatalogPromotionsPlugin` BEFORE `SyliusGridBundle`.
 Otherwise you'll see exception like this:
 
 ```bash
-You have requested a non-existent parameter "setono_sylius_bulk_discount.model.discount.class".  
+You have requested a non-existent parameter "setono_sylius_catalog_promotions.model.promotion.class".  
 ```
 
 ### Add config
@@ -45,15 +45,15 @@ You have requested a non-existent parameter "setono_sylius_bulk_discount.model.d
 ```yaml
 # config/packages/_sylius.yaml
 imports:
-    - { resource: "@SetonoSyliusBulkDiscountPlugin/Resources/config/app/config.yaml" }
+    - { resource: "@SetonoSyliusCatalogPromotionsPlugin/Resources/config/app/config.yaml" }
 ```
 
 ### Add routing
 
 ```yaml
 # config/routes.yaml
-setono_sylius_bulk_discount_admin:
-    resource: "@SetonoSyliusBulkDiscountPlugin/Resources/config/admin_routing.yaml"
+setono_sylius_catalog_promotions_admin:
+    resource: "@SetonoSyliusCatalogPromotionsPlugin/Resources/config/admin_routing.yaml"
     prefix: /admin
 ```
 
@@ -66,8 +66,8 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use Setono\SyliusBulkDiscountPlugin\Model\ChannelPricingInterface;
-use Setono\SyliusBulkDiscountPlugin\Model\ChannelPricingTrait;
+use Setono\SyliusCatalogPromotionsPlugin\Model\ChannelPricingInterface;
+use Setono\SyliusCatalogPromotionsPlugin\Model\ChannelPricingTrait;
 use Sylius\Component\Core\Model\ChannelPricing as BaseChannelPricing;
 
 class ChannelPricing extends BaseChannelPricing implements ChannelPricingInterface
@@ -84,8 +84,8 @@ declare(strict_types=1);
 
 namespace App\Repository;
 
-use Setono\SyliusBulkDiscountPlugin\Doctrine\ORM\ChannelPricingRepositoryTrait;
-use Setono\SyliusBulkDiscountPlugin\Repository\ChannelPricingRepositoryInterface;
+use Setono\SyliusCatalogPromotionsPlugin\Doctrine\ORM\ChannelPricingRepositoryTrait;
+use Setono\SyliusCatalogPromotionsPlugin\Repository\ChannelPricingRepositoryInterface;
 use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 
 class ChannelPricingRepository extends EntityRepository implements ChannelPricingRepositoryInterface
@@ -102,8 +102,8 @@ declare(strict_types=1);
 
 namespace App\Repository;
 
-use Setono\SyliusBulkDiscountPlugin\Doctrine\ORM\ProductRepositoryTrait;
-use Setono\SyliusBulkDiscountPlugin\Repository\ProductRepositoryInterface;
+use Setono\SyliusCatalogPromotionsPlugin\Doctrine\ORM\ProductRepositoryTrait;
+use Setono\SyliusCatalogPromotionsPlugin\Repository\ProductRepositoryInterface;
 use Sylius\Bundle\CoreBundle\Doctrine\ORM\ProductRepository as BaseProductRepository;
 
 class ProductRepository extends BaseProductRepository implements ProductRepositoryInterface
@@ -120,8 +120,8 @@ declare(strict_types=1);
 
 namespace App\Repository;
 
-use Setono\SyliusBulkDiscountPlugin\Doctrine\ORM\ProductVariantRepositoryTrait;
-use Setono\SyliusBulkDiscountPlugin\Repository\ProductVariantRepositoryInterface;
+use Setono\SyliusCatalogPromotionsPlugin\Doctrine\ORM\ProductVariantRepositoryTrait;
+use Setono\SyliusCatalogPromotionsPlugin\Repository\ProductVariantRepositoryInterface;
 use Sylius\Bundle\CoreBundle\Doctrine\ORM\ProductVariantRepository as BaseProductVariantRepository;
 
 class ProductVariantRepository extends BaseProductVariantRepository implements ProductVariantRepositoryInterface
@@ -200,15 +200,15 @@ bin/console sylius:install:assets
 ### Configure CRON to run next command every minute
 
 ```bash
-$ php bin/console setono:sylius-bulk-discount:process
+$ php bin/console setono:sylius-catalog-promotions:process
 ```
 
-[ico-version]: https://poser.pugx.org/setono/sylius-bulk-discount-plugin/v/stable
-[ico-unstable-version]: https://poser.pugx.org/setono/sylius-bulk-discount-plugin/v/unstable
-[ico-license]: https://poser.pugx.org/setono/sylius-bulk-discount-plugin/license
-[ico-github-actions]: https://github.com/Setono/SyliusBulkDiscountPlugin/workflows/CI/badge.svg
-[ico-code-quality]: https://img.shields.io/scrutinizer/g/Setono/SyliusBulkDiscountPlugin.svg?style=flat-square
+[ico-version]: https://poser.pugx.org/setono/sylius-catalog-promotions-plugin/v/stable
+[ico-unstable-version]: https://poser.pugx.org/setono/sylius-catalog-promotions-plugin/v/unstable
+[ico-license]: https://poser.pugx.org/setono/sylius-catalog-promotions-plugin/license
+[ico-github-actions]: https://github.com/Setono/SyliusCatalogPromotionsPlugin/workflows/CI/badge.svg
+[ico-code-quality]: https://img.shields.io/scrutinizer/g/Setono/SyliusCatalogPromotionsPlugin.svg?style=flat-square
 
-[link-packagist]: https://packagist.org/packages/setono/sylius-bulk-discount-plugin
-[link-github-actions]: https://github.com/Setono/SyliusBulkDiscountPlugin/actions
-[link-code-quality]: https://scrutinizer-ci.com/g/Setono/SyliusBulkDiscountPlugin
+[link-packagist]: https://packagist.org/packages/setono/sylius-catalog-promotions-plugin
+[link-github-actions]: https://github.com/Setono/SyliusCatalogPromotionsPlugin/actions
+[link-code-quality]: https://scrutinizer-ci.com/g/Setono/SyliusCatalogPromotionsPlugin

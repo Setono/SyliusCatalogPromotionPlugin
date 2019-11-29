@@ -2,28 +2,25 @@
 
 declare(strict_types=1);
 
-namespace Tests\Setono\SyliusBulkDiscountPlugin\Behat\Context\Domain;
+namespace Tests\Setono\SyliusCatalogPromotionsPlugin\Behat\Context\Domain;
 
 use Behat\Behat\Context\Context;
 use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
-use Setono\SyliusBulkDiscountPlugin\Model\DiscountInterface;
-use Setono\SyliusBulkDiscountPlugin\Repository\DiscountRepositoryInterface;
+use Setono\SyliusCatalogPromotionsPlugin\Model\PromotionInterface;
+use Setono\SyliusCatalogPromotionsPlugin\Repository\PromotionRepositoryInterface;
 use Sylius\Behat\Service\SharedStorageInterface;
 use Webmozart\Assert\Assert;
 
 final class ManagingSpecialsContext implements Context
 {
-    /**
-     * @var SharedStorageInterface
-     */
+    /** @var SharedStorageInterface */
     private $sharedStorage;
 
-    /**
-     * @var DiscountRepositoryInterface
-     */
+    /** @var PromotionRepositoryInterface */
     private $discountRepository;
 
-    public function __construct(SharedStorageInterface $sharedStorage, DiscountRepositoryInterface $specialRepository) {
+    public function __construct(SharedStorageInterface $sharedStorage, PromotionRepositoryInterface $specialRepository)
+    {
         $this->sharedStorage = $sharedStorage;
         $this->discountRepository = $specialRepository;
     }
@@ -31,7 +28,7 @@ final class ManagingSpecialsContext implements Context
     /**
      * @When /^I delete a ("([^"]+)" special)$/
      */
-    public function iDeleteSpecial(DiscountInterface $special)
+    public function iDeleteSpecial(PromotionInterface $special)
     {
         $this->discountRepository->remove($special);
     }
@@ -39,7 +36,7 @@ final class ManagingSpecialsContext implements Context
     /**
      * @When /^I try to delete a ("([^"]+)" special)$/
      */
-    public function iTryToDeleteSpecial(DiscountInterface $special)
+    public function iTryToDeleteSpecial(PromotionInterface $special)
     {
         try {
             $this->discountRepository->remove($special);
@@ -51,7 +48,7 @@ final class ManagingSpecialsContext implements Context
     /**
      * @Then /^(this special) should no longer exist in the special registry$/
      */
-    public function specialShouldNotExistInTheRegistry(DiscountInterface $special)
+    public function specialShouldNotExistInTheRegistry(PromotionInterface $special)
     {
         Assert::null($this->discountRepository->findOneBy(['code' => $special->getCode()]));
     }
@@ -59,7 +56,7 @@ final class ManagingSpecialsContext implements Context
     /**
      * @Then special :special should still exist in the registry
      */
-    public function specialShouldStillExistInTheRegistry(DiscountInterface $special)
+    public function specialShouldStillExistInTheRegistry(PromotionInterface $special)
     {
         Assert::notNull($this->discountRepository->find($special->getId()));
     }

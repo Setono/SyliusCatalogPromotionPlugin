@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Setono\SyliusBulkDiscountPlugin\Registry;
+namespace Setono\SyliusCatalogPromotionsPlugin\Registry;
 
-use Setono\SyliusBulkDiscountPlugin\Rule\RuleInterface;
+use Setono\SyliusCatalogPromotionsPlugin\Rule\RuleInterface;
 use Sylius\Component\Registry\ServiceRegistry;
 
 class RuleServiceRegistry extends ServiceRegistry
@@ -13,7 +13,7 @@ class RuleServiceRegistry extends ServiceRegistry
     {
         parent::__construct(
             RuleInterface::class,
-            'query builder rule'
+            'rule'
         );
     }
 }

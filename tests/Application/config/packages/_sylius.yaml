@@ -6,7 +6,7 @@ imports:
 
     - { resource: "@SyliusShopBundle/Resources/config/app/config.yml" }
 
-    - { resource: "@SetonoSyliusBulkDiscountPlugin/Resources/config/app/config.yaml" }
+    - { resource: "@SetonoSyliusCatalogPromotionsPlugin/Resources/config/app/config.yaml" }
     - { resource: "@AppBundle/Resources/config/app/config.yaml" }
 
 parameters:

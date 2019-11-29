@@ -7,9 +7,9 @@
     <services>
         <defaults public="true" />
 
-        <service id="setono_sylius_bulk_discount.test.factory.discount"
-                 class="Setono\SyliusBulkDiscountPlugin\Test\Factory\TestDiscountFactory">
-            <argument type="service" id="setono_sylius_bulk_discount.factory.discount" />
+        <service id="setono_sylius_catalog_promotions.test.factory.promotion"
+                 class="Setono\SyliusCatalogPromotionsPlugin\Test\Factory\TestPromotionFactory">
+            <argument type="service" id="setono_sylius_catalog_promotions.factory.promotion" />
         </service>
     </services>
 

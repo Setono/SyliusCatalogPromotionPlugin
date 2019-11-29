@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Tests\Setono\SyliusBulkDiscountPlugin\Behat\Context\Setup;
+namespace Tests\Setono\SyliusCatalogPromotionsPlugin\Behat\Context\Setup;
 
 use Behat\Behat\Context\Context;
 use Doctrine\Common\Persistence\ObjectManager;
-use Setono\SyliusBulkDiscountPlugin\Factory\DiscountRuleFactoryInterface;
-use Setono\SyliusBulkDiscountPlugin\Model\Discount;
-use Setono\SyliusBulkDiscountPlugin\Model\DiscountInterface;
-use Setono\SyliusBulkDiscountPlugin\Model\DiscountRuleInterface;
-use Setono\SyliusBulkDiscountPlugin\Repository\DiscountRepositoryInterface;
-use Setono\SyliusBulkDiscountPlugin\Test\Factory\TestDiscountFactoryInterface;
+use Setono\SyliusCatalogPromotionsPlugin\Factory\PromotionRuleFactoryInterface;
+use Setono\SyliusCatalogPromotionsPlugin\Model\Promotion;
+use Setono\SyliusCatalogPromotionsPlugin\Model\PromotionInterface;
+use Setono\SyliusCatalogPromotionsPlugin\Model\PromotionRuleInterface;
+use Setono\SyliusCatalogPromotionsPlugin\Repository\PromotionRepositoryInterface;
+use Setono\SyliusCatalogPromotionsPlugin\Test\Factory\TestPromotionFactoryInterface;
 use Sylius\Behat\Service\SharedStorageInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\ProductInterface;
@@ -19,36 +19,26 @@ use Sylius\Component\Core\Model\TaxonInterface;
 
 final class DiscountContext implements Context
 {
-    /**
-     * @var SharedStorageInterface
-     */
+    /** @var SharedStorageInterface */
     private $sharedStorage;
 
-    /**
-     * @var DiscountRuleFactoryInterface
-     */
+    /** @var PromotionRuleFactoryInterface */
     private $discountRuleFactory;
 
-    /**
-     * @var TestDiscountFactoryInterface
-     */
+    /** @var TestPromotionFactoryInterface */
     private $testDiscountFactory;
 
-    /**
-     * @var DiscountRepositoryInterface
-     */
+    /** @var PromotionRepositoryInterface */
     private $discountRepository;
 
-    /**
-     * @var ObjectManager
-     */
+    /** @var ObjectManager */
     private $objectManager;
 
     public function __construct(
         SharedStorageInterface $sharedStorage,
-        DiscountRuleFactoryInterface $discountRuleFactory,
-        TestDiscountFactoryInterface $testDiscountFactory,
-        DiscountRepositoryInterface $discountRepository,
+        PromotionRuleFactoryInterface $discountRuleFactory,
+        TestPromotionFactoryInterface $testDiscountFactory,
+        PromotionRepositoryInterface $discountRepository,
         ObjectManager $objectManager
     ) {
         $this->sharedStorage = $sharedStorage;
@@ -116,7 +106,7 @@ final class DiscountContext implements Context
     /**
      * @Given /^(this discount) was disabled$/
      */
-    public function thisDiscountDisabled(DiscountInterface $discount)
+    public function thisDiscountDisabled(PromotionInterface $discount)
     {
         $discount->setEnabled(false);
 
@@ -126,7 +116,7 @@ final class DiscountContext implements Context
     /**
      * @Given /^(this discount) was enabled$/
      */
-    public function thisDiscountEnabled(DiscountInterface $discount)
+    public function thisDiscountEnabled(PromotionInterface $discount)
     {
         $discount->setEnabled(true);
 
@@ -136,7 +126,7 @@ final class DiscountContext implements Context
     /**
      * @Given /^(this discount) has already expired$/
      */
-    public function thisDiscountHasExpired(DiscountInterface $discount)
+    public function thisDiscountHasExpired(PromotionInterface $discount)
     {
         $discount->setEndsAt(new \DateTime('1 day ago'));
 
@@ -146,7 +136,7 @@ final class DiscountContext implements Context
     /**
      * @Given /^(this discount) expires tomorrow$/
      */
-    public function thisDiscountExpiresTomorrow(DiscountInterface $discount)
+    public function thisDiscountExpiresTomorrow(PromotionInterface $discount)
     {
         $discount->setEndsAt(new \DateTime('tomorrow'));
 
@@ -156,7 +146,7 @@ final class DiscountContext implements Context
     /**
      * @Given /^(this discount) has started yesterday$/
      */
-    public function thisDiscountHasStartedYesterday(DiscountInterface $discount)
+    public function thisDiscountHasStartedYesterday(PromotionInterface $discount)
     {
         $discount->setStartsAt(new \DateTime('1 day ago'));
 
@@ -166,7 +156,7 @@ final class DiscountContext implements Context
     /**
      * @Given /^(this discount) starts tomorrow$/
      */
-    public function thisDiscountStartsTomorrow(DiscountInterface $discount)
+    public function thisDiscountStartsTomorrow(PromotionInterface $discount)
     {
         $discount->setStartsAt(new \DateTime('tomorrow'));
 
@@ -176,7 +166,7 @@ final class DiscountContext implements Context
     /**
      * @Given /^([^"]+) gives ("[^"]+%") discount$/
      */
-    public function itGivesPercentageDiscount(DiscountInterface $discount, $percentage)
+    public function itGivesPercentageDiscount(PromotionInterface $discount, $percentage)
     {
         $this->persistDiscount(
             $this->setPercentageDiscount($discount, $percentage)
@@ -186,7 +176,7 @@ final class DiscountContext implements Context
     /**
      * @Given /^([^"]+) gives ("[^"]+%") margin$/
      */
-    public function itGivesPercentageMargin(DiscountInterface $discount, $margin)
+    public function itGivesPercentageMargin(PromotionInterface $discount, $margin)
     {
         $this->persistDiscount(
             $this->setPercentageMargin($discount, $margin)
@@ -197,7 +187,7 @@ final class DiscountContext implements Context
      * @Given /^([^"]+) gives(?:| another) ("[^"]+%") off on every product (classified as "[^"]+")$/
      */
     public function itGivesPercentageOffEveryProductClassifiedAs(
-        DiscountInterface $discount,
+        PromotionInterface $discount,
         $percentage,
         TaxonInterface $taxon
     ) {
@@ -205,7 +195,7 @@ final class DiscountContext implements Context
             $discount,
             $percentage,
             $this->discountRuleFactory->createHasTaxon([
-                $taxon->getCode()
+                $taxon->getCode(),
             ])
         );
     }
@@ -214,7 +204,7 @@ final class DiscountContext implements Context
      * @Given /^([^"]+) gives ("[^"]+%") off on every product (classified as "[^"]+" or "[^"]+")$/
      */
     public function itGivesOffOnEveryProductClassifiedAs(
-        DiscountInterface $discount,
+        PromotionInterface $discount,
         $percentage,
         array $discountTaxons
     ) {
@@ -231,7 +221,7 @@ final class DiscountContext implements Context
      * @Given /^([^"]+) gives ("[^"]+%") off on that product$/
      */
     public function itGivesPercentageDiscountOffOnAProduct(
-        DiscountInterface $discount,
+        PromotionInterface $discount,
         $percentage,
         ?ProductInterface $product = null
     ) {
@@ -250,7 +240,7 @@ final class DiscountContext implements Context
      * @Given /^([^"]+) gives ("[^"]+%") off on a ("[^"]+" or "[^"]+" product)$/
      */
     public function itGivesPercentageDiscountOffOnAProducts(
-        DiscountInterface $discount,
+        PromotionInterface $discount,
         $percentage,
         array $products
     ) {
@@ -266,7 +256,7 @@ final class DiscountContext implements Context
      * @Given /^(this discount) applicable for (all channels)$/
      * @Given /^discount :discount applicable for (all channels)$/
      */
-    public function discountApplicableForAllChannels(DiscountInterface $discount, array $channels)
+    public function discountApplicableForAllChannels(PromotionInterface $discount, array $channels)
     {
         foreach ($channels as $channel) {
             $discount->addChannel($channel);
@@ -278,7 +268,7 @@ final class DiscountContext implements Context
     /**
      * @Given /^(the discount) was disabled for the (channel "[^"]+")$/
      */
-    public function theDiscountWasDisabledForTheChannel(DiscountInterface $discount, ChannelInterface $channel)
+    public function theDiscountWasDisabledForTheChannel(PromotionInterface $discount, ChannelInterface $channel)
     {
         $discount->removeChannel($channel);
 
@@ -286,14 +276,13 @@ final class DiscountContext implements Context
     }
 
     /**
-     * @param DiscountInterface $discount
      * @param float $discount
-     * @param DiscountRuleInterface $rule
+     * @param PromotionRuleInterface $rule
      */
     private function createPercentageDiscount(
-        DiscountInterface $discount,
+        PromotionInterface $discount,
         $percentage,
-        DiscountRuleInterface $rule = null
+        PromotionRuleInterface $rule = null
     ) {
         $this->persistDiscount(
             $this->setPercentageDiscount($discount, $percentage),
@@ -301,13 +290,7 @@ final class DiscountContext implements Context
         );
     }
 
-    /**
-     * @param DiscountInterface $discount
-     * @param int $actionPercent
-     * @param string $actionType
-     * @param DiscountRuleInterface|null $rule
-     */
-    private function persistDiscount(DiscountInterface $discount, DiscountRuleInterface $rule = null)
+    private function persistDiscount(PromotionInterface $discount, PromotionRuleInterface $rule = null)
     {
         if (null !== $rule) {
             $discount->addRule($rule);
@@ -317,26 +300,19 @@ final class DiscountContext implements Context
     }
 
     /**
-     * @param DiscountInterface $discount
      * @param float $discount
-     * @return DiscountInterface
      */
-    private function setPercentageDiscount(DiscountInterface $discount, float $percentage): DiscountInterface
+    private function setPercentageDiscount(PromotionInterface $discount, float $percentage): PromotionInterface
     {
-        $discount->setActionType(Discount::ACTION_TYPE_OFF);
+        $discount->setActionType(Promotion::ACTION_TYPE_OFF);
         $discount->setActionPercent($percentage * 100);
 
         return $discount;
     }
 
-    /**
-     * @param DiscountInterface $discount
-     * @param float $margin
-     * @return DiscountInterface
-     */
-    private function setPercentageMargin(DiscountInterface $discount, float $margin): DiscountInterface
+    private function setPercentageMargin(PromotionInterface $discount, float $margin): PromotionInterface
     {
-        $discount->setActionType(Discount::ACTION_TYPE_INCREASE);
+        $discount->setActionType(Promotion::ACTION_TYPE_INCREASE);
         $discount->setActionPercent($margin * 100);
 
         return $discount;
