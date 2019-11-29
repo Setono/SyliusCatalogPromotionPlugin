@@ -9,7 +9,7 @@
         <service id="setono_sylius_catalog_promotions.behat.context.domain.managing_specials"
                  class="Tests\Setono\SyliusCatalogPromotionsPlugin\Behat\Context\Domain\ManagingSpecialsContext">
             <argument type="service" id="sylius.behat.shared_storage"/>
-            <argument type="service" id="setono_sylius_catalog_promotions.repository.discount"/>
+            <argument type="service" id="setono_sylius_catalog_promotions.repository.promotion"/>
         </service>
 
     </services>

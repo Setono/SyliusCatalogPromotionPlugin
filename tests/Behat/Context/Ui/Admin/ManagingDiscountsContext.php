@@ -53,7 +53,7 @@ final class ManagingDiscountsContext implements Context
     }
 
     /**
-     * @When I want to create a new discount
+     * @When I want to create a new promotion
      */
     public function iWantToCreateANewDiscount(): void
     {
@@ -61,8 +61,8 @@ final class ManagingDiscountsContext implements Context
     }
 
     /**
-     * @Given I want to browse discounts
-     * @When I browse discounts
+     * @Given I want to browse promotions
+     * @When I browse promotions
      */
     public function iWantToBrowseDiscounts(): void
     {
@@ -79,13 +79,13 @@ final class ManagingDiscountsContext implements Context
     }
 
     /**
-     * @When I specify :discount% discount
-     * @When I do not specify discount
+     * @When I specify :promotion% promotion
+     * @When I do not specify promotion
      */
-    public function iSpecifyItsDiscount($discount = null): void
+    public function iSpecifyItsDiscount($promotion = null): void
     {
         $this->createPage->specifyActionType(Promotion::ACTION_TYPE_OFF);
-        $this->createPage->specifyActionPercent((float) $discount);
+        $this->createPage->specifyActionPercent((float) $promotion);
     }
 
     /**
@@ -126,17 +126,17 @@ final class ManagingDiscountsContext implements Context
     }
 
     /**
-     * @Then I should see the discount :discountName in the list
-     * @Then the :discountName discount should appear in the registry
-     * @Then the :discountName discount should exist in the registry
-     * @Then this discount should still be named :discountName
-     * @Then discount :discountName should still exist in the registry
+     * @Then I should see the promotion :promotionName in the list
+     * @Then the :promotionName promotion should appear in the registry
+     * @Then the :promotionName promotion should exist in the registry
+     * @Then this promotion should still be named :promotionName
+     * @Then promotion :promotionName should still exist in the registry
      */
-    public function theDiscountShouldAppearInTheRegistry(string $discountName): void
+    public function theDiscountShouldAppearInTheRegistry(string $promotionName): void
     {
         $this->indexPage->open();
 
-        Assert::true($this->indexPage->isSingleResourceOnPage(['name' => $discountName]));
+        Assert::true($this->indexPage->isSingleResourceOnPage(['name' => $promotionName]));
     }
 
     /**
@@ -178,11 +178,11 @@ final class ManagingDiscountsContext implements Context
     }
 
     /**
-     * @When I check (also) the :discountName discount
+     * @When I check (also) the :promotionName promotion
      */
-    public function iCheckTheDiscount(string $discountName): void
+    public function iCheckTheDiscount(string $promotionName): void
     {
-        $this->indexPage->checkResourceOnPage(['name' => $discountName]);
+        $this->indexPage->checkResourceOnPage(['name' => $promotionName]);
     }
 
     /**
@@ -194,8 +194,8 @@ final class ManagingDiscountsContext implements Context
     }
 
     /**
-     * @Then I should see a single discount in the list
-     * @Then there should be :amount discounts
+     * @Then I should see a single promotion in the list
+     * @Then there should be :amount promotions
      */
     public function thereShouldBeDiscount(int $amount = 1): void
     {
@@ -207,7 +207,7 @@ final class ManagingDiscountsContext implements Context
      */
     public function iShouldBeNotifiedThatIsRequired($element): void
     {
-        $this->assertFieldValidationMessage($element, sprintf('Please enter discount %s.', $element));
+        $this->assertFieldValidationMessage($element, sprintf('Please enter promotion %s.', $element));
     }
 
     /**
@@ -219,17 +219,17 @@ final class ManagingDiscountsContext implements Context
     }
 
     /**
-     * @Then I should be notified that discount with this code already exists
+     * @Then I should be notified that promotion with this code already exists
      */
     public function iShouldBeNotifiedThatDiscountWithThisCodeAlreadyExists(): void
     {
-        Assert::same($this->createPage->getValidationMessage('code'), 'The discount with given code already exists.');
+        Assert::same($this->createPage->getValidationMessage('code'), 'The promotion with given code already exists.');
     }
 
     /**
-     * @Then discount with :element :name should not be added
+     * @Then promotion with :element :name should not be added
      */
-    public function discountWithElementValueShouldNotBeAdded($element, $name): void
+    public function promotionWithElementValueShouldNotBeAdded($element, $name): void
     {
         $this->indexPage->open();
 
@@ -237,7 +237,7 @@ final class ManagingDiscountsContext implements Context
     }
 
     /**
-     * @Then there should still be only one discount with :element :value
+     * @Then there should still be only one promotion with :element :value
      */
     public function thereShouldStillBeOnlyOneDiscountWith($element, $value): void
     {
@@ -258,11 +258,11 @@ final class ManagingDiscountsContext implements Context
     }
 
     /**
-     * @Then the :discount discount should be exclusive
+     * @Then the :promotion promotion should be exclusive
      */
-    public function theDiscountShouldBeExclusive(PromotionInterface $discount): void
+    public function theDiscountShouldBeExclusive(PromotionInterface $promotion): void
     {
-        $this->assertIfFieldIsTrue($discount, 'exclusive');
+        $this->assertIfFieldIsTrue($promotion, 'exclusive');
     }
 
     /**
@@ -277,23 +277,23 @@ final class ManagingDiscountsContext implements Context
     }
 
     /**
-     * @Then the :discount discount should be applicable for the :channelName channel
+     * @Then the :promotion promotion should be applicable for the :channelName channel
      */
-    public function theDiscountShouldBeApplicableForTheChannel(PromotionInterface $discount, $channelName): void
+    public function theDiscountShouldBeApplicableForTheChannel(PromotionInterface $promotion, $channelName): void
     {
-        $this->iWantToModifyADiscount($discount);
+        $this->iWantToModifyADiscount($promotion);
 
         Assert::true($this->updatePage->checkChannelsState($channelName));
     }
 
     /**
-     * @Given I want to modify a :discount discount
-     * @Given /^I want to modify (this discount)$/
-     * @Then I should be able to modify a :discount discount
+     * @Given I want to modify a :promotion promotion
+     * @Given /^I want to modify (this promotion)$/
+     * @Then I should be able to modify a :promotion promotion
      */
-    public function iWantToModifyADiscount(PromotionInterface $discount): void
+    public function iWantToModifyADiscount(PromotionInterface $promotion): void
     {
-        $this->updatePage->open(['id' => $discount->getId()]);
+        $this->updatePage->open(['id' => $promotion->getId()]);
     }
 
     /**
@@ -314,25 +314,25 @@ final class ManagingDiscountsContext implements Context
     }
 
     /**
-     * @When /^I delete a ("([^"]+)" discount)$/
-     * @When /^I try to delete a ("([^"]+)" discount)$/
+     * @When /^I delete a ("([^"]+)" promotion)$/
+     * @When /^I try to delete a ("([^"]+)" promotion)$/
      */
-    public function iDeleteDiscount(PromotionInterface $discount): void
+    public function iDeleteDiscount(PromotionInterface $promotion): void
     {
-        $this->sharedStorage->set('discount', $discount);
+        $this->sharedStorage->set('promotion', $promotion);
 
         $this->indexPage->open();
-        $this->indexPage->deleteResourceOnPage(['name' => $discount->getName()]);
+        $this->indexPage->deleteResourceOnPage(['name' => $promotion->getName()]);
     }
 
     /**
-     * @Then /^(this discount) should no longer exist in the discount registry$/
+     * @Then /^(this promotion) should no longer exist in the promotion registry$/
      */
-    public function discountShouldNotExistInTheRegistry(PromotionInterface $discount): void
+    public function promotionShouldNotExistInTheRegistry(PromotionInterface $promotion): void
     {
         $this->indexPage->open();
 
-        Assert::false($this->indexPage->isSingleResourceOnPage(['code' => $discount->getCode()]));
+        Assert::false($this->indexPage->isSingleResourceOnPage(['code' => $promotion->getCode()]));
     }
 
     /**
@@ -341,7 +341,7 @@ final class ManagingDiscountsContext implements Context
     public function iShouldBeNotifiedOfFailure(): void
     {
         $this->notificationChecker->checkNotification(
-            'Cannot delete, the discount is in use.',
+            'Cannot delete, the promotion is in use.',
             NotificationType::failure()
         );
     }
@@ -359,11 +359,11 @@ final class ManagingDiscountsContext implements Context
     }
 
     /**
-     * @Then the :discount discount should be available from :startsDate to :endsDate
+     * @Then the :promotion promotion should be available from :startsDate to :endsDate
      */
-    public function theDiscountShouldBeAvailableFromTo(PromotionInterface $discount, \DateTimeInterface $startsDate, \DateTimeInterface $endsDate): void
+    public function theDiscountShouldBeAvailableFromTo(PromotionInterface $promotion, \DateTimeInterface $startsDate, \DateTimeInterface $endsDate): void
     {
-        $this->iWantToModifyADiscount($discount);
+        $this->iWantToModifyADiscount($promotion);
 
         Assert::true($this->updatePage->hasStartsAt($startsDate));
 
@@ -371,7 +371,7 @@ final class ManagingDiscountsContext implements Context
     }
 
     /**
-     * @Then I should be notified that discount cannot end before it start
+     * @Then I should be notified that promotion cannot end before it start
      */
     public function iShouldBeNotifiedThatDiscountCannotEndBeforeItsEvenStart(): void
     {
@@ -393,29 +393,29 @@ final class ManagingDiscountsContext implements Context
     }
 
     /**
-     * @Then I should be notified that the maximum value of discount is 100%
+     * @Then I should be notified that the maximum value of promotion is 100%
      */
     public function iShouldBeNotifiedThatTheMaximumValueOfDiscountIs100(): void
     {
         /** @var CreatePageInterface|UpdatePageInterface $currentPage */
         $currentPage = $this->currentPageResolver->getCurrentPageWithForm([$this->createPage, $this->updatePage]);
 
-        Assert::same($currentPage->getValidationMessage('action_percent'), 'The maximum value of discount is 100%.');
+        Assert::same($currentPage->getValidationMessage('action_percent'), 'The maximum value of promotion is 100%.');
     }
 
     /**
-     * @Then I should be notified that discount value must be at least 1%
+     * @Then I should be notified that promotion value must be at least 1%
      */
     public function iShouldBeNotifiedThatDiscountValueMustBeAtLeast0(): void
     {
         /** @var CreatePageInterface|UpdatePageInterface $currentPage */
         $currentPage = $this->currentPageResolver->getCurrentPageWithForm([$this->createPage, $this->updatePage]);
 
-        Assert::same($currentPage->getValidationMessage('action_percent'), 'The value of discount must be at least 1%.');
+        Assert::same($currentPage->getValidationMessage('action_percent'), 'The value of promotion must be at least 1%.');
     }
 
     /**
-     * @Then I should see :count discounts on the list
+     * @Then I should see :count promotions on the list
      */
     public function iShouldSeeDiscountsOnTheList($count): void
     {
@@ -424,12 +424,12 @@ final class ManagingDiscountsContext implements Context
         Assert::same(
             (int) $count,
             $actualCount,
-            'There should be %s discount, but there\'s %2$s.'
+            'There should be %s promotion, but there\'s %2$s.'
         );
     }
 
     /**
-     * @Then the first discount on the list should have :field :value
+     * @Then the first promotion on the list should have :field :value
      */
     public function theFirstDiscountOnTheListShouldHave($field, $value): void
     {
@@ -439,12 +439,12 @@ final class ManagingDiscountsContext implements Context
         Assert::same(
             $actualValue,
             $value,
-            sprintf('Expected first discount\'s %s to be "%s", but it is "%s".', $field, $value, $actualValue)
+            sprintf('Expected first promotion\'s %s to be "%s", but it is "%s".', $field, $value, $actualValue)
         );
     }
 
     /**
-     * @Then the last discount on the list should have :field :value
+     * @Then the last promotion on the list should have :field :value
      */
     public function theLastDiscountOnTheListShouldHave($field, $value): void
     {
@@ -454,16 +454,16 @@ final class ManagingDiscountsContext implements Context
         Assert::same(
             $actualValue,
             $value,
-            sprintf('Expected last discount\'s %s to be "%s", but it is "%s".', $field, $value, $actualValue)
+            sprintf('Expected last promotion\'s %s to be "%s", but it is "%s".', $field, $value, $actualValue)
         );
     }
 
     /**
-     * @Given the :discount discount should have priority :priority
+     * @Given the :promotion promotion should have priority :priority
      */
-    public function theDiscountsShouldHavePriority(PromotionInterface $discount, $priority): void
+    public function theDiscountsShouldHavePriority(PromotionInterface $promotion, $priority): void
     {
-        $this->iWantToModifyADiscount($discount);
+        $this->iWantToModifyADiscount($promotion);
 
         Assert::same($this->updatePage->getPriority(), $priority);
     }
@@ -483,9 +483,9 @@ final class ManagingDiscountsContext implements Context
     /**
      * @param string $field
      */
-    private function assertIfFieldIsTrue(PromotionInterface $discount, $field): void
+    private function assertIfFieldIsTrue(PromotionInterface $promotion, $field): void
     {
-        $this->iWantToModifyADiscount($discount);
+        $this->iWantToModifyADiscount($promotion);
 
         Assert::true($this->updatePage->hasResourceValues([$field => 1]));
     }

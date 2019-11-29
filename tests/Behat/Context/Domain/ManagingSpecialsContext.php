@@ -17,12 +17,12 @@ final class ManagingSpecialsContext implements Context
     private $sharedStorage;
 
     /** @var PromotionRepositoryInterface */
-    private $discountRepository;
+    private $promotionRepository;
 
     public function __construct(SharedStorageInterface $sharedStorage, PromotionRepositoryInterface $specialRepository)
     {
         $this->sharedStorage = $sharedStorage;
-        $this->discountRepository = $specialRepository;
+        $this->promotionRepository = $specialRepository;
     }
 
     /**
@@ -30,7 +30,7 @@ final class ManagingSpecialsContext implements Context
      */
     public function iDeleteSpecial(PromotionInterface $special)
     {
-        $this->discountRepository->remove($special);
+        $this->promotionRepository->remove($special);
     }
 
     /**
@@ -39,7 +39,7 @@ final class ManagingSpecialsContext implements Context
     public function iTryToDeleteSpecial(PromotionInterface $special)
     {
         try {
-            $this->discountRepository->remove($special);
+            $this->promotionRepository->remove($special);
         } catch (ForeignKeyConstraintViolationException $exception) {
             $this->sharedStorage->set('last_exception', $exception);
         }
@@ -50,7 +50,7 @@ final class ManagingSpecialsContext implements Context
      */
     public function specialShouldNotExistInTheRegistry(PromotionInterface $special)
     {
-        Assert::null($this->discountRepository->findOneBy(['code' => $special->getCode()]));
+        Assert::null($this->promotionRepository->findOneBy(['code' => $special->getCode()]));
     }
 
     /**
@@ -58,7 +58,7 @@ final class ManagingSpecialsContext implements Context
      */
     public function specialShouldStillExistInTheRegistry(PromotionInterface $special)
     {
-        Assert::notNull($this->discountRepository->find($special->getId()));
+        Assert::notNull($this->promotionRepository->find($special->getId()));
     }
 
     /**

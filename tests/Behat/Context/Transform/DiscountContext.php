@@ -12,25 +12,25 @@ use Webmozart\Assert\Assert;
 final class DiscountContext implements Context
 {
     /** @var PromotionRepositoryInterface */
-    private $discountRepository;
+    private $promotionRepository;
 
-    public function __construct(PromotionRepositoryInterface $discountRepository)
+    public function __construct(PromotionRepositoryInterface $promotionRepository)
     {
-        $this->discountRepository = $discountRepository;
+        $this->promotionRepository = $promotionRepository;
     }
 
     /**
-     * @Transform /^discount "([^"]+)"$/
-     * @Transform /^"([^"]+)" discount/
-     * @Transform :discount
+     * @Transform /^promotion "([^"]+)"$/
+     * @Transform /^"([^"]+)" promotion/
+     * @Transform :promotion
      */
-    public function getDiscountByName($discountName): PromotionInterface
+    public function getDiscountByName($promotionName): PromotionInterface
     {
-        /** @var PromotionInterface $discount */
-        $discount = $this->discountRepository->findOneBy(['name' => $discountName]);
+        /** @var PromotionInterface $promotion */
+        $promotion = $this->promotionRepository->findOneBy(['name' => $promotionName]);
 
-        Assert::notNull($discount, sprintf('Discount with name "%s" does not exist', $discountName));
+        Assert::notNull($promotion, sprintf('Discount with name "%s" does not exist', $promotionName));
 
-        return $discount;
+        return $promotion;
     }
 }

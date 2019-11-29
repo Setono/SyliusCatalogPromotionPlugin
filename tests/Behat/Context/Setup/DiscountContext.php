@@ -23,163 +23,163 @@ final class DiscountContext implements Context
     private $sharedStorage;
 
     /** @var PromotionRuleFactoryInterface */
-    private $discountRuleFactory;
+    private $promotionRuleFactory;
 
     /** @var TestPromotionFactoryInterface */
     private $testDiscountFactory;
 
     /** @var PromotionRepositoryInterface */
-    private $discountRepository;
+    private $promotionRepository;
 
     /** @var ObjectManager */
     private $objectManager;
 
     public function __construct(
         SharedStorageInterface $sharedStorage,
-        PromotionRuleFactoryInterface $discountRuleFactory,
+        PromotionRuleFactoryInterface $promotionRuleFactory,
         TestPromotionFactoryInterface $testDiscountFactory,
-        PromotionRepositoryInterface $discountRepository,
+        PromotionRepositoryInterface $promotionRepository,
         ObjectManager $objectManager
     ) {
         $this->sharedStorage = $sharedStorage;
-        $this->discountRuleFactory = $discountRuleFactory;
+        $this->promotionRuleFactory = $promotionRuleFactory;
         $this->testDiscountFactory = $testDiscountFactory;
-        $this->discountRepository = $discountRepository;
+        $this->promotionRepository = $promotionRepository;
         $this->objectManager = $objectManager;
     }
 
     /**
-     * @Given there is (also) a discount :discountName
-     * @Given there is (also) a discount :discountName applicable for :channel channel
-     * @Given there is a discount :discountName identified by :discountCode code
+     * @Given there is (also) a promotion :promotionName
+     * @Given there is (also) a promotion :promotionName applicable for :channel channel
+     * @Given there is a promotion :promotionName identified by :promotionCode code
      */
-    public function thereIsDiscount(string $discountName, ?string $discountCode = null, ?ChannelInterface $channel = null): void
+    public function thereIsDiscount(string $promotionName, ?string $promotionCode = null, ?ChannelInterface $channel = null): void
     {
         if (null === $channel) {
             $channel = $this->sharedStorage->get('channel');
         }
 
-        $discount = $this->testDiscountFactory
-            ->createForChannel($discountName, $channel)
+        $promotion = $this->testDiscountFactory
+            ->createForChannel($promotionName, $channel)
         ;
 
-        if (null !== $discountCode) {
-            $discount->setCode($discountCode);
+        if (null !== $promotionCode) {
+            $promotion->setCode($promotionCode);
         }
 
-        $this->discountRepository->add($discount);
-        $this->sharedStorage->set('discount', $discount);
+        $this->promotionRepository->add($promotion);
+        $this->sharedStorage->set('promotion', $promotion);
     }
 
     /**
-     * @Given /^there is a discount "([^"]+)" with priority ([^"]+)$/
+     * @Given /^there is a promotion "([^"]+)" with priority ([^"]+)$/
      */
-    public function thereIsADiscountWithPriority($discountName, $priority)
+    public function thereIsADiscountWithPriority($promotionName, $priority)
     {
-        $discount = $this->testDiscountFactory
-            ->createForChannel($discountName, $this->sharedStorage->get('channel'))
+        $promotion = $this->testDiscountFactory
+            ->createForChannel($promotionName, $this->sharedStorage->get('channel'))
         ;
 
-        $discount->setPriority((int) $priority);
-        $discount->setActionPercent(1); // todo should be moved to another method
+        $promotion->setPriority((int) $priority);
+        $promotion->setActionPercent(1); // todo should be moved to another method
 
-        $this->discountRepository->add($discount);
-        $this->sharedStorage->set('discount', $discount);
+        $this->promotionRepository->add($promotion);
+        $this->sharedStorage->set('promotion', $promotion);
     }
 
     /**
-     * @Given /^there is an exclusive discount "([^"]+)"(?:| with priority ([^"]+))$/
+     * @Given /^there is an exclusive promotion "([^"]+)"(?:| with priority ([^"]+))$/
      */
-    public function thereIsAnExclusiveDiscountWithPriority($discountName, $priority = 0)
+    public function thereIsAnExclusiveDiscountWithPriority($promotionName, $priority = 0)
     {
-        $discount = $this->testDiscountFactory
-            ->createForChannel($discountName, $this->sharedStorage->get('channel'))
+        $promotion = $this->testDiscountFactory
+            ->createForChannel($promotionName, $this->sharedStorage->get('channel'))
         ;
 
-        $discount->setExclusive(true);
-        $discount->setPriority((int) $priority);
+        $promotion->setExclusive(true);
+        $promotion->setPriority((int) $priority);
 
-        $this->discountRepository->add($discount);
-        $this->sharedStorage->set('discount', $discount);
+        $this->promotionRepository->add($promotion);
+        $this->sharedStorage->set('promotion', $promotion);
     }
 
     /**
-     * @Given /^(this discount) was disabled$/
+     * @Given /^(this promotion) was disabled$/
      */
-    public function thisDiscountDisabled(PromotionInterface $discount)
+    public function thisDiscountDisabled(PromotionInterface $promotion)
     {
-        $discount->setEnabled(false);
+        $promotion->setEnabled(false);
 
         $this->objectManager->flush();
     }
 
     /**
-     * @Given /^(this discount) was enabled$/
+     * @Given /^(this promotion) was enabled$/
      */
-    public function thisDiscountEnabled(PromotionInterface $discount)
+    public function thisDiscountEnabled(PromotionInterface $promotion)
     {
-        $discount->setEnabled(true);
+        $promotion->setEnabled(true);
 
         $this->objectManager->flush();
     }
 
     /**
-     * @Given /^(this discount) has already expired$/
+     * @Given /^(this promotion) has already expired$/
      */
-    public function thisDiscountHasExpired(PromotionInterface $discount)
+    public function thisDiscountHasExpired(PromotionInterface $promotion)
     {
-        $discount->setEndsAt(new \DateTime('1 day ago'));
+        $promotion->setEndsAt(new \DateTime('1 day ago'));
 
         $this->objectManager->flush();
     }
 
     /**
-     * @Given /^(this discount) expires tomorrow$/
+     * @Given /^(this promotion) expires tomorrow$/
      */
-    public function thisDiscountExpiresTomorrow(PromotionInterface $discount)
+    public function thisDiscountExpiresTomorrow(PromotionInterface $promotion)
     {
-        $discount->setEndsAt(new \DateTime('tomorrow'));
+        $promotion->setEndsAt(new \DateTime('tomorrow'));
 
         $this->objectManager->flush();
     }
 
     /**
-     * @Given /^(this discount) has started yesterday$/
+     * @Given /^(this promotion) has started yesterday$/
      */
-    public function thisDiscountHasStartedYesterday(PromotionInterface $discount)
+    public function thisDiscountHasStartedYesterday(PromotionInterface $promotion)
     {
-        $discount->setStartsAt(new \DateTime('1 day ago'));
+        $promotion->setStartsAt(new \DateTime('1 day ago'));
 
         $this->objectManager->flush();
     }
 
     /**
-     * @Given /^(this discount) starts tomorrow$/
+     * @Given /^(this promotion) starts tomorrow$/
      */
-    public function thisDiscountStartsTomorrow(PromotionInterface $discount)
+    public function thisDiscountStartsTomorrow(PromotionInterface $promotion)
     {
-        $discount->setStartsAt(new \DateTime('tomorrow'));
+        $promotion->setStartsAt(new \DateTime('tomorrow'));
 
         $this->objectManager->flush();
     }
 
     /**
-     * @Given /^([^"]+) gives ("[^"]+%") discount$/
+     * @Given /^([^"]+) gives ("[^"]+%") promotion$/
      */
-    public function itGivesPercentageDiscount(PromotionInterface $discount, $percentage)
+    public function itGivesPercentageDiscount(PromotionInterface $promotion, $percentage)
     {
         $this->persistDiscount(
-            $this->setPercentageDiscount($discount, $percentage)
+            $this->setPercentageDiscount($promotion, $percentage)
         );
     }
 
     /**
      * @Given /^([^"]+) gives ("[^"]+%") margin$/
      */
-    public function itGivesPercentageMargin(PromotionInterface $discount, $margin)
+    public function itGivesPercentageMargin(PromotionInterface $promotion, $margin)
     {
         $this->persistDiscount(
-            $this->setPercentageMargin($discount, $margin)
+            $this->setPercentageMargin($promotion, $margin)
         );
     }
 
@@ -187,14 +187,14 @@ final class DiscountContext implements Context
      * @Given /^([^"]+) gives(?:| another) ("[^"]+%") off on every product (classified as "[^"]+")$/
      */
     public function itGivesPercentageOffEveryProductClassifiedAs(
-        PromotionInterface $discount,
+        PromotionInterface $promotion,
         $percentage,
         TaxonInterface $taxon
     ) {
         $this->createPercentageDiscount(
-            $discount,
+            $promotion,
             $percentage,
-            $this->discountRuleFactory->createHasTaxon([
+            $this->promotionRuleFactory->createHasTaxon([
                 $taxon->getCode(),
             ])
         );
@@ -204,15 +204,15 @@ final class DiscountContext implements Context
      * @Given /^([^"]+) gives ("[^"]+%") off on every product (classified as "[^"]+" or "[^"]+")$/
      */
     public function itGivesOffOnEveryProductClassifiedAs(
-        PromotionInterface $discount,
+        PromotionInterface $promotion,
         $percentage,
-        array $discountTaxons
+        array $promotionTaxons
     ) {
-        $discountTaxonsCodes = [$discountTaxons[0]->getCode(), $discountTaxons[1]->getCode()];
+        $promotionTaxonsCodes = [$promotionTaxons[0]->getCode(), $promotionTaxons[1]->getCode()];
         $this->createPercentageDiscount(
-            $discount,
+            $promotion,
             $percentage,
-            $this->discountRuleFactory->createHasTaxon($discountTaxonsCodes)
+            $this->promotionRuleFactory->createHasTaxon($promotionTaxonsCodes)
         );
     }
 
@@ -221,7 +221,7 @@ final class DiscountContext implements Context
      * @Given /^([^"]+) gives ("[^"]+%") off on that product$/
      */
     public function itGivesPercentageDiscountOffOnAProduct(
-        PromotionInterface $discount,
+        PromotionInterface $promotion,
         $percentage,
         ?ProductInterface $product = null
     ) {
@@ -230,9 +230,9 @@ final class DiscountContext implements Context
         }
 
         $this->createPercentageDiscount(
-            $discount,
+            $promotion,
             $percentage,
-            $this->discountRuleFactory->createContainsProduct($product->getCode())
+            $this->promotionRuleFactory->createContainsProduct($product->getCode())
         );
     }
 
@@ -240,81 +240,81 @@ final class DiscountContext implements Context
      * @Given /^([^"]+) gives ("[^"]+%") off on a ("[^"]+" or "[^"]+" product)$/
      */
     public function itGivesPercentageDiscountOffOnAProducts(
-        PromotionInterface $discount,
+        PromotionInterface $promotion,
         $percentage,
         array $products
     ) {
         $productCodes = [$products[0]->getCode(), $products[1]->getCode()];
         $this->createPercentageDiscount(
-            $discount,
+            $promotion,
             $percentage,
-            $this->discountRuleFactory->createContainsProducts($productCodes)
+            $this->promotionRuleFactory->createContainsProducts($productCodes)
         );
     }
 
     /**
-     * @Given /^(this discount) applicable for (all channels)$/
-     * @Given /^discount :discount applicable for (all channels)$/
+     * @Given /^(this promotion) applicable for (all channels)$/
+     * @Given /^promotion :promotion applicable for (all channels)$/
      */
-    public function discountApplicableForAllChannels(PromotionInterface $discount, array $channels)
+    public function promotionApplicableForAllChannels(PromotionInterface $promotion, array $channels)
     {
         foreach ($channels as $channel) {
-            $discount->addChannel($channel);
+            $promotion->addChannel($channel);
         }
 
         $this->objectManager->flush();
     }
 
     /**
-     * @Given /^(the discount) was disabled for the (channel "[^"]+")$/
+     * @Given /^(the promotion) was disabled for the (channel "[^"]+")$/
      */
-    public function theDiscountWasDisabledForTheChannel(PromotionInterface $discount, ChannelInterface $channel)
+    public function theDiscountWasDisabledForTheChannel(PromotionInterface $promotion, ChannelInterface $channel)
     {
-        $discount->removeChannel($channel);
+        $promotion->removeChannel($channel);
 
         $this->objectManager->flush();
     }
 
     /**
-     * @param float $discount
+     * @param float $promotion
      * @param PromotionRuleInterface $rule
      */
     private function createPercentageDiscount(
-        PromotionInterface $discount,
+        PromotionInterface $promotion,
         $percentage,
         PromotionRuleInterface $rule = null
     ) {
         $this->persistDiscount(
-            $this->setPercentageDiscount($discount, $percentage),
+            $this->setPercentageDiscount($promotion, $percentage),
             $rule
         );
     }
 
-    private function persistDiscount(PromotionInterface $discount, PromotionRuleInterface $rule = null)
+    private function persistDiscount(PromotionInterface $promotion, PromotionRuleInterface $rule = null)
     {
         if (null !== $rule) {
-            $discount->addRule($rule);
+            $promotion->addRule($rule);
         }
 
         $this->objectManager->flush();
     }
 
     /**
-     * @param float $discount
+     * @param float $promotion
      */
-    private function setPercentageDiscount(PromotionInterface $discount, float $percentage): PromotionInterface
+    private function setPercentageDiscount(PromotionInterface $promotion, float $percentage): PromotionInterface
     {
-        $discount->setActionType(Promotion::ACTION_TYPE_OFF);
-        $discount->setActionPercent($percentage * 100);
+        $promotion->setActionType(Promotion::ACTION_TYPE_OFF);
+        $promotion->setActionPercent($percentage * 100);
 
-        return $discount;
+        return $promotion;
     }
 
-    private function setPercentageMargin(PromotionInterface $discount, float $margin): PromotionInterface
+    private function setPercentageMargin(PromotionInterface $promotion, float $margin): PromotionInterface
     {
-        $discount->setActionType(Promotion::ACTION_TYPE_INCREASE);
-        $discount->setActionPercent($margin * 100);
+        $promotion->setActionType(Promotion::ACTION_TYPE_INCREASE);
+        $promotion->setActionPercent($margin * 100);
 
-        return $discount;
+        return $promotion;
     }
 }

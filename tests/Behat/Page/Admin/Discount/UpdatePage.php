@@ -51,16 +51,16 @@ class UpdatePage extends BaseUpdatePage implements UpdatePageInterface
     {
         $timestamp = $dateTime->getTimestamp();
 
-        $this->getDocument()->fillField('setono_sylius_catalog_promotions_discount_startsAt_date', date('Y-m-d', $timestamp));
-        $this->getDocument()->fillField('setono_sylius_catalog_promotions_discount_startsAt_time', date('H:i', $timestamp));
+        $this->getDocument()->fillField('setono_sylius_catalog_promotions_promotion_startsAt_date', date('Y-m-d', $timestamp));
+        $this->getDocument()->fillField('setono_sylius_catalog_promotions_promotion_startsAt_time', date('H:i', $timestamp));
     }
 
     public function setEndsAt(\DateTimeInterface $dateTime)
     {
         $timestamp = $dateTime->getTimestamp();
 
-        $this->getDocument()->fillField('setono_sylius_catalog_promotions_discount_endsAt_date', date('Y-m-d', $timestamp));
-        $this->getDocument()->fillField('setono_sylius_catalog_promotions_discount_endsAt_time', date('H:i', $timestamp));
+        $this->getDocument()->fillField('setono_sylius_catalog_promotions_promotion_endsAt_date', date('Y-m-d', $timestamp));
+        $this->getDocument()->fillField('setono_sylius_catalog_promotions_promotion_endsAt_time', date('H:i', $timestamp));
     }
 
     public function hasStartsAt(\DateTimeInterface $dateTime): bool

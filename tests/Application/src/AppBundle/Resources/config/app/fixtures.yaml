@@ -14,7 +14,7 @@ sylius_fixtures:
                                 channels:
                                     - "US_WEB"
 
-                discount:
+                catalog_promotion:
                     options:
                         custom:
                             accidentally_enabled_mugs_20_off:

@@ -46,7 +46,7 @@ final class CommandsContext implements Context
     }
 
     /**
-     * @When I run process discounts CLI command
+     * @When I run process promotions CLI command
      */
     public function iRunProcessDiscountsCommand(): void
     {

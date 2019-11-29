@@ -6,12 +6,12 @@
     <services>
         <defaults public="true"/>
 
-        <service id="setono_sylius_catalog_promotions.behat.context.setup.discount"
+        <service id="setono_sylius_catalog_promotions.behat.context.setup.promotion"
                  class="Tests\Setono\SyliusCatalogPromotionsPlugin\Behat\Context\Setup\DiscountContext">
             <argument type="service" id="sylius.behat.shared_storage"/>
-            <argument type="service" id="setono_sylius_catalog_promotions.factory.discount_rule"/>
-            <argument type="service" id="setono_sylius_catalog_promotions.test.factory.discount"/>
-            <argument type="service" id="setono_sylius_catalog_promotions.repository.discount"/>
+            <argument type="service" id="setono_sylius_catalog_promotions.factory.promotion_rule"/>
+            <argument type="service" id="setono_sylius_catalog_promotions.test.factory.promotion"/>
+            <argument type="service" id="setono_sylius_catalog_promotions.repository.promotion"/>
             <argument type="service" id="doctrine.orm.entity_manager"/>
         </service>
 
