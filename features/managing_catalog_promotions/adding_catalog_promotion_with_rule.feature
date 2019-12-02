@@ -10,7 +10,7 @@ Feature: Adding a new discount with rule
         And I am logged in as an administrator
 
     @ui @javascript
-    Scenario: Adding a new discount with taxon rule
+    Scenario: Adding a new catalog promotion with taxon rule
         Given I want to create a new catalog promotion
         When I specify its code as "HOLIDAY_SALE"
         And I name it "Holiday sale"

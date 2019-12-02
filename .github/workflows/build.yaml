@@ -79,3 +79,6 @@ jobs:
                     DISPLAY: ':99'
                     APP_ENV: test
                     DATABASE_URL: mysql://root:root@127.0.0.1/setono_sylius_catalog_promotion?serverVersion=5.7
+            -   name: Upload logs
+                if: failure()
+                run: vendor/bin/upload-textfiles etc/build/*.log
