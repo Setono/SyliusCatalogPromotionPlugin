@@ -53,6 +53,10 @@ jobs:
                 env:
                     APP_ENV: test
                     DATABASE_URL: mysql://root:root@127.0.0.1/setono_sylius_catalog_promotion?serverVersion=5.7
+            ###########################################################################
+            # The steps below is used to run behat with javascript.                   #
+            # If you don't have scenarios with javascript, you can remove these steps #
+            ###########################################################################
             -   name: Install and build Yarn dependencies
                 run: |
                     (cd tests/Application && yarn install)
@@ -84,7 +88,7 @@ jobs:
                     DISPLAY: ':99'
                     APP_ENV: test
                     DATABASE_URL: mysql://root:root@127.0.0.1/setono_sylius_catalog_promotion?serverVersion=5.7
-            -   name: Run behat
+            -   name: Run behat with javascript
                 run: vendor/bin/behat --strict -vvv --no-interaction --tags="@javascript" || vendor/bin/behat --strict -vvv --no-interaction --tags="@javascript" --rerun
                 env:
                     DISPLAY: ':99'
