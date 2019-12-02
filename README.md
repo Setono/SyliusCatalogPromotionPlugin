@@ -206,7 +206,7 @@ $ php bin/console setono:sylius-catalog-promotion:process
 [ico-version]: https://poser.pugx.org/setono/sylius-catalog-promotion-plugin/v/stable
 [ico-unstable-version]: https://poser.pugx.org/setono/sylius-catalog-promotion-plugin/v/unstable
 [ico-license]: https://poser.pugx.org/setono/sylius-catalog-promotion-plugin/license
-[ico-github-actions]: https://github.com/Setono/SyliusCatalogPromotionPlugin/workflows/CI/badge.svg
+[ico-github-actions]: https://github.com/Setono/SyliusCatalogPromotionPlugin/workflows/build/badge.svg
 [ico-code-quality]: https://img.shields.io/scrutinizer/g/Setono/SyliusCatalogPromotionPlugin.svg?style=flat-square
 
 [link-packagist]: https://packagist.org/packages/setono/sylius-catalog-promotion-plugin
