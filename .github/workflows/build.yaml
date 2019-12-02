@@ -55,21 +55,27 @@ jobs:
             -   name: Configure display
                 run: |
                     /sbin/start-stop-daemon --start --quiet --pidfile /tmp/xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0 1680x1050x16
-                    export DISPLAY=:99
             -   name: Download and run Chromedriver
                 run: |
                     curl http://chromedriver.storage.googleapis.com/2.34/chromedriver_linux64.zip > chromedriver.zip
                     unzip chromedriver.zip
                     chmod +x chromedriver
                     chromedriver > /dev/null 2>&1 &
+                env:
+                    DISPLAY: ':99'
             -   name: Download and run Selenium
                 run: |
                     curl http://selenium-release.storage.googleapis.com/3.4/selenium-server-standalone-3.4.0.jar > selenium.jar
                     java -Dwebdriver.chrome.driver=chromedriver -jar selenium.jar > /dev/null 2>&1 &
+                env:
+                    DISPLAY: ':99'
             -   name: Run webserver
                 run: (cd tests/Application && bin/console server:run 127.0.0.1:8080 --quiet > /dev/null 2>&1 &)
+                env:
+                    DISPLAY: ':99'
             -   name: Run behat
                 run: vendor/bin/behat --strict -vvv --no-interaction || vendor/bin/behat --strict -vvv --no-interaction --rerun
                 env:
+                    DISPLAY: ':99'
                     APP_ENV: test
                     DATABASE_URL: mysql://root:root@127.0.0.1/setono_sylius_catalog_promotion?serverVersion=5.7
