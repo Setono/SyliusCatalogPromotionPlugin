@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Setono\SyliusCatalogPromotionPlugin\Behat\Page\Admin\Discount;
+namespace Tests\Setono\SyliusCatalogPromotionPlugin\Behat\Page\Admin\Promotion;
 
 use Sylius\Behat\Page\Admin\Crud\UpdatePageInterface as BaseUpdatePageInterface;
 

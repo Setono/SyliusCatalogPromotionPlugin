@@ -9,7 +9,7 @@ use Setono\SyliusCatalogPromotionPlugin\Model\PromotionInterface;
 use Setono\SyliusCatalogPromotionPlugin\Repository\PromotionRepositoryInterface;
 use Webmozart\Assert\Assert;
 
-final class DiscountContext implements Context
+final class CatalogPromotionContext implements Context
 {
     /** @var PromotionRepositoryInterface */
     private $promotionRepository;
@@ -20,16 +20,16 @@ final class DiscountContext implements Context
     }
 
     /**
-     * @Transform /^promotion "([^"]+)"$/
-     * @Transform /^"([^"]+)" promotion/
-     * @Transform :promotion
+     * @Transform /^catalog promotion "([^"]+)"$/
+     * @Transform /^"([^"]+)" catalog promotion/
+     * @Transform :catalogPromotion
      */
-    public function getDiscountByName($promotionName): PromotionInterface
+    public function getCatalogPromotionByName($name): PromotionInterface
     {
         /** @var PromotionInterface $promotion */
-        $promotion = $this->promotionRepository->findOneBy(['name' => $promotionName]);
+        $promotion = $this->promotionRepository->findOneBy(['name' => $name]);
 
-        Assert::notNull($promotion, sprintf('Discount with name "%s" does not exist', $promotionName));
+        Assert::notNull($promotion, sprintf('Catalog promotion with name "%s" does not exist', $name));
 
         return $promotion;
     }

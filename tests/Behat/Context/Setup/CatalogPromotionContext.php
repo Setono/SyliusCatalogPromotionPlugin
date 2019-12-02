@@ -17,7 +17,7 @@ use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Model\TaxonInterface;
 
-final class DiscountContext implements Context
+final class CatalogPromotionContext implements Context
 {
     /** @var SharedStorageInterface */
     private $sharedStorage;
@@ -49,11 +49,11 @@ final class DiscountContext implements Context
     }
 
     /**
-     * @Given there is (also) a promotion :promotionName
-     * @Given there is (also) a promotion :promotionName applicable for :channel channel
-     * @Given there is a promotion :promotionName identified by :promotionCode code
+     * @Given there is (also) a catalog promotion :promotionName
+     * @Given there is (also) a catalog promotion :promotionName applicable for :channel channel
+     * @Given there is a catalog promotion :promotionName identified by :promotionCode code
      */
-    public function thereIsDiscount(string $promotionName, ?string $promotionCode = null, ?ChannelInterface $channel = null): void
+    public function thereIsACatalogPromotion(string $promotionName, ?string $promotionCode = null, ?ChannelInterface $channel = null): void
     {
         if (null === $channel) {
             $channel = $this->sharedStorage->get('channel');
@@ -68,11 +68,11 @@ final class DiscountContext implements Context
         }
 
         $this->promotionRepository->add($promotion);
-        $this->sharedStorage->set('promotion', $promotion);
+        $this->sharedStorage->set('catalog_promotion', $promotion);
     }
 
     /**
-     * @Given /^there is a promotion "([^"]+)" with priority ([^"]+)$/
+     * @Given /^there is a catalog promotion "([^"]+)" with priority ([^"]+)$/
      */
     public function thereIsADiscountWithPriority($promotionName, $priority)
     {
@@ -84,11 +84,11 @@ final class DiscountContext implements Context
         $promotion->setActionPercent(1); // todo should be moved to another method
 
         $this->promotionRepository->add($promotion);
-        $this->sharedStorage->set('promotion', $promotion);
+        $this->sharedStorage->set('catalog_promotion', $promotion);
     }
 
     /**
-     * @Given /^there is an exclusive promotion "([^"]+)"(?:| with priority ([^"]+))$/
+     * @Given /^there is an exclusive catalog promotion "([^"]+)"(?:| with priority ([^"]+))$/
      */
     public function thereIsAnExclusiveDiscountWithPriority($promotionName, $priority = 0)
     {
@@ -100,7 +100,7 @@ final class DiscountContext implements Context
         $promotion->setPriority((int) $priority);
 
         $this->promotionRepository->add($promotion);
-        $this->sharedStorage->set('promotion', $promotion);
+        $this->sharedStorage->set('catalog_promotion', $promotion);
     }
 
     /**
@@ -164,7 +164,7 @@ final class DiscountContext implements Context
     }
 
     /**
-     * @Given /^([^"]+) gives ("[^"]+%") promotion$/
+     * @Given /^([^"]+) gives ("[^"]+%") discount/
      */
     public function itGivesPercentageDiscount(PromotionInterface $promotion, $percentage)
     {
