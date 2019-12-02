@@ -14,6 +14,7 @@ Feature: Adding a new discount with rule
         Given I want to create a new catalog promotion
         When I specify its code as "HOLIDAY_SALE"
         And I name it "Holiday sale"
+        And I specify 10% action percent
         And I add the "Product having one of taxons" rule configured with "T-Shirts" or "Mugs"
         And I add it
         Then I should be notified that it has been successfully created
@@ -26,6 +27,7 @@ Feature: Adding a new discount with rule
         And I want to create a new catalog promotion
         When I specify its code as "PHP_SPECIAL"
         And I name it "PHP Special"
+        And I specify 10% action percent
         And I add the "Product is one of" rule configured with the "PHP T-Shirt" or "PHP Mug" product
         And I add it
         Then I should be notified that it has been successfully created
@@ -37,6 +39,7 @@ Feature: Adding a new discount with rule
         And I want to create a new catalog promotion
         When I specify its code as "PHP_TSHIRT_SPECIAL"
         And I name it "PHP T-Shirt discount"
+        And I specify 10% action percent
         And I add the "Product is" rule configured with the "PHP T-Shirt" product
         And I add it
         Then I should be notified that it has been successfully created
