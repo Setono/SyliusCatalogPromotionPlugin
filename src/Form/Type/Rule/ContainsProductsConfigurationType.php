@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Setono\SyliusCatalogPromotionsPlugin\Form\Type\Rule;
+namespace Setono\SyliusCatalogPromotionPlugin\Form\Type\Rule;
 
 use Sylius\Bundle\ProductBundle\Form\Type\ProductAutocompleteChoiceType;
 use Symfony\Component\Form\AbstractType;
@@ -23,7 +23,7 @@ final class ContainsProductsConfigurationType extends AbstractType
     {
         $builder
             ->add('products', ProductAutocompleteChoiceType::class, [
-                'label' => 'setono_sylius_catalog_promotions.form.promotion_rule.contains_products_configuration.products',
+                'label' => 'setono_sylius_catalog_promotion.form.promotion_rule.contains_products_configuration.products',
                 'multiple' => true,
             ])
         ;
@@ -33,6 +33,6 @@ final class ContainsProductsConfigurationType extends AbstractType
 
     public function getBlockPrefix(): string
     {
-        return 'setono_sylius_catalog_promotions_promotion_rule_contains_products_configuration';
+        return 'setono_sylius_catalog_promotion_promotion_rule_contains_products_configuration';
     }
 }

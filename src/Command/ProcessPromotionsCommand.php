@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Setono\SyliusCatalogPromotionsPlugin\Command;
+namespace Setono\SyliusCatalogPromotionPlugin\Command;
 
 use DateTime;
 use DateTimeInterface;
@@ -12,13 +12,13 @@ use Safe\Exceptions\StringsException;
 use function Safe\file_get_contents;
 use function Safe\file_put_contents;
 use function Safe\sprintf;
-use Setono\SyliusCatalogPromotionsPlugin\Model\PromotionInterface;
-use Setono\SyliusCatalogPromotionsPlugin\Repository\ChannelPricingRepositoryInterface;
-use Setono\SyliusCatalogPromotionsPlugin\Repository\ProductRepositoryInterface;
-use Setono\SyliusCatalogPromotionsPlugin\Repository\ProductVariantRepositoryInterface;
-use Setono\SyliusCatalogPromotionsPlugin\Repository\PromotionRepositoryInterface;
-use Setono\SyliusCatalogPromotionsPlugin\Rule\ManuallyDiscountedProductsExcludedRule;
-use Setono\SyliusCatalogPromotionsPlugin\Rule\RuleInterface;
+use Setono\SyliusCatalogPromotionPlugin\Model\PromotionInterface;
+use Setono\SyliusCatalogPromotionPlugin\Repository\ChannelPricingRepositoryInterface;
+use Setono\SyliusCatalogPromotionPlugin\Repository\ProductRepositoryInterface;
+use Setono\SyliusCatalogPromotionPlugin\Repository\ProductVariantRepositoryInterface;
+use Setono\SyliusCatalogPromotionPlugin\Repository\PromotionRepositoryInterface;
+use Setono\SyliusCatalogPromotionPlugin\Rule\ManuallyDiscountedProductsExcludedRule;
+use Setono\SyliusCatalogPromotionPlugin\Rule\RuleInterface;
 use Sylius\Component\Registry\ServiceRegistryInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Command\LockableTrait;
@@ -31,7 +31,7 @@ final class ProcessPromotionsCommand extends Command
 {
     use LockableTrait;
 
-    protected static $defaultName = 'setono:sylius-catalog-promotions:process';
+    protected static $defaultName = 'setono:sylius-catalog-promotion:process';
 
     /** @var ChannelPricingRepositoryInterface */
     private $channelPricingRepository;

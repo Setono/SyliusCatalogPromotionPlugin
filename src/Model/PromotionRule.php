@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Setono\SyliusCatalogPromotionsPlugin\Model;
+namespace Setono\SyliusCatalogPromotionPlugin\Model;
 
 class PromotionRule implements PromotionRuleInterface
 {

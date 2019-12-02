@@ -1,4 +1,4 @@
-@setono_sylius_catalog_promotions_managing_discounts
+@setono_sylius_catalog_promotion_managing_discounts
 Feature: Special unique code validation
     In order to uniquely identify discounts
     As an Administrator

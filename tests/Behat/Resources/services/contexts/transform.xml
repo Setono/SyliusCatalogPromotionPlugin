@@ -5,9 +5,9 @@
     <services>
         <defaults public="true"/>
 
-        <service id="setono_sylius_catalog_promotions.behat.context.transform.promotion"
-                 class="Tests\Setono\SyliusCatalogPromotionsPlugin\Behat\Context\Transform\DiscountContext">
-            <argument type="service" id="setono_sylius_catalog_promotions.repository.promotion"/>
+        <service id="setono_sylius_catalog_promotion.behat.context.transform.promotion"
+                 class="Tests\Setono\SyliusCatalogPromotionPlugin\Behat\Context\Transform\DiscountContext">
+            <argument type="service" id="setono_sylius_catalog_promotion.repository.promotion"/>
         </service>
 
     </services>

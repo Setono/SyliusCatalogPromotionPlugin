@@ -1,4 +1,4 @@
-@setono_sylius_catalog_promotions_commands
+@setono_sylius_catalog_promotion_commands
 Feature: Special CLI feature
     In order to enable/disable specials via CLI
     As a Developer

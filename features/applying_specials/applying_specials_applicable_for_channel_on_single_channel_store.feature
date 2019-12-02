@@ -1,4 +1,4 @@
-@setono_sylius_catalog_promotions_applying_specials
+@setono_sylius_catalog_promotion_applying_specials
 Feature: Applying only specials enabled for given channel
     As an Administrator
     I want to have only available specials applied to products prices

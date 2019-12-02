@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Setono\SyliusCatalogPromotionsPlugin\Doctrine\ORM;
+namespace Setono\SyliusCatalogPromotionPlugin\Doctrine\ORM;
 
 use DateTime;
-use Setono\SyliusCatalogPromotionsPlugin\Repository\PromotionRepositoryInterface;
+use Setono\SyliusCatalogPromotionPlugin\Repository\PromotionRepositoryInterface;
 use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 
 class PromotionRepository extends EntityRepository implements PromotionRepositoryInterface

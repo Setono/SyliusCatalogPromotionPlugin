@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Tests\Setono\SyliusCatalogPromotionsPlugin\Behat\Behaviour;
+namespace Tests\Setono\SyliusCatalogPromotionPlugin\Behat\Behaviour;
 
-use Setono\SyliusCatalogPromotionsPlugin\Model\Promotion;
+use Setono\SyliusCatalogPromotionPlugin\Model\Promotion;
 use Sylius\Behat\Behaviour\DocumentAccessor;
 use Webmozart\Assert\Assert;
 

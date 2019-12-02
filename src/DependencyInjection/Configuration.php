@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Setono\SyliusCatalogPromotionsPlugin\DependencyInjection;
+namespace Setono\SyliusCatalogPromotionPlugin\DependencyInjection;
 
 use function method_exists;
-use Setono\SyliusCatalogPromotionsPlugin\Doctrine\ORM\PromotionRepository;
-use Setono\SyliusCatalogPromotionsPlugin\Form\Type\PromotionRuleType;
-use Setono\SyliusCatalogPromotionsPlugin\Form\Type\PromotionType;
-use Setono\SyliusCatalogPromotionsPlugin\Model\Promotion;
-use Setono\SyliusCatalogPromotionsPlugin\Model\PromotionInterface;
-use Setono\SyliusCatalogPromotionsPlugin\Model\PromotionRule;
-use Setono\SyliusCatalogPromotionsPlugin\Model\PromotionRuleInterface;
+use Setono\SyliusCatalogPromotionPlugin\Doctrine\ORM\PromotionRepository;
+use Setono\SyliusCatalogPromotionPlugin\Form\Type\PromotionRuleType;
+use Setono\SyliusCatalogPromotionPlugin\Form\Type\PromotionType;
+use Setono\SyliusCatalogPromotionPlugin\Model\Promotion;
+use Setono\SyliusCatalogPromotionPlugin\Model\PromotionInterface;
+use Setono\SyliusCatalogPromotionPlugin\Model\PromotionRule;
+use Setono\SyliusCatalogPromotionPlugin\Model\PromotionRuleInterface;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceController;
 use Sylius\Bundle\ResourceBundle\SyliusResourceBundle;
 use Sylius\Component\Resource\Factory\Factory;
@@ -23,12 +23,12 @@ final class Configuration implements ConfigurationInterface
 {
     public function getConfigTreeBuilder(): TreeBuilder
     {
-        $treeBuilder = new TreeBuilder('setono_sylius_catalog_promotions');
+        $treeBuilder = new TreeBuilder('setono_sylius_catalog_promotion');
         if (method_exists($treeBuilder, 'getRootNode')) {
             $rootNode = $treeBuilder->getRootNode();
         } else {
             // BC layer for symfony/config 4.1 and older
-            $rootNode = $treeBuilder->root('setono_sylius_catalog_promotions');
+            $rootNode = $treeBuilder->root('setono_sylius_catalog_promotion');
         }
 
         $rootNode

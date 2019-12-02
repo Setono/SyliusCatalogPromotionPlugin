@@ -7,8 +7,8 @@
     <services>
         <defaults public="true"/>
 
-        <service id="setono_sylius_catalog_promotions.behat.context.dump.special"
-                 class="Tests\Setono\SyliusCatalogPromotionsPlugin\Behat\Context\Dump\SpecialContext">
+        <service id="setono_sylius_catalog_promotion.behat.context.dump.special"
+                 class="Tests\Setono\SyliusCatalogPromotionPlugin\Behat\Context\Dump\SpecialContext">
             <argument type="service" id="sylius.behat.shared_storage"/>
         </service>
 

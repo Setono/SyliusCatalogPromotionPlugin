@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Setono\SyliusCatalogPromotionsPlugin\Form\Type;
+namespace Setono\SyliusCatalogPromotionPlugin\Form\Type;
 
 use Sylius\Bundle\PromotionBundle\Form\Type\Core\AbstractConfigurationCollectionType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -18,6 +18,6 @@ final class PromotionRuleCollectionType extends AbstractConfigurationCollectionT
 
     public function getBlockPrefix(): string
     {
-        return 'setono_sylius_catalog_promotions_promotion_rule_collection';
+        return 'setono_sylius_catalog_promotion_promotion_rule_collection';
     }
 }

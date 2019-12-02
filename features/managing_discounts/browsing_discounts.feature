@@ -1,4 +1,4 @@
-@setono_sylius_catalog_promotions_managing_discounts
+@setono_sylius_catalog_promotion_managing_discounts
 Feature: Browsing discounts
     In order to see all discount
     As an Administrator

@@ -1,6 +1,6 @@
 <?php
 
-use Tests\Setono\SyliusCatalogPromotionsPlugin\Application\Kernel;
+use Tests\Setono\SyliusCatalogPromotionPlugin\Application\Kernel;
 use Symfony\Component\Debug\Debug;
 use Symfony\Component\HttpFoundation\Request;
 

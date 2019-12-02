@@ -1,7 +1,7 @@
 {
-    "name": "setono/sylius-catalog-promotions-plugin",
+    "name": "setono/sylius-catalog-promotion-plugin",
     "type": "sylius-plugin",
-    "description": "Catalog promotions plugin for Sylius",
+    "description": "Catalog promotion plugin for Sylius",
     "keywords": [
         "sylius",
         "sylius-plugin",
@@ -56,8 +56,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Setono\\SyliusCatalogPromotionsPlugin\\": "src/",
-            "Tests\\Setono\\SyliusCatalogPromotionsPlugin\\": "tests/"
+            "Setono\\SyliusCatalogPromotionPlugin\\": "src/",
+            "Tests\\Setono\\SyliusCatalogPromotionPlugin\\": "tests/"
         }
     },
     "autoload-dev": {

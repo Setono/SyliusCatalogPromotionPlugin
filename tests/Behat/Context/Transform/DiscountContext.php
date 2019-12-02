@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Setono\SyliusCatalogPromotionsPlugin\Behat\Context\Transform;
+namespace Tests\Setono\SyliusCatalogPromotionPlugin\Behat\Context\Transform;
 
 use Behat\Behat\Context\Context;
-use Setono\SyliusCatalogPromotionsPlugin\Model\PromotionInterface;
-use Setono\SyliusCatalogPromotionsPlugin\Repository\PromotionRepositoryInterface;
+use Setono\SyliusCatalogPromotionPlugin\Model\PromotionInterface;
+use Setono\SyliusCatalogPromotionPlugin\Repository\PromotionRepositoryInterface;
 use Webmozart\Assert\Assert;
 
 final class DiscountContext implements Context

@@ -1,4 +1,4 @@
-# Sylius Catalog Promotions Plugin
+# Sylius Catalog Promotion Plugin
 
 [![Latest Version][ico-version]][link-packagist]
 [![Latest Unstable Version][ico-unstable-version]][link-packagist]
@@ -15,7 +15,7 @@ Plugin for Sylius to define permanent or time-limited promotions for products an
 ### Add plugin to composer.json
 
 ```bash
-composer require setono/sylius-catalog-promotions-plugin
+composer require setono/sylius-catalog-promotion-plugin
 ```
 
 ### Register plugin
@@ -26,18 +26,18 @@ composer require setono/sylius-catalog-promotions-plugin
 
 return [
     // ...
-    Setono\SyliusCatalogPromotionsPlugin\SetonoSyliusCatalogPromotionsPlugin::class => ['all' => true],
+    Setono\SyliusCatalogPromotionPlugin\SetonoSyliusCatalogPromotionPlugin::class => ['all' => true],
     Sylius\Bundle\GridBundle\SyliusGridBundle::class => ['all' => true],
     // ...
 ];
 
 ```
 
-**Note**, that we MUST define `SetonoSyliusCatalogPromotionsPlugin` BEFORE `SyliusGridBundle`.
+**Note**, that we MUST define `SetonoSyliusCatalogPromotionPlugin` BEFORE `SyliusGridBundle`.
 Otherwise you'll see exception like this:
 
 ```bash
-You have requested a non-existent parameter "setono_sylius_catalog_promotions.model.promotion.class".  
+You have requested a non-existent parameter "setono_sylius_catalog_promotion.model.promotion.class".  
 ```
 
 ### Add config
@@ -45,15 +45,15 @@ You have requested a non-existent parameter "setono_sylius_catalog_promotions.mo
 ```yaml
 # config/packages/_sylius.yaml
 imports:
-    - { resource: "@SetonoSyliusCatalogPromotionsPlugin/Resources/config/app/config.yaml" }
+    - { resource: "@SetonoSyliusCatalogPromotionPlugin/Resources/config/app/config.yaml" }
 ```
 
 ### Add routing
 
 ```yaml
 # config/routes.yaml
-setono_sylius_catalog_promotions_admin:
-    resource: "@SetonoSyliusCatalogPromotionsPlugin/Resources/config/admin_routing.yaml"
+setono_sylius_catalog_promotion_admin:
+    resource: "@SetonoSyliusCatalogPromotionPlugin/Resources/config/admin_routing.yaml"
     prefix: /admin
 ```
 
@@ -66,8 +66,8 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use Setono\SyliusCatalogPromotionsPlugin\Model\ChannelPricingInterface;
-use Setono\SyliusCatalogPromotionsPlugin\Model\ChannelPricingTrait;
+use Setono\SyliusCatalogPromotionPlugin\Model\ChannelPricingInterface;
+use Setono\SyliusCatalogPromotionPlugin\Model\ChannelPricingTrait;
 use Sylius\Component\Core\Model\ChannelPricing as BaseChannelPricing;
 
 class ChannelPricing extends BaseChannelPricing implements ChannelPricingInterface
@@ -84,8 +84,8 @@ declare(strict_types=1);
 
 namespace App\Repository;
 
-use Setono\SyliusCatalogPromotionsPlugin\Doctrine\ORM\ChannelPricingRepositoryTrait;
-use Setono\SyliusCatalogPromotionsPlugin\Repository\ChannelPricingRepositoryInterface;
+use Setono\SyliusCatalogPromotionPlugin\Doctrine\ORM\ChannelPricingRepositoryTrait;
+use Setono\SyliusCatalogPromotionPlugin\Repository\ChannelPricingRepositoryInterface;
 use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 
 class ChannelPricingRepository extends EntityRepository implements ChannelPricingRepositoryInterface
@@ -102,8 +102,8 @@ declare(strict_types=1);
 
 namespace App\Repository;
 
-use Setono\SyliusCatalogPromotionsPlugin\Doctrine\ORM\ProductRepositoryTrait;
-use Setono\SyliusCatalogPromotionsPlugin\Repository\ProductRepositoryInterface;
+use Setono\SyliusCatalogPromotionPlugin\Doctrine\ORM\ProductRepositoryTrait;
+use Setono\SyliusCatalogPromotionPlugin\Repository\ProductRepositoryInterface;
 use Sylius\Bundle\CoreBundle\Doctrine\ORM\ProductRepository as BaseProductRepository;
 
 class ProductRepository extends BaseProductRepository implements ProductRepositoryInterface
@@ -120,8 +120,8 @@ declare(strict_types=1);
 
 namespace App\Repository;
 
-use Setono\SyliusCatalogPromotionsPlugin\Doctrine\ORM\ProductVariantRepositoryTrait;
-use Setono\SyliusCatalogPromotionsPlugin\Repository\ProductVariantRepositoryInterface;
+use Setono\SyliusCatalogPromotionPlugin\Doctrine\ORM\ProductVariantRepositoryTrait;
+use Setono\SyliusCatalogPromotionPlugin\Repository\ProductVariantRepositoryInterface;
 use Sylius\Bundle\CoreBundle\Doctrine\ORM\ProductVariantRepository as BaseProductVariantRepository;
 
 class ProductVariantRepository extends BaseProductVariantRepository implements ProductVariantRepositoryInterface
@@ -200,15 +200,15 @@ bin/console sylius:install:assets
 ### Configure CRON to run next command every minute
 
 ```bash
-$ php bin/console setono:sylius-catalog-promotions:process
+$ php bin/console setono:sylius-catalog-promotion:process
 ```
 
-[ico-version]: https://poser.pugx.org/setono/sylius-catalog-promotions-plugin/v/stable
-[ico-unstable-version]: https://poser.pugx.org/setono/sylius-catalog-promotions-plugin/v/unstable
-[ico-license]: https://poser.pugx.org/setono/sylius-catalog-promotions-plugin/license
-[ico-github-actions]: https://github.com/Setono/SyliusCatalogPromotionsPlugin/workflows/CI/badge.svg
-[ico-code-quality]: https://img.shields.io/scrutinizer/g/Setono/SyliusCatalogPromotionsPlugin.svg?style=flat-square
+[ico-version]: https://poser.pugx.org/setono/sylius-catalog-promotion-plugin/v/stable
+[ico-unstable-version]: https://poser.pugx.org/setono/sylius-catalog-promotion-plugin/v/unstable
+[ico-license]: https://poser.pugx.org/setono/sylius-catalog-promotion-plugin/license
+[ico-github-actions]: https://github.com/Setono/SyliusCatalogPromotionPlugin/workflows/CI/badge.svg
+[ico-code-quality]: https://img.shields.io/scrutinizer/g/Setono/SyliusCatalogPromotionPlugin.svg?style=flat-square
 
-[link-packagist]: https://packagist.org/packages/setono/sylius-catalog-promotions-plugin
-[link-github-actions]: https://github.com/Setono/SyliusCatalogPromotionsPlugin/actions
-[link-code-quality]: https://scrutinizer-ci.com/g/Setono/SyliusCatalogPromotionsPlugin
+[link-packagist]: https://packagist.org/packages/setono/sylius-catalog-promotion-plugin
+[link-github-actions]: https://github.com/Setono/SyliusCatalogPromotionPlugin/actions
+[link-code-quality]: https://scrutinizer-ci.com/g/Setono/SyliusCatalogPromotionPlugin

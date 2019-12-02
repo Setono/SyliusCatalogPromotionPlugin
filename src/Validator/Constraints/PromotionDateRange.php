@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Setono\SyliusCatalogPromotionsPlugin\Validator\Constraints;
+namespace Setono\SyliusCatalogPromotionPlugin\Validator\Constraints;
 
 use Symfony\Component\Validator\Constraint;
 
 final class PromotionDateRange extends Constraint
 {
     /** @var string */
-    public $message = 'setono_sylius_catalog_promotions.promotion.end_date_cannot_be_set_prior_start_date';
+    public $message = 'setono_sylius_catalog_promotion.promotion.end_date_cannot_be_set_prior_start_date';
 
     public function getTargets(): string
     {
@@ -18,6 +18,6 @@ final class PromotionDateRange extends Constraint
 
     public function validatedBy(): string
     {
-        return 'setono_sylius_catalog_promotions_promotion_date_range_validator';
+        return 'setono_sylius_catalog_promotion_promotion_date_range_validator';
     }
 }

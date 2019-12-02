@@ -1,10 +1,10 @@
 sylius_grid:
     grids:
-        setono_sylius_catalog_promotions_admin_promotion:
+        setono_sylius_catalog_promotion_admin_promotion:
             driver:
                 name: doctrine/orm
                 options:
-                    class: "%setono_sylius_catalog_promotions.model.promotion.class%"
+                    class: "%setono_sylius_catalog_promotion.model.promotion.class%"
             sorting:
                 priority: desc
             fields:

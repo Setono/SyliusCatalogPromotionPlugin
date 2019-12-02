@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Setono\SyliusCatalogPromotionsPlugin\EventListener;
+namespace Setono\SyliusCatalogPromotionPlugin\EventListener;
 
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
@@ -10,7 +10,7 @@ use Doctrine\ORM\Events;
 use RuntimeException;
 use Safe\Exceptions\StringsException;
 use function Safe\sprintf;
-use Setono\SyliusCatalogPromotionsPlugin\Model\ChannelPricingInterface;
+use Setono\SyliusCatalogPromotionPlugin\Model\ChannelPricingInterface;
 
 final class AddChannelPricingIndicesSubscriber implements EventSubscriber
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Setono\SyliusCatalogPromotionsPlugin\Form\Type;
+namespace Setono\SyliusCatalogPromotionPlugin\Form\Type;
 
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -14,7 +14,7 @@ final class PromotionRuleType extends AbstractConfigurablePromotionElementType
 
         $builder
             ->add('type', PromotionRuleChoiceType::class, [
-                'label' => 'setono_sylius_catalog_promotions.form.promotion_rule.type',
+                'label' => 'setono_sylius_catalog_promotion.form.promotion_rule.type',
                 'attr' => [
                     'data-form-collection' => 'update',
                 ],
@@ -24,6 +24,6 @@ final class PromotionRuleType extends AbstractConfigurablePromotionElementType
 
     public function getBlockPrefix(): string
     {
-        return 'setono_sylius_catalog_promotions_promotion_rule';
+        return 'setono_sylius_catalog_promotion_promotion_rule';
     }
 }

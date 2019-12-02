@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Setono\SyliusCatalogPromotionsPlugin\Form\Type;
+namespace Setono\SyliusCatalogPromotionPlugin\Form\Type;
 
-use Setono\SyliusCatalogPromotionsPlugin\Model\ConfigurablePromotionElementInterface;
+use Setono\SyliusCatalogPromotionPlugin\Model\ConfigurablePromotionElementInterface;
 use Sylius\Bundle\ResourceBundle\Form\Registry\FormTypeRegistryInterface;
 use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
 use Symfony\Component\Form\FormBuilderInterface;

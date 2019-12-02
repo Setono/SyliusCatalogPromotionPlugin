@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Setono\SyliusCatalogPromotionsPlugin\Registry;
+namespace Setono\SyliusCatalogPromotionPlugin\Registry;
 
-use Setono\SyliusCatalogPromotionsPlugin\Rule\RuleInterface;
+use Setono\SyliusCatalogPromotionPlugin\Rule\RuleInterface;
 use Sylius\Component\Registry\ServiceRegistry;
 
 class RuleServiceRegistry extends ServiceRegistry

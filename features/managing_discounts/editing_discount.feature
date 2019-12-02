@@ -1,4 +1,4 @@
-@setono_sylius_catalog_promotions_managing_discounts
+@setono_sylius_catalog_promotion_managing_discounts
 Feature: Editing discount
   In order to change discount details
   As an Administrator

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Setono\SyliusCatalogPromotionsPlugin\Menu;
+namespace Setono\SyliusCatalogPromotionPlugin\Menu;
 
 use Knp\Menu\ItemInterface;
 use Sylius\Bundle\UiBundle\Menu\Event\MenuBuilderEvent;
@@ -20,10 +20,10 @@ final class AdminMenuListener
 
         $marketingSubmenu
             ->addChild('catalog_promotions', [
-                'route' => 'setono_sylius_catalog_promotions_admin_promotion_index',
+                'route' => 'setono_sylius_catalog_promotion_admin_promotion_index',
             ])
             ->setAttribute('type', 'link')
-            ->setLabel('setono_sylius_catalog_promotions.menu.admin.main.marketing.promotions')
+            ->setLabel('setono_sylius_catalog_promotion.menu.admin.main.marketing.promotions')
             ->setLabelAttributes([
                 'icon' => 'tasks',
             ])

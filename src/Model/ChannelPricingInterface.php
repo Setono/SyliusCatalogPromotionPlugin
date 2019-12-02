@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Setono\SyliusCatalogPromotionsPlugin\Model;
+namespace Setono\SyliusCatalogPromotionPlugin\Model;
 
 use Sylius\Component\Core\Model\ChannelPricingInterface as BaseChannelPricingInterface;
 use Sylius\Component\Resource\Model\TimestampableInterface;

@@ -1,5 +1,5 @@
 imports:
-    - { resource: "@SetonoSyliusCatalogPromotionsPlugin/Resources/config/grids/promotion.yaml" }
+    - { resource: "@SetonoSyliusCatalogPromotionPlugin/Resources/config/grids/promotion.yaml" }
 
 doctrine:
     orm:

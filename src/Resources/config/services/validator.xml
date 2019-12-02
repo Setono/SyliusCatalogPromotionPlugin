@@ -6,10 +6,10 @@
     <services>
         <defaults public="true"/>
 
-        <service id="setono_sylius_catalog_promotions.validator.date_range"
-                 class="Setono\SyliusCatalogPromotionsPlugin\Validator\Constraints\PromotionDateRangeValidator">
+        <service id="setono_sylius_catalog_promotion.validator.date_range"
+                 class="Setono\SyliusCatalogPromotionPlugin\Validator\Constraints\PromotionDateRangeValidator">
             <tag name="validator.constraint_validator"
-                 alias="setono_sylius_catalog_promotions_promotion_date_range_validator"/>
+                 alias="setono_sylius_catalog_promotion_promotion_date_range_validator"/>
         </service>
     </services>
 </container>

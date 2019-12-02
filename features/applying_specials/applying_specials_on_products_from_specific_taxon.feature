@@ -1,4 +1,4 @@
-@setono_sylius_catalog_promotions_applying_specials
+@setono_sylius_catalog_promotion_applying_specials
 Feature: Receiving percentage discount on products from specific taxon
     As an Administrator
     I want assign discounts to products from specific taxons
