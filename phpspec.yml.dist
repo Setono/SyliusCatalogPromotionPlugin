@@ -1,4 +1,4 @@
 suites:
     main:
-        namespace: Setono\SyliusCatalogPromotionsPlugin
-        psr4_prefix: Setono\SyliusCatalogPromotionsPlugin
+        namespace: Setono\SyliusCatalogPromotionPlugin
+        psr4_prefix: Setono\SyliusCatalogPromotionPlugin

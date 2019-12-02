@@ -1,4 +1,4 @@
-@setono_sylius_catalog_promotions_managing_discounts
+@setono_sylius_catalog_promotion_managing_discounts
 Feature: Sorting listed discounts by priority
     In order to change the order by which discounts are used
     As an Administrator

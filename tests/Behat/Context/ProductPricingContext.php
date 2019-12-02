@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Tests\Setono\SyliusCatalogPromotionsPlugin\Behat\Context;
+namespace Tests\Setono\SyliusCatalogPromotionPlugin\Behat\Context;
 
 use Behat\Behat\Context\Context;
-use Setono\SyliusCatalogPromotionsPlugin\Model\ProductInterface;
+use Setono\SyliusCatalogPromotionPlugin\Model\ProductInterface;
 use Sylius\Behat\Service\SharedStorage;
 use Sylius\Behat\Service\SharedStorageInterface;
 use Sylius\Component\Core\Model\ChannelInterface;

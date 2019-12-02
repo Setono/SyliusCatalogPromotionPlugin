@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Setono\SyliusCatalogPromotionsPlugin\Doctrine\ORM;
+namespace Setono\SyliusCatalogPromotionPlugin\Doctrine\ORM;
 
 trait ProductRepositoryTrait
 {

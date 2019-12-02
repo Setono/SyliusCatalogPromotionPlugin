@@ -1,4 +1,4 @@
-@setono_sylius_catalog_promotions_applying_discounts
+@setono_sylius_catalog_promotion_applying_discounts
 Feature: Receiving discount from most prioritized exclusive discount
     As an Administrator
     I want exclusive discounts applied in prioritized order

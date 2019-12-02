@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Tests\Setono\SyliusCatalogPromotionsPlugin\Behat\Context\Dump;
+namespace Tests\Setono\SyliusCatalogPromotionPlugin\Behat\Context\Dump;
 
 use Behat\Behat\Context\Context;
-use Setono\SyliusCatalogPromotionsPlugin\Model\PromotionInterface;
+use Setono\SyliusCatalogPromotionPlugin\Model\PromotionInterface;
 use Sylius\Behat\Service\SharedStorage;
 use Sylius\Behat\Service\SharedStorageInterface;
 

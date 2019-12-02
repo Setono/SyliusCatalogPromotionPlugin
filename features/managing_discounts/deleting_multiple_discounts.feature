@@ -1,4 +1,4 @@
-@setono_sylius_catalog_promotions_managing_discounts
+@setono_sylius_catalog_promotion_managing_discounts
 Feature: Deleting multiple discounts
     In order to remove test, obsolete or incorrect discounts in an efficient way
     As an Administrator

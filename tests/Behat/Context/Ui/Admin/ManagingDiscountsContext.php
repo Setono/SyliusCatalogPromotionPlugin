@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Tests\Setono\SyliusCatalogPromotionsPlugin\Behat\Context\Ui\Admin;
+namespace Tests\Setono\SyliusCatalogPromotionPlugin\Behat\Context\Ui\Admin;
 
 use Behat\Behat\Context\Context;
-use Setono\SyliusCatalogPromotionsPlugin\Model\Promotion;
-use Setono\SyliusCatalogPromotionsPlugin\Model\PromotionInterface;
+use Setono\SyliusCatalogPromotionPlugin\Model\Promotion;
+use Setono\SyliusCatalogPromotionPlugin\Model\PromotionInterface;
 use Sylius\Behat\NotificationType;
 use Sylius\Behat\Service\NotificationCheckerInterface;
 use Sylius\Behat\Service\Resolver\CurrentPageResolverInterface;
 use Sylius\Behat\Service\SharedStorageInterface;
-use Tests\Setono\SyliusCatalogPromotionsPlugin\Behat\Page\Admin\Discount\CreatePageInterface;
-use Tests\Setono\SyliusCatalogPromotionsPlugin\Behat\Page\Admin\Discount\IndexPageInterface;
-use Tests\Setono\SyliusCatalogPromotionsPlugin\Behat\Page\Admin\Discount\UpdatePageInterface;
+use Tests\Setono\SyliusCatalogPromotionPlugin\Behat\Page\Admin\Discount\CreatePageInterface;
+use Tests\Setono\SyliusCatalogPromotionPlugin\Behat\Page\Admin\Discount\IndexPageInterface;
+use Tests\Setono\SyliusCatalogPromotionPlugin\Behat\Page\Admin\Discount\UpdatePageInterface;
 use Webmozart\Assert\Assert;
 
 final class ManagingDiscountsContext implements Context

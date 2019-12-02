@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Setono\SyliusCatalogPromotionsPlugin\Repository;
+namespace Setono\SyliusCatalogPromotionPlugin\Repository;
 
-use Setono\SyliusCatalogPromotionsPlugin\Model\PromotionInterface;
+use Setono\SyliusCatalogPromotionPlugin\Model\PromotionInterface;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 
 interface PromotionRepositoryInterface extends RepositoryInterface, HasAnyBeenUpdatedSinceRepositoryInterface

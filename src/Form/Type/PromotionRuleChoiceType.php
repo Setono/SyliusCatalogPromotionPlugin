@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Setono\SyliusCatalogPromotionsPlugin\Form\Type;
+namespace Setono\SyliusCatalogPromotionPlugin\Form\Type;
 
 use function Safe\array_flip;
 use Safe\Exceptions\ArrayException;
@@ -37,6 +37,6 @@ final class PromotionRuleChoiceType extends AbstractType
 
     public function getBlockPrefix(): string
     {
-        return 'setono_sylius_catalog_promotions_promotion_rule_choice';
+        return 'setono_sylius_catalog_promotion_promotion_rule_choice';
     }
 }

@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Setono\SyliusCatalogPromotionsPlugin\Fixture\Factory;
+namespace Setono\SyliusCatalogPromotionPlugin\Fixture\Factory;
 
 use DateTime;
 use DateTimeInterface;
 use Exception;
 use Faker\Generator;
-use Setono\SyliusCatalogPromotionsPlugin\Model\Promotion;
-use Setono\SyliusCatalogPromotionsPlugin\Model\PromotionInterface;
-use Setono\SyliusCatalogPromotionsPlugin\Model\PromotionRuleInterface;
+use Setono\SyliusCatalogPromotionPlugin\Model\Promotion;
+use Setono\SyliusCatalogPromotionPlugin\Model\PromotionInterface;
+use Setono\SyliusCatalogPromotionPlugin\Model\PromotionRuleInterface;
 use Sylius\Bundle\CoreBundle\Fixture\Factory\AbstractExampleFactory;
 use Sylius\Bundle\CoreBundle\Fixture\OptionsResolver\LazyOption;
 use Sylius\Component\Channel\Repository\ChannelRepositoryInterface;

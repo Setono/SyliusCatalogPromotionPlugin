@@ -5,8 +5,8 @@
                   xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                                       http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-    <mapped-superclass name="Setono\SyliusCatalogPromotionsPlugin\Model\Promotion"
-                       table="setono_sylius_catalog_promotions__promotion">
+    <mapped-superclass name="Setono\SyliusCatalogPromotionPlugin\Model\Promotion"
+                       table="setono_sylius_catalog_promotion__promotion">
         <id name="id" type="integer">
             <generator strategy="AUTO"/>
         </id>
@@ -37,7 +37,7 @@
         </field>
 
         <many-to-many field="channels" target-entity="Sylius\Component\Channel\Model\ChannelInterface">
-            <join-table name="setono_sylius_catalog_promotions__promotion_channels">
+            <join-table name="setono_sylius_catalog_promotion__promotion_channels">
                 <join-columns>
                     <join-column name="promotion_id" referenced-column-name="id" nullable="false" on-delete="CASCADE"/>
                 </join-columns>
@@ -47,7 +47,7 @@
             </join-table>
         </many-to-many>
 
-        <one-to-many field="rules" target-entity="Setono\SyliusCatalogPromotionsPlugin\Model\PromotionRuleInterface"
+        <one-to-many field="rules" target-entity="Setono\SyliusCatalogPromotionPlugin\Model\PromotionRuleInterface"
                      mapped-by="promotion" orphan-removal="true">
             <cascade>
                 <cascade-all/>

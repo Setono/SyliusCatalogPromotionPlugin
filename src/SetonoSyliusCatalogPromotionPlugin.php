@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Setono\SyliusCatalogPromotionsPlugin;
+namespace Setono\SyliusCatalogPromotionPlugin;
 
-use Setono\SyliusCatalogPromotionsPlugin\DependencyInjection\Compiler\RegisterRulesPass;
+use Setono\SyliusCatalogPromotionPlugin\DependencyInjection\Compiler\RegisterRulesPass;
 use Sylius\Bundle\CoreBundle\Application\SyliusPluginTrait;
 use Sylius\Bundle\ResourceBundle\AbstractResourceBundle;
 use Sylius\Bundle\ResourceBundle\SyliusResourceBundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-final class SetonoSyliusCatalogPromotionsPlugin extends AbstractResourceBundle
+final class SetonoSyliusCatalogPromotionPlugin extends AbstractResourceBundle
 {
     use SyliusPluginTrait;
 

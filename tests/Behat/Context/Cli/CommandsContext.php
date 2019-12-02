@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Tests\Setono\SyliusCatalogPromotionsPlugin\Behat\Context\Cli;
+namespace Tests\Setono\SyliusCatalogPromotionPlugin\Behat\Context\Cli;
 
 use Behat\Behat\Context\Context;
-use Setono\SyliusCatalogPromotionsPlugin\Command\ProcessPromotionsCommand;
+use Setono\SyliusCatalogPromotionPlugin\Command\ProcessPromotionsCommand;
 use Sylius\Behat\Service\SharedStorage;
 use Sylius\Behat\Service\SharedStorageInterface;
 use Symfony\Bundle\FrameworkBundle\Console\Application;

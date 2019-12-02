@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Setono\SyliusCatalogPromotionsPlugin\Factory;
+namespace Setono\SyliusCatalogPromotionPlugin\Factory;
 
 use InvalidArgumentException;
 use Safe\Exceptions\StringsException;
 use function Safe\sprintf;
-use Setono\SyliusCatalogPromotionsPlugin\Model\PromotionRuleInterface;
-use Setono\SyliusCatalogPromotionsPlugin\Rule\ContainsProductRule;
-use Setono\SyliusCatalogPromotionsPlugin\Rule\ContainsProductsRule;
-use Setono\SyliusCatalogPromotionsPlugin\Rule\HasTaxonRule;
+use Setono\SyliusCatalogPromotionPlugin\Model\PromotionRuleInterface;
+use Setono\SyliusCatalogPromotionPlugin\Rule\ContainsProductRule;
+use Setono\SyliusCatalogPromotionPlugin\Rule\ContainsProductsRule;
+use Setono\SyliusCatalogPromotionPlugin\Rule\HasTaxonRule;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 
 final class PromotionRuleFactory implements PromotionRuleFactoryInterface

@@ -1,4 +1,4 @@
-setono_sylius_catalog_promotions:
+setono_sylius_catalog_promotion:
     ui:
         promotion: Catalog promotion
         promotions: Catalog promotions

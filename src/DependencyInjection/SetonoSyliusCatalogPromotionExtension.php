@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Setono\SyliusCatalogPromotionsPlugin\DependencyInjection;
+namespace Setono\SyliusCatalogPromotionPlugin\DependencyInjection;
 
 use Exception;
 use Sylius\Bundle\ResourceBundle\DependencyInjection\Extension\AbstractResourceExtension;
@@ -10,7 +10,7 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 
-final class SetonoSyliusCatalogPromotionsExtension extends AbstractResourceExtension
+final class SetonoSyliusCatalogPromotionExtension extends AbstractResourceExtension
 {
     /**
      * @throws Exception
@@ -22,7 +22,7 @@ final class SetonoSyliusCatalogPromotionsExtension extends AbstractResourceExten
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.xml');
 
-        $this->registerResources('setono_sylius_catalog_promotions', $config['driver'], $config['resources'], $container);
+        $this->registerResources('setono_sylius_catalog_promotion', $config['driver'], $config['resources'], $container);
 
         $env = $container->getParameter('kernel.environment');
         if ('test' === $env || 'test_cached' === $env) {

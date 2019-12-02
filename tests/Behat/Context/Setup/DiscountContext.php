@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Tests\Setono\SyliusCatalogPromotionsPlugin\Behat\Context\Setup;
+namespace Tests\Setono\SyliusCatalogPromotionPlugin\Behat\Context\Setup;
 
 use Behat\Behat\Context\Context;
 use Doctrine\Common\Persistence\ObjectManager;
-use Setono\SyliusCatalogPromotionsPlugin\Factory\PromotionRuleFactoryInterface;
-use Setono\SyliusCatalogPromotionsPlugin\Model\Promotion;
-use Setono\SyliusCatalogPromotionsPlugin\Model\PromotionInterface;
-use Setono\SyliusCatalogPromotionsPlugin\Model\PromotionRuleInterface;
-use Setono\SyliusCatalogPromotionsPlugin\Repository\PromotionRepositoryInterface;
-use Setono\SyliusCatalogPromotionsPlugin\Test\Factory\TestPromotionFactoryInterface;
+use Setono\SyliusCatalogPromotionPlugin\Factory\PromotionRuleFactoryInterface;
+use Setono\SyliusCatalogPromotionPlugin\Model\Promotion;
+use Setono\SyliusCatalogPromotionPlugin\Model\PromotionInterface;
+use Setono\SyliusCatalogPromotionPlugin\Model\PromotionRuleInterface;
+use Setono\SyliusCatalogPromotionPlugin\Repository\PromotionRepositoryInterface;
+use Setono\SyliusCatalogPromotionPlugin\Test\Factory\TestPromotionFactoryInterface;
 use Sylius\Behat\Service\SharedStorageInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\ProductInterface;

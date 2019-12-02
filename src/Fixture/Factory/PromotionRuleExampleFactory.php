@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Setono\SyliusCatalogPromotionsPlugin\Fixture\Factory;
+namespace Setono\SyliusCatalogPromotionPlugin\Fixture\Factory;
 
-use Setono\SyliusCatalogPromotionsPlugin\Factory\PromotionRuleFactoryInterface;
-use Setono\SyliusCatalogPromotionsPlugin\Model\PromotionRuleInterface;
+use Setono\SyliusCatalogPromotionPlugin\Factory\PromotionRuleFactoryInterface;
+use Setono\SyliusCatalogPromotionPlugin\Model\PromotionRuleInterface;
 use Sylius\Bundle\CoreBundle\Fixture\Factory\AbstractExampleFactory;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
