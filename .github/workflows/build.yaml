@@ -21,8 +21,14 @@ jobs:
                 with:
                     php-version: ${{ matrix.php-versions }}
                     extension-csv: intl
+            -   name: Setup node
+                uses: actions/setup-node@v1
+                with:
+                    node-version: '10.x'
             -   name: Install Composer dependencies
                 run: composer update --no-progress --no-suggest --prefer-dist --no-interaction
+            -   name: Install Yarn dependencies
+                run: (cd tests/Application && yarn install)
             -   name: Validate composer
                 run: composer validate --strict
             -   name: Check composer normalized
