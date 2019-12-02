@@ -63,16 +63,22 @@ jobs:
                     chromedriver > /dev/null 2>&1 &
                 env:
                     DISPLAY: ':99'
+                    APP_ENV: test
+                    DATABASE_URL: mysql://root:root@127.0.0.1/setono_sylius_catalog_promotion?serverVersion=5.7
             -   name: Download and run Selenium
                 run: |
                     curl http://selenium-release.storage.googleapis.com/3.4/selenium-server-standalone-3.4.0.jar > selenium.jar
                     java -Dwebdriver.chrome.driver=chromedriver -jar selenium.jar > /dev/null 2>&1 &
                 env:
                     DISPLAY: ':99'
+                    APP_ENV: test
+                    DATABASE_URL: mysql://root:root@127.0.0.1/setono_sylius_catalog_promotion?serverVersion=5.7
             -   name: Run webserver
                 run: (cd tests/Application && bin/console server:run 127.0.0.1:8080 --quiet > /dev/null 2>&1 &)
                 env:
                     DISPLAY: ':99'
+                    APP_ENV: test
+                    DATABASE_URL: mysql://root:root@127.0.0.1/setono_sylius_catalog_promotion?serverVersion=5.7
             -   name: Run behat
                 run: vendor/bin/behat --strict -vvv --no-interaction || vendor/bin/behat --strict -vvv --no-interaction --rerun
                 env:
