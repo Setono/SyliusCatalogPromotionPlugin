@@ -58,7 +58,8 @@ jobs:
                     unzip chromedriver.zip
                     chmod +x chromedriver
                     chromedriver > /dev/null 2>&1 &
-            -   name: Downlaod and run Selenium
+            -   name: Download and run Selenium
+                run: |
                     curl http://selenium-release.storage.googleapis.com/3.4/selenium-server-standalone-3.4.0.jar > selenium.jar
                     java -Dwebdriver.chrome.driver=$SYLIUS_CACHE_DIR/chromedriver -jar selenium.jar > /dev/null 2>&1 &
             -   name: Run webserver
