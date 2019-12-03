@@ -84,7 +84,7 @@
             "SYMFONY_ENV=test composer ensure-schema-updated",
             "./vendor/bin/behat --tags=\"~@javascript\" --no-interaction --format=progress"
         ],
-        "check-style": "vendor/bin/ecs check src/ tests/",
+        "check-style": "vendor/bin/ecs check src/ tests/ spec/",
         "checks": [
             "composer check-style",
             "composer analyse"
@@ -94,13 +94,13 @@
         "ensure-database-created": "(cd tests/Application && bin/console doctrine:database:create --if-not-exists -e ${SYMFONY_ENV:-'dev'})",
         "ensure-schema-updated": "(cd tests/Application && bin/console doctrine:schema:update --force -e ${SYMFONY_ENV:-'dev'})",
         "ensure-vendors-installed": "[[ -f vendor/autoload.php ]] || COMPOSER_MEMORY_LIMIT=-1 composer install",
-        "fix-style": "vendor/bin/ecs check src/ tests/ --fix",
+        "fix-style": "vendor/bin/ecs check src/ tests/ spec/ --fix",
         "fixtures": [
             "composer ensure-database-created",
             "composer ensure-schema-updated",
             "(cd tests/Application && bin/console sylius:fixtures:load --no-interaction -e ${SYMFONY_ENV:-'dev'})"
         ],
-        "phpspec": "vendor/bin/phpspec run -vvv",
+        "phpspec": "vendor/bin/phpspec run",
         "phpunit": "vendor/bin/phpunit",
         "run": "(cd tests/Application && bin/console server:run -d public -e ${SYMFONY_ENV:-'dev'})",
         "tests": [
