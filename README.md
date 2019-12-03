@@ -8,7 +8,7 @@
 
 Plugin for Sylius to define permanent or time-limited promotions for products and automatically update prices.
 
-![Screenshot showing specials admin page](docs/admin-create.png)
+![Screenshot showing catalog promotions admin page](docs/admin-create.png)
 
 ## Install
 
