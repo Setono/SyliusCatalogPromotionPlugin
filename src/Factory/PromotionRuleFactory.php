@@ -12,6 +12,7 @@ use Setono\SyliusCatalogPromotionPlugin\Rule\ContainsProductRule;
 use Setono\SyliusCatalogPromotionPlugin\Rule\ContainsProductsRule;
 use Setono\SyliusCatalogPromotionPlugin\Rule\HasTaxonRule;
 use Sylius\Component\Resource\Factory\FactoryInterface;
+use Webmozart\Assert\Assert;
 
 final class PromotionRuleFactory implements PromotionRuleFactoryInterface
 {
@@ -60,11 +61,13 @@ final class PromotionRuleFactory implements PromotionRuleFactoryInterface
         ])));
     }
 
-    public function createHasTaxon(array $taxons): PromotionRuleInterface
+    public function createHasTaxon(array $taxonCodes): PromotionRuleInterface
     {
+        Assert::allString($taxonCodes);
+
         return $this->createPromotionRule(
             HasTaxonRule::TYPE,
-            ['taxons' => $taxons]
+            ['taxons' => $taxonCodes]
         );
     }
 
@@ -78,6 +81,8 @@ final class PromotionRuleFactory implements PromotionRuleFactoryInterface
 
     public function createContainsProducts(array $productCodes): PromotionRuleInterface
     {
+        Assert::allString($productCodes);
+
         return $this->createPromotionRule(
             ContainsProductsRule::TYPE,
             ['products' => $productCodes]

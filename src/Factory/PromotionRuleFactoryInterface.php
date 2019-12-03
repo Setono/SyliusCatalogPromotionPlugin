@@ -14,7 +14,7 @@ interface PromotionRuleFactoryInterface extends FactoryInterface
      */
     public function createByType(string $type, $configuration): PromotionRuleInterface;
 
-    public function createHasTaxon(array $taxons): PromotionRuleInterface;
+    public function createHasTaxon(array $taxonCodes): PromotionRuleInterface;
 
     public function createContainsProduct(string $productCode): PromotionRuleInterface;
 
