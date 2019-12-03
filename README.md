@@ -203,6 +203,9 @@ bin/console sylius:install:assets
 $ php bin/console setono:sylius-catalog-promotion:process
 ```
 
+## Notice
+This plugin only works on apps installed on a single server at the moment. It uses the local filesystem to save execution data.
+
 [ico-version]: https://poser.pugx.org/setono/sylius-catalog-promotion-plugin/v/stable
 [ico-unstable-version]: https://poser.pugx.org/setono/sylius-catalog-promotion-plugin/v/unstable
 [ico-license]: https://poser.pugx.org/setono/sylius-catalog-promotion-plugin/license
