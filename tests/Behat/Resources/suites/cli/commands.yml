@@ -4,8 +4,8 @@ default:
             contexts:
                 - sylius.behat.context.hook.doctrine_orm
 
-                - setono_sylius_catalog_promotion.behat.context.product_pricing
-                - setono_sylius_catalog_promotion.behat.context.cli.commands
+                - setono_sylius_catalog_promotion.behat.context.ui.product_pricing
+                - setono_sylius_catalog_promotion.behat.context.cli.command
 
                 - sylius.behat.context.transform.lexical
                 - sylius.behat.context.transform.shared_storage
@@ -22,4 +22,4 @@ default:
                 - setono_sylius_catalog_promotion.behat.context.setup.promotion
 
             filters:
-                tags: "@setono_sylius_catalog_promotion_commands"
+                tags: "@processing_catalog_promotions"

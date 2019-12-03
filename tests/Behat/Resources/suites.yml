@@ -1,4 +1,4 @@
 imports:
-    #- suites/cli/commands.yml
+    - suites/cli/commands.yml
     - suites/ui/promotion/managing_catalog_promotions.yml
     #- suites/ui/promotion/applying_promotions.yml

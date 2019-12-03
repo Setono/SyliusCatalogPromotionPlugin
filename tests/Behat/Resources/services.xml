@@ -11,9 +11,8 @@
     <services>
         <defaults public="true"/>
 
-        <service id="setono_sylius_catalog_promotion.behat.context.cli.commands"
-                 class="Tests\Setono\SyliusCatalogPromotionPlugin\Behat\Context\Cli\CommandsContext">
-            <argument type="service" id="sylius.behat.shared_storage"/>
+        <service id="setono_sylius_catalog_promotion.behat.context.cli.command"
+                 class="Tests\Setono\SyliusCatalogPromotionPlugin\Behat\Context\Cli\CommandContext">
             <argument type="service" id="kernel"/>
             <argument type="service" id="setono_sylius_catalog_promotion.command.process_promotions"/>
         </service>
@@ -22,11 +21,6 @@
                  class="Tests\Setono\SyliusCatalogPromotionPlugin\Behat\Context\Domain\ManagingSpecialsContext">
             <argument type="service" id="sylius.behat.shared_storage"/>
             <argument type="service" id="setono_sylius_catalog_promotion.repository.promotion"/>
-        </service>
-
-        <service id="setono_sylius_catalog_promotion.behat.context.dump.special"
-                 class="Tests\Setono\SyliusCatalogPromotionPlugin\Behat\Context\Dump\SpecialContext">
-            <argument type="service" id="sylius.behat.shared_storage"/>
         </service>
 
         <!-- Pages -->
@@ -75,9 +69,9 @@
             <argument type="service" id="sylius.behat.notification_checker"/>
         </service>
 
-        <service id="setono_sylius_catalog_promotion.behat.context.product_pricing"
-                 class="Tests\Setono\SyliusCatalogPromotionPlugin\Behat\Context\ProductPricingContext">
-            <argument type="service" id="sylius.behat.shared_storage"/>
+        <service id="setono_sylius_catalog_promotion.behat.context.ui.product_pricing"
+                 class="Tests\Setono\SyliusCatalogPromotionPlugin\Behat\Context\Ui\ProductPricingContext">
+            <argument type="service" id="sylius.manager.channel_pricing"/>
         </service>
     </services>
 </container>

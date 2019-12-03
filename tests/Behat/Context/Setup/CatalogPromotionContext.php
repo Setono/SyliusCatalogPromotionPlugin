@@ -16,6 +16,7 @@ use Sylius\Behat\Service\SharedStorageInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Core\Model\ProductInterface;
 use Sylius\Component\Core\Model\TaxonInterface;
+use Webmozart\Assert\Assert;
 
 final class CatalogPromotionContext implements Context
 {
@@ -49,6 +50,37 @@ final class CatalogPromotionContext implements Context
     }
 
     /**
+     * @Given there is a disabled catalog promotion for all products with a :percentage% discount
+     */
+    public function thereIsADisabledCatalogPromotionForAllProductsWithADiscount($percentage): void
+    {
+        $promotion = $this->testDiscountFactory->createForChannel(uniqid('catalog-promotion-', true), $this->sharedStorage->get('channel'));
+        $promotion->setEnabled(false);
+        $promotion->setActionPercent((int) $percentage);
+        $this->promotionRepository->add($promotion);
+        $this->sharedStorage->set('catalog_promotion', $promotion);
+    }
+
+    /**
+     * @Given there is a catalog promotion for all products with a :percentage% discount
+     * @Given there is a catalog promotion for taxon :taxon with a :percentage% discount
+     */
+    public function thereIsACatalogPromotionWithADiscount(TaxonInterface $taxon = null, $percentage): void
+    {
+        Assert::greaterThan($percentage, 0);
+
+        $promotion = $this->testDiscountFactory->createForChannel(uniqid('catalog-promotion-', true), $this->sharedStorage->get('channel'));
+        $promotion->setActionPercent((int) $percentage);
+
+        if (null !== $taxon) {
+            $promotion->addRule($this->promotionRuleFactory->createHasTaxon([$taxon->getCode()]));
+        }
+
+        $this->promotionRepository->add($promotion);
+        $this->sharedStorage->set('catalog_promotion', $promotion);
+    }
+
+    /**
      * @Given there is (also) a catalog promotion :promotionName
      * @Given there is (also) a catalog promotion :promotionName applicable for :channel channel
      * @Given there is a catalog promotion :promotionName identified by :promotionCode code
@@ -74,7 +106,7 @@ final class CatalogPromotionContext implements Context
     /**
      * @Given /^there is a catalog promotion "([^"]+)" with priority ([^"]+)$/
      */
-    public function thereIsADiscountWithPriority($promotionName, $priority)
+    public function thereIsACatalogPromotionWithPriority($promotionName, $priority)
     {
         $promotion = $this->testDiscountFactory
             ->createForChannel($promotionName, $this->sharedStorage->get('channel'))
@@ -90,7 +122,7 @@ final class CatalogPromotionContext implements Context
     /**
      * @Given /^there is an exclusive catalog promotion "([^"]+)"(?:| with priority ([^"]+))$/
      */
-    public function thereIsAnExclusiveDiscountWithPriority($promotionName, $priority = 0)
+    public function thereIsAnExclusiveCatalogPromotionWithPriority($promotionName, $priority = 0)
     {
         $promotion = $this->testDiscountFactory
             ->createForChannel($promotionName, $this->sharedStorage->get('channel'))
@@ -104,7 +136,7 @@ final class CatalogPromotionContext implements Context
     }
 
     /**
-     * @Given /^(this promotion) was disabled$/
+     * @Given /^(this catalog promotion) was disabled$/
      */
     public function thisDiscountDisabled(PromotionInterface $promotion)
     {
@@ -114,7 +146,7 @@ final class CatalogPromotionContext implements Context
     }
 
     /**
-     * @Given /^(this promotion) was enabled$/
+     * @Given /^(this catalog promotion) was enabled$/
      */
     public function thisDiscountEnabled(PromotionInterface $promotion)
     {
@@ -124,7 +156,7 @@ final class CatalogPromotionContext implements Context
     }
 
     /**
-     * @Given /^(this promotion) has already expired$/
+     * @Given /^(this catalog promotion) has already expired$/
      */
     public function thisDiscountHasExpired(PromotionInterface $promotion)
     {
@@ -134,7 +166,7 @@ final class CatalogPromotionContext implements Context
     }
 
     /**
-     * @Given /^(this promotion) expires tomorrow$/
+     * @Given /^(this catalog promotion) expires tomorrow$/
      */
     public function thisDiscountExpiresTomorrow(PromotionInterface $promotion)
     {
@@ -144,7 +176,7 @@ final class CatalogPromotionContext implements Context
     }
 
     /**
-     * @Given /^(this promotion) has started yesterday$/
+     * @Given /^(this catalog promotion) has started yesterday$/
      */
     public function thisDiscountHasStartedYesterday(PromotionInterface $promotion)
     {
@@ -154,7 +186,7 @@ final class CatalogPromotionContext implements Context
     }
 
     /**
-     * @Given /^(this promotion) starts tomorrow$/
+     * @Given /^(this catalog promotion) starts tomorrow$/
      */
     public function thisDiscountStartsTomorrow(PromotionInterface $promotion)
     {
@@ -266,7 +298,7 @@ final class CatalogPromotionContext implements Context
     }
 
     /**
-     * @Given /^(the promotion) was disabled for the (channel "[^"]+")$/
+     * @Given /^(the catalog promotion) was disabled for the (channel "[^"]+")$/
      */
     public function theDiscountWasDisabledForTheChannel(PromotionInterface $promotion, ChannelInterface $channel)
     {

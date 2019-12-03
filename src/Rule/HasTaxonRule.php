@@ -20,19 +20,17 @@ final class HasTaxonRule extends Rule
         $value = self::getConfigurationValue('taxons', $configuration);
         $rootAlias = $this->getRootAlias($queryBuilder);
         $productAlias = self::generateAlias('product');
-        $mainTaxonAlias = self::generateAlias('main_taxon');
         $productTaxonsAlias = self::generateAlias('product_taxons');
         $taxonAlias = self::generateAlias('taxon');
         $parameter = self::generateParameter('taxon_codes');
 
         $queryBuilder
             ->join(sprintf('%s.product', $rootAlias), $productAlias)
-            ->join(sprintf('%s.mainTaxon', $productAlias), $mainTaxonAlias) // todo with these joins it says that we HAVE to have a main taxon, but that is not required
             ->join(sprintf('%s.productTaxons', $productAlias), $productTaxonsAlias)
             ->join(sprintf('%s.taxon', $productTaxonsAlias), $taxonAlias)
             ->andWhere(sprintf(
-                '%s.code IN (:%s) OR %s.code IN (:%s)',
-                $mainTaxonAlias, $parameter, $taxonAlias, $parameter
+                '%s.code IN (:%s)',
+                $taxonAlias, $parameter
             ))
             ->setParameter($parameter, $value)
         ;

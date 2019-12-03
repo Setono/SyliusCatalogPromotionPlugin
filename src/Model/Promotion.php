@@ -59,7 +59,7 @@ class Promotion implements PromotionInterface
     protected $endsAt;
 
     /** @var bool */
-    protected $enabled = false;
+    protected $enabled = true;
 
     /** @var Collection|PromotionRuleInterface[] */
     protected $rules;
