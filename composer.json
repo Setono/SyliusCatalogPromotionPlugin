@@ -29,7 +29,7 @@
         "korbeil/phpstan-generic-rules": "^0.2.1",
         "lakion/mink-debug-extension": "^1.2.3",
         "localheinz/composer-normalize": "^1.1",
-        "phpspec/phpspec": "^5.0",
+        "phpspec/phpspec": "^6.1",
         "phpstan/phpstan": "^0.11",
         "phpstan/phpstan-doctrine": "^0.11",
         "phpstan/phpstan-strict-rules": "^0.11.1",
