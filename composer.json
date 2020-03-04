@@ -44,7 +44,7 @@
         "symfony/intl": "^4.4 || ^5.0",
         "symfony/web-profiler-bundle": "^4.4 || ^5.0",
         "symfony/web-server-bundle": "^4.4 || ^5.0",
-        "thecodingmachine/phpstan-safe-rule": "^0.1.4"
+        "thecodingmachine/phpstan-safe-rule": "^1.0.0"
     },
     "config": {
         "sort-packages": true
