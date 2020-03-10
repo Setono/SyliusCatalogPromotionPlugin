@@ -14,6 +14,10 @@ jobs:
                 operating-system: [ubuntu-latest]
                 php-versions: ['7.3', '7.4']
         steps:
+            -   name: Set environment variables
+                run: |
+                    echo "::set-env name=APP_ENV::test"
+                    echo "::set-env name=DATABASE_URL::mysql://root:root@127.0.0.1/sylius?serverVersion=5.7"
             -   name: Checkout
                 uses: actions/checkout@v1
             -   name: Setup PHP, with composer and extensions
@@ -45,14 +49,8 @@ jobs:
                     (cd tests/Application && bin/console doctrine:schema:create -vvv)
                     (cd tests/Application && bin/console assets:install public -vvv)
                     (cd tests/Application && bin/console cache:warmup -vvv)
-                env:
-                    APP_ENV: test
-                    DATABASE_URL: mysql://root:root@127.0.0.1/setono_sylius_catalog_promotion?serverVersion=5.7
             -   name: Run behat without javascript
                 run: vendor/bin/behat --strict -vvv --no-interaction --tags="~@javascript" || vendor/bin/behat --strict -vvv --no-interaction --tags="~@javascript" --rerun
-                env:
-                    APP_ENV: test
-                    DATABASE_URL: mysql://root:root@127.0.0.1/setono_sylius_catalog_promotion?serverVersion=5.7
             ###########################################################################
             # The steps below is used to run behat with javascript.                   #
             # If you don't have scenarios with javascript, you can remove these steps #
@@ -80,20 +78,14 @@ jobs:
                     java -Dwebdriver.chrome.driver=chromedriver -jar selenium.jar > /dev/null 2>&1 &
                 env:
                     DISPLAY: ':99'
-                    APP_ENV: test
-                    DATABASE_URL: mysql://root:root@127.0.0.1/setono_sylius_catalog_promotion?serverVersion=5.7
             -   name: Run webserver
                 run: (cd tests/Application && bin/console server:run 127.0.0.1:8080 --quiet > /dev/null 2>&1 &)
                 env:
                     DISPLAY: ':99'
-                    APP_ENV: test
-                    DATABASE_URL: mysql://root:root@127.0.0.1/setono_sylius_catalog_promotion?serverVersion=5.7
             -   name: Run behat with javascript
                 run: vendor/bin/behat --strict -vvv --no-interaction --tags="@javascript" || vendor/bin/behat --strict -vvv --no-interaction --tags="@javascript" --rerun
                 env:
                     DISPLAY: ':99'
-                    APP_ENV: test
-                    DATABASE_URL: mysql://root:root@127.0.0.1/setono_sylius_catalog_promotion?serverVersion=5.7
             -   uses: actions/upload-artifact@v1
                 if: failure()
                 with:
