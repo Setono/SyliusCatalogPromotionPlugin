@@ -9,14 +9,14 @@ use Behat\Mink\Exception\ElementNotFoundException;
 use Sylius\Behat\Behaviour\ChecksCodeImmutability;
 use Sylius\Behat\Behaviour\NamesIt;
 use Sylius\Behat\Page\Admin\Crud\UpdatePage as BaseUpdatePage;
-use Tests\Setono\SyliusCatalogPromotionPlugin\Behat\Behaviour\SpecifiesItsActionPercent;
 use Tests\Setono\SyliusCatalogPromotionPlugin\Behat\Behaviour\SpecifiesItsActionType;
+use Tests\Setono\SyliusCatalogPromotionPlugin\Behat\Behaviour\SpecifiesItsDiscount;
 
 class UpdatePage extends BaseUpdatePage implements UpdatePageInterface
 {
     use NamesIt;
     use SpecifiesItsActionType;
-    use SpecifiesItsActionPercent;
+    use SpecifiesItsDiscount;
     use ChecksCodeImmutability;
     use PageDefinedElements;
 

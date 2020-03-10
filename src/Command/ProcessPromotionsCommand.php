@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Setono\SyliusCatalogPromotionPlugin\Command;
 
-use DateTime;
 use DateTimeInterface;
 use Doctrine\ORM\EntityRepository;
+use Safe\DateTime;
 use Safe\Exceptions\FilesystemException;
 use Safe\Exceptions\StringsException;
 use function Safe\file_get_contents;
@@ -101,8 +101,8 @@ final class ProcessPromotionsCommand extends Command
 
         /** @var PromotionInterface[] $promotions */
         $promotions = $this->promotionRepository->findForProcessing();
-        $promotionIds = array_map(static function (PromotionInterface $promotion) {
-            return $promotion->getId();
+        $promotionIds = array_map(static function (PromotionInterface $promotion): int {
+            return (int) $promotion->getId();
         }, $promotions);
 
         if (!$force

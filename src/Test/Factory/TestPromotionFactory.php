@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Setono\SyliusCatalogPromotionPlugin\Test\Factory;
 
-use DateTime;
+use Safe\DateTime;
 use Setono\SyliusCatalogPromotionPlugin\Model\PromotionInterface;
 use Sylius\Component\Core\Formatter\StringInflector;
 use Sylius\Component\Core\Model\ChannelInterface;

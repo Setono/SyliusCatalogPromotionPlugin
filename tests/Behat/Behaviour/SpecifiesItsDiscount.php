@@ -6,15 +6,15 @@ namespace Tests\Setono\SyliusCatalogPromotionPlugin\Behat\Behaviour;
 
 use Sylius\Behat\Behaviour\DocumentAccessor;
 
-trait SpecifiesItsActionPercent
+trait SpecifiesItsDiscount
 {
     use DocumentAccessor;
 
     /**
-     * @param string $actionPercent
+     * @param string $discount
      */
-    public function specifyActionPercent($actionPercent)
+    public function specifyDiscount($discount)
     {
-        $this->getDocument()->fillField('Action percent', $actionPercent);
+        $this->getDocument()->fillField('Discount', $discount);
     }
 }

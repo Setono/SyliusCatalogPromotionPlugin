@@ -27,8 +27,7 @@
         <field name="startsAt" column="starts_at" type="datetime" nullable="true"/>
         <field name="endsAt" column="ends_at" type="datetime" nullable="true"/>
         <field name="enabled" type="boolean"/>
-        <field name="actionType" column="action_type" type="string" nullable="false"/>
-        <field name="actionPercent" column="action_percent" type="float" nullable="false"/>
+        <field name="discount" column="discount" type="integer"/>
         <field name="createdAt" column="created_at" type="datetime">
             <gedmo:timestampable on="create"/>
         </field>

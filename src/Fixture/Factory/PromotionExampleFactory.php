@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Setono\SyliusCatalogPromotionPlugin\Fixture\Factory;
 
-use DateTime;
 use DateTimeInterface;
 use Exception;
 use Faker\Generator;
+use Safe\DateTime;
 use Setono\SyliusCatalogPromotionPlugin\Model\Promotion;
 use Setono\SyliusCatalogPromotionPlugin\Model\PromotionInterface;
 use Setono\SyliusCatalogPromotionPlugin\Model\PromotionRuleInterface;
@@ -86,8 +86,7 @@ class PromotionExampleFactory extends AbstractExampleFactory
             $promotion->addRule($promotionRule);
         }
 
-        $promotion->setActionType($options['action_type']);
-        $promotion->setActionPercent($options['action_percent']);
+        $promotion->setDiscount($options['discount']);
 
         $promotion->setCreatedAt($options['created_at']);
         $promotion->setUpdatedAt($options['updated_at']);
@@ -118,15 +117,10 @@ class PromotionExampleFactory extends AbstractExampleFactory
             })
             ->setAllowedTypes('enabled', 'bool')
 
-            ->setDefault('action_type', static function () {
-                $actionTypes = Promotion::getActionTypes();
-
-                return $actionTypes[array_rand($actionTypes)];
-            })
-            ->setDefault('action_percent', static function (): int {
+            ->setDefault('discount', static function (): int {
                 return 10 * random_int(1, 9);
             })
-            ->setAllowedTypes('action_percent', 'int')
+            ->setAllowedTypes('discount', 'int')
 
             ->setDefault('created_at', null)
             ->setAllowedTypes('created_at', ['null', DateTimeInterface::class])

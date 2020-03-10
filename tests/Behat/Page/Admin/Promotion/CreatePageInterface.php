@@ -9,14 +9,9 @@ use Sylius\Behat\Page\Admin\Crud\CreatePageInterface as BaseCreatePageInterface;
 interface CreatePageInterface extends BaseCreatePageInterface
 {
     /**
-     * @param string $actionPercent
+     * @param string $discount
      */
-    public function specifyActionPercent($actionPercent);
-
-    /**
-     * @param string $actionType
-     */
-    public function specifyActionType($actionType);
+    public function specifyDiscount($discount);
 
     public function specifyCode(string $code): void;
 

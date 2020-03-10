@@ -47,22 +47,16 @@
                 <option name="groups">setono_sylius_catalog_promotion</option>
             </constraint>
         </property>
-        <property name="actionType">
+        <property name="discount">
             <constraint name="NotBlank">
-                <option name="message">setono_sylius_catalog_promotion.promotion.action_type.not_blank</option>
-                <option name="groups">setono_sylius_catalog_promotion</option>
-            </constraint>
-        </property>
-        <property name="actionPercent">
-            <constraint name="NotBlank">
-                <option name="message">setono_sylius_catalog_promotion.promotion.action_percent.not_blank</option>
+                <option name="message">setono_sylius_catalog_promotion.promotion.discount.not_blank</option>
                 <option name="groups">setono_sylius_catalog_promotion</option>
             </constraint>
             <constraint name="Range">
                 <option name="min">1</option>
                 <option name="max">100</option>
-                <option name="minMessage">setono_sylius_catalog_promotion.promotion.action_percent.min</option>
-                <option name="maxMessage">setono_sylius_catalog_promotion.promotion.action_percent.max</option>
+                <option name="minMessage">setono_sylius_catalog_promotion.promotion.discount.min</option>
+                <option name="maxMessage">setono_sylius_catalog_promotion.promotion.discount.max</option>
                 <option name="groups">setono_sylius_catalog_promotion</option>
             </constraint>
         </property>

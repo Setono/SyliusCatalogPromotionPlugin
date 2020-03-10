@@ -4,23 +4,17 @@ declare(strict_types=1);
 
 namespace Setono\SyliusCatalogPromotionPlugin\Model;
 
-use DateTime;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Exception;
-use InvalidArgumentException;
-use function Safe\sprintf;
+use Safe\DateTime;
 use Sylius\Component\Channel\Model\ChannelInterface as BaseChannelInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Resource\Model\TimestampableTrait;
+use Webmozart\Assert\Assert;
 
 class Promotion implements PromotionInterface
 {
-    public const ACTION_TYPE_OFF = 'off';
-
-    public const ACTION_TYPE_INCREASE = 'increase';
-
     use TimestampableTrait;
 
     /** @var mixed */
@@ -64,11 +58,8 @@ class Promotion implements PromotionInterface
     /** @var Collection|PromotionRuleInterface[] */
     protected $rules;
 
-    /** @var string */
-    protected $actionType = self::ACTION_TYPE_OFF;
-
-    /** @var float */
-    protected $actionPercent = 0.0;
+    /** @var int */
+    protected $discount = 0;
 
     /** @var ChannelInterface[]|Collection */
     protected $channels;
@@ -92,39 +83,15 @@ class Promotion implements PromotionInterface
         return $name;
     }
 
-    public static function getActionTypes(): array
-    {
-        return [
-            self::ACTION_TYPE_OFF,
-            self::ACTION_TYPE_INCREASE,
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @throws Exception
-     */
     public function getMultiplier(): float
     {
-        switch ($this->getActionType()) {
-            case self::ACTION_TYPE_OFF:
-                return (100 - $this->getActionPercent()) / 100;
-            case self::ACTION_TYPE_INCREASE:
-                return (100 + $this->getActionPercent()) / 100;
-            default:
-                throw new InvalidArgumentException(sprintf(
-                    "Unknown actionType '%s'. Expected one of: %s",
-                    $this->getActionType(),
-                    implode(' ,', self::getActionTypes())
-                ));
-        }
+        return (100 - $this->getDiscount()) / 100;
     }
 
     public function getChannelCodes(): array
     {
-        return $this->channels->map(static function (ChannelInterface $channel) {
-            return $channel->getCode();
+        return $this->channels->map(static function (ChannelInterface $channel): string {
+            return (string) $channel->getCode();
         })->toArray();
     }
 
@@ -252,24 +219,16 @@ class Promotion implements PromotionInterface
         $this->rules->removeElement($rule);
     }
 
-    public function getActionType(): string
+    public function getDiscount(): int
     {
-        return $this->actionType;
+        return $this->discount;
     }
 
-    public function setActionType(string $actionType): void
+    public function setDiscount(int $discount): void
     {
-        $this->actionType = $actionType;
-    }
+        Assert::greaterThan($discount, 0);
 
-    public function getActionPercent(): float
-    {
-        return $this->actionPercent;
-    }
-
-    public function setActionPercent(float $actionPercent): void
-    {
-        $this->actionPercent = $actionPercent;
+        $this->discount = $discount;
     }
 
     public function getChannels(): Collection

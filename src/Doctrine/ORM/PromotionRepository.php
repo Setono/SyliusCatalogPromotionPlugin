@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Setono\SyliusCatalogPromotionPlugin\Doctrine\ORM;
 
-use DateTime;
+use Safe\DateTime;
 use Setono\SyliusCatalogPromotionPlugin\Repository\PromotionRepositoryInterface;
 use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 

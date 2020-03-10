@@ -28,8 +28,7 @@ trait PageDefinedElements
 
             'rules' => '#setono_sylius_catalog_promotion_promotion_rules',
 
-            'action_type' => '#setono_sylius_catalog_promotion_promotion_actionType',
-            'action_percent' => '#setono_sylius_catalog_promotion_promotion_actionPercent',
+            'discount' => '#setono_sylius_catalog_promotion_promotion_discount',
         ];
     }
 }

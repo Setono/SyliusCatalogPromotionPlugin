@@ -10,6 +10,7 @@ use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\PercentType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -32,12 +33,9 @@ final class PromotionType extends AbstractResourceType
                 'label' => 'setono_sylius_catalog_promotion.form.promotion.description',
                 'required' => false,
             ])
-            ->add('actionType', PromotionActionTypeChoiceType::class, [
-                'label' => 'setono_sylius_catalog_promotion.form.promotion.action_type',
-                'required' => true,
-            ])
-            ->add('actionPercent', TextType::class, [
-                'label' => 'setono_sylius_catalog_promotion.form.promotion.action_percent',
+            ->add('discount', PercentType::class, [
+                'label' => 'setono_sylius_catalog_promotion.form.promotion.discount',
+                'type' => 'integer',
                 'required' => true,
             ])
             ->add('exclusive', CheckboxType::class, [

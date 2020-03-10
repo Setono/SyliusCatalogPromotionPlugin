@@ -9,16 +9,14 @@ use Sylius\Behat\Behaviour\NamesIt;
 use Sylius\Behat\Behaviour\SpecifiesItsCode;
 use Sylius\Behat\Page\Admin\Crud\CreatePage as BaseCreatePage;
 use Sylius\Behat\Service\AutocompleteHelper;
-use Tests\Setono\SyliusCatalogPromotionPlugin\Behat\Behaviour\SpecifiesItsActionPercent;
-use Tests\Setono\SyliusCatalogPromotionPlugin\Behat\Behaviour\SpecifiesItsActionType;
+use Tests\Setono\SyliusCatalogPromotionPlugin\Behat\Behaviour\SpecifiesItsDiscount;
 use Webmozart\Assert\Assert;
 
 class CreatePage extends BaseCreatePage implements CreatePageInterface
 {
     use NamesIt;
     use SpecifiesItsCode;
-    use SpecifiesItsActionType;
-    use SpecifiesItsActionPercent;
+    use SpecifiesItsDiscount;
     use PageDefinedElements;
 
     public function addRule($ruleName)

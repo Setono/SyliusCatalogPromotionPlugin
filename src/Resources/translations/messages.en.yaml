@@ -24,8 +24,7 @@ setono_sylius_catalog_promotion:
             enabled: Enabled
             rules: Rules
             add_rule: Add rule
-            action_type: Action type
-            action_percent: Action percent
+            discount: Discount
         promotion_rule:
             contains_product: Product is
             contains_product_configuration:
@@ -38,7 +37,3 @@ setono_sylius_catalog_promotion:
                 taxons: Taxons
             taxonomy: Taxonomy
             type: Type
-        promotion_action_type:
-            choice:
-                off: Make a discount
-                increase: Make a margin (increase price)

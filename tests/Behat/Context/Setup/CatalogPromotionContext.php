@@ -56,7 +56,7 @@ final class CatalogPromotionContext implements Context
     {
         $promotion = $this->testDiscountFactory->createForChannel(uniqid('catalog-promotion-', true), $this->sharedStorage->get('channel'));
         $promotion->setEnabled(false);
-        $promotion->setActionPercent((int) $percentage);
+        $promotion->setDiscount((int) $percentage);
         $this->promotionRepository->add($promotion);
         $this->sharedStorage->set('catalog_promotion', $promotion);
     }
@@ -70,7 +70,7 @@ final class CatalogPromotionContext implements Context
         Assert::greaterThan($percentage, 0);
 
         $promotion = $this->testDiscountFactory->createForChannel(uniqid('catalog-promotion-', true), $this->sharedStorage->get('channel'));
-        $promotion->setActionPercent((int) $percentage);
+        $promotion->setDiscount((int) $percentage);
 
         if (null !== $taxon) {
             $promotion->addRule($this->promotionRuleFactory->createHasTaxon([$taxon->getCode()]));
@@ -113,7 +113,7 @@ final class CatalogPromotionContext implements Context
         ;
 
         $promotion->setPriority((int) $priority);
-        $promotion->setActionPercent(1); // todo should be moved to another method
+        $promotion->setDiscount(1); // todo should be moved to another method
 
         $this->promotionRepository->add($promotion);
         $this->sharedStorage->set('catalog_promotion', $promotion);
@@ -336,16 +336,14 @@ final class CatalogPromotionContext implements Context
      */
     private function setPercentageDiscount(PromotionInterface $promotion, float $percentage): PromotionInterface
     {
-        $promotion->setActionType(Promotion::ACTION_TYPE_OFF);
-        $promotion->setActionPercent($percentage * 100);
+        $promotion->setDiscount($percentage * 100);
 
         return $promotion;
     }
 
     private function setPercentageMargin(PromotionInterface $promotion, float $margin): PromotionInterface
     {
-        $promotion->setActionType(Promotion::ACTION_TYPE_INCREASE);
-        $promotion->setActionPercent($margin * 100);
+        $promotion->setDiscount($margin * 100);
 
         return $promotion;
     }

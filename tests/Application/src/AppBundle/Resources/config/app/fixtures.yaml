@@ -23,8 +23,7 @@ sylius_fixtures:
                                 starts_at: "-1 day"
                                 ends_at: "-1 second"
                                 enabled: true
-                                action_type: "off"
-                                action_percent: 20
+                                discount: 20
                                 rules:
                                   - type: "has_taxon"
                                     configuration: ["mugs"]
@@ -34,8 +33,7 @@ sylius_fixtures:
                                 starts_at: "-1 day"
                                 ends_at: "+1 day"
                                 enabled: false
-                                action_type: "off"
-                                action_percent: 10
+                                discount: 10
                                 rules:
                                   - type: "has_taxon"
                                     configuration: ["mugs"]
@@ -49,8 +47,7 @@ sylius_fixtures:
                                 starts_at: "now"
                                 ends_at: "+14 day"
                                 enabled: true
-                                action_type: "off"
-                                action_percent: 50
+                                discount: 50
                                 rules:
                                   - type: "has_taxon"
                                     configuration: ["mugs"]
@@ -66,8 +63,7 @@ sylius_fixtures:
                                 starts_at: "now"
                                 ends_at: "+3 day"
                                 enabled: true
-                                action_type: "off"
-                                action_percent: 75
+                                discount: 75
                                 rules:
                                   - type: "contains_product"
                                     configuration: "santa-mug"

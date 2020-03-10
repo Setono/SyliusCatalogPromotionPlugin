@@ -76,7 +76,7 @@ final class ManagingPromotionsContext implements Context
      */
     public function iSpecifyItsActionPercent($actionPercent = null): void
     {
-        $this->createPage->specifyActionPercent((float) $actionPercent);
+        $this->createPage->specifyDiscount((float) $actionPercent);
     }
 
     /**
@@ -85,8 +85,7 @@ final class ManagingPromotionsContext implements Context
      */
     public function iSpecifyItsDiscount($promotion = null): void
     {
-        $this->createPage->specifyActionType(Promotion::ACTION_TYPE_OFF);
-        $this->createPage->specifyActionPercent((float) $promotion);
+        $this->createPage->specifyDiscount((float) $promotion);
     }
 
     /**
@@ -95,8 +94,7 @@ final class ManagingPromotionsContext implements Context
      */
     public function iSpecifyItsMargin($margin = null): void
     {
-        $this->createPage->specifyActionType(Promotion::ACTION_TYPE_INCREASE);
-        $this->createPage->specifyActionPercent((float) $margin);
+        $this->createPage->specifyDiscount((float) $margin);
     }
 
     /**
@@ -401,7 +399,7 @@ final class ManagingPromotionsContext implements Context
         /** @var CreatePageInterface|UpdatePageInterface $currentPage */
         $currentPage = $this->currentPageResolver->getCurrentPageWithForm([$this->createPage, $this->updatePage]);
 
-        Assert::same($currentPage->getValidationMessage('action_percent'), 'This value should be between 1 and 100.');
+        Assert::same($currentPage->getValidationMessage('discount'), 'This value should be between 1 and 100.');
     }
 
     /**
@@ -412,7 +410,7 @@ final class ManagingPromotionsContext implements Context
         /** @var CreatePageInterface|UpdatePageInterface $currentPage */
         $currentPage = $this->currentPageResolver->getCurrentPageWithForm([$this->createPage, $this->updatePage]);
 
-        Assert::same($currentPage->getValidationMessage('action_percent'), 'This value should be between 1 and 100.');
+        Assert::same($currentPage->getValidationMessage('discount'), 'This value should be between 1 and 100.');
     }
 
     /**
