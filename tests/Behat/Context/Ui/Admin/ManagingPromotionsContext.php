@@ -6,7 +6,6 @@ namespace Tests\Setono\SyliusCatalogPromotionPlugin\Behat\Context\Ui\Admin;
 
 use Behat\Behat\Context\Context;
 use DateTimeInterface;
-use Setono\SyliusCatalogPromotionPlugin\Model\Promotion;
 use Setono\SyliusCatalogPromotionPlugin\Model\PromotionInterface;
 use Sylius\Behat\NotificationType;
 use Sylius\Behat\Service\NotificationCheckerInterface;
@@ -86,15 +85,6 @@ final class ManagingPromotionsContext implements Context
     public function iSpecifyItsDiscount($promotion = null): void
     {
         $this->createPage->specifyDiscount((float) $promotion);
-    }
-
-    /**
-     * @When I specify :margin% margin
-     * @When I do not specify margin
-     */
-    public function iSpecifyItsMargin($margin = null): void
-    {
-        $this->createPage->specifyDiscount((float) $margin);
     }
 
     /**

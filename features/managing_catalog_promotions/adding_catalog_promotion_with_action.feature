@@ -17,13 +17,3 @@ Feature: Adding a new catalog promotion with action
         And I add it
         Then I should be notified that it has been successfully created
         And the "10% off for all mugs!" catalog promotion should appear in the registry
-
-    @ui
-    Scenario: Adding a new catalog promotion with fixed margin
-        When I want to create a new catalog promotion
-        And I specify its code as "20_margin_for_all_tshirts"
-        And I name it "20% margin for all t-shirts!"
-        And I specify 20% margin
-        And I add it
-        Then I should be notified that it has been successfully created
-        And the "20% margin for all t-shirts!" catalog promotion should appear in the registry

@@ -226,8 +226,6 @@ class Promotion implements PromotionInterface
 
     public function setDiscount(int $discount): void
     {
-        Assert::greaterThan($discount, 0);
-
         $this->discount = $discount;
     }
 

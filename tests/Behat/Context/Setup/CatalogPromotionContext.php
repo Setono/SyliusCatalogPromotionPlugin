@@ -201,17 +201,7 @@ final class CatalogPromotionContext implements Context
     public function itGivesPercentageDiscount(PromotionInterface $promotion, $percentage)
     {
         $this->persistDiscount(
-            $this->setPercentageDiscount($promotion, $percentage)
-        );
-    }
-
-    /**
-     * @Given /^([^"]+) gives ("[^"]+%") margin$/
-     */
-    public function itGivesPercentageMargin(PromotionInterface $promotion, $margin)
-    {
-        $this->persistDiscount(
-            $this->setPercentageMargin($promotion, $margin)
+            $this->setPercentageDiscount($promotion, (int) $percentage)
         );
     }
 
@@ -322,7 +312,7 @@ final class CatalogPromotionContext implements Context
         );
     }
 
-    private function persistDiscount(PromotionInterface $promotion, PromotionRuleInterface $rule = null)
+    private function persistDiscount(PromotionInterface $promotion, PromotionRuleInterface $rule = null): void
     {
         if (null !== $rule) {
             $promotion->addRule($rule);
@@ -331,19 +321,9 @@ final class CatalogPromotionContext implements Context
         $this->objectManager->flush();
     }
 
-    /**
-     * @param float $promotion
-     */
-    private function setPercentageDiscount(PromotionInterface $promotion, float $percentage): PromotionInterface
+    private function setPercentageDiscount(PromotionInterface $promotion, int $percentage): PromotionInterface
     {
         $promotion->setDiscount($percentage * 100);
-
-        return $promotion;
-    }
-
-    private function setPercentageMargin(PromotionInterface $promotion, float $margin): PromotionInterface
-    {
-        $promotion->setDiscount($margin * 100);
 
         return $promotion;
     }
