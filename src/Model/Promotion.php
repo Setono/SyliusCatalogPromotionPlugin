@@ -11,7 +11,6 @@ use Safe\DateTime;
 use Sylius\Component\Channel\Model\ChannelInterface as BaseChannelInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Resource\Model\TimestampableTrait;
-use Webmozart\Assert\Assert;
 
 class Promotion implements PromotionInterface
 {
