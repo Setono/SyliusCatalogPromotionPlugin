@@ -3,7 +3,7 @@ on:
     push: ~
     pull_request: ~
     schedule:
-        - cron: 5 8 * * 3
+        - cron: 5 8 * * 5
 jobs:
     checks:
         name: PHP ${{ matrix.php-versions }}
@@ -22,10 +22,10 @@ jobs:
             -   name: Checkout
                 uses: actions/checkout@v1
             -   name: Setup PHP, with composer and extensions
-                uses: shivammathur/setup-php@master
+                uses: shivammathur/setup-php@v2
                 with:
                     php-version: ${{ matrix.php-versions }}
-                    extension-csv: intl
+                    extensions: intl
             -   name: Setup node
                 uses: actions/setup-node@v1
                 with:
