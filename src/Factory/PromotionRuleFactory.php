@@ -34,8 +34,6 @@ final class PromotionRuleFactory implements PromotionRuleFactoryInterface
 
     /**
      * @param array|string|mixed $configuration
-     *
-     * @throws StringsException
      */
     public function createByType(string $type, $configuration): PromotionRuleInterface
     {

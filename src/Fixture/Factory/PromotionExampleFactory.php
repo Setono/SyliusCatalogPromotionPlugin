@@ -50,9 +50,6 @@ class PromotionExampleFactory extends AbstractExampleFactory
         $this->configureOptions($this->optionsResolver);
     }
 
-    /**
-     * @throws Exception
-     */
     public function create(array $options = []): PromotionInterface
     {
         $options = $this->optionsResolver->resolve($options);

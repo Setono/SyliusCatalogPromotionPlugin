@@ -10,9 +10,6 @@ use function Safe\sprintf;
 
 final class ManuallyDiscountedProductsExcludedRule extends Rule
 {
-    /**
-     * @throws StringsException
-     */
     public function filter(QueryBuilder $queryBuilder, array $configuration): void
     {
         $rootAlias = $this->getRootAlias($queryBuilder);

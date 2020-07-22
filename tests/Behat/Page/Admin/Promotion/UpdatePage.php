@@ -79,8 +79,6 @@ class UpdatePage extends BaseUpdatePage implements UpdatePageInterface
 
     /**
      * @return NodeElement
-     *
-     * @throws ElementNotFoundException
      */
     protected function getCodeElement()
     {

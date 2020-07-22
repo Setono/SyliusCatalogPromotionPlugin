@@ -12,9 +12,6 @@ use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 
 final class SetonoSyliusCatalogPromotionExtension extends AbstractResourceExtension
 {
-    /**
-     * @throws Exception
-     */
     public function load(array $config, ContainerBuilder $container): void
     {
         $config = $this->processConfiguration($this->getConfiguration([], $container), $config);

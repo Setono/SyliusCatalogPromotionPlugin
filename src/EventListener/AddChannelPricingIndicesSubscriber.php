@@ -21,9 +21,6 @@ final class AddChannelPricingIndicesSubscriber implements EventSubscriber
         ];
     }
 
-    /**
-     * @throws StringsException
-     */
     public function loadClassMetadata(LoadClassMetadataEventArgs $event): void
     {
         $metadata = $event->getClassMetadata();

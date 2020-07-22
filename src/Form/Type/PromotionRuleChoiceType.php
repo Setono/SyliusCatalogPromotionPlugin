@@ -20,9 +20,6 @@ final class PromotionRuleChoiceType extends AbstractType
         $this->rules = $rules;
     }
 
-    /**
-     * @throws ArrayException
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

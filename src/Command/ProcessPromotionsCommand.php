@@ -77,10 +77,6 @@ final class ProcessPromotionsCommand extends Command
         ;
     }
 
-    /**
-     * @throws FilesystemException
-     * @throws StringsException
-     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if (!$this->productVariantRepository instanceof EntityRepository) {
@@ -179,10 +175,6 @@ final class ProcessPromotionsCommand extends Command
         ;
     }
 
-    /**
-     * @throws FilesystemException
-     * @throws StringsException
-     */
     private function getLastExecution(): ?array
     {
         $filename = $this->getExecutionLogFilename();
@@ -207,10 +199,6 @@ final class ProcessPromotionsCommand extends Command
         return $execution;
     }
 
-    /**
-     * @throws FilesystemException
-     * @throws StringsException
-     */
     private function setExecution(array $execution): void
     {
         $filename = $this->getExecutionLogFilename();
@@ -218,9 +206,6 @@ final class ProcessPromotionsCommand extends Command
         file_put_contents($filename, serialize($execution));
     }
 
-    /**
-     * @throws StringsException
-     */
     private function getExecutionLogFilename(): string
     {
         return sprintf('%s/%s.log',

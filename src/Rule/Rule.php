@@ -31,8 +31,6 @@ abstract class Rule implements RuleInterface
 
     /**
      * @return mixed|null
-     *
-     * @throws StringsException
      */
     protected static function getConfigurationValue(string $key, array $configuration, bool $optional = false)
     {

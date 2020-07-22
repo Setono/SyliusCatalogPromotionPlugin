@@ -29,9 +29,6 @@ final class AddTimestampableIndicesSubscriber implements EventSubscriber
         ];
     }
 
-    /**
-     * @throws StringsException
-     */
     public function loadClassMetadata(LoadClassMetadataEventArgs $event): void
     {
         $metadata = $event->getClassMetadata();
@@ -45,9 +42,6 @@ final class AddTimestampableIndicesSubscriber implements EventSubscriber
         }
     }
 
-    /**
-     * @throws StringsException
-     */
     private static function addIndices(ClassMetadata $metadata): void
     {
         $indices = [];

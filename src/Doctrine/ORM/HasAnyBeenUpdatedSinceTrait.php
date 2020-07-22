@@ -15,9 +15,6 @@ trait HasAnyBeenUpdatedSinceTrait
      */
     abstract public function createQueryBuilder($alias, $indexBy = null);
 
-    /**
-     * @throws NonUniqueResultException
-     */
     public function hasAnyBeenUpdatedSince(DateTimeInterface $dateTime): bool
     {
         $qb = $this->createQueryBuilder('o')

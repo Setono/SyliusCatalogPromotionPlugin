@@ -12,9 +12,6 @@ use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 
 final class AppExtension extends Extension
 {
-    /**
-     * @throws Exception
-     */
     public function load(array $config, ContainerBuilder $container): void
     {
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));

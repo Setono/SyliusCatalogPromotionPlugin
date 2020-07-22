@@ -12,9 +12,6 @@ final class ContainsProductsRule extends Rule
 {
     public const TYPE = 'contains_products';
 
-    /**
-     * @throws StringsException
-     */
     public function filter(QueryBuilder $queryBuilder, array $configuration): void
     {
         $value = self::getConfigurationValue('products', $configuration);
