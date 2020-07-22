@@ -25,9 +25,7 @@ final class AddChannelPricingIndicesSubscriber implements EventSubscriber
         $metadata = $event->getClassMetadata();
 
         if (!is_subclass_of($metadata->name, ChannelPricingInterface::class, true)) {
-            throw new RuntimeException(sprintf(
-                'You need to implement the interface, %s', ChannelPricingInterface::class
-            ));
+            return;
         }
 
         if (!$metadata->hasField('multiplier')) {
