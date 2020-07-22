@@ -29,6 +29,8 @@ jobs:
                 with:
                     php-version: ${{ matrix.php-versions }}
                     extensions: intl
+                    coverage: none
+                    tools: symfony
             -   name: Setup node
                 uses: actions/setup-node@v1
                 with:
@@ -63,21 +65,14 @@ jobs:
                 run: |
                     (cd tests/Application && yarn install)
                     (cd tests/Application && yarn build)
-            -   name: Configure display
-                run: |
-                    /sbin/start-stop-daemon --start --quiet --pidfile /tmp/xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0 1680x1050x16
-            -   name: Download and run Chromedriver
-                run: |
-                    curl http://chromedriver.storage.googleapis.com/2.36/chromedriver_linux64.zip > chromedriver.zip
-                    unzip chromedriver.zip
-                    chmod +x chromedriver
-                    chromedriver > /dev/null 2>&1 &
-            -   name: Download and run Selenium
-                run: |
-                    curl http://selenium-release.storage.googleapis.com/3.4/selenium-server-standalone-3.4.0.jar > selenium.jar
-                    java -Dwebdriver.chrome.driver=chromedriver -jar selenium.jar > /dev/null 2>&1 &
+            -   name: Output PHP version
+                run: php -v | head -n 1 | awk '{ print $2 }' > .php-version
+            -   name: Install certificates
+                run: symfony server:ca:install
+            -   name: Run Chrome headless
+                run: google-chrome-stable --enable-automation --disable-background-networking --no-default-browser-check --no-first-run --disable-popup-blocking --disable-default-apps --allow-insecure-localhost --disable-translate --disable-extensions --no-sandbox --enable-features=Metal --headless --remote-debugging-port=9222 --window-size=2880,1800 --proxy-server='direct://' --proxy-bypass-list='*' http://127.0.0.1 > /dev/null 2>&1 &
             -   name: Run webserver
-                run: (cd tests/Application && bin/console server:run 127.0.0.1:8080 --quiet > /dev/null 2>&1 &)
+                run: (cd tests/Application && symfony server:start --port=8080 --dir=public --daemon)
             -   name: Run behat with javascript
                 run: vendor/bin/behat --strict -vvv --no-interaction --tags="@javascript" || vendor/bin/behat --strict -vvv --no-interaction --tags="@javascript" --rerun
             -   uses: actions/upload-artifact@v1
