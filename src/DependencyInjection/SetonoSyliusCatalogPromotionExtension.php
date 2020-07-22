@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Setono\SyliusCatalogPromotionPlugin\DependencyInjection;
 
-use Exception;
 use Sylius\Bundle\ResourceBundle\DependencyInjection\Extension\AbstractResourceExtension;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;

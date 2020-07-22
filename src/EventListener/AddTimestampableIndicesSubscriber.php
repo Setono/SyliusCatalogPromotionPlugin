@@ -9,7 +9,6 @@ use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
 use Doctrine\ORM\Events;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use RuntimeException;
-use Safe\Exceptions\StringsException;
 use function Safe\sprintf;
 
 final class AddTimestampableIndicesSubscriber implements EventSubscriber

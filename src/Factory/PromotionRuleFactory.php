@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Setono\SyliusCatalogPromotionPlugin\Factory;
 
 use InvalidArgumentException;
-use Safe\Exceptions\StringsException;
 use function Safe\sprintf;
 use Setono\SyliusCatalogPromotionPlugin\Model\PromotionRuleInterface;
 use Setono\SyliusCatalogPromotionPlugin\Rule\ContainsProductRule;

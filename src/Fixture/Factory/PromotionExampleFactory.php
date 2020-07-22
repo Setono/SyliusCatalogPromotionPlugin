@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Setono\SyliusCatalogPromotionPlugin\Fixture\Factory;
 
 use DateTimeInterface;
-use Exception;
 use Faker\Generator;
 use Safe\DateTime;
 use Setono\SyliusCatalogPromotionPlugin\Model\PromotionInterface;

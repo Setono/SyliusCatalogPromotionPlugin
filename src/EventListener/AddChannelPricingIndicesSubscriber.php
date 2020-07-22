@@ -8,7 +8,6 @@ use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
 use Doctrine\ORM\Events;
 use RuntimeException;
-use Safe\Exceptions\StringsException;
 use function Safe\sprintf;
 use Setono\SyliusCatalogPromotionPlugin\Model\ChannelPricingInterface;
 

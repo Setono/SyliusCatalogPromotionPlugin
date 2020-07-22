@@ -7,7 +7,6 @@ namespace Setono\SyliusCatalogPromotionPlugin\Rule;
 use Doctrine\ORM\QueryBuilder;
 use InvalidArgumentException;
 use RuntimeException;
-use Safe\Exceptions\StringsException;
 use function Safe\sprintf;
 
 abstract class Rule implements RuleInterface

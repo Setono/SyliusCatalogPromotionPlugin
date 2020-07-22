@@ -7,8 +7,6 @@ namespace Setono\SyliusCatalogPromotionPlugin\Command;
 use DateTimeInterface;
 use Doctrine\ORM\EntityRepository;
 use Safe\DateTime;
-use Safe\Exceptions\FilesystemException;
-use Safe\Exceptions\StringsException;
 use function Safe\file_get_contents;
 use function Safe\file_put_contents;
 use function Safe\sprintf;

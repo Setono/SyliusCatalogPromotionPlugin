@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Setono\SyliusCatalogPromotionPlugin\Rule;
 
 use Doctrine\ORM\QueryBuilder;
-use Safe\Exceptions\StringsException;
 use function Safe\sprintf;
 
 final class HasTaxonRule extends Rule
