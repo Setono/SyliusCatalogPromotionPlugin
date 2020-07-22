@@ -51,13 +51,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Setono\\SyliusCatalogPromotionPlugin\\": "src/",
-            "Tests\\Setono\\SyliusCatalogPromotionPlugin\\": "tests/"
+            "Setono\\SyliusCatalogPromotionPlugin\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "AppBundle\\": "tests/Application/src/AppBundle/"
+            "AppBundle\\": "tests/Application/src/AppBundle/",
+            "Tests\\Setono\\SyliusCatalogPromotionPlugin\\": "tests/"
         },
         "classmap": [
             "tests/Application/Kernel.php"

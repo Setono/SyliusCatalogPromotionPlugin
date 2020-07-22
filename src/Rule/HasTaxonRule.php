@@ -5,16 +5,12 @@ declare(strict_types=1);
 namespace Setono\SyliusCatalogPromotionPlugin\Rule;
 
 use Doctrine\ORM\QueryBuilder;
-use Safe\Exceptions\StringsException;
 use function Safe\sprintf;
 
 final class HasTaxonRule extends Rule
 {
     public const TYPE = 'has_taxon';
 
-    /**
-     * @throws StringsException
-     */
     public function filter(QueryBuilder $queryBuilder, array $configuration): void
     {
         $value = self::getConfigurationValue('taxons', $configuration);

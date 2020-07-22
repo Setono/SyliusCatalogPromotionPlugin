@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Setono\SyliusCatalogPromotionPlugin\Doctrine\ORM;
 
 use DateTimeInterface;
-use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\QueryBuilder;
 
 trait HasAnyBeenUpdatedSinceTrait
@@ -15,9 +14,6 @@ trait HasAnyBeenUpdatedSinceTrait
      */
     abstract public function createQueryBuilder($alias, $indexBy = null);
 
-    /**
-     * @throws NonUniqueResultException
-     */
     public function hasAnyBeenUpdatedSince(DateTimeInterface $dateTime): bool
     {
         $qb = $this->createQueryBuilder('o')

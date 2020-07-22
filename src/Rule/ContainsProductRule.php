@@ -5,16 +5,12 @@ declare(strict_types=1);
 namespace Setono\SyliusCatalogPromotionPlugin\Rule;
 
 use Doctrine\ORM\QueryBuilder;
-use Safe\Exceptions\StringsException;
 use function Safe\sprintf;
 
 final class ContainsProductRule extends Rule
 {
     public const TYPE = 'contains_product';
 
-    /**
-     * @throws StringsException
-     */
     public function filter(QueryBuilder $queryBuilder, array $configuration): void
     {
         $value = self::getConfigurationValue('product', $configuration);

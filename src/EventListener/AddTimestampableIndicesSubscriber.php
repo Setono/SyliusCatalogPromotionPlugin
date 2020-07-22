@@ -9,8 +9,8 @@ use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
 use Doctrine\ORM\Events;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use RuntimeException;
-use Safe\Exceptions\StringsException;
 use function Safe\sprintf;
+use Sylius\Component\Resource\Model\TimestampableInterface;
 
 final class AddTimestampableIndicesSubscriber implements EventSubscriber
 {
@@ -29,9 +29,6 @@ final class AddTimestampableIndicesSubscriber implements EventSubscriber
         ];
     }
 
-    /**
-     * @throws StringsException
-     */
     public function loadClassMetadata(LoadClassMetadataEventArgs $event): void
     {
         $metadata = $event->getClassMetadata();
@@ -45,12 +42,15 @@ final class AddTimestampableIndicesSubscriber implements EventSubscriber
         }
     }
 
-    /**
-     * @throws StringsException
-     */
     private static function addIndices(ClassMetadata $metadata): void
     {
         $indices = [];
+
+        if (!is_subclass_of($metadata->name, TimestampableInterface::class, true)) {
+            throw new RuntimeException(sprintf(
+                'The class %s must implement the interface, %s', $metadata->name, TimestampableInterface::class
+            ));
+        }
 
         $fields = ['createdAt', 'updatedAt'];
         foreach ($fields as $field) {

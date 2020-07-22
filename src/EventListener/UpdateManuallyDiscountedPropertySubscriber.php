@@ -10,6 +10,9 @@ use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Events;
 use Setono\SyliusCatalogPromotionPlugin\Model\ChannelPricingInterface;
 
+/**
+ * This subscriber has the responsibility to mark a channel pricing as manually discounted if the user did so manually
+ */
 final class UpdateManuallyDiscountedPropertySubscriber implements EventSubscriber
 {
     public function getSubscribedEvents(): array
@@ -46,7 +49,7 @@ final class UpdateManuallyDiscountedPropertySubscriber implements EventSubscribe
 
         $channelPricing->setManuallyDiscounted(
             null !== $channelPricing->getOriginalPrice()
-            && $channelPricing->getPrice() !== $channelPricing->getOriginalPrice()
+            && $channelPricing->getPrice() < $channelPricing->getOriginalPrice()
         );
     }
 }

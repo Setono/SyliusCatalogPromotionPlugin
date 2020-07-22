@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Setono\SyliusCatalogPromotionPlugin\Fixture\Factory;
 
 use DateTimeInterface;
-use Exception;
 use Faker\Generator;
 use Safe\DateTime;
 use Setono\SyliusCatalogPromotionPlugin\Model\PromotionInterface;
@@ -50,9 +49,6 @@ class PromotionExampleFactory extends AbstractExampleFactory
         $this->configureOptions($this->optionsResolver);
     }
 
-    /**
-     * @throws Exception
-     */
     public function create(array $options = []): PromotionInterface
     {
         $options = $this->optionsResolver->resolve($options);

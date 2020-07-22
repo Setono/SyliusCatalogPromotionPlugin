@@ -7,7 +7,6 @@ namespace Setono\SyliusCatalogPromotionPlugin\Rule;
 use Doctrine\ORM\QueryBuilder;
 use InvalidArgumentException;
 use RuntimeException;
-use Safe\Exceptions\StringsException;
 use function Safe\sprintf;
 
 abstract class Rule implements RuleInterface
@@ -31,8 +30,6 @@ abstract class Rule implements RuleInterface
 
     /**
      * @return mixed|null
-     *
-     * @throws StringsException
      */
     protected static function getConfigurationValue(string $key, array $configuration, bool $optional = false)
     {

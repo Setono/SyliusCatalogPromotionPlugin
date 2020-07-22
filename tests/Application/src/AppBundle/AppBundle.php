@@ -12,9 +12,6 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 final class AppBundle extends Bundle
 {
-    /**
-     * @throws FilesystemException
-     */
     public function build(ContainerBuilder $container): void
     {
         parent::build($container);
