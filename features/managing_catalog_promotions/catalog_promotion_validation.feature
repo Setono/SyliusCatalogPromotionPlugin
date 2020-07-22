@@ -29,7 +29,7 @@ Feature: Catalog promotion validation
     @ui
     Scenario: Adding a discount with start date set up after end date
         Given I want to create a new catalog promotion
-        When I specify its code as "FULL_METAL_SPECIAL"
+        When I specify its code as "FULL_METAL_PROMO"
         And I name it "Full metal discount"
         And I make it available from "24.12.2017" to "12.12.2017"
         And I try to add it
