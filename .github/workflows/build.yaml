@@ -67,7 +67,10 @@ jobs:
             -   name: Install certificates
                 run: symfony server:ca:install
             -   name: Run Chrome headless
-                run: google-chrome-stable --enable-automation --disable-background-networking --no-default-browser-check --no-first-run --disable-popup-blocking --disable-default-apps --allow-insecure-localhost --disable-translate --disable-extensions --no-sandbox --enable-features=Metal --headless --remote-debugging-port=9222 --window-size=2880,1800 --proxy-server='direct://' --proxy-bypass-list='*' http://127.0.0.1 > /dev/null 2>&1 &
+                run: |
+                    google-chrome-stable --enable-automation --disable-background-networking --no-default-browser-check --no-first-run --disable-popup-blocking --disable-default-apps --allow-insecure-localhost --disable-translate --disable-extensions --no-sandbox --enable-features=Metal --headless --remote-debugging-port=9222 --window-size=2880,1800 --proxy-server='direct://' --proxy-bypass-list='*' http://127.0.0.1 > /dev/null 2>&1 &
+                    sleep 15
+                    curl -s -o /dev/null -I -w "%{http_code}" http://127.0.0.1:9222/json/version
             -   name: Run webserver
                 run: (cd tests/Application && symfony server:start --port=8080 --dir=public --daemon)
             -   name: Run behat with javascript
