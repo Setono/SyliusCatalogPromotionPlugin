@@ -4,12 +4,9 @@ on:
     pull_request: ~
     schedule:
         - cron: 5 8 * * 5
-
 env:
     APP_ENV: test
     DATABASE_URL: mysql://root:root@127.0.0.1/sylius?serverVersion=5.7
-    DISPLAY: :99
-
 jobs:
     checks:
         name: PHP ${{ matrix.php-versions }}
