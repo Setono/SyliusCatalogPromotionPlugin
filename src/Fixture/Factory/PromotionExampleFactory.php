@@ -119,17 +119,19 @@ class PromotionExampleFactory extends AbstractExampleFactory
 
             ->setDefault('priority', 0)
             ->setAllowedTypes('priority', 'int')
-            ->setDefault('exclusive', $this->faker->boolean(25))
-            ->setAllowedTypes('exclusive', 'bool')
+
+            ->setDefault('exclusive', function (Options $options): bool {
+                return $this->faker->boolean(25);
+            })
 
             ->setDefault('starts_at', null)
             ->setAllowedTypes('starts_at', ['null', 'string'])
             ->setDefault('ends_at', null)
             ->setAllowedTypes('ends_at', ['null', 'string'])
-            ->setDefault('enabled', function (): bool {
+
+            ->setDefault('enabled', function (Options $options): bool {
                 return $this->faker->boolean(90);
             })
-            ->setAllowedTypes('enabled', 'bool')
 
             ->setDefault('discount', function (Options $options): float {
                 return $this->faker->randomFloat(3, 0, 100);
