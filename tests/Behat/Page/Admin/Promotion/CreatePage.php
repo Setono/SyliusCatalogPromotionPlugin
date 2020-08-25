@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Tests\Setono\SyliusCatalogPromotionPlugin\Behat\Page\Admin\Promotion;
 
 use Behat\Mink\Element\NodeElement;
+use Behat\Mink\Exception\ElementNotFoundException;
+use function Safe\sprintf;
 use Sylius\Behat\Behaviour\NamesIt;
 use Sylius\Behat\Behaviour\SpecifiesItsCode;
 use Sylius\Behat\Page\Admin\Crud\CreatePage as BaseCreatePage;
@@ -19,33 +21,39 @@ class CreatePage extends BaseCreatePage implements CreatePageInterface
     use SpecifiesItsDiscount;
     use PageDefinedElements;
 
-    public function addRule($ruleName)
+    public function addRule(string $ruleName): void
     {
         $count = count($this->getCollectionItems('rules'));
 
         $this->getDocument()->clickLink('Add rule');
 
-        $this->getDocument()->waitFor(5, function () use ($count) {
+        $this->getDocument()->waitFor(5, function () use ($count): bool {
             return $count + 1 === count($this->getCollectionItems('rules'));
         });
 
         $this->selectRuleOption('Type', $ruleName);
     }
 
-    public function selectRuleOption($option, $value, $multiple = false)
+    public function selectRuleOption(string $option, string $value, bool $multiple = false): void
     {
-        $this->getLastCollectionItem('rules')->find('named', ['select', $option])->selectOption($value, $multiple);
+        $select = $this->getLastCollectionItem('rules')->find('named', ['select', $option]);
+
+        Assert::notNull($select);
+
+        $select->selectOption($value, $multiple);
     }
 
-    public function selectAutocompleteRuleOption($option, $value, $multiple = false)
+    public function selectAutocompleteRuleOption(string $option, $value, bool $multiple = false): void
     {
-        $option = strtolower(str_replace(' ', '_', $option));
+        $option = mb_strtolower(str_replace(' ', '_', $option));
 
-        $ruleAutocomplete = $this
+        $element = $this
             ->getLastCollectionItem('rules')
             ->find('css', sprintf('input[type="hidden"][name*="[%s]"]', $option))
-            ->getParent()
-        ;
+            ;
+        Assert::notNull($element);
+
+        $ruleAutocomplete = $element->getParent();
 
         if ($multiple && is_array($value)) {
             AutocompleteHelper::chooseValues($this->getSession(), $ruleAutocomplete, $value);
@@ -53,25 +61,26 @@ class CreatePage extends BaseCreatePage implements CreatePageInterface
             return;
         }
 
+        Assert::string($value);
         AutocompleteHelper::chooseValue($this->getSession(), $ruleAutocomplete, $value);
     }
 
-    public function fillRuleOption($option, $value)
+    public function fillRuleOption(string $option, string $value): void
     {
         $this->getLastCollectionItem('rules')->fillField($option, $value);
     }
 
-    public function makeExclusive()
+    public function makeExclusive(): void
     {
         $this->getDocument()->checkField('Exclusive');
     }
 
-    public function checkChannel($name)
+    public function checkChannel(string $name): void
     {
         $this->getDocument()->checkField($name);
     }
 
-    public function setStartsAt(\DateTimeInterface $dateTime)
+    public function setStartsAt(\DateTimeInterface $dateTime): void
     {
         $timestamp = $dateTime->getTimestamp();
 
@@ -79,7 +88,7 @@ class CreatePage extends BaseCreatePage implements CreatePageInterface
         $this->getDocument()->fillField('setono_sylius_catalog_promotion_promotion_startsAt_time', date('H:i', $timestamp));
     }
 
-    public function setEndsAt(\DateTimeInterface $dateTime)
+    public function setEndsAt(\DateTimeInterface $dateTime): void
     {
         $timestamp = $dateTime->getTimestamp();
 
@@ -87,44 +96,35 @@ class CreatePage extends BaseCreatePage implements CreatePageInterface
         $this->getDocument()->fillField('setono_sylius_catalog_promotion_promotion_endsAt_time', date('H:i', $timestamp));
     }
 
-    /**
-     * @param string $channelName
-     *
-     * @return NodeElement
-     */
-    private function getChannelConfigurationOfLastRule($channelName)
-    {
-        return $this
-            ->getLastCollectionItem('rules')
-            ->find('css', sprintf('[id$="configuration"] .field:contains("%s")', $channelName))
-        ;
-    }
-
-    /**
-     * @param string $collection
-     *
-     * @return NodeElement
-     */
-    private function getLastCollectionItem($collection)
+    private function getLastCollectionItem(string $collection): NodeElement
     {
         $items = $this->getCollectionItems($collection);
 
         Assert::notEmpty($items);
 
-        return end($items);
+        $item = end($items);
+        Assert::notFalse($item);
+
+        return $item;
     }
 
     /**
-     * @param string $collection
-     *
-     * @return NodeElement[]
+     * @return NodeElement[]|array
      */
-    private function getCollectionItems($collection)
+    private function getCollectionItems(string $collection): array
     {
-        $items = $this->getElement($collection)->findAll('css', 'div[data-form-collection="item"]');
+        return $this->getElement($collection)->findAll('css', 'div[data-form-collection="item"]');
+    }
 
-        Assert::isArray($items);
+    public function getValidationMessageForAction(): string
+    {
+        $actionForm = $this->getLastCollectionItem('actions');
 
-        return $items;
+        $foundElement = $actionForm->find('css', '.sylius-validation-error');
+        if (null === $foundElement) {
+            throw new ElementNotFoundException($this->getSession(), 'Tag', 'css', '.sylius-validation-error');
+        }
+
+        return $foundElement->getText();
     }
 }

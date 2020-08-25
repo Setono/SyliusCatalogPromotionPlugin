@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\Setono\SyliusCatalogPromotionPlugin\Behat\Page\Admin\Promotion;
 
-/**
- * Trait PageDefinedElements
- */
 trait PageDefinedElements
 {
     protected function getDefinedElements(): array

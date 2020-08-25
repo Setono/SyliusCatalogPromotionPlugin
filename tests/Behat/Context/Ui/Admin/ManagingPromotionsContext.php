@@ -6,6 +6,7 @@ namespace Tests\Setono\SyliusCatalogPromotionPlugin\Behat\Context\Ui\Admin;
 
 use Behat\Behat\Context\Context;
 use DateTimeInterface;
+use function Safe\sprintf;
 use Setono\SyliusCatalogPromotionPlugin\Model\PromotionInterface;
 use Sylius\Behat\NotificationType;
 use Sylius\Behat\Service\NotificationCheckerInterface;
@@ -73,16 +74,16 @@ final class ManagingPromotionsContext implements Context
      * @When I specify :actionPercent% action percent
      * @When I do not specify its action percent
      */
-    public function iSpecifyItsActionPercent($actionPercent = null): void
+    public function iSpecifyItsActionPercent(?float $actionPercent = null): void
     {
-        $this->createPage->specifyDiscount((float) $actionPercent);
+        $this->createPage->specifyDiscount($actionPercent);
     }
 
     /**
      * @When I specify :promotion% promotion
      * @When I do not specify promotion
      */
-    public function iSpecifyItsDiscount($promotion = null): void
+    public function iSpecifyItsDiscount(?string $promotion = null): void
     {
         $this->createPage->specifyDiscount((float) $promotion);
     }
@@ -91,7 +92,7 @@ final class ManagingPromotionsContext implements Context
      * @When I specify its code as :code
      * @When I do not specify its code
      */
-    public function iSpecifyItsCodeAs($code = null): void
+    public function iSpecifyItsCodeAs(?string $code = null): void
     {
         $this->createPage->specifyCode($code ?? '');
     }
@@ -101,7 +102,7 @@ final class ManagingPromotionsContext implements Context
      * @When I do not name it
      * @When I remove its name
      */
-    public function iNameIt($name = null): void
+    public function iNameIt(?string $name = null): void
     {
         $this->createPage->nameIt($name ?? '');
     }
@@ -141,7 +142,7 @@ final class ManagingPromotionsContext implements Context
      * @When I add the "Product having one of taxons" rule configured with :firstTaxon
      * @When I add the "Product having one of taxons" rule configured with :firstTaxon or :secondTaxon
      */
-    public function iAddTheHasTaxonRuleConfiguredWith(...$taxons): void
+    public function iAddTheHasTaxonRuleConfiguredWith(string ...$taxons): void
     {
         $this->createPage->addRule('Product having one of taxons');
         $this->createPage->selectAutocompleteRuleOption('Taxons', $taxons, true);
@@ -151,7 +152,7 @@ final class ManagingPromotionsContext implements Context
      * @When I add the "Product is one of" rule configured with the :productName product
      * @When I add the "Product is one of" rule configured with the :firstProductName or :secondProductName product
      */
-    public function iAddTheRuleConfiguredWithTheProducts(...$productNames): void
+    public function iAddTheRuleConfiguredWithTheProducts(string ...$productNames): void
     {
         $this->createPage->addRule('Product is one of');
         $this->createPage->selectAutocompleteRuleOption('Products', $productNames, true);
@@ -160,7 +161,7 @@ final class ManagingPromotionsContext implements Context
     /**
      * @When I add the "Product is" rule configured with the :productName product
      */
-    public function iAddTheRuleConfiguredWithTheProduct($productName): void
+    public function iAddTheRuleConfiguredWithTheProduct(string $productName): void
     {
         $this->createPage->addRule('Product is');
         $this->createPage->selectAutocompleteRuleOption('Product', $productName);
@@ -194,7 +195,7 @@ final class ManagingPromotionsContext implements Context
     /**
      * @Then I should be notified that :element is required
      */
-    public function iShouldBeNotifiedThatIsRequired($element): void
+    public function iShouldBeNotifiedThatIsRequired(string $element): void
     {
         $this->assertFieldValidationMessage($element, sprintf('Please enter promotion %s.', $element));
     }
@@ -202,7 +203,7 @@ final class ManagingPromotionsContext implements Context
     /**
      * @Then I should be notified that a :element value should be a numeric value
      */
-    public function iShouldBeNotifiedThatAMinimalValueShouldBeNumeric($element): void
+    public function iShouldBeNotifiedThatAMinimalValueShouldBeNumeric(string $element): void
     {
         $this->assertFieldValidationMessage($element, 'This value is not valid.');
     }
@@ -218,7 +219,7 @@ final class ManagingPromotionsContext implements Context
     /**
      * @Then catalog promotion with :element :name should not be added
      */
-    public function promotionWithElementValueShouldNotBeAdded($element, $name): void
+    public function promotionWithElementValueShouldNotBeAdded(string $element, string $name): void
     {
         $this->indexPage->open();
 
@@ -228,7 +229,7 @@ final class ManagingPromotionsContext implements Context
     /**
      * @Then there should still be only one catalog promotion with :element :value
      */
-    public function thereShouldStillBeOnlyOneDiscountWith($element, $value): void
+    public function thereShouldStillBeOnlyOneDiscountWith(string $element, string $value): void
     {
         $this->indexPage->open();
 
@@ -257,7 +258,7 @@ final class ManagingPromotionsContext implements Context
     /**
      * @When I make it applicable for the :channelName channel
      */
-    public function iMakeItApplicableForTheChannel($channelName): void
+    public function iMakeItApplicableForTheChannel(string $channelName): void
     {
         /** @var CreatePageInterface|UpdatePageInterface $currentPage */
         $currentPage = $this->currentPageResolver->getCurrentPageWithForm([$this->createPage, $this->updatePage]);
@@ -268,7 +269,7 @@ final class ManagingPromotionsContext implements Context
     /**
      * @Then the :catalogPromotion catalog promotion should be applicable for the :channelName channel
      */
-    public function theDiscountShouldBeApplicableForTheChannel(PromotionInterface $catalogPromotion, $channelName): void
+    public function theDiscountShouldBeApplicableForTheChannel(PromotionInterface $catalogPromotion, string $channelName): void
     {
         $this->iWantToModifyADiscount($catalogPromotion);
 
@@ -382,36 +383,25 @@ final class ManagingPromotionsContext implements Context
     }
 
     /**
-     * @Then I should be notified that the maximum value of catalog promotion is 100%
+     * @Then I should be notified that catalog promotion discount range is 0% to 100%
      */
     public function iShouldBeNotifiedThatTheMaximumValueOfDiscountIs100(): void
     {
         /** @var CreatePageInterface|UpdatePageInterface $currentPage */
         $currentPage = $this->currentPageResolver->getCurrentPageWithForm([$this->createPage, $this->updatePage]);
 
-        Assert::same($currentPage->getValidationMessage('discount'), 'This value should be between 1 and 100.');
-    }
-
-    /**
-     * @Then I should be notified that catalog promotion value must be at least 1%
-     */
-    public function iShouldBeNotifiedThatDiscountValueMustBeAtLeast0(): void
-    {
-        /** @var CreatePageInterface|UpdatePageInterface $currentPage */
-        $currentPage = $this->currentPageResolver->getCurrentPageWithForm([$this->createPage, $this->updatePage]);
-
-        Assert::same($currentPage->getValidationMessage('discount'), 'This value should be between 1 and 100.');
+        Assert::same($currentPage->getValidationMessage('discount'), 'Please enter value between 0% and 100%.');
     }
 
     /**
      * @Then I should see :count catalog promotions on the list
      */
-    public function iShouldSeeDiscountsOnTheList($count): void
+    public function iShouldSeeDiscountsOnTheList(int $count): void
     {
         $actualCount = $this->indexPage->countItems();
 
         Assert::same(
-            (int) $count,
+            $count,
             $actualCount,
             'There should be %s promotion, but there\'s %2$s.'
         );
@@ -420,7 +410,7 @@ final class ManagingPromotionsContext implements Context
     /**
      * @Then the first catalog promotion on the list should have :field :value
      */
-    public function theFirstDiscountOnTheListShouldHave($field, $value): void
+    public function theFirstDiscountOnTheListShouldHave(string $field, string $value): void
     {
         $fields = $this->indexPage->getColumnFields($field);
         $actualValue = reset($fields);
@@ -435,7 +425,7 @@ final class ManagingPromotionsContext implements Context
     /**
      * @Then the last catalog promotion on the list should have :field :value
      */
-    public function theLastDiscountOnTheListShouldHave($field, $value): void
+    public function theLastDiscountOnTheListShouldHave(string $field, string $value): void
     {
         $fields = $this->indexPage->getColumnFields($field);
         $actualValue = end($fields);
@@ -450,18 +440,14 @@ final class ManagingPromotionsContext implements Context
     /**
      * @Given the :catalogPromotion catalog promotion should have priority :priority
      */
-    public function theDiscountsShouldHavePriority(PromotionInterface $catalogPromotion, $priority): void
+    public function theDiscountsShouldHavePriority(PromotionInterface $catalogPromotion, string $priority): void
     {
         $this->iWantToModifyADiscount($catalogPromotion);
 
         Assert::same($this->updatePage->getPriority(), $priority);
     }
 
-    /**
-     * @param string $element
-     * @param string $expectedMessage
-     */
-    private function assertFieldValidationMessage($element, $expectedMessage): void
+    private function assertFieldValidationMessage(string $element, string $expectedMessage): void
     {
         /** @var CreatePageInterface|UpdatePageInterface $currentPage */
         $currentPage = $this->currentPageResolver->getCurrentPageWithForm([$this->createPage, $this->updatePage]);
@@ -469,10 +455,7 @@ final class ManagingPromotionsContext implements Context
         Assert::same($currentPage->getValidationMessage($element), $expectedMessage);
     }
 
-    /**
-     * @param string $field
-     */
-    private function assertIfFieldIsTrue(PromotionInterface $promotion, $field): void
+    private function assertIfFieldIsTrue(PromotionInterface $promotion, string $field): void
     {
         $this->iWantToModifyADiscount($promotion);
 

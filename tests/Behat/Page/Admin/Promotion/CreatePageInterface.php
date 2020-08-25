@@ -8,48 +8,30 @@ use Sylius\Behat\Page\Admin\Crud\CreatePageInterface as BaseCreatePageInterface;
 
 interface CreatePageInterface extends BaseCreatePageInterface
 {
-    /**
-     * @param string $discount
-     */
-    public function specifyDiscount($discount);
+    public function specifyDiscount(?float $discount): void;
 
     public function specifyCode(string $code): void;
 
     public function nameIt(string $name): void;
 
-    /**
-     * @param string $ruleName
-     */
-    public function addRule($ruleName);
+    public function addRule(string $ruleName): void;
+
+    public function selectRuleOption(string $option, string $value, bool $multiple = false): void;
 
     /**
-     * @param string $option
-     * @param string $value
-     * @param bool $multiple
-     */
-    public function selectRuleOption($option, $value, $multiple = false);
-
-    /**
-     * @param string $option
      * @param string|string[] $value
-     * @param bool $multiple
      */
-    public function selectAutocompleteRuleOption($option, $value, $multiple = false);
+    public function selectAutocompleteRuleOption(string $option, $value, bool $multiple = false): void;
 
-    /**
-     * @param string $option
-     * @param string $value
-     */
-    public function fillRuleOption($option, $value);
+    public function fillRuleOption(string $option, string $value): void;
 
-    public function makeExclusive();
+    public function makeExclusive(): void;
 
-    /**
-     * @param string $name
-     */
-    public function checkChannel($name);
+    public function checkChannel(string $name): void;
 
-    public function setStartsAt(\DateTimeInterface $dateTime);
+    public function setStartsAt(\DateTimeInterface $dateTime): void;
 
-    public function setEndsAt(\DateTimeInterface $dateTime);
+    public function setEndsAt(\DateTimeInterface $dateTime): void;
+
+    public function getValidationMessageForAction(): string;
 }

@@ -6,6 +6,7 @@ namespace Tests\Setono\SyliusCatalogPromotionPlugin\Behat\Context\Setup;
 
 use Behat\Behat\Context\Context;
 use Doctrine\Common\Persistence\ObjectManager;
+use Safe\DateTime;
 use Setono\SyliusCatalogPromotionPlugin\Factory\PromotionRuleFactoryInterface;
 use Setono\SyliusCatalogPromotionPlugin\Model\Promotion;
 use Setono\SyliusCatalogPromotionPlugin\Model\PromotionInterface;
@@ -52,11 +53,11 @@ final class CatalogPromotionContext implements Context
     /**
      * @Given there is a disabled catalog promotion for all products with a :percentage% discount
      */
-    public function thereIsADisabledCatalogPromotionForAllProductsWithADiscount($percentage): void
+    public function thereIsADisabledCatalogPromotionForAllProductsWithADiscount(string $percentage): void
     {
         $promotion = $this->testDiscountFactory->createForChannel(uniqid('catalog-promotion-', true), $this->sharedStorage->get('channel'));
         $promotion->setEnabled(false);
-        $promotion->setDiscount((int) $percentage);
+        $promotion->setDiscount((float) $percentage);
         $this->promotionRepository->add($promotion);
         $this->sharedStorage->set('catalog_promotion', $promotion);
     }
@@ -65,9 +66,10 @@ final class CatalogPromotionContext implements Context
      * @Given there is a catalog promotion for all products with a :percentage% discount
      * @Given there is a catalog promotion for taxon :taxon with a :percentage% discount
      */
-    public function thereIsACatalogPromotionWithADiscount(TaxonInterface $taxon = null, $percentage): void
+    public function thereIsACatalogPromotionWithADiscount(TaxonInterface $taxon = null, float $percentage): void
     {
-        Assert::greaterThan($percentage, 0);
+        Assert::greaterThanEq($percentage, 0);
+        Assert::lessThanEq($percentage, 100);
 
         $promotion = $this->testDiscountFactory->createForChannel(uniqid('catalog-promotion-', true), $this->sharedStorage->get('channel'));
         $promotion->setDiscount($percentage / 100);
@@ -106,13 +108,13 @@ final class CatalogPromotionContext implements Context
     /**
      * @Given /^there is a catalog promotion "([^"]+)" with priority ([^"]+)$/
      */
-    public function thereIsACatalogPromotionWithPriority($promotionName, $priority)
+    public function thereIsACatalogPromotionWithPriority(string $promotionName, int $priority): void
     {
         $promotion = $this->testDiscountFactory
             ->createForChannel($promotionName, $this->sharedStorage->get('channel'))
         ;
 
-        $promotion->setPriority((int) $priority);
+        $promotion->setPriority($priority);
         $promotion->setDiscount(1); // todo should be moved to another method
 
         $this->promotionRepository->add($promotion);
@@ -122,14 +124,14 @@ final class CatalogPromotionContext implements Context
     /**
      * @Given /^there is an exclusive catalog promotion "([^"]+)"(?:| with priority ([^"]+))$/
      */
-    public function thereIsAnExclusiveCatalogPromotionWithPriority($promotionName, $priority = 0)
+    public function thereIsAnExclusiveCatalogPromotionWithPriority(string $promotionName, int $priority = 0): void
     {
         $promotion = $this->testDiscountFactory
             ->createForChannel($promotionName, $this->sharedStorage->get('channel'))
         ;
 
         $promotion->setExclusive(true);
-        $promotion->setPriority((int) $priority);
+        $promotion->setPriority($priority);
 
         $this->promotionRepository->add($promotion);
         $this->sharedStorage->set('catalog_promotion', $promotion);
@@ -138,7 +140,7 @@ final class CatalogPromotionContext implements Context
     /**
      * @Given /^(this catalog promotion) was disabled$/
      */
-    public function thisDiscountDisabled(PromotionInterface $promotion)
+    public function thisDiscountDisabled(PromotionInterface $promotion): void
     {
         $promotion->setEnabled(false);
 
@@ -148,7 +150,7 @@ final class CatalogPromotionContext implements Context
     /**
      * @Given /^(this catalog promotion) was enabled$/
      */
-    public function thisDiscountEnabled(PromotionInterface $promotion)
+    public function thisDiscountEnabled(PromotionInterface $promotion): void
     {
         $promotion->setEnabled(true);
 
@@ -158,9 +160,9 @@ final class CatalogPromotionContext implements Context
     /**
      * @Given /^(this catalog promotion) has already expired$/
      */
-    public function thisDiscountHasExpired(PromotionInterface $promotion)
+    public function thisDiscountHasExpired(PromotionInterface $promotion): void
     {
-        $promotion->setEndsAt(new \DateTime('1 day ago'));
+        $promotion->setEndsAt(new DateTime('1 day ago'));
 
         $this->objectManager->flush();
     }
@@ -168,9 +170,9 @@ final class CatalogPromotionContext implements Context
     /**
      * @Given /^(this catalog promotion) expires tomorrow$/
      */
-    public function thisDiscountExpiresTomorrow(PromotionInterface $promotion)
+    public function thisDiscountExpiresTomorrow(PromotionInterface $promotion): void
     {
-        $promotion->setEndsAt(new \DateTime('tomorrow'));
+        $promotion->setEndsAt(new DateTime('tomorrow'));
 
         $this->objectManager->flush();
     }
@@ -178,9 +180,9 @@ final class CatalogPromotionContext implements Context
     /**
      * @Given /^(this catalog promotion) has started yesterday$/
      */
-    public function thisDiscountHasStartedYesterday(PromotionInterface $promotion)
+    public function thisDiscountHasStartedYesterday(PromotionInterface $promotion): void
     {
-        $promotion->setStartsAt(new \DateTime('1 day ago'));
+        $promotion->setStartsAt(new DateTime('1 day ago'));
 
         $this->objectManager->flush();
     }
@@ -188,9 +190,9 @@ final class CatalogPromotionContext implements Context
     /**
      * @Given /^(this catalog promotion) starts tomorrow$/
      */
-    public function thisDiscountStartsTomorrow(PromotionInterface $promotion)
+    public function thisDiscountStartsTomorrow(PromotionInterface $promotion): void
     {
-        $promotion->setStartsAt(new \DateTime('tomorrow'));
+        $promotion->setStartsAt(new DateTime('tomorrow'));
 
         $this->objectManager->flush();
     }
@@ -198,10 +200,10 @@ final class CatalogPromotionContext implements Context
     /**
      * @Given /^([^"]+) gives ("[^"]+%") discount/
      */
-    public function itGivesPercentageDiscount(PromotionInterface $promotion, $percentage)
+    public function itGivesPercentageDiscount(PromotionInterface $promotion, float $percentage): void
     {
         $this->persistDiscount(
-            $this->setPercentageDiscount($promotion, (int) $percentage)
+            $this->setPercentageDiscount($promotion, $percentage)
         );
     }
 
@@ -210,9 +212,9 @@ final class CatalogPromotionContext implements Context
      */
     public function itGivesPercentageOffEveryProductClassifiedAs(
         PromotionInterface $promotion,
-        $percentage,
+        float $percentage,
         TaxonInterface $taxon
-    ) {
+    ): void {
         $this->createPercentageDiscount(
             $promotion,
             $percentage,
@@ -227,9 +229,9 @@ final class CatalogPromotionContext implements Context
      */
     public function itGivesOffOnEveryProductClassifiedAs(
         PromotionInterface $promotion,
-        $percentage,
+        float $percentage,
         array $promotionTaxons
-    ) {
+    ): void {
         $promotionTaxonsCodes = [$promotionTaxons[0]->getCode(), $promotionTaxons[1]->getCode()];
         $this->createPercentageDiscount(
             $promotion,
@@ -244,9 +246,9 @@ final class CatalogPromotionContext implements Context
      */
     public function itGivesPercentageDiscountOffOnAProduct(
         PromotionInterface $promotion,
-        $percentage,
+        float $percentage,
         ?ProductInterface $product = null
-    ) {
+    ): void {
         if (null == $product) {
             $product = $this->sharedStorage->get('product');
         }
@@ -263,9 +265,9 @@ final class CatalogPromotionContext implements Context
      */
     public function itGivesPercentageDiscountOffOnAProducts(
         PromotionInterface $promotion,
-        $percentage,
+        float $percentage,
         array $products
-    ) {
+    ): void {
         $productCodes = [$products[0]->getCode(), $products[1]->getCode()];
         $this->createPercentageDiscount(
             $promotion,
@@ -278,7 +280,7 @@ final class CatalogPromotionContext implements Context
      * @Given /^(this promotion) applicable for (all channels)$/
      * @Given /^promotion :promotion applicable for (all channels)$/
      */
-    public function promotionApplicableForAllChannels(PromotionInterface $promotion, array $channels)
+    public function promotionApplicableForAllChannels(PromotionInterface $promotion, array $channels): void
     {
         foreach ($channels as $channel) {
             $promotion->addChannel($channel);
@@ -290,22 +292,18 @@ final class CatalogPromotionContext implements Context
     /**
      * @Given /^(the catalog promotion) was disabled for the (channel "[^"]+")$/
      */
-    public function theDiscountWasDisabledForTheChannel(PromotionInterface $promotion, ChannelInterface $channel)
+    public function theDiscountWasDisabledForTheChannel(PromotionInterface $promotion, ChannelInterface $channel): void
     {
         $promotion->removeChannel($channel);
 
         $this->objectManager->flush();
     }
 
-    /**
-     * @param float $promotion
-     * @param PromotionRuleInterface $rule
-     */
     private function createPercentageDiscount(
         PromotionInterface $promotion,
-        $percentage,
+        float $percentage,
         PromotionRuleInterface $rule = null
-    ) {
+    ): void {
         $this->persistDiscount(
             $this->setPercentageDiscount($promotion, $percentage),
             $rule
@@ -321,7 +319,7 @@ final class CatalogPromotionContext implements Context
         $this->objectManager->flush();
     }
 
-    private function setPercentageDiscount(PromotionInterface $promotion, int $percentage): PromotionInterface
+    private function setPercentageDiscount(PromotionInterface $promotion, float $percentage): PromotionInterface
     {
         $promotion->setDiscount($percentage * 100);
 

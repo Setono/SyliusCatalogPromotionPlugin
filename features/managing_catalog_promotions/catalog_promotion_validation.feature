@@ -59,7 +59,7 @@ Feature: Catalog promotion validation
         And I name it "Christmas sale"
         And I specify 120% action percent
         And I try to add it
-        Then I should be notified that the maximum value of catalog promotion is 100%
+        Then I should be notified that catalog promotion discount range is 0% to 100%
         And catalog promotion with name "Christmas sale" should not be added
 
     @ui
@@ -69,5 +69,5 @@ Feature: Catalog promotion validation
         And I name it "Christmas sale"
         And I specify -20% action percent
         And I try to add it
-        Then I should be notified that catalog promotion value must be at least 1%
+        Then I should be notified that catalog promotion discount range is 0% to 100%
         And catalog promotion with name "Christmas sale" should not be added
