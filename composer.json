@@ -38,8 +38,7 @@
         "symfony/debug-bundle": "^4.4 || ^5.0",
         "symfony/dotenv": "^4.4 || ^5.0",
         "symfony/intl": "^4.4 || ^5.0",
-        "symfony/web-profiler-bundle": "^4.4 || ^5.0",
-        "symfony/web-server-bundle": "^4.4 || ^5.0"
+        "symfony/web-profiler-bundle": "^4.4 || ^5.0"
     },
     "config": {
         "sort-packages": true
@@ -96,7 +95,7 @@
         ],
         "phpspec": "vendor/bin/phpspec run",
         "phpunit": "vendor/bin/phpunit",
-        "run": "(cd tests/Application && bin/console server:run -d public -e ${SYMFONY_ENV:-'dev'})",
+        "run": "(cd tests/Application && symfony server:start --port=8000)",
         "tests": [
             "composer phpspec",
             "composer behat"
