@@ -95,8 +95,15 @@ class PromotionExampleFactory extends AbstractExampleFactory
             ->setDefault('code', static function (Options $options): string {
                 return StringInflector::nameToCode($options['name']);
             })
-            ->setDefault('name', $this->faker->words(3, true))
-            ->setDefault('description', $this->faker->sentence())
+            ->setDefault('name', function (Options $options): string {
+                /** @var string $text */
+                $text = $this->faker->words(3, true);
+
+                return $text;
+            })
+            ->setDefault('description', function (Options $options): string {
+                return $this->faker->sentence();
+            })
 
             ->setDefault('priority', 0)
             ->setAllowedTypes('priority', 'int')
