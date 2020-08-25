@@ -67,6 +67,11 @@
             "APP_ENV=test composer ensure-schema-updated",
             "./vendor/bin/behat --tags=\"~@javascript\" --no-interaction --format=progress"
         ],
+        "behat-js": [
+            "APP_ENV=test composer ensure-database-created",
+            "APP_ENV=test composer ensure-schema-updated",
+            "./vendor/bin/behat --tags=\"@javascript\" --no-interaction --format=progress"
+        ],
         "check-style": "vendor/bin/ecs check src/ tests/Application/Entity tests/Application/Doctrine tests/Behat/ spec/",
         "checks": [
             "composer check-style",
@@ -88,7 +93,8 @@
         "run": "(cd tests/Application && symfony server:start --port=8000)",
         "tests": [
             "@phpspec",
-            "@behat"
+            "@behat",
+            "@behat-js"
         ],
         "try": [
             "@ensure-vendors-installed",
