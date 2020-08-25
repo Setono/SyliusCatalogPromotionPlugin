@@ -70,7 +70,7 @@ final class CatalogPromotionContext implements Context
         Assert::greaterThan($percentage, 0);
 
         $promotion = $this->testDiscountFactory->createForChannel(uniqid('catalog-promotion-', true), $this->sharedStorage->get('channel'));
-        $promotion->setDiscount((int) $percentage);
+        $promotion->setDiscount($percentage / 100);
 
         if (null !== $taxon) {
             $promotion->addRule($this->promotionRuleFactory->createHasTaxon([$taxon->getCode()]));

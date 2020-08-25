@@ -29,7 +29,7 @@ final class PromotionFixture extends AbstractResourceFixture
                 ->scalarNode('ends_at')->cannotBeEmpty()->end()
                 ->booleanNode('enabled')->end()
 
-                ->scalarNode('discount')->cannotBeEmpty()->end()
+                ->floatNode('discount')->end()
 
                 ->scalarNode('created_at')->cannotBeEmpty()->end()
                 ->scalarNode('updated_at')->cannotBeEmpty()->end()

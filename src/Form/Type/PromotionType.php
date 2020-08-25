@@ -35,7 +35,7 @@ final class PromotionType extends AbstractResourceType
             ])
             ->add('discount', PercentType::class, [
                 'label' => 'setono_sylius_catalog_promotion.form.promotion.discount',
-                'type' => 'integer',
+                'scale' => 3,
                 'required' => true,
             ])
             ->add('exclusive', CheckboxType::class, [

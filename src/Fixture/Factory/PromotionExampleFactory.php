@@ -17,6 +17,7 @@ use Sylius\Component\Core\Formatter\StringInflector;
 use Sylius\Component\Resource\Factory\Factory;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Webmozart\Assert\Assert;
 
 class PromotionExampleFactory extends AbstractExampleFactory
 {
@@ -130,10 +131,19 @@ class PromotionExampleFactory extends AbstractExampleFactory
             })
             ->setAllowedTypes('enabled', 'bool')
 
-            ->setDefault('discount', static function (): int {
-                return 10 * random_int(1, 9);
+            ->setDefault('discount', function (Options $options): float {
+                return $this->faker->randomFloat(3, 0, 100);
             })
-            ->setAllowedTypes('discount', 'int')
+            ->setNormalizer('discount', static function (Options $options, $value): float {
+                if ($value >= 0 && $value <= 100) {
+                    $value = $value / 100;
+                }
+
+                Assert::range($value, 0, 1, 'Discount can be set in 0..100 range');
+
+                return $value;
+            })
+            ->setAllowedTypes('discount', ['int', 'float'])
 
             ->setDefault('created_at', null)
             ->setAllowedTypes('created_at', ['null', DateTimeInterface::class])
