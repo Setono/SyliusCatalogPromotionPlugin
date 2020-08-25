@@ -9,10 +9,7 @@ use Sylius\Component\Resource\Factory\FactoryInterface;
 
 interface PromotionRuleFactoryInterface extends FactoryInterface
 {
-    /**
-     * @param array|string|mixed $configuration
-     */
-    public function createByType(string $type, $configuration): PromotionRuleInterface;
+    public function createByType(string $type, array $configuration, bool $strict = false): PromotionRuleInterface;
 
     public function createHasTaxon(array $taxonCodes): PromotionRuleInterface;
 
