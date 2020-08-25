@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AppBundle\Doctrine\ORM;
+namespace Tests\Setono\SyliusCatalogPromotionPlugin\Application\Doctrine\ORM;
 
 use Setono\SyliusCatalogPromotionPlugin\Doctrine\ORM\ProductRepositoryTrait;
 use Setono\SyliusCatalogPromotionPlugin\Repository\ProductRepositoryInterface;

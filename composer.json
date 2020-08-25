@@ -56,7 +56,6 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "AppBundle\\": "tests/Application/src/AppBundle/",
             "Tests\\Setono\\SyliusCatalogPromotionPlugin\\": "tests/"
         },
         "classmap": [

@@ -43,15 +43,17 @@ You have requested a non-existent parameter "setono_sylius_catalog_promotion.mod
 ### Add config
 
 ```yaml
-# config/packages/_sylius.yaml
+# config/packages/setono_sylius_catalog_promotion.yaml
 imports:
     - { resource: "@SetonoSyliusCatalogPromotionPlugin/Resources/config/app/config.yaml" }
+    # Uncomment if you want to add some catalog promotion fixtures to default suite
+    # - { resource: "@SetonoSyliusCatalogPromotionPlugin/Resources/config/app/fixtures.yaml" }
 ```
 
 ### Add routing
 
 ```yaml
-# config/routes.yaml
+# config/routes/setono_sylius_catalog_promotion.yaml
 setono_sylius_catalog_promotion_admin:
     resource: "@SetonoSyliusCatalogPromotionPlugin/Resources/config/admin_routing.yaml"
     prefix: /admin
@@ -66,13 +68,18 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use Setono\SyliusCatalogPromotionPlugin\Model\ChannelPricingInterface;
-use Setono\SyliusCatalogPromotionPlugin\Model\ChannelPricingTrait;
+use Doctrine\ORM\Mapping as ORM;
+use Setono\SyliusCatalogPromotionPlugin\Model\ChannelPricingInterface as CatalogPromotionChannelPricingInterface;
+use Setono\SyliusCatalogPromotionPlugin\Model\ChannelPricingTrait as CatalogPromotionChannelPricingTrait;
 use Sylius\Component\Core\Model\ChannelPricing as BaseChannelPricing;
 
-class ChannelPricing extends BaseChannelPricing implements ChannelPricingInterface
+/**
+ * @ORM\Table(name="sylius_channel_pricing")
+ * @ORM\Entity()
+ */
+class ChannelPricing extends BaseChannelPricing implements CatalogPromotionChannelPricingInterface
 {
-    use ChannelPricingTrait;
+    use CatalogPromotionChannelPricingTrait;
 }
 ```
 
