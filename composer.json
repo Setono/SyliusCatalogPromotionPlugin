@@ -18,12 +18,12 @@
         "thecodingmachine/safe": "^1.1"
     },
     "require-dev": {
-        "setono/sylius-behat-pack": "^0.1",
         "lakion/mink-debug-extension": "^1.2.3",
         "phpspec/phpspec": "^6.1",
         "phpunit/phpunit": "^8.5",
         "roave/security-advisories": "dev-master",
         "setono/code-quality-pack": "^1.1",
+        "setono/sylius-behat-pack": "^0.1",
         "symfony/browser-kit": "^4.4",
         "symfony/debug-bundle": "^4.4 || ^5.0",
         "symfony/dotenv": "^4.4 || ^5.0",
