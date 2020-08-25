@@ -7,8 +7,12 @@ namespace Setono\SyliusCatalogPromotionPlugin\Model;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Sylius\Component\Core\Model\ChannelPricing;
 use Sylius\Component\Resource\Model\TimestampableTrait;
 
+/**
+ * @mixin ChannelPricing
+ */
 trait ChannelPricingTrait
 {
     use TimestampableTrait;
