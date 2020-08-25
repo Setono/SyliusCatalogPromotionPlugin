@@ -91,13 +91,13 @@ declare(strict_types=1);
 
 namespace App\Repository;
 
-use Setono\SyliusCatalogPromotionPlugin\Doctrine\ORM\ChannelPricingRepositoryTrait;
-use Setono\SyliusCatalogPromotionPlugin\Repository\ChannelPricingRepositoryInterface;
+use Setono\SyliusCatalogPromotionPlugin\Doctrine\ORM\ChannelPricingRepositoryTrait as CatalogPromotionChannelPricingRepositoryTrait;
+use Setono\SyliusCatalogPromotionPlugin\Repository\ChannelPricingRepositoryInterface as CatalogPromotionChannelPricingRepositoryInterface;
 use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 
-class ChannelPricingRepository extends EntityRepository implements ChannelPricingRepositoryInterface
+class ChannelPricingRepository extends EntityRepository implements CatalogPromotionChannelPricingRepositoryInterface
 {
-    use ChannelPricingRepositoryTrait;
+    use CatalogPromotionChannelPricingRepositoryTrait;
 }
 ```
 
@@ -109,13 +109,13 @@ declare(strict_types=1);
 
 namespace App\Repository;
 
-use Setono\SyliusCatalogPromotionPlugin\Doctrine\ORM\ProductRepositoryTrait;
-use Setono\SyliusCatalogPromotionPlugin\Repository\ProductRepositoryInterface;
+use Setono\SyliusCatalogPromotionPlugin\Doctrine\ORM\ProductRepositoryTrait as CatalogPromotionProductRepositoryTrait;
+use Setono\SyliusCatalogPromotionPlugin\Repository\ProductRepositoryInterface as CatalogPromotionProductRepositoryInterface;
 use Sylius\Bundle\CoreBundle\Doctrine\ORM\ProductRepository as BaseProductRepository;
 
-class ProductRepository extends BaseProductRepository implements ProductRepositoryInterface
+class ProductRepository extends BaseProductRepository implements CatalogPromotionProductRepositoryInterface
 {
-    use ProductRepositoryTrait;
+    use CatalogPromotionProductRepositoryTrait;
 }
 ```
 
@@ -127,13 +127,13 @@ declare(strict_types=1);
 
 namespace App\Repository;
 
-use Setono\SyliusCatalogPromotionPlugin\Doctrine\ORM\ProductVariantRepositoryTrait;
-use Setono\SyliusCatalogPromotionPlugin\Repository\ProductVariantRepositoryInterface;
+use Setono\SyliusCatalogPromotionPlugin\Doctrine\ORM\ProductVariantRepositoryTrait as CatalogPromotionProductVariantRepositoryTrait;
+use Setono\SyliusCatalogPromotionPlugin\Repository\ProductVariantRepositoryInterface as CatalogPromotionProductVariantRepositoryInterface;
 use Sylius\Bundle\CoreBundle\Doctrine\ORM\ProductVariantRepository as BaseProductVariantRepository;
 
-class ProductVariantRepository extends BaseProductVariantRepository implements ProductVariantRepositoryInterface
+class ProductVariantRepository extends BaseProductVariantRepository implements CatalogPromotionProductVariantRepositoryInterface
 {
-    use ProductVariantRepositoryTrait;
+    use CatalogPromotionProductVariantRepositoryTrait;
 }
 ```
 
@@ -141,6 +141,7 @@ class ProductVariantRepository extends BaseProductVariantRepository implements P
 In your `config/packages/_sylius.yaml` file update the configured classes:
 
 ```yaml
+# config/packages/_sylius.yaml
 sylius_core:
     resources:
         channel_pricing:
