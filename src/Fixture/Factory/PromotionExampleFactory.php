@@ -9,6 +9,7 @@ use Faker\Generator;
 use Safe\DateTime;
 use Setono\SyliusCatalogPromotionPlugin\Model\PromotionInterface;
 use Setono\SyliusCatalogPromotionPlugin\Model\PromotionRuleInterface;
+use Setono\SyliusCatalogPromotionPlugin\Repository\PromotionRepositoryInterface;
 use Sylius\Bundle\CoreBundle\Fixture\Factory\AbstractExampleFactory;
 use Sylius\Bundle\CoreBundle\Fixture\OptionsResolver\LazyOption;
 use Sylius\Component\Channel\Repository\ChannelRepositoryInterface;
@@ -21,6 +22,9 @@ class PromotionExampleFactory extends AbstractExampleFactory
 {
     /** @var ChannelRepositoryInterface */
     protected $channelRepository;
+
+    /** @var PromotionRepositoryInterface */
+    protected $promotionRepository;
 
     /** @var Factory */
     protected $promotionFactory;
@@ -36,10 +40,12 @@ class PromotionExampleFactory extends AbstractExampleFactory
 
     public function __construct(
         ChannelRepositoryInterface $channelRepository,
+        PromotionRepositoryInterface $promotionRepository,
         Factory $promotionFactory,
         PromotionRuleExampleFactory $promotionRuleExampleFactory
     ) {
         $this->channelRepository = $channelRepository;
+        $this->promotionRepository = $promotionRepository;
         $this->promotionFactory = $promotionFactory;
         $this->promotionRuleExampleFactory = $promotionRuleExampleFactory;
 
@@ -54,7 +60,12 @@ class PromotionExampleFactory extends AbstractExampleFactory
         $options = $this->optionsResolver->resolve($options);
 
         /** @var PromotionInterface $promotion */
-        $promotion = $this->promotionFactory->createNew();
+        $promotion = $this->promotionRepository->findOneBy(['code' => $options['code']]);
+        if (null === $promotion) {
+            /** @var PromotionInterface $promotion */
+            $promotion = $this->promotionFactory->createNew();
+        }
+
         $promotion->setCode($options['code']);
         $promotion->setName($options['name']);
         $promotion->setDescription($options['description']);

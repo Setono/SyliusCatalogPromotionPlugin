@@ -12,6 +12,7 @@
         <service id="setono_sylius_catalog_promotion.fixture.example_factory.promotion"
                  class="Setono\SyliusCatalogPromotionPlugin\Fixture\Factory\PromotionExampleFactory">
             <argument type="service" id="sylius.repository.channel" />
+            <argument type="service" id="setono_sylius_catalog_promotion.repository.promotion" />
             <argument type="service" id="setono_sylius_catalog_promotion.factory.promotion" />
             <argument type="service" id="setono_sylius_catalog_promotion.fixture.example_factory.promotion_rule" />
         </service>
