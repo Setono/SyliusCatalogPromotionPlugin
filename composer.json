@@ -54,47 +54,47 @@
     "prefer-stable": true,
     "scripts": {
         "all": [
-            "composer checks",
-            "composer tests"
+            "@checks",
+            "@tests"
         ],
-        "analyse": "vendor/bin/phpstan analyse -c phpstan.neon -l max src/",
+        "analyse": "vendor/bin/phpstan analyse -c phpstan.neon -l max src/ tests/Application/Entity tests/Application/Doctrine tests/Behat/",
         "assets": [
-            "composer ensure-assets-installed",
-            "composer ensure-assets-compiled"
+            "@ensure-assets-installed",
+            "@ensure-assets-compiled"
         ],
         "behat": [
-            "SYMFONY_ENV=test composer ensure-database-created",
-            "SYMFONY_ENV=test composer ensure-schema-updated",
+            "APP_ENV=test composer ensure-database-created",
+            "APP_ENV=test composer ensure-schema-updated",
             "./vendor/bin/behat --tags=\"~@javascript\" --no-interaction --format=progress"
         ],
-        "check-style": "vendor/bin/ecs check src/ tests/ spec/",
+        "check-style": "vendor/bin/ecs check src/ tests/Application/Entity tests/Application/Doctrine tests/Behat/ spec/",
         "checks": [
             "composer check-style",
             "composer analyse"
         ],
-        "ensure-assets-compiled": "[[ -d tests/Application/public/assets ]] || (cd tests/Application && yarn build && bin/console assets:install public -e ${SYMFONY_ENV:-'dev'})",
+        "ensure-assets-compiled": "[[ -d tests/Application/public/assets ]] || (cd tests/Application && yarn build && bin/console assets:install public)",
         "ensure-assets-installed": "[[ -d tests/Application/node_modules ]] || (cd tests/Application && yarn install)",
-        "ensure-database-created": "(cd tests/Application && bin/console doctrine:database:create --if-not-exists -e ${SYMFONY_ENV:-'dev'})",
-        "ensure-schema-updated": "(cd tests/Application && bin/console doctrine:schema:update --force -e ${SYMFONY_ENV:-'dev'})",
+        "ensure-database-created": "(cd tests/Application && bin/console doctrine:database:create --if-not-exists)",
+        "ensure-schema-updated": "(cd tests/Application && bin/console doctrine:schema:update --force)",
         "ensure-vendors-installed": "[[ -f vendor/autoload.php ]] || COMPOSER_MEMORY_LIMIT=-1 composer install",
-        "fix-style": "vendor/bin/ecs check src/ tests/ spec/ --fix",
+        "fix-style": "vendor/bin/ecs check src/ tests/Application/Entity tests/Application/Doctrine tests/Behat/ spec/ --fix",
         "fixtures": [
             "composer ensure-database-created",
             "composer ensure-schema-updated",
-            "(cd tests/Application && bin/console sylius:fixtures:load --no-interaction -e ${SYMFONY_ENV:-'dev'})"
+            "(cd tests/Application && bin/console sylius:fixtures:load default --no-interaction)"
         ],
         "phpspec": "vendor/bin/phpspec run",
         "phpunit": "vendor/bin/phpunit",
         "run": "(cd tests/Application && symfony server:start --port=8000)",
         "tests": [
-            "composer phpspec",
-            "composer behat"
+            "@phpspec",
+            "@behat"
         ],
         "try": [
-            "composer ensure-vendors-installed",
-            "composer assets",
-            "composer fixtures",
-            "composer run"
+            "@ensure-vendors-installed",
+            "@assets",
+            "@fixtures",
+            "@run"
         ]
     }
 }
