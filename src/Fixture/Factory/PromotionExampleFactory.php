@@ -60,7 +60,7 @@ class PromotionExampleFactory extends AbstractExampleFactory
     {
         $options = $this->optionsResolver->resolve($options);
 
-        /** @var PromotionInterface $promotion */
+        /** @var PromotionInterface|null $promotion */
         $promotion = $this->promotionRepository->findOneBy(['code' => $options['code']]);
         if (null === $promotion) {
             /** @var PromotionInterface $promotion */

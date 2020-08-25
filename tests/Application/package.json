@@ -38,6 +38,7 @@
     "rollup-plugin-inject": "^2.0.0",
     "rollup-plugin-node-resolve": "^3.3.0",
     "rollup-plugin-uglify": "^4.0.0",
+    "sass-loader": "^7.0.1",
     "upath": "^1.1.0",
     "yargs": "^6.4.0"
   },

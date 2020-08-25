@@ -11,3 +11,5 @@ parameters:
         - '/Parameter \#1 \$configuration of method .+\\Extension::processConfiguration\(\) expects .+\\ConfigurationInterface\, .+\\ConfigurationInterface\|null given\./'
         - '/Cannot call method .+ on .+\\NodeParentInterface\|null\./'
         - '/Only numeric types are allowed in \/\, int\|null given on the .+ side\./'
+        - '/Only numeric types are allowed in \-\, int\|null given on the .+ side\./'
+        - '/Casting to float .+ already float\./'
