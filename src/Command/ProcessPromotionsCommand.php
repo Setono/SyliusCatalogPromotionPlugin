@@ -24,6 +24,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\Container;
+use Webmozart\Assert\Assert;
 
 final class ProcessPromotionsCommand extends Command
 {
@@ -77,9 +78,7 @@ final class ProcessPromotionsCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        if (!$this->productVariantRepository instanceof EntityRepository) {
-            throw new \RuntimeException(sprintf('The product variant repository is not an instance of %s', EntityRepository::class));
-        }
+        Assert::isInstanceOf($this->productVariantRepository, EntityRepository::class);
 
         if (!$this->lock()) {
             $output->writeln('The command is already running in another process.');
@@ -87,10 +86,8 @@ final class ProcessPromotionsCommand extends Command
             return 0;
         }
 
-        $force = is_bool($input->getOption('force')) ? $input->getOption('force') : false;
-
-        $lastExecution = $this->getLastExecution();
-
+        /** @var bool $force */
+        $force = $input->getOption('force');
         $startTime = new DateTime();
 
         /** @var PromotionInterface[] $promotions */
@@ -99,12 +96,11 @@ final class ProcessPromotionsCommand extends Command
             return (int) $promotion->getId();
         }, $promotions);
 
-        if (!$force
-            && null !== $lastExecution
-            && $lastExecution['promotions'] === $promotionIds // means the last promotion ids were the exact same AND same order
-            && !$this->hasAnyBeenUpdatedSince($lastExecution['start']) // despite being the same and same order we still need to check whether any relevant entities were updated
-        ) {
-            $output->writeln('Did not do nutting', OutputInterface::VERBOSITY_VERBOSE);
+        if (!$this->isProcessingAllowed($promotionIds) && !$force) {
+            $output->writeln(
+                'Nothing to process at the moment. Run command with --force option to force process',
+                OutputInterface::VERBOSITY_VERBOSE
+            );
 
             return 0;
         }
@@ -145,7 +141,10 @@ final class ProcessPromotionsCommand extends Command
                 $productVariantIds = $qb->getQuery()->getResult();
 
                 $this->channelPricingRepository->updateMultiplier(
-                    $promotion->getMultiplier(), $productVariantIds, $promotion->getChannelCodes(), $startTime,
+                    $promotion->getMultiplier(),
+                    $productVariantIds,
+                    $promotion->getChannelCodes(),
+                    $startTime,
                     $promotion->isExclusive()
                 );
 
@@ -164,6 +163,30 @@ final class ProcessPromotionsCommand extends Command
         return 0;
     }
 
+    private function isProcessingAllowed(array $promotionIds): bool
+    {
+        // If there was no executions - we can process
+        $lastExecution = $this->getLastExecution();
+        if (null === $lastExecution) {
+            return true;
+        }
+
+        // If last execution promotions not exact same as found for processing
+        // or not at the same order - we can process
+        if ($lastExecution['promotions'] !== $promotionIds) {
+            return true;
+        }
+
+        // If any relevant entities were updated - we can process
+        if ($this->hasAnyBeenUpdatedSince($lastExecution['start'])) {
+            return true;
+        }
+
+        return false;
+    }
+
+    // As far as updatedAt field updating even when some fields not impacting promotion changed,
+    // @todo Set catalog_promotions_process flag at memory storage / cache at subscribers once particular product/variant/taxon fields (that can impact promotion) changed
     private function hasAnyBeenUpdatedSince(DateTimeInterface $dateTime): bool
     {
         return $this->productRepository->hasAnyBeenUpdatedSince($dateTime) ||
@@ -173,6 +196,7 @@ final class ProcessPromotionsCommand extends Command
         ;
     }
 
+    // @todo Move storing last execution data to some memory storage / cache?
     private function getLastExecution(): ?array
     {
         $filename = $this->getExecutionLogFilename();
