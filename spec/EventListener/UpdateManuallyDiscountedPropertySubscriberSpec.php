@@ -29,11 +29,10 @@ class UpdateManuallyDiscountedPropertySubscriberSpec extends ObjectBehavior
         ChannelPricingInterface $channelPricing,
         EntityManagerInterface $entityManager
     ): void {
-        $arr = ['price' => true];
-        $event = new PreUpdateEventArgs($channelPricing->getWrappedObject(), $entityManager->getWrappedObject(), $arr);
+        $changeSet = ['price' => true];
+        $event = new PreUpdateEventArgs($channelPricing->getWrappedObject(), $entityManager->getWrappedObject(), $changeSet);
 
-        $channelPricing->getOriginalPrice()->willReturn(100);
-        $channelPricing->getPrice()->willReturn(80);
+        $channelPricing->hasDiscount()->willReturn(true);
         $channelPricing->setManuallyDiscounted(true)->shouldBeCalled();
 
         $this->preUpdate($event);
@@ -43,11 +42,10 @@ class UpdateManuallyDiscountedPropertySubscriberSpec extends ObjectBehavior
         ChannelPricingInterface $channelPricing,
         EntityManagerInterface $entityManager
     ): void {
-        $arr = ['originalPrice' => true];
-        $event = new PreUpdateEventArgs($channelPricing->getWrappedObject(), $entityManager->getWrappedObject(), $arr);
+        $changeSet = ['originalPrice' => true];
+        $event = new PreUpdateEventArgs($channelPricing->getWrappedObject(), $entityManager->getWrappedObject(), $changeSet);
 
-        $channelPricing->getOriginalPrice()->willReturn(100);
-        $channelPricing->getPrice()->willReturn(80);
+        $channelPricing->hasDiscount()->willReturn(true);
         $channelPricing->setManuallyDiscounted(true)->shouldBeCalled();
 
         $this->preUpdate($event);
@@ -57,11 +55,10 @@ class UpdateManuallyDiscountedPropertySubscriberSpec extends ObjectBehavior
         ChannelPricingInterface $channelPricing,
         EntityManagerInterface $entityManager
     ): void {
-        $arr = ['originalPrice' => true];
-        $event = new PreUpdateEventArgs($channelPricing->getWrappedObject(), $entityManager->getWrappedObject(), $arr);
+        $changeSet = ['originalPrice' => true];
+        $event = new PreUpdateEventArgs($channelPricing->getWrappedObject(), $entityManager->getWrappedObject(), $changeSet);
 
-        $channelPricing->getOriginalPrice()->willReturn(100);
-        $channelPricing->getPrice()->willReturn(100);
+        $channelPricing->hasDiscount()->willReturn(false);
         $channelPricing->setManuallyDiscounted(false)->shouldBeCalled();
 
         $this->preUpdate($event);
@@ -71,8 +68,8 @@ class UpdateManuallyDiscountedPropertySubscriberSpec extends ObjectBehavior
         ChannelPricingInterface $channelPricing,
         EntityManagerInterface $entityManager
     ): void {
-        $arr = [];
-        $event = new PreUpdateEventArgs($channelPricing->getWrappedObject(), $entityManager->getWrappedObject(), $arr);
+        $changeSet = [];
+        $event = new PreUpdateEventArgs($channelPricing->getWrappedObject(), $entityManager->getWrappedObject(), $changeSet);
 
         $channelPricing->setManuallyDiscounted(Argument::any())->shouldNotBeCalled();
 
@@ -85,8 +82,7 @@ class UpdateManuallyDiscountedPropertySubscriberSpec extends ObjectBehavior
     ): void {
         $event = new LifecycleEventArgs($channelPricing->getWrappedObject(), $entityManager->getWrappedObject());
 
-        $channelPricing->getOriginalPrice()->willReturn(100);
-        $channelPricing->getPrice()->willReturn(100);
+        $channelPricing->hasDiscount()->willReturn(false);
         $channelPricing->setManuallyDiscounted(false)->shouldBeCalled();
 
         $this->prePersist($event);
@@ -98,8 +94,7 @@ class UpdateManuallyDiscountedPropertySubscriberSpec extends ObjectBehavior
     ): void {
         $event = new LifecycleEventArgs($channelPricing->getWrappedObject(), $entityManager->getWrappedObject());
 
-        $channelPricing->getOriginalPrice()->willReturn(100);
-        $channelPricing->getPrice()->willReturn(80);
+        $channelPricing->hasDiscount()->willReturn(true);
         $channelPricing->setManuallyDiscounted(true)->shouldBeCalled();
 
         $this->prePersist($event);

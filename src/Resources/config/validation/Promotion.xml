@@ -53,10 +53,9 @@
                 <option name="groups">setono_sylius_catalog_promotion</option>
             </constraint>
             <constraint name="Range">
-                <option name="min">1</option>
-                <option name="max">100</option>
-                <option name="minMessage">setono_sylius_catalog_promotion.promotion.discount.min</option>
-                <option name="maxMessage">setono_sylius_catalog_promotion.promotion.discount.max</option>
+                <option name="min">0</option>
+                <option name="max">1</option>
+                <option name="notInRangeMessage">setono_sylius_catalog_promotion.promotion.discount.range</option>
                 <option name="groups">setono_sylius_catalog_promotion</option>
             </constraint>
         </property>

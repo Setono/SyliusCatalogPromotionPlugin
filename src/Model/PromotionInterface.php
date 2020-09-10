@@ -72,7 +72,9 @@ interface PromotionInterface extends ChannelsAwareInterface, CodeAwareInterface,
 
     public function removeRule(PromotionRuleInterface $rule): void;
 
-    public function getDiscount(): int;
+    public function getDiscount(): float;
 
-    public function setDiscount(int $discount): void;
+    public function getDisplayableDiscount(): float;
+
+    public function setDiscount(float $discount): void;
 }

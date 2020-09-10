@@ -9,6 +9,7 @@ use Sylius\Behat\Behaviour\ChecksCodeImmutability;
 use Sylius\Behat\Behaviour\NamesIt;
 use Sylius\Behat\Page\Admin\Crud\UpdatePage as BaseUpdatePage;
 use Tests\Setono\SyliusCatalogPromotionPlugin\Behat\Behaviour\SpecifiesItsDiscount;
+use Webmozart\Assert\Assert;
 
 class UpdatePage extends BaseUpdatePage implements UpdatePageInterface
 {
@@ -17,34 +18,38 @@ class UpdatePage extends BaseUpdatePage implements UpdatePageInterface
     use ChecksCodeImmutability;
     use PageDefinedElements;
 
-    public function setPriority($priority)
+    public function setPriority(?string $priority): void
     {
-        $this->getDocument()->fillField('Priority', $priority);
+        $this->getDocument()->fillField('Priority', $priority ?? '');
     }
 
-    public function getPriority()
+    public function getPriority(): string
     {
-        return $this->getElement('priority')->getValue();
+        /** @var string $value */
+        $value = $this->getElement('priority')->getValue();
+
+        return $value;
     }
 
-    public function checkChannelsState($channelName)
+    public function checkChannelsState(string $channelName): bool
     {
         $field = $this->getDocument()->findField($channelName);
+        Assert::notNull($field);
 
         return (bool) $field->getValue();
     }
 
-    public function makeExclusive()
+    public function makeExclusive(): void
     {
         $this->getDocument()->checkField('Exclusive');
     }
 
-    public function checkChannel($name)
+    public function checkChannel(string $name): void
     {
         $this->getDocument()->checkField($name);
     }
 
-    public function setStartsAt(\DateTimeInterface $dateTime)
+    public function setStartsAt(\DateTimeInterface $dateTime): void
     {
         $timestamp = $dateTime->getTimestamp();
 
@@ -52,7 +57,7 @@ class UpdatePage extends BaseUpdatePage implements UpdatePageInterface
         $this->getDocument()->fillField('setono_sylius_catalog_promotion_promotion_startsAt_time', date('H:i', $timestamp));
     }
 
-    public function setEndsAt(\DateTimeInterface $dateTime)
+    public function setEndsAt(\DateTimeInterface $dateTime): void
     {
         $timestamp = $dateTime->getTimestamp();
 
@@ -76,10 +81,7 @@ class UpdatePage extends BaseUpdatePage implements UpdatePageInterface
             && $this->getElement('ends_at_time')->getValue() === date('H:i', $timestamp);
     }
 
-    /**
-     * @return NodeElement
-     */
-    protected function getCodeElement()
+    protected function getCodeElement(): NodeElement
     {
         return $this->getElement('code');
     }

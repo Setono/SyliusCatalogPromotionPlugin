@@ -9,6 +9,7 @@ use Faker\Generator;
 use Safe\DateTime;
 use Setono\SyliusCatalogPromotionPlugin\Model\PromotionInterface;
 use Setono\SyliusCatalogPromotionPlugin\Model\PromotionRuleInterface;
+use Setono\SyliusCatalogPromotionPlugin\Repository\PromotionRepositoryInterface;
 use Sylius\Bundle\CoreBundle\Fixture\Factory\AbstractExampleFactory;
 use Sylius\Bundle\CoreBundle\Fixture\OptionsResolver\LazyOption;
 use Sylius\Component\Channel\Repository\ChannelRepositoryInterface;
@@ -16,11 +17,15 @@ use Sylius\Component\Core\Formatter\StringInflector;
 use Sylius\Component\Resource\Factory\Factory;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Webmozart\Assert\Assert;
 
 class PromotionExampleFactory extends AbstractExampleFactory
 {
     /** @var ChannelRepositoryInterface */
     protected $channelRepository;
+
+    /** @var PromotionRepositoryInterface */
+    protected $promotionRepository;
 
     /** @var Factory */
     protected $promotionFactory;
@@ -36,10 +41,12 @@ class PromotionExampleFactory extends AbstractExampleFactory
 
     public function __construct(
         ChannelRepositoryInterface $channelRepository,
+        PromotionRepositoryInterface $promotionRepository,
         Factory $promotionFactory,
         PromotionRuleExampleFactory $promotionRuleExampleFactory
     ) {
         $this->channelRepository = $channelRepository;
+        $this->promotionRepository = $promotionRepository;
         $this->promotionFactory = $promotionFactory;
         $this->promotionRuleExampleFactory = $promotionRuleExampleFactory;
 
@@ -53,8 +60,13 @@ class PromotionExampleFactory extends AbstractExampleFactory
     {
         $options = $this->optionsResolver->resolve($options);
 
-        /** @var PromotionInterface $promotion */
-        $promotion = $this->promotionFactory->createNew();
+        /** @var PromotionInterface|null $promotion */
+        $promotion = $this->promotionRepository->findOneBy(['code' => $options['code']]);
+        if (null === $promotion) {
+            /** @var PromotionInterface $promotion */
+            $promotion = $this->promotionFactory->createNew();
+        }
+
         $promotion->setCode($options['code']);
         $promotion->setName($options['name']);
         $promotion->setDescription($options['description']);
@@ -95,27 +107,45 @@ class PromotionExampleFactory extends AbstractExampleFactory
             ->setDefault('code', static function (Options $options): string {
                 return StringInflector::nameToCode($options['name']);
             })
-            ->setDefault('name', $this->faker->words(3, true))
-            ->setDefault('description', $this->faker->sentence())
+            ->setDefault('name', function (Options $options): string {
+                /** @var string $text */
+                $text = $this->faker->words(3, true);
+
+                return $text;
+            })
+            ->setDefault('description', function (Options $options): string {
+                return $this->faker->sentence();
+            })
 
             ->setDefault('priority', 0)
             ->setAllowedTypes('priority', 'int')
-            ->setDefault('exclusive', $this->faker->boolean(25))
-            ->setAllowedTypes('exclusive', 'bool')
+
+            ->setDefault('exclusive', function (Options $options): bool {
+                return $this->faker->boolean(25);
+            })
 
             ->setDefault('starts_at', null)
             ->setAllowedTypes('starts_at', ['null', 'string'])
             ->setDefault('ends_at', null)
             ->setAllowedTypes('ends_at', ['null', 'string'])
-            ->setDefault('enabled', function (): bool {
+
+            ->setDefault('enabled', function (Options $options): bool {
                 return $this->faker->boolean(90);
             })
-            ->setAllowedTypes('enabled', 'bool')
 
-            ->setDefault('discount', static function (): int {
-                return 10 * random_int(1, 9);
+            ->setDefault('discount', function (Options $options): float {
+                return $this->faker->randomFloat(3, 0, 100);
             })
-            ->setAllowedTypes('discount', 'int')
+            ->setNormalizer('discount', static function (Options $options, $value): float {
+                if ($value >= 0 && $value <= 100) {
+                    $value = $value / 100;
+                }
+
+                Assert::range($value, 0, 1, 'Discount can be set in 0..100 range');
+
+                return $value;
+            })
+            ->setAllowedTypes('discount', ['int', 'float'])
 
             ->setDefault('created_at', null)
             ->setAllowedTypes('created_at', ['null', DateTimeInterface::class])

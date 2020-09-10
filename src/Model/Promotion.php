@@ -57,8 +57,8 @@ class Promotion implements PromotionInterface
     /** @var Collection|PromotionRuleInterface[] */
     protected $rules;
 
-    /** @var int */
-    protected $discount = 0;
+    /** @var float */
+    protected $discount = 0.0;
 
     /** @var ChannelInterface[]|Collection */
     protected $channels;
@@ -84,7 +84,7 @@ class Promotion implements PromotionInterface
 
     public function getMultiplier(): float
     {
-        return (100 - $this->getDiscount()) / 100;
+        return 1 - $this->getDiscount();
     }
 
     public function getChannelCodes(): array
@@ -218,12 +218,18 @@ class Promotion implements PromotionInterface
         $this->rules->removeElement($rule);
     }
 
-    public function getDiscount(): int
+    public function getDiscount(): float
     {
-        return $this->discount;
+        // Doctrine converts decimal values to string, so we cast to float
+        return (float) $this->discount;
     }
 
-    public function setDiscount(int $discount): void
+    public function getDisplayableDiscount(): float
+    {
+        return $this->getDiscount() * 100;
+    }
+
+    public function setDiscount(float $discount): void
     {
         $this->discount = $discount;
     }

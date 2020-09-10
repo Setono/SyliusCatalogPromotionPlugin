@@ -48,8 +48,7 @@ final class UpdateManuallyDiscountedPropertySubscriber implements EventSubscribe
         }
 
         $channelPricing->setManuallyDiscounted(
-            null !== $channelPricing->getOriginalPrice()
-            && $channelPricing->getPrice() < $channelPricing->getOriginalPrice()
+            $channelPricing->hasDiscount()
         );
     }
 }

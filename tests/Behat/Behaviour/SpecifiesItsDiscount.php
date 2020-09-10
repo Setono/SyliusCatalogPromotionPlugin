@@ -10,11 +10,8 @@ trait SpecifiesItsDiscount
 {
     use DocumentAccessor;
 
-    /**
-     * @param string $discount
-     */
-    public function specifyDiscount($discount)
+    public function specifyDiscount(?float $discount): void
     {
-        $this->getDocument()->fillField('Discount', $discount);
+        $this->getDocument()->fillField('Discount', (string) $discount ?? '');
     }
 }

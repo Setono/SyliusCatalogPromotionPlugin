@@ -10,6 +10,7 @@
                  decoration-priority="256"
                  public="false">
             <argument type="service" id="setono_sylius_catalog_promotion.custom_factory.promotion_rule.inner"/>
+            <argument>%setono_sylius_catalog_promotion.promotion_rules%</argument>
         </service>
     </services>
 </container>

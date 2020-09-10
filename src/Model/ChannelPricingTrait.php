@@ -7,8 +7,12 @@ namespace Setono\SyliusCatalogPromotionPlugin\Model;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Sylius\Component\Core\Model\ChannelPricing;
 use Sylius\Component\Resource\Model\TimestampableTrait;
 
+/**
+ * @mixin ChannelPricing
+ */
 trait ChannelPricingTrait
 {
     use TimestampableTrait;
@@ -42,6 +46,32 @@ trait ChannelPricingTrait
      * @var DateTimeInterface|null
      */
     protected $updatedAt;
+
+    public function hasDiscount(): bool
+    {
+        return null !== $this->getOriginalPrice()
+            && null !== $this->getPrice()
+            && $this->getOriginalPrice() > $this->getPrice()
+            ;
+    }
+
+    public function getDiscountAmount(): ?float
+    {
+        if (!$this->hasDiscount()) {
+            return null;
+        }
+
+        return $this->getOriginalPrice() - $this->getPrice();
+    }
+
+    public function getDisplayableDiscount(): ?float
+    {
+        if (!$this->hasDiscount()) {
+            return null;
+        }
+
+        return round(100 - ($this->getPrice() / $this->getOriginalPrice() * 100), 2);
+    }
 
     public function isManuallyDiscounted(): bool
     {

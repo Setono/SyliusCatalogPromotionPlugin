@@ -18,9 +18,15 @@ final class PromotionRuleFactory implements PromotionRuleFactoryInterface
     /** @var FactoryInterface */
     private $decoratedFactory;
 
-    public function __construct(FactoryInterface $decoratedFactory)
-    {
+    /** @var array */
+    private $rules;
+
+    public function __construct(
+        FactoryInterface $decoratedFactory,
+        array $rules
+    ) {
         $this->decoratedFactory = $decoratedFactory;
+        $this->rules = $rules;
     }
 
     public function createNew(): PromotionRuleInterface
@@ -31,31 +37,34 @@ final class PromotionRuleFactory implements PromotionRuleFactoryInterface
         return $obj;
     }
 
-    /**
-     * @param array|string|mixed $configuration
-     */
-    public function createByType(string $type, $configuration): PromotionRuleInterface
+    public function createByType(string $type, array $configuration, bool $strict = false): PromotionRuleInterface
     {
         switch ($type) {
             case HasTaxonRule::TYPE:
-                return $this->createHasTaxon((array) $configuration);
-            case ContainsProductRule::TYPE:
-                if (is_array($configuration)) {
-                    throw new InvalidArgumentException(
-                        'The createContainsProduct method only accepts a string'
-                    );
-                }
+                Assert::keyExists($configuration, 'taxons');
+                Assert::isArray($configuration['taxons']);
 
-                return $this->createContainsProduct((string) $configuration);
+                return $this->createHasTaxon($configuration['taxons']);
+            case ContainsProductRule::TYPE:
+                Assert::keyExists($configuration, 'product');
+                Assert::string($configuration['product']);
+
+                return $this->createContainsProduct($configuration['product']);
             case ContainsProductsRule::TYPE:
-                return $this->createContainsProducts((array) $configuration);
+                Assert::keyExists($configuration, 'products');
+                Assert::isArray($configuration['products']);
+
+                return $this->createContainsProducts($configuration['products']);
         }
 
-        throw new InvalidArgumentException(sprintf('type must be one of [%s]', implode(', ', [
-            HasTaxonRule::TYPE,
-            ContainsProductRule::TYPE,
-            ContainsProductsRule::TYPE,
-        ])));
+        if ($strict) {
+            throw new InvalidArgumentException(sprintf(
+                'Type must be one of: %s',
+                implode(', ', array_keys($this->rules))
+            ));
+        }
+
+        return $this->createPromotionRule($type, $configuration);
     }
 
     public function createHasTaxon(array $taxonCodes): PromotionRuleInterface

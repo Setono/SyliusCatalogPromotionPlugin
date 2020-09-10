@@ -1,0 +1,110 @@
+sylius_fixtures:
+    suites:
+        default:
+            fixtures:
+                product:
+                    options:
+                        custom:
+                            product_santa_cap:
+                                code: "santa-cap"
+                                name: "Santa cap"
+                                main_taxon: "caps"
+                                taxons:
+                                    - 'caps'
+                                images:
+                                    - { path: '@SyliusCoreBundle/Resources/fixtures/caps/cap_03.jpg', type: 'main' }
+                                channels:
+                                    - "FASHION_WEB"
+
+                catalog_promotion_random:
+                    name: catalog_promotion
+                    options:
+                        random: 10
+                        prototype:
+                            rules:
+                              - type: "has_taxon"
+                                configuration:
+                                    taxons:
+                                        - "jeans"
+
+                catalog_promotion_custom:
+                    name: catalog_promotion
+                    options:
+                        custom:
+                            accidentally_enabled:
+                                code: "accidentally_enabled"
+                                name: "Accidentally enabled catalog promotion"
+                                starts_at: "-1 day"
+                                ends_at: "-1 second"
+                                enabled: true
+                                discount: 20.00
+                                rules:
+                                  - type: "has_taxon"
+                                    configuration:
+                                        taxons:
+                                            - "caps"
+                            accidentally_disabled:
+                                code: "accidentally_disabled"
+                                name: "Accidentally disabled catalog promotion"
+                                starts_at: "-1 day"
+                                ends_at: "+1 day"
+                                enabled: false
+                                discount: 10.00
+                                rules:
+                                  - type: "has_taxon"
+                                    configuration:
+                                        taxons:
+                                            - "caps"
+
+                            ny_caps_50_off:
+                                code: "ny_caps_50_off"
+                                name: "New year -50% for caps"
+                                description: "14 days promo before New Year"
+                                priority: 99
+                                exclusive: true
+                                starts_at: "now"
+                                ends_at: "+14 day"
+                                enabled: true
+                                discount: 50.00
+                                rules:
+                                  - type: "has_taxon"
+                                    configuration:
+                                        taxons:
+                                            - "caps"
+                                channels:
+                                  - "FASHION_WEB"
+
+                            ny_santa_cap_75_off:
+                                code: "ny_santa_cap_75_off"
+                                name: "New year -75% for Santa cap"
+                                description: "3 days promo before New Year"
+                                priority: 100
+                                exclusive: true
+                                starts_at: "now"
+                                ends_at: "+3 day"
+                                enabled: true
+                                discount: 75.00
+                                rules:
+                                  - type: "contains_product"
+                                    configuration:
+                                        product: "santa-cap"
+                                channels:
+                                  - "FASHION_WEB"
+
+                            bf_santa_cap_75_off:
+                                code: "bf_santa_cap_75_off"
+                                name: "Black friday -75% for Santa cap"
+                                description: "1 day only, Black Friday deal"
+                                priority: 100
+                                exclusive: true
+                                starts_at: "now"
+                                ends_at: "+1 day"
+                                enabled: true
+                                discount: 75.00
+                                rules:
+                                  - type: "contains_products"
+                                    configuration:
+                                        products:
+                                            - "santa-cap"
+                                channels:
+                                  - "FASHION_WEB"
