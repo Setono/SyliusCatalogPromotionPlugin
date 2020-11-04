@@ -66,7 +66,7 @@ setono_sylius_catalog_promotion_admin:
 
 declare(strict_types=1);
 
-namespace App\Entity;
+namespace App\Entity\Channel;
 
 use Doctrine\ORM\Mapping as ORM;
 use Setono\SyliusCatalogPromotionPlugin\Model\ChannelPricingInterface as CatalogPromotionChannelPricingInterface;
