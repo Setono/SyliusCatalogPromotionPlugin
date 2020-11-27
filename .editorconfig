@@ -1,3 +1,7 @@
+# EditorConfig helps developers define and maintain consistent
+# coding styles between different editors and IDEs
+# editorconfig.org
+
 root = true
 
 [*]
@@ -13,7 +17,7 @@ insert_final_newline = true
 
 [*.feature]
 indent_style = space
-indent_size = 4
+indent_size = 2
 
 [*.js]
 indent_style = space
@@ -29,7 +33,7 @@ indent_size = 4
 trim_trailing_whitespace = false
 
 [*.neon]
-indent_style = space
+indent_style = tab
 indent_size = 4
 
 [*.php]
@@ -37,7 +41,7 @@ indent_style = space
 indent_size = 4
 
 [*.sh]
-indent_style = space
+indent_style = tab
 indent_size = 4
 
 [*.{yaml,yml}]
@@ -61,6 +65,14 @@ indent_size = 4
 indent_style = space
 indent_size = 4
 
+[docker-compose{,.override}.{yaml,yml}]
+indent_style = space
+indent_size = 2
+
+[Dockerfile]
+indent_style = tab
+indent_size = 4
+
 [package.json]
 indent_style = space
 indent_size = 2
@@ -70,7 +82,7 @@ indent_style = space
 indent_size = 4
 
 [phpstan.neon]
-indent_style = space
+indent_style = tab
 indent_size = 4
 
 [phpunit.xml{,.dist}]

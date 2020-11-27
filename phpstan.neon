@@ -1,15 +1,13 @@
+includes:
+    - phpstan-baseline.neon
+
 parameters:
-    reportUnmatchedIgnoredErrors: true
-    checkMissingIterableValueType: false
-    checkGenericClassInNonGenericObjectType: false
+	checkGenericClassInNonGenericObjectType: false
+	checkMissingIterableValueType: false
 
-    excludes_analyse:
-        # Makes PHPStan crash
-        - 'src/DependencyInjection/Configuration.php'
+	level: max
 
-    ignoreErrors:
-        - '/Parameter \#1 \$configuration of method .+\\Extension::processConfiguration\(\) expects .+\\ConfigurationInterface\, .+\\ConfigurationInterface\|null given\./'
-        - '/Cannot call method .+ on .+\\NodeParentInterface\|null\./'
-        - '/Only numeric types are allowed in \/\, int\|null given on the .+ side\./'
-        - '/Only numeric types are allowed in \-\, int\|null given on the .+ side\./'
-        - '/Casting to float .+ already float\./'
+	paths:
+		- src/
+
+	reportUnmatchedIgnoredErrors: true
