@@ -11,9 +11,12 @@ interface ChannelPricingInterface extends BaseChannelPricingInterface, Timestamp
 {
     public function hasDiscount(): bool;
 
-    public function getDiscountAmount(): ?float;
+    public function getDiscountAmount(): ?int;
 
-    public function getDisplayableDiscount(): ?float;
+    /**
+     * If $asInteger is true it returns the discount rounded to the nearest whole number
+     */
+    public function getDisplayableDiscount(bool $asInteger = false): ?float;
 
     /**
      * @return bool Returns true if this was discounted manually

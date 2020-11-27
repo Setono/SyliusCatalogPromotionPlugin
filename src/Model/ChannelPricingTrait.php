@@ -55,22 +55,24 @@ trait ChannelPricingTrait
             ;
     }
 
-    public function getDiscountAmount(): ?float
+    public function getDiscountAmount(): ?int
     {
         if (!$this->hasDiscount()) {
             return null;
         }
 
-        return $this->getOriginalPrice() - $this->getPrice();
+        return (int) $this->getOriginalPrice() - (int) $this->getPrice();
     }
 
-    public function getDisplayableDiscount(): ?float
+    public function getDisplayableDiscount(bool $asInteger = false): ?float
     {
         if (!$this->hasDiscount()) {
             return null;
         }
 
-        return round(100 - ($this->getPrice() / $this->getOriginalPrice() * 100), 2);
+        $precision = $asInteger ? 0 : 2;
+
+        return round(100 - ($this->getPrice() / $this->getOriginalPrice() * 100), $precision);
     }
 
     public function isManuallyDiscounted(): bool
