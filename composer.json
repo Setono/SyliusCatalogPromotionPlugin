@@ -23,14 +23,13 @@
         "phpspec/phpspec": "^6.1",
         "phpunit/phpunit": "^8.5",
         "roave/security-advisories": "dev-master",
-        "setono/code-quality-pack": "^1.1",
+        "setono/code-quality-pack": "^1.5",
         "setono/sylius-behat-pack": "^0.1",
         "sylius/sylius": "~1.7.0",
-        "symfony/browser-kit": "^4.4",
-        "symfony/debug-bundle": "^4.4 || ^5.0",
-        "symfony/dotenv": "^4.4 || ^5.0",
+        "symfony/debug-bundle": "^5.1",
+        "symfony/dotenv": "^5.1",
         "symfony/intl": "^4.4 || ^5.0",
-        "symfony/web-profiler-bundle": "^4.4 || ^5.0"
+        "symfony/web-profiler-bundle": "^5.0"
     },
     "config": {
         "sort-packages": true
