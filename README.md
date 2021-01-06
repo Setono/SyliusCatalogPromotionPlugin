@@ -4,7 +4,6 @@
 [![Latest Unstable Version][ico-unstable-version]][link-packagist]
 [![Software License][ico-license]](LICENSE)
 [![Build Status][ico-github-actions]][link-github-actions]
-[![Quality Score][ico-code-quality]][link-code-quality]
 
 Plugin for Sylius to define permanent or time-limited promotions for products and automatically update prices.
 
@@ -218,8 +217,6 @@ This plugin only works on apps installed on a single server at the moment. It us
 [ico-unstable-version]: https://poser.pugx.org/setono/sylius-catalog-promotion-plugin/v/unstable
 [ico-license]: https://poser.pugx.org/setono/sylius-catalog-promotion-plugin/license
 [ico-github-actions]: https://github.com/Setono/SyliusCatalogPromotionPlugin/workflows/build/badge.svg
-[ico-code-quality]: https://img.shields.io/scrutinizer/g/Setono/SyliusCatalogPromotionPlugin.svg?style=flat-square
 
 [link-packagist]: https://packagist.org/packages/setono/sylius-catalog-promotion-plugin
 [link-github-actions]: https://github.com/Setono/SyliusCatalogPromotionPlugin/actions
-[link-code-quality]: https://scrutinizer-ci.com/g/Setono/SyliusCatalogPromotionPlugin
