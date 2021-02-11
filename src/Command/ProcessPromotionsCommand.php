@@ -145,7 +145,8 @@ final class ProcessPromotionsCommand extends Command
                     $productVariantIds,
                     $promotion->getChannelCodes(),
                     $startTime,
-                    $promotion->isExclusive()
+                    $promotion->isExclusive(),
+                    $promotion->isManuallyDiscountedProductsExcluded()
                 );
 
                 ++$i;

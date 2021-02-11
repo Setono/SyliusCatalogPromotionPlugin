@@ -5,19 +5,19 @@ declare(strict_types=1);
 namespace Setono\SyliusCatalogPromotionPlugin\Doctrine\ORM;
 
 use DateTimeInterface;
-use Doctrine\ORM\QueryBuilder;
+use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 
+/**
+ * @mixin EntityRepository
+ */
 trait ChannelPricingRepositoryTrait
 {
     use HasAnyBeenUpdatedSinceTrait;
 
-    /**
-     * @return QueryBuilder
-     */
-    abstract public function createQueryBuilder($alias, $indexBy = null);
-
     public function resetMultiplier(DateTimeInterface $dateTime): void
     {
+        \assert($this instanceof EntityRepository);
+
         $this
             ->createQueryBuilder('o')
             ->update()
@@ -35,8 +35,11 @@ trait ChannelPricingRepositoryTrait
         array $productVariantIds,
         array $channelCodes,
         DateTimeInterface $dateTime,
-        bool $exclusive = false
+        bool $exclusive = false,
+        bool $manuallyDiscountedProductsExcluded = true
     ): void {
+        \assert($this instanceof EntityRepository);
+
         if (count($channelCodes) === 0 || count($productVariantIds) === 0) {
             return;
         }
@@ -52,6 +55,10 @@ trait ChannelPricingRepositoryTrait
             ->setParameter('date', $dateTime)
         ;
 
+        if ($manuallyDiscountedProductsExcluded) {
+            $qb->andWhere('channelPricing.manuallyDiscounted = false');
+        }
+
         if ($exclusive) {
             $qb->set('channelPricing.multiplier', ':multiplier');
         } else {
@@ -65,6 +72,8 @@ trait ChannelPricingRepositoryTrait
 
     public function updatePrices(DateTimeInterface $dateTime): void
     {
+        \assert($this instanceof EntityRepository);
+
         $this->createQueryBuilder('o')
             ->update()
             ->set('o.price', 'ROUND(o.originalPrice * o.multiplier)')
