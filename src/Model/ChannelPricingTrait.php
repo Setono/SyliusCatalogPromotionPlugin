@@ -32,6 +32,13 @@ trait ChannelPricingTrait
     protected $multiplier = 1;
 
     /**
+     * @ORM\Column(type="string", nullable=true)
+     *
+     * @var string|null
+     */
+    protected $bulkIdentifier;
+
+    /**
      * @ORM\Column(type="datetime", nullable=true)
      * @Gedmo\Timestampable(on="create")
      *
@@ -88,5 +95,15 @@ trait ChannelPricingTrait
     public function getMultiplier(): float
     {
         return $this->multiplier;
+    }
+
+    public function getBulkIdentifier(): ?string
+    {
+        return $this->bulkIdentifier;
+    }
+
+    public function resetBulkIdentifier(): void
+    {
+        $this->bulkIdentifier = null;
     }
 }

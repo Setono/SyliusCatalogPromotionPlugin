@@ -105,6 +105,8 @@ final class ProcessPromotionsCommand extends Command
             return 0;
         }
 
+        $bulkIdentifier = uniqid('bulk-', true);
+
         $this->channelPricingRepository->resetMultiplier($startTime);
 
         foreach ($promotions as $promotion) {
@@ -145,6 +147,7 @@ final class ProcessPromotionsCommand extends Command
                     $productVariantIds,
                     $promotion->getChannelCodes(),
                     $startTime,
+                    $bulkIdentifier,
                     $promotion->isExclusive(),
                     $promotion->isManuallyDiscountedProductsExcluded()
                 );
@@ -153,7 +156,7 @@ final class ProcessPromotionsCommand extends Command
             } while (count($productVariantIds) !== 0);
         }
 
-        $this->channelPricingRepository->updatePrices($startTime);
+        $this->channelPricingRepository->updatePrices($startTime, $bulkIdentifier);
 
         $this->setExecution([
             'start' => $startTime,

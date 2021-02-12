@@ -21,6 +21,7 @@ interface ChannelPricingRepositoryInterface extends HasAnyBeenUpdatedSinceReposi
         array $productVariantIds,
         array $channelCodes,
         DateTimeInterface $dateTime,
+        string $bulkIdentifier,
         bool $exclusive = false,
         bool $manuallyDiscountedProductsExcluded = true
     ): void;
@@ -28,5 +29,5 @@ interface ChannelPricingRepositoryInterface extends HasAnyBeenUpdatedSinceReposi
     /**
      * This method will update ALL channel prices based on the multiplier and updated after $dateTime
      */
-    public function updatePrices(DateTimeInterface $dateTime): void;
+    public function updatePrices(DateTimeInterface $dateTime, string $bulkIdentifier): void;
 }

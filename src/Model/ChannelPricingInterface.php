@@ -26,4 +26,8 @@ interface ChannelPricingInterface extends BaseChannelPricingInterface, Timestamp
     public function setManuallyDiscounted(bool $manuallyDiscounted): void;
 
     public function getMultiplier(): float;
+
+    public function getBulkIdentifier(): ?string;
+
+    public function resetBulkIdentifier(): void;
 }

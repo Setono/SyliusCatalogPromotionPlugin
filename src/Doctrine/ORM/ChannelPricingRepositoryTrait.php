@@ -22,8 +22,10 @@ trait ChannelPricingRepositoryTrait
             ->createQueryBuilder('o')
             ->update()
             ->set('o.multiplier', 1)
+            ->set('o.bulkIdentifier', ':null')
             ->set('o.updatedAt', ':updatedAt')
             ->andWhere('o.multiplier != 1')
+            ->setParameter('null', null)
             ->setParameter('updatedAt', $dateTime)
             ->getQuery()
             ->execute()
@@ -35,6 +37,7 @@ trait ChannelPricingRepositoryTrait
         array $productVariantIds,
         array $channelCodes,
         DateTimeInterface $dateTime,
+        string $bulkIdentifier,
         bool $exclusive = false,
         bool $manuallyDiscountedProductsExcluded = true
     ): void {
@@ -50,9 +53,11 @@ trait ChannelPricingRepositoryTrait
             ->andWhere('channelPricing.productVariant IN (:productVariantIds)')
             ->andWhere('channelPricing.channelCode IN (:channelCodes)')
             ->set('channelPricing.updatedAt', ':date')
+            ->set('channelPricing.bulkIdentifier', ':bulkIdentifier')
             ->setParameter('productVariantIds', $productVariantIds)
             ->setParameter('channelCodes', $channelCodes)
             ->setParameter('date', $dateTime)
+            ->setParameter('bulkIdentifier', $bulkIdentifier)
         ;
 
         if ($manuallyDiscountedProductsExcluded) {
@@ -70,7 +75,7 @@ trait ChannelPricingRepositoryTrait
         $qb->getQuery()->execute();
     }
 
-    public function updatePrices(DateTimeInterface $dateTime): void
+    public function updatePrices(DateTimeInterface $dateTime, string $bulkIdentifier): void
     {
         \assert($this instanceof EntityRepository);
 
@@ -79,7 +84,9 @@ trait ChannelPricingRepositoryTrait
             ->set('o.price', 'ROUND(o.originalPrice * o.multiplier)')
             ->andWhere('o.originalPrice is not null')
             ->andWhere('o.updatedAt >= :date')
+            ->andWhere('o.bulkIdentifier = :bulkIdentifier')
             ->setParameter('date', $dateTime)
+            ->setParameter('bulkIdentifier', $bulkIdentifier)
             ->getQuery()
             ->execute()
         ;
@@ -91,7 +98,9 @@ trait ChannelPricingRepositoryTrait
             ->andWhere('o.originalPrice is null')
             ->andWhere('o.multiplier != 1')
             ->andWhere('o.updatedAt >= :date')
+            ->andWhere('o.bulkIdentifier = :bulkIdentifier')
             ->setParameter('date', $dateTime)
+            ->setParameter('bulkIdentifier', $bulkIdentifier)
             ->getQuery()
             ->execute()
         ;
@@ -101,8 +110,10 @@ trait ChannelPricingRepositoryTrait
             ->set('o.originalPrice', ':originalPrice')
             ->andWhere('o.price = o.originalPrice')
             ->andWhere('o.updatedAt >= :date')
+            ->andWhere('o.bulkIdentifier = :bulkIdentifier')
             ->setParameter('originalPrice', null)
             ->setParameter('date', $dateTime)
+            ->setParameter('bulkIdentifier', $bulkIdentifier)
             ->getQuery()
             ->execute()
         ;
