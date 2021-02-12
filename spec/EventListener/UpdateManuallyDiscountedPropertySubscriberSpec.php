@@ -33,6 +33,7 @@ class UpdateManuallyDiscountedPropertySubscriberSpec extends ObjectBehavior
         $event = new PreUpdateEventArgs($channelPricing->getWrappedObject(), $entityManager->getWrappedObject(), $changeSet);
 
         $channelPricing->hasDiscount()->willReturn(true);
+        $channelPricing->resetBulkIdentifier()->shouldBeCalled();
         $channelPricing->setManuallyDiscounted(true)->shouldBeCalled();
 
         $this->preUpdate($event);
@@ -46,6 +47,7 @@ class UpdateManuallyDiscountedPropertySubscriberSpec extends ObjectBehavior
         $event = new PreUpdateEventArgs($channelPricing->getWrappedObject(), $entityManager->getWrappedObject(), $changeSet);
 
         $channelPricing->hasDiscount()->willReturn(true);
+        $channelPricing->resetBulkIdentifier()->shouldBeCalled();
         $channelPricing->setManuallyDiscounted(true)->shouldBeCalled();
 
         $this->preUpdate($event);
@@ -59,6 +61,7 @@ class UpdateManuallyDiscountedPropertySubscriberSpec extends ObjectBehavior
         $event = new PreUpdateEventArgs($channelPricing->getWrappedObject(), $entityManager->getWrappedObject(), $changeSet);
 
         $channelPricing->hasDiscount()->willReturn(false);
+        $channelPricing->resetBulkIdentifier()->shouldBeCalled();
         $channelPricing->setManuallyDiscounted(false)->shouldBeCalled();
 
         $this->preUpdate($event);
@@ -83,6 +86,7 @@ class UpdateManuallyDiscountedPropertySubscriberSpec extends ObjectBehavior
         $event = new LifecycleEventArgs($channelPricing->getWrappedObject(), $entityManager->getWrappedObject());
 
         $channelPricing->hasDiscount()->willReturn(false);
+        $channelPricing->resetBulkIdentifier()->shouldBeCalled();
         $channelPricing->setManuallyDiscounted(false)->shouldBeCalled();
 
         $this->prePersist($event);
@@ -95,6 +99,7 @@ class UpdateManuallyDiscountedPropertySubscriberSpec extends ObjectBehavior
         $event = new LifecycleEventArgs($channelPricing->getWrappedObject(), $entityManager->getWrappedObject());
 
         $channelPricing->hasDiscount()->willReturn(true);
+        $channelPricing->resetBulkIdentifier()->shouldBeCalled();
         $channelPricing->setManuallyDiscounted(true)->shouldBeCalled();
 
         $this->prePersist($event);
