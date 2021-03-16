@@ -3,7 +3,7 @@ setono_sylius_catalog_promotion_admin_promotion:
         alias: setono_sylius_catalog_promotion.promotion
         path: catalog-promotions
         section: admin
-        templates: SyliusAdminBundle:Crud
+        templates: '@SyliusAdmin/Crud'
         except: ['show']
         redirect: update
         grid: setono_sylius_catalog_promotion_admin_promotion
