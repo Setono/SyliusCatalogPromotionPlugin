@@ -1,5 +1,5 @@
 {
-    "name": "setono/sylius-catalog-promotion-plugin",
+    "name": "bitbag/sylius-catalog-promotion-plugin",
     "type": "sylius-plugin",
     "description": "Catalog promotion plugin for Sylius",
     "keywords": [
