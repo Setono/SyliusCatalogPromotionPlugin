@@ -6,7 +6,6 @@ namespace Setono\SyliusCatalogPromotionPlugin\Command;
 
 use DateTimeInterface;
 use Doctrine\ORM\EntityRepository;
-use Safe\DateTime;
 use function Safe\file_get_contents;
 use function Safe\file_put_contents;
 use function Safe\sprintf;
@@ -88,22 +87,14 @@ final class ProcessPromotionsCommand extends Command
 
         /** @var bool $force */
         $force = $input->getOption('force');
-        $startTime = new DateTime();
+        $startTime = new \DateTime();
 
         /** @var PromotionInterface[] $promotions */
         $promotions = $this->promotionRepository->findForProcessing();
+
         $promotionIds = array_map(static function (PromotionInterface $promotion): int {
             return (int) $promotion->getId();
         }, $promotions);
-
-        if (!$this->isProcessingAllowed($promotionIds) && !$force) {
-            $output->writeln(
-                'Nothing to process at the moment. Run command with --force option to force process',
-                OutputInterface::VERBOSITY_VERBOSE
-            );
-
-            return 0;
-        }
 
         $bulkIdentifier = uniqid('bulk-', true);
 
@@ -160,7 +151,7 @@ final class ProcessPromotionsCommand extends Command
 
         $this->setExecution([
             'start' => $startTime,
-            'end' => new DateTime(),
+            'end' => new \DateTime(),
             'promotions' => $promotionIds,
         ]);
 
