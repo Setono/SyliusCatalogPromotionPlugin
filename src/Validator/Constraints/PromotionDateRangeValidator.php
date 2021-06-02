@@ -11,10 +11,6 @@ use Webmozart\Assert\Assert;
 
 final class PromotionDateRangeValidator extends ConstraintValidator
 {
-    /**
-     * @param PromotionInterface|mixed $value
-     * @param PromotionDateRange|Constraint $constraint
-     */
     public function validate($value, Constraint $constraint): void
     {
         if (null === $value) {

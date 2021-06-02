@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Setono\SyliusCatalogPromotionPlugin\Model;
 
-use DateTimeInterface;
 use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Channel\Model\ChannelsAwareInterface;
 use Sylius\Component\Resource\Model\CodeAwareInterface;
@@ -47,13 +46,13 @@ interface PromotionInterface extends ChannelsAwareInterface, CodeAwareInterface,
 
     public function setManuallyDiscountedProductsExcluded(bool $manuallyDiscountedProductsExcluded): void;
 
-    public function getStartsAt(): ?DateTimeInterface;
+    public function getStartsAt(): ?\DateTimeInterface;
 
-    public function setStartsAt(?DateTimeInterface $startsAt): void;
+    public function setStartsAt(?\DateTimeInterface $startsAt): void;
 
-    public function getEndsAt(): ?DateTimeInterface;
+    public function getEndsAt(): ?\DateTimeInterface;
 
-    public function setEndsAt(?DateTimeInterface $endsAt): void;
+    public function setEndsAt(?\DateTimeInterface $endsAt): void;
 
     public function isEnabled(): bool;
 
@@ -72,9 +71,9 @@ interface PromotionInterface extends ChannelsAwareInterface, CodeAwareInterface,
 
     public function removeRule(PromotionRuleInterface $rule): void;
 
-    public function getDiscount(): float;
+    public function getDiscount(): ?float;
+
+    public function setDiscount(?float $discount): void;
 
     public function getDisplayableDiscount(): float;
-
-    public function setDiscount(float $discount): void;
 }

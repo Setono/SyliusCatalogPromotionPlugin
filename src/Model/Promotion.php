@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace Setono\SyliusCatalogPromotionPlugin\Model;
 
-use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Safe\DateTime;
 use Sylius\Component\Channel\Model\ChannelInterface as BaseChannelInterface;
 use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Resource\Model\TimestampableTrait;
@@ -45,10 +43,10 @@ class Promotion implements PromotionInterface
     /** @var bool */
     protected $manuallyDiscountedProductsExcluded = true;
 
-    /** @var DateTimeInterface|null */
+    /** @var \DateTimeInterface|null */
     protected $startsAt;
 
-    /** @var DateTimeInterface|null */
+    /** @var \DateTimeInterface|null */
     protected $endsAt;
 
     /** @var bool */
@@ -57,7 +55,7 @@ class Promotion implements PromotionInterface
     /** @var Collection|PromotionRuleInterface[] */
     protected $rules;
 
-    /** @var float */
+    /** @var float|null */
     protected $discount = 0.0;
 
     /** @var ChannelInterface[]|Collection */
@@ -65,7 +63,7 @@ class Promotion implements PromotionInterface
 
     public function __construct()
     {
-        $this->createdAt = new DateTime();
+        $this->createdAt = new \DateTime();
 
         $this->rules = new ArrayCollection();
         $this->channels = new ArrayCollection();
@@ -159,22 +157,22 @@ class Promotion implements PromotionInterface
         $this->manuallyDiscountedProductsExcluded = $manuallyDiscountedProductsExcluded;
     }
 
-    public function getStartsAt(): ?DateTimeInterface
+    public function getStartsAt(): ?\DateTimeInterface
     {
         return $this->startsAt;
     }
 
-    public function setStartsAt(?DateTimeInterface $startsAt): void
+    public function setStartsAt(?\DateTimeInterface $startsAt): void
     {
         $this->startsAt = $startsAt;
     }
 
-    public function getEndsAt(): ?DateTimeInterface
+    public function getEndsAt(): ?\DateTimeInterface
     {
         return $this->endsAt;
     }
 
-    public function setEndsAt(?DateTimeInterface $endsAt): void
+    public function setEndsAt(?\DateTimeInterface $endsAt): void
     {
         $this->endsAt = $endsAt;
     }
@@ -218,20 +216,20 @@ class Promotion implements PromotionInterface
         $this->rules->removeElement($rule);
     }
 
-    public function getDiscount(): float
+    public function getDiscount(): ?float
     {
         // Doctrine converts decimal values to string, so we cast to float
         return (float) $this->discount;
     }
 
+    public function setDiscount(?float $discount): void
+    {
+        $this->discount = $discount;
+    }
+
     public function getDisplayableDiscount(): float
     {
         return $this->getDiscount() * 100;
-    }
-
-    public function setDiscount(float $discount): void
-    {
-        $this->discount = $discount;
     }
 
     public function getChannels(): Collection

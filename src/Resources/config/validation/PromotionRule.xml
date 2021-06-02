@@ -7,5 +7,9 @@
         <property name="configuration">
             <constraint name="Valid"/>
         </property>
+        <constraint name="Setono\SyliusCatalogPromotionPlugin\Validator\Constraints\PromotionRulesNotEmpty">
+            <option name="message">setono_sylius_catalog_promotion.promotion.rule_not_be_empty</option>
+            <option name="groups">setono_sylius_catalog_promotion</option>
+        </constraint>
     </class>
 </constraint-mapping>

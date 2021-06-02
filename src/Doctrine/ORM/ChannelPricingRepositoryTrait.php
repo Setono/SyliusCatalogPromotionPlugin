@@ -117,5 +117,16 @@ trait ChannelPricingRepositoryTrait
             ->getQuery()
             ->execute()
         ;
+
+        $this->createQueryBuilder('o')
+            ->update()
+            ->set('o.price', 'o.originalPrice')
+            ->andWhere('o.updatedAt <= :date')
+            ->andWhere('o.bulkIdentifier is null')
+            ->andWhere('o.originalPrice is not null')
+            ->setParameter('date', $dateTime)
+            ->getQuery()
+            ->execute()
+        ;
     }
 }
