@@ -6,8 +6,8 @@ namespace Tests\Setono\SyliusCatalogPromotionPlugin\Behat\Context\Ui\Admin;
 
 use Behat\Behat\Context\Context;
 use DateTimeInterface;
-use function Safe\sprintf;
 use Setono\SyliusCatalogPromotionPlugin\Model\PromotionInterface;
+use function sprintf;
 use Sylius\Behat\NotificationType;
 use Sylius\Behat\Service\NotificationCheckerInterface;
 use Sylius\Behat\Service\Resolver\CurrentPageResolverInterface;

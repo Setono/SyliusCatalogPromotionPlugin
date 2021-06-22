@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Tests\Setono\SyliusCatalogPromotionPlugin\Behat\Context\Setup;
 
 use Behat\Behat\Context\Context;
+use DateTime;
 use Doctrine\Common\Persistence\ObjectManager;
-use Safe\DateTime;
 use Setono\SyliusCatalogPromotionPlugin\Factory\PromotionRuleFactoryInterface;
 use Setono\SyliusCatalogPromotionPlugin\Model\Promotion;
 use Setono\SyliusCatalogPromotionPlugin\Model\PromotionInterface;

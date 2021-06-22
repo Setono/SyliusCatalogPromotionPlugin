@@ -4,15 +4,14 @@ declare(strict_types=1);
 
 namespace Setono\SyliusCatalogPromotionPlugin\Form\Type;
 
-use function Safe\array_flip;
+use function array_flip;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class PromotionRuleChoiceType extends AbstractType
 {
-    /** @var array */
-    private $rules;
+    private array $rules;
 
     public function __construct(array $rules)
     {

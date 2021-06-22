@@ -23,13 +23,16 @@ final class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder('setono_sylius_catalog_promotion');
         $rootNode = $treeBuilder->getRootNode();
 
+        /**
+         * @psalm-suppress MixedMethodCall
+         * @psalm-suppress PossiblyUndefinedMethod
+         * @psalm-suppress PossiblyNullReference
+         */
         $rootNode
             ->addDefaultsIfNotSet()
             ->children()
                 ->scalarNode('driver')
                     ->defaultValue(SyliusResourceBundle::DRIVER_DOCTRINE_ORM)
-                ->end()
-            ->end()
         ;
 
         $this->addResourcesSection($rootNode);
@@ -39,6 +42,11 @@ final class Configuration implements ConfigurationInterface
 
     private function addResourcesSection(ArrayNodeDefinition $node): void
     {
+        /**
+         * @psalm-suppress MixedMethodCall
+         * @psalm-suppress PossiblyUndefinedMethod
+         * @psalm-suppress PossiblyNullReference
+         */
         $node
             ->children()
                 ->arrayNode('resources')

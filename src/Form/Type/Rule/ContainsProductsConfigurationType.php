@@ -11,8 +11,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 final class ContainsProductsConfigurationType extends AbstractType
 {
-    /** @var DataTransformerInterface */
-    private $productsToCodesTransformer;
+    private DataTransformerInterface $productsToCodesTransformer;
 
     public function __construct(DataTransformerInterface $productsToCodesTransformer)
     {

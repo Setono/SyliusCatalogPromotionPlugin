@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Setono\SyliusCatalogPromotionPlugin\Fixture\Factory;
 
+use DateTime;
 use DateTimeInterface;
 use Faker\Generator;
-use Safe\DateTime;
 use Setono\SyliusCatalogPromotionPlugin\Model\PromotionInterface;
 use Setono\SyliusCatalogPromotionPlugin\Model\PromotionRuleInterface;
 use Setono\SyliusCatalogPromotionPlugin\Repository\PromotionRepositoryInterface;
@@ -21,23 +21,17 @@ use Webmozart\Assert\Assert;
 
 class PromotionExampleFactory extends AbstractExampleFactory
 {
-    /** @var ChannelRepositoryInterface */
-    protected $channelRepository;
+    protected ChannelRepositoryInterface $channelRepository;
 
-    /** @var PromotionRepositoryInterface */
-    protected $promotionRepository;
+    protected PromotionRepositoryInterface $promotionRepository;
 
-    /** @var Factory */
-    protected $promotionFactory;
+    protected Factory $promotionFactory;
 
-    /** @var PromotionRuleExampleFactory */
-    protected $promotionRuleExampleFactory;
+    protected PromotionRuleExampleFactory $promotionRuleExampleFactory;
 
-    /** @var Generator */
-    protected $faker;
+    protected Generator $faker;
 
-    /** @var OptionsResolver */
-    protected $optionsResolver;
+    protected OptionsResolver $optionsResolver;
 
     public function __construct(
         ChannelRepositoryInterface $channelRepository,

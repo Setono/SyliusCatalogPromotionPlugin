@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace Setono\SyliusCatalogPromotionPlugin\Rule;
 
 use Doctrine\ORM\QueryBuilder;
-use function Safe\sprintf;
+use function sprintf;
+use Webmozart\Assert\Assert;
 
 final class HasTaxonRule extends Rule
 {
@@ -14,6 +15,8 @@ final class HasTaxonRule extends Rule
     public function filter(QueryBuilder $queryBuilder, array $configuration): void
     {
         $value = self::getConfigurationValue('taxons', $configuration);
+        Assert::isArray($value);
+
         $rootAlias = $this->getRootAlias($queryBuilder);
         $productAlias = self::generateAlias('product');
         $productTaxonsAlias = self::generateAlias('product_taxons');
@@ -26,7 +29,8 @@ final class HasTaxonRule extends Rule
             ->join(sprintf('%s.taxon', $productTaxonsAlias), $taxonAlias)
             ->andWhere(sprintf(
                 '%s.code IN (:%s)',
-                $taxonAlias, $parameter
+                $taxonAlias,
+                $parameter
             ))
             ->setParameter($parameter, $value)
         ;

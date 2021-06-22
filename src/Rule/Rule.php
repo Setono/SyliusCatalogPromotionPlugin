@@ -7,15 +7,14 @@ namespace Setono\SyliusCatalogPromotionPlugin\Rule;
 use Doctrine\ORM\QueryBuilder;
 use InvalidArgumentException;
 use RuntimeException;
-use function Safe\sprintf;
+use function sprintf;
+use Webmozart\Assert\Assert;
 
 abstract class Rule implements RuleInterface
 {
-    /** @var int */
-    private static $aliasIndex = 0;
+    private static int $aliasIndex = 0;
 
-    /** @var int */
-    private static $parameterIndex = 0;
+    private static int $parameterIndex = 0;
 
     protected function getRootAlias(QueryBuilder $queryBuilder): string
     {
@@ -25,7 +24,10 @@ abstract class Rule implements RuleInterface
             throw new RuntimeException('No root aliases');
         }
 
-        return $rootAliases[0];
+        $rootAlias = $rootAliases[0];
+        Assert::string($rootAlias);
+
+        return $rootAlias;
     }
 
     /**

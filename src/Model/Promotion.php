@@ -4,64 +4,58 @@ declare(strict_types=1);
 
 namespace Setono\SyliusCatalogPromotionPlugin\Model;
 
+use DateTime;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Safe\DateTime;
 use Sylius\Component\Channel\Model\ChannelInterface as BaseChannelInterface;
-use Sylius\Component\Core\Model\ChannelInterface;
 use Sylius\Component\Resource\Model\TimestampableTrait;
 
 class Promotion implements PromotionInterface
 {
     use TimestampableTrait;
 
-    /** @var mixed */
-    protected $id;
+    protected ?int $id = null;
 
-    /** @var string|null */
-    protected $code;
+    protected ?string $code = null;
 
-    /** @var string|null */
-    protected $name;
+    protected ?string $name = null;
 
-    /** @var string|null */
-    protected $description;
+    protected ?string $description = null;
 
     /**
      * When exclusive, promotion with top priority will be applied
-     *
-     * @var int
      */
-    protected $priority = 0;
+    protected int $priority = 0;
 
     /**
      * Cannot be applied together with other promotions
-     *
-     * @var bool
      */
-    protected $exclusive = false;
+    protected bool $exclusive = false;
 
-    /** @var bool */
-    protected $manuallyDiscountedProductsExcluded = true;
+    protected bool $manuallyDiscountedProductsExcluded = true;
 
-    /** @var DateTimeInterface|null */
-    protected $startsAt;
+    protected ?DateTimeInterface $startsAt = null;
 
-    /** @var DateTimeInterface|null */
-    protected $endsAt;
+    protected ?DateTimeInterface $endsAt = null;
 
-    /** @var bool */
-    protected $enabled = true;
+    protected bool $enabled = true;
 
-    /** @var Collection|PromotionRuleInterface[] */
-    protected $rules;
+    /**
+     * @var Collection|PromotionRuleInterface[]
+     *
+     * @psalm-var Collection<array-key, PromotionRuleInterface>
+     */
+    protected Collection $rules;
 
-    /** @var float */
-    protected $discount = 0.0;
+    protected float $discount = 0.0;
 
-    /** @var ChannelInterface[]|Collection */
-    protected $channels;
+    /**
+     * @var BaseChannelInterface[]|Collection
+     *
+     * @psalm-var Collection<array-key, BaseChannelInterface>
+     */
+    protected Collection $channels;
 
     public function __construct()
     {
@@ -89,7 +83,7 @@ class Promotion implements PromotionInterface
 
     public function getChannelCodes(): array
     {
-        return $this->channels->map(static function (ChannelInterface $channel): string {
+        return $this->channels->map(static function (BaseChannelInterface $channel): string {
             return (string) $channel->getCode();
         })->toArray();
     }

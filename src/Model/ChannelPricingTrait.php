@@ -17,12 +17,8 @@ trait ChannelPricingTrait
 {
     use TimestampableTrait;
 
-    /**
-     * @ORM\Column(type="boolean", options={"default": 0})
-     *
-     * @var bool
-     */
-    protected $manuallyDiscounted = false;
+    /** @ORM\Column(type="boolean", options={"default": 0}) */
+    protected bool $manuallyDiscounted = false;
 
     /**
      * @ORM\Column(type="decimal", precision=8, scale=4, options={"default": 1})
@@ -31,12 +27,8 @@ trait ChannelPricingTrait
      */
     protected $multiplier = 1;
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     *
-     * @var string|null
-     */
-    protected $bulkIdentifier;
+    /** @ORM\Column(type="string", nullable=true) */
+    protected ?string $bulkIdentifier;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)

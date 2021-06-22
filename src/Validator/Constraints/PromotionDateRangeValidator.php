@@ -17,19 +17,21 @@ final class PromotionDateRangeValidator extends ConstraintValidator
      */
     public function validate($value, Constraint $constraint): void
     {
-        if (null === $value) {
+        if (null === $value || '' === $value) {
             return;
         }
 
         Assert::isInstanceOf($value, PromotionInterface::class);
-
         Assert::isInstanceOf($constraint, PromotionDateRange::class);
 
-        if (null === $value->getStartsAt() || null === $value->getEndsAt()) {
+        $startsAt = $value->getStartsAt();
+        $endsAt = $value->getEndsAt();
+
+        if (null === $startsAt || null === $endsAt) {
             return;
         }
 
-        if ($value->getStartsAt()->getTimestamp() > $value->getEndsAt()->getTimestamp()) {
+        if ($startsAt->getTimestamp() > $endsAt->getTimestamp()) {
             $this->context
                 ->buildViolation($constraint->message)
                 ->atPath('endsAt')

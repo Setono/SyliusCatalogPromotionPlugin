@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Setono\SyliusCatalogPromotionPlugin\Rule;
 
 use Doctrine\ORM\QueryBuilder;
-use function Safe\sprintf;
+use function sprintf;
 
 final class ManuallyDiscountedProductsExcludedRule extends Rule
 {

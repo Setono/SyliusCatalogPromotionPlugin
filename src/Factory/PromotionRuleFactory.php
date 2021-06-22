@@ -5,21 +5,19 @@ declare(strict_types=1);
 namespace Setono\SyliusCatalogPromotionPlugin\Factory;
 
 use InvalidArgumentException;
-use function Safe\sprintf;
 use Setono\SyliusCatalogPromotionPlugin\Model\PromotionRuleInterface;
 use Setono\SyliusCatalogPromotionPlugin\Rule\ContainsProductRule;
 use Setono\SyliusCatalogPromotionPlugin\Rule\ContainsProductsRule;
 use Setono\SyliusCatalogPromotionPlugin\Rule\HasTaxonRule;
+use function sprintf;
 use Sylius\Component\Resource\Factory\FactoryInterface;
 use Webmozart\Assert\Assert;
 
 final class PromotionRuleFactory implements PromotionRuleFactoryInterface
 {
-    /** @var FactoryInterface */
-    private $decoratedFactory;
+    private FactoryInterface $decoratedFactory;
 
-    /** @var array */
-    private $rules;
+    private array $rules;
 
     public function __construct(
         FactoryInterface $decoratedFactory,

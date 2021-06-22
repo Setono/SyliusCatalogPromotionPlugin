@@ -11,14 +11,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class PromotionRuleExampleFactory extends AbstractExampleFactory
 {
-    /** @var PromotionRuleFactoryInterface */
-    protected $promotionRuleFactory;
+    protected PromotionRuleFactoryInterface $promotionRuleFactory;
 
-    /** @var array */
-    protected $promotionRules;
+    protected array $promotionRules;
 
-    /** @var OptionsResolver */
-    protected $optionsResolver;
+    protected OptionsResolver $optionsResolver;
 
     public function __construct(PromotionRuleFactoryInterface $promotionRuleFactory, array $promotionRules)
     {
