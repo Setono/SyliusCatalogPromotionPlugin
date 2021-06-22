@@ -12,12 +12,15 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Webmozart\Assert\Assert;
 
 abstract class AbstractConfigurablePromotionElementType extends AbstractResourceType
 {
-    /** @var FormTypeRegistryInterface */
-    private $formTypeRegistry;
+    private FormTypeRegistryInterface $formTypeRegistry;
 
+    /**
+     * @param array<array-key, string> $validationGroups
+     */
     public function __construct(string $dataClass, FormTypeRegistryInterface $formTypeRegistry, array $validationGroups = [])
     {
         parent::__construct($dataClass, $validationGroups);
@@ -53,6 +56,8 @@ abstract class AbstractConfigurablePromotionElementType extends AbstractResource
                     return;
                 }
 
+                Assert::string($data['type']);
+
                 $this->addConfigurationFields($event->getForm(), (string) $this->formTypeRegistry->get($data['type'], 'default'));
             })
         ;
@@ -76,7 +81,7 @@ abstract class AbstractConfigurablePromotionElementType extends AbstractResource
     }
 
     /**
-     * @param ConfigurablePromotionElementInterface|null $data
+     * @param mixed $data
      */
     protected function getRegistryIdentifier(FormInterface $form, $data = null): ?string
     {
@@ -85,7 +90,10 @@ abstract class AbstractConfigurablePromotionElementType extends AbstractResource
         }
 
         if ($form->getConfig()->hasOption('configuration_type')) {
-            return $form->getConfig()->getOption('configuration_type');
+            $res = $form->getConfig()->getOption('configuration_type');
+            Assert::string($res);
+
+            return $res;
         }
 
         return null;

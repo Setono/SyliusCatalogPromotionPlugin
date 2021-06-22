@@ -6,17 +6,13 @@ namespace Setono\SyliusCatalogPromotionPlugin\Model;
 
 class PromotionRule implements PromotionRuleInterface
 {
-    /** @var int */
-    protected $id;
+    protected ?int $id = null;
 
-    /** @var string */
-    protected $type;
+    protected ?string $type = null;
 
-    /** @var array */
-    protected $configuration = [];
+    protected array $configuration = [];
 
-    /** @var PromotionInterface|null */
-    protected $promotion;
+    protected ?PromotionInterface $promotion = null;
 
     public function getId(): ?int
     {

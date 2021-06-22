@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace Setono\SyliusCatalogPromotionPlugin\Rule;
 
 use Doctrine\ORM\QueryBuilder;
-use function Safe\sprintf;
+use function sprintf;
+use Webmozart\Assert\Assert;
 
 final class ContainsProductsRule extends Rule
 {
@@ -14,6 +15,8 @@ final class ContainsProductsRule extends Rule
     public function filter(QueryBuilder $queryBuilder, array $configuration): void
     {
         $value = self::getConfigurationValue('products', $configuration);
+        Assert::string($value);
+
         $rootAlias = $this->getRootAlias($queryBuilder);
         $productAlias = self::generateAlias('product');
         $parameter = self::generateParameter('product_codes');

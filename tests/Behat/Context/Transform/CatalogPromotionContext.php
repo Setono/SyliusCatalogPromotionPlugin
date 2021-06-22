@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Tests\Setono\SyliusCatalogPromotionPlugin\Behat\Context\Transform;
 
 use Behat\Behat\Context\Context;
-use function Safe\sprintf;
 use Setono\SyliusCatalogPromotionPlugin\Model\PromotionInterface;
 use Setono\SyliusCatalogPromotionPlugin\Repository\PromotionRepositoryInterface;
+use function sprintf;
 use Webmozart\Assert\Assert;
 
 final class CatalogPromotionContext implements Context

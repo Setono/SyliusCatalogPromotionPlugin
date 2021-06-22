@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace Setono\SyliusCatalogPromotionPlugin\Command;
 
+use DateTime;
 use DateTimeInterface;
 use Doctrine\ORM\EntityRepository;
-use Safe\DateTime;
-use function Safe\file_get_contents;
-use function Safe\file_put_contents;
-use function Safe\sprintf;
+use function file_get_contents;
+use function file_put_contents;
 use Setono\SyliusCatalogPromotionPlugin\Model\PromotionInterface;
 use Setono\SyliusCatalogPromotionPlugin\Repository\ChannelPricingRepositoryInterface;
 use Setono\SyliusCatalogPromotionPlugin\Repository\ProductRepositoryInterface;
@@ -17,6 +16,7 @@ use Setono\SyliusCatalogPromotionPlugin\Repository\ProductVariantRepositoryInter
 use Setono\SyliusCatalogPromotionPlugin\Repository\PromotionRepositoryInterface;
 use Setono\SyliusCatalogPromotionPlugin\Rule\ManuallyDiscountedProductsExcludedRule;
 use Setono\SyliusCatalogPromotionPlugin\Rule\RuleInterface;
+use function sprintf;
 use Sylius\Component\Registry\ServiceRegistryInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Command\LockableTrait;
@@ -32,23 +32,17 @@ final class ProcessPromotionsCommand extends Command
 
     protected static $defaultName = 'setono:sylius-catalog-promotion:process';
 
-    /** @var ChannelPricingRepositoryInterface */
-    private $channelPricingRepository;
+    private ChannelPricingRepositoryInterface $channelPricingRepository;
 
-    /** @var ProductRepositoryInterface */
-    private $productRepository;
+    private ProductRepositoryInterface $productRepository;
 
-    /** @var ProductVariantRepositoryInterface */
-    private $productVariantRepository;
+    private ProductVariantRepositoryInterface $productVariantRepository;
 
-    /** @var PromotionRepositoryInterface */
-    private $promotionRepository;
+    private PromotionRepositoryInterface $promotionRepository;
 
-    /** @var ServiceRegistryInterface */
-    private $ruleRegistry;
+    private ServiceRegistryInterface $ruleRegistry;
 
-    /** @var string */
-    private $logsDir;
+    private string $logsDir;
 
     public function __construct(
         ChannelPricingRepositoryInterface $channelPricingRepository,
@@ -86,17 +80,15 @@ final class ProcessPromotionsCommand extends Command
             return 0;
         }
 
-        /** @var bool $force */
-        $force = $input->getOption('force');
+        $force = true === $input->getOption('force');
         $startTime = new DateTime();
 
-        /** @var PromotionInterface[] $promotions */
         $promotions = $this->promotionRepository->findForProcessing();
         $promotionIds = array_map(static function (PromotionInterface $promotion): int {
             return (int) $promotion->getId();
         }, $promotions);
 
-        if (!$this->isProcessingAllowed($promotionIds) && !$force) {
+        if (!$force && !$this->isProcessingAllowed($promotionIds)) {
             $output->writeln(
                 'Nothing to process at the moment. Run command with --force option to force process',
                 OutputInterface::VERBOSITY_VERBOSE
@@ -123,13 +115,13 @@ final class ProcessPromotionsCommand extends Command
                     continue;
                 }
 
-                if (!$this->ruleRegistry->has($rule->getType())) {
+                if (!$this->ruleRegistry->has((string) $rule->getType())) {
                     // todo should this throw an exception or give an error somewhere?
                     continue;
                 }
 
                 /** @var RuleInterface $ruleQueryBuilder */
-                $ruleQueryBuilder = $this->ruleRegistry->get($rule->getType());
+                $ruleQueryBuilder = $this->ruleRegistry->get((string) $rule->getType());
 
                 $ruleQueryBuilder->filter($qb, $rule->getConfiguration());
             }
@@ -140,6 +132,8 @@ final class ProcessPromotionsCommand extends Command
 
             do {
                 $qb->setFirstResult($i * $bulkSize);
+
+                /** @var array<array-key, int> $productVariantIds */
                 $productVariantIds = $qb->getQuery()->getResult();
 
                 $this->channelPricingRepository->updateMultiplier(
@@ -200,7 +194,11 @@ final class ProcessPromotionsCommand extends Command
         ;
     }
 
-    // @todo Move storing last execution data to some memory storage / cache?
+    /**
+     * todo Move storing last execution data to some memory storage / cache?
+     *
+     * @return null|array{start: \DateTimeInterface, end: \DateTimeInterface, promotions: array<array-key, int>}
+     */
     private function getLastExecution(): ?array
     {
         $filename = $this->getExecutionLogFilename();
@@ -217,10 +215,17 @@ final class ProcessPromotionsCommand extends Command
             return null;
         }
 
+        Assert::isArray($execution);
+
         // validate contents
         if (!isset($execution['start'], $execution['end'], $execution['promotions'])) {
             return null;
         }
+
+        Assert::isInstanceOf($execution['start'], DateTimeInterface::class);
+        Assert::isInstanceOf($execution['end'], DateTimeInterface::class);
+        Assert::isArray($execution['promotions']);
+        Assert::allInteger($execution['promotions']);
 
         return $execution;
     }
@@ -234,8 +239,10 @@ final class ProcessPromotionsCommand extends Command
 
     private function getExecutionLogFilename(): string
     {
-        return sprintf('%s/%s.log',
-            $this->logsDir, Container::underscore(str_replace('\\', '', get_class($this)))
+        return sprintf(
+            '%s/%s.log',
+            $this->logsDir,
+            Container::underscore(str_replace('\\', '', static::class))
         );
     }
 }
