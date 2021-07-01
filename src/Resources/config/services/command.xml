@@ -5,12 +5,14 @@
     <services>
         <service id="setono_sylius_catalog_promotion.command.process_promotions"
                  class="Setono\SyliusCatalogPromotionPlugin\Command\ProcessPromotionsCommand">
+            <argument type="service" id="setono_job_status.repository.job"/>
+            <argument type="service" id="setono_job_status.factory.job"/>
+            <argument type="service" id="setono_job_status.manager.job"/>
             <argument type="service" id="sylius.repository.channel_pricing"/>
             <argument type="service" id="sylius.repository.product"/>
             <argument type="service" id="sylius.repository.product_variant"/>
             <argument type="service" id="setono_sylius_catalog_promotion.repository.promotion"/>
             <argument type="service" id="setono_sylius_catalog_promotion.registry.rule"/>
-            <argument>%kernel.logs_dir%</argument>
 
             <tag name="console.command"/>
         </service>
