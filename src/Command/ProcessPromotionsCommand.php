@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace Setono\SyliusCatalogPromotionPlugin\Command;
 
-use DateTime;
 use DateTimeInterface;
 use Doctrine\ORM\EntityRepository;
-use function file_get_contents;
-use function file_put_contents;
+use Setono\JobStatusBundle\Entity\JobInterface;
+use Setono\JobStatusBundle\Factory\JobFactoryInterface;
+use Setono\JobStatusBundle\Manager\JobManagerInterface;
+use Setono\JobStatusBundle\Repository\JobRepositoryInterface;
 use Setono\SyliusCatalogPromotionPlugin\Model\PromotionInterface;
 use Setono\SyliusCatalogPromotionPlugin\Repository\ChannelPricingRepositoryInterface;
 use Setono\SyliusCatalogPromotionPlugin\Repository\ProductRepositoryInterface;
@@ -16,21 +17,27 @@ use Setono\SyliusCatalogPromotionPlugin\Repository\ProductVariantRepositoryInter
 use Setono\SyliusCatalogPromotionPlugin\Repository\PromotionRepositoryInterface;
 use Setono\SyliusCatalogPromotionPlugin\Rule\ManuallyDiscountedProductsExcludedRule;
 use Setono\SyliusCatalogPromotionPlugin\Rule\RuleInterface;
-use function sprintf;
 use Sylius\Component\Registry\ServiceRegistryInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Command\LockableTrait;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\DependencyInjection\Container;
 use Webmozart\Assert\Assert;
 
 final class ProcessPromotionsCommand extends Command
 {
     use LockableTrait;
 
+    private const JOB_TYPE = 'sscp_process_promotions';
+
     protected static $defaultName = 'setono:sylius-catalog-promotion:process';
+
+    private JobRepositoryInterface $jobRepository;
+
+    private JobFactoryInterface $jobFactory;
+
+    private JobManagerInterface $jobManager;
 
     private ChannelPricingRepositoryInterface $channelPricingRepository;
 
@@ -42,24 +49,26 @@ final class ProcessPromotionsCommand extends Command
 
     private ServiceRegistryInterface $ruleRegistry;
 
-    private string $logsDir;
-
     public function __construct(
+        JobRepositoryInterface $jobRepository,
+        JobFactoryInterface $jobFactory,
+        JobManagerInterface $jobManager,
         ChannelPricingRepositoryInterface $channelPricingRepository,
         ProductRepositoryInterface $productRepository,
         ProductVariantRepositoryInterface $productVariantRepository,
         PromotionRepositoryInterface $promotionRepository,
-        ServiceRegistryInterface $ruleRegistry,
-        string $logsDir
+        ServiceRegistryInterface $ruleRegistry
     ) {
         parent::__construct();
 
+        $this->jobRepository = $jobRepository;
+        $this->jobFactory = $jobFactory;
+        $this->jobManager = $jobManager;
         $this->channelPricingRepository = $channelPricingRepository;
         $this->productRepository = $productRepository;
         $this->productVariantRepository = $productVariantRepository;
         $this->promotionRepository = $promotionRepository;
         $this->ruleRegistry = $ruleRegistry;
-        $this->logsDir = $logsDir;
     }
 
     protected function configure(): void
@@ -74,21 +83,21 @@ final class ProcessPromotionsCommand extends Command
     {
         Assert::isInstanceOf($this->productVariantRepository, EntityRepository::class);
 
-        if (!$this->lock()) {
-            $output->writeln('The command is already running in another process.');
+        $lastJob = $this->jobRepository->findLastJobByType(self::JOB_TYPE);
+        if (null !== $lastJob && $lastJob->isRunning()) {
+            $output->writeln('The job is already running');
 
             return 0;
         }
 
         $force = true === $input->getOption('force');
-        $startTime = new DateTime();
 
         $promotions = $this->promotionRepository->findForProcessing();
         $promotionIds = array_map(static function (PromotionInterface $promotion): int {
             return (int) $promotion->getId();
         }, $promotions);
 
-        if (!$force && !$this->isProcessingAllowed($promotionIds)) {
+        if (!$force && !$this->isProcessingAllowed($promotionIds, $lastJob)) {
             $output->writeln(
                 'Nothing to process at the moment. Run command with --force option to force process',
                 OutputInterface::VERBOSITY_VERBOSE
@@ -96,6 +105,16 @@ final class ProcessPromotionsCommand extends Command
 
             return 0;
         }
+
+        $job = $this->jobFactory->createNew();
+        $job->setExclusive(true);
+        $job->setType(self::JOB_TYPE);
+        $job->setName('Sylius Catalog Promotion plugin: Process promotions');
+
+        $this->jobManager->start($job);
+
+        $startTime = $job->getStartedAt();
+        Assert::notNull($startTime);
 
         $bulkIdentifier = uniqid('bulk-', true);
 
@@ -147,36 +166,40 @@ final class ProcessPromotionsCommand extends Command
                 );
 
                 ++$i;
+
+                $this->jobManager->advance($job, $bulkSize);
             } while (count($productVariantIds) !== 0);
         }
 
         $this->channelPricingRepository->updatePrices($startTime, $bulkIdentifier);
 
-        $this->setExecution([
-            'start' => $startTime,
-            'end' => new DateTime(),
-            'promotions' => $promotionIds,
-        ]);
+        $job->setMetadataEntry('promotions', $promotionIds);
+        $this->jobManager->finish($job);
 
         return 0;
     }
 
-    private function isProcessingAllowed(array $promotionIds): bool
+    private function isProcessingAllowed(array $promotionIds, ?JobInterface $lastJob): bool
     {
-        // If there was no executions - we can process
-        $lastExecution = $this->getLastExecution();
-        if (null === $lastExecution) {
+        // if there isn't no last job we can just process
+        if (null === $lastJob) {
             return true;
         }
+
+        $lastPromotionIds = $lastJob->getMetadataEntry('promotions');
+        Assert::isArray($lastPromotionIds);
 
         // If last execution promotions not exact same as found for processing
         // or not at the same order - we can process
-        if ($lastExecution['promotions'] !== $promotionIds) {
+        if ($lastPromotionIds !== $promotionIds) {
             return true;
         }
 
+        $lastJobStartedAt = $lastJob->getStartedAt();
+        Assert::notNull($lastJobStartedAt);
+
         // If any relevant entities were updated - we can process
-        if ($this->hasAnyBeenUpdatedSince($lastExecution['start'])) {
+        if ($this->hasAnyBeenUpdatedSince($lastJobStartedAt)) {
             return true;
         }
 
@@ -192,57 +215,5 @@ final class ProcessPromotionsCommand extends Command
             $this->channelPricingRepository->hasAnyBeenUpdatedSince($dateTime) ||
             $this->promotionRepository->hasAnyBeenUpdatedSince($dateTime)
         ;
-    }
-
-    /**
-     * todo Move storing last execution data to some memory storage / cache?
-     *
-     * @return null|array{start: \DateTimeInterface, end: \DateTimeInterface, promotions: array<array-key, int>}
-     */
-    private function getLastExecution(): ?array
-    {
-        $filename = $this->getExecutionLogFilename();
-
-        if (!file_exists($filename)) {
-            return null;
-        }
-
-        $execution = unserialize(file_get_contents($filename), [
-            'allowed_classes' => true,
-        ]);
-
-        if (false === $execution) {
-            return null;
-        }
-
-        Assert::isArray($execution);
-
-        // validate contents
-        if (!isset($execution['start'], $execution['end'], $execution['promotions'])) {
-            return null;
-        }
-
-        Assert::isInstanceOf($execution['start'], DateTimeInterface::class);
-        Assert::isInstanceOf($execution['end'], DateTimeInterface::class);
-        Assert::isArray($execution['promotions']);
-        Assert::allInteger($execution['promotions']);
-
-        return $execution;
-    }
-
-    private function setExecution(array $execution): void
-    {
-        $filename = $this->getExecutionLogFilename();
-
-        file_put_contents($filename, serialize($execution));
-    }
-
-    private function getExecutionLogFilename(): string
-    {
-        return sprintf(
-            '%s/%s.log',
-            $this->logsDir,
-            Container::underscore(str_replace('\\', '', static::class))
-        );
     }
 }
