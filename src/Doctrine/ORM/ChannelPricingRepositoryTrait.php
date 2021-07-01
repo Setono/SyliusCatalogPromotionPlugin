@@ -18,18 +18,27 @@ trait ChannelPricingRepositoryTrait
     {
         \assert($this instanceof EntityRepository);
 
-        $this
-            ->createQueryBuilder('o')
-            ->update()
-            ->set('o.multiplier', 1)
-            ->set('o.bulkIdentifier', ':null')
-            ->set('o.updatedAt', ':updatedAt')
-            ->andWhere('o.multiplier != 1')
-            ->setParameter('null', null)
-            ->setParameter('updatedAt', $dateTime)
-            ->getQuery()
-            ->execute()
-        ;
+        do {
+            $ids = $this->createQueryBuilder('o')
+                ->select('o.id')
+                ->andWhere('o.multiplier != 1')
+                ->setMaxResults(100)
+                ->getQuery()
+                ->getResult()
+            ;
+
+            $res = (int) $this
+                ->createQueryBuilder('o')
+                ->update()
+                ->set('o.multiplier', 1)
+                ->set('o.updatedAt', ':updatedAt')
+                ->andWhere('o.id IN (:ids)')
+                ->setParameter('updatedAt', $dateTime)
+                ->setParameter('ids', $ids)
+                ->getQuery()
+                ->execute()
+            ;
+        } while ($res > 0);
     }
 
     public function updateMultiplier(
@@ -75,47 +84,70 @@ trait ChannelPricingRepositoryTrait
         $qb->getQuery()->execute();
     }
 
-    public function updatePrices(DateTimeInterface $dateTime, string $bulkIdentifier): void
+    public function updatePrices(string $bulkIdentifier): void
     {
         \assert($this instanceof EntityRepository);
 
-        $this->createQueryBuilder('o')
-            ->update()
-            ->set('o.price', 'ROUND(o.originalPrice * o.multiplier)')
-            ->andWhere('o.originalPrice is not null')
-            ->andWhere('o.updatedAt >= :date')
-            ->andWhere('o.bulkIdentifier = :bulkIdentifier')
-            ->setParameter('date', $dateTime)
-            ->setParameter('bulkIdentifier', $bulkIdentifier)
-            ->getQuery()
-            ->execute()
-        ;
+        do {
+            // get an array of ids to work on
+            $ids = $this->createQueryBuilder('o')
+                ->select('o.id')
+                ->andWhere('o.bulkIdentifier = :bulkIdentifier')
+                ->setParameter('bulkIdentifier', $bulkIdentifier)
+                ->setMaxResults(100)
+                ->getQuery()
+                ->getResult()
+            ;
 
-        $this->createQueryBuilder('o')
-            ->update()
-            ->set('o.originalPrice', 'o.price')
-            ->set('o.price', 'ROUND(o.price * o.multiplier)')
-            ->andWhere('o.originalPrice is null')
-            ->andWhere('o.multiplier != 1')
-            ->andWhere('o.updatedAt >= :date')
-            ->andWhere('o.bulkIdentifier = :bulkIdentifier')
-            ->setParameter('date', $dateTime)
-            ->setParameter('bulkIdentifier', $bulkIdentifier)
-            ->getQuery()
-            ->execute()
-        ;
+            // this query handles the case where an original price is set
+            // i.e. we have made discounts on this product before
+            $this->createQueryBuilder('o')
+                ->update()
+                ->set('o.price', 'ROUND(o.originalPrice * o.multiplier)')
+                ->andWhere('o.originalPrice is not null')
+                ->andWhere('o.id in (:ids)')
+                ->setParameter('ids', $ids)
+                ->getQuery()
+                ->execute()
+            ;
 
-        $this->createQueryBuilder('o')
-            ->update()
-            ->set('o.originalPrice', ':originalPrice')
-            ->andWhere('o.price = o.originalPrice')
-            ->andWhere('o.updatedAt >= :date')
-            ->andWhere('o.bulkIdentifier = :bulkIdentifier')
-            ->setParameter('originalPrice', null)
-            ->setParameter('date', $dateTime)
-            ->setParameter('bulkIdentifier', $bulkIdentifier)
-            ->getQuery()
-            ->execute()
-        ;
+            // this query handles the case where a discount hasn't been applied before
+            // so we want to move the current price to the original price before changing the price
+            $this->createQueryBuilder('o')
+                ->update()
+                ->set('o.originalPrice', 'o.price')
+                ->set('o.price', 'ROUND(o.price * o.multiplier)')
+                ->andWhere('o.originalPrice is null')
+                ->andWhere('o.multiplier != 1')
+                ->andWhere('o.id in (:ids)')
+                ->setParameter('ids', $ids)
+                ->getQuery()
+                ->execute()
+            ;
+
+            // this query sets the original price to null where the original price equals the price
+            $this->createQueryBuilder('o')
+                ->update()
+                ->set('o.originalPrice', ':originalPrice')
+                ->andWhere('o.price = o.originalPrice')
+                ->andWhere('o.id in (:ids)')
+                ->setParameter('ids', $ids)
+                ->setParameter('originalPrice', null)
+                ->getQuery()
+                ->execute()
+            ;
+
+            // set the bulk identifier to null to ensure the loop will come to an end ;)
+            $res = (int) $this
+                ->createQueryBuilder('o')
+                ->update()
+                ->set('o.bulkIdentifier', ':null')
+                ->andWhere('o.id IN (:ids)')
+                ->setParameter('null', null)
+                ->setParameter('ids', $ids)
+                ->getQuery()
+                ->execute()
+            ;
+        } while ($res > 0);
     }
 }

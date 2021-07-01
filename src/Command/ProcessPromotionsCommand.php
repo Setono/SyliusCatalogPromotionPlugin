@@ -171,7 +171,7 @@ final class ProcessPromotionsCommand extends Command
             } while (count($productVariantIds) !== 0);
         }
 
-        $this->channelPricingRepository->updatePrices($startTime, $bulkIdentifier);
+        $this->channelPricingRepository->updatePrices($bulkIdentifier);
 
         $job->setMetadataEntry('promotions', $promotionIds);
         $this->jobManager->finish($job);
