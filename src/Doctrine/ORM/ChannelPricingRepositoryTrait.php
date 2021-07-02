@@ -66,6 +66,7 @@ trait ChannelPricingRepositoryTrait
     }
 
     public function updateMultiplier(
+        string $promotionCode,
         float $multiplier,
         array $productVariantIds,
         array $channelCodes,
@@ -87,10 +88,12 @@ trait ChannelPricingRepositoryTrait
             ->andWhere('channelPricing.channelCode IN (:channelCodes)')
             ->set('channelPricing.updatedAt', ':date')
             ->set('channelPricing.bulkIdentifier', ':bulkIdentifier')
+            ->set('channelPricing.appliedPromotions', "CONCAT(channelPricing.appliedPromotions, CONCAT(',', :promotion))")
             ->setParameter('productVariantIds', $productVariantIds)
             ->setParameter('channelCodes', $channelCodes)
             ->setParameter('date', $dateTime)
             ->setParameter('bulkIdentifier', $bulkIdentifier)
+            ->setParameter('promotion', $promotionCode)
         ;
 
         if ($manuallyDiscountedProductsExcluded) {

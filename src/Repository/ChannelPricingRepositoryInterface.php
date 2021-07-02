@@ -21,6 +21,7 @@ interface ChannelPricingRepositoryInterface extends HasAnyBeenUpdatedSinceReposi
      * @return int the number of updated rows in total
      */
     public function updateMultiplier(
+        string $promotionCode,
         float $multiplier,
         array $productVariantIds,
         array $channelCodes,

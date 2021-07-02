@@ -156,6 +156,7 @@ final class ProcessPromotionsCommand extends Command
                 $productVariantIds = $qb->getQuery()->getResult();
 
                 $updatedRows = $this->channelPricingRepository->updateMultiplier(
+                    (string) $promotion->getCode(),
                     $promotion->getMultiplier(),
                     $productVariantIds,
                     $promotion->getChannelCodes(),
