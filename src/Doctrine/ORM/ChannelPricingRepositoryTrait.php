@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Setono\SyliusCatalogPromotionPlugin\Doctrine\ORM;
 
 use DateTimeInterface;
+use Doctrine\DBAL\TransactionIsolationLevel;
+use EventSauce\BackOff\FibonacciBackOffStrategy;
 use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 
 /**
@@ -14,31 +16,56 @@ trait ChannelPricingRepositoryTrait
 {
     use HasAnyBeenUpdatedSinceTrait;
 
-    public function resetMultiplier(DateTimeInterface $dateTime): void
+    public function resetMultiplier(DateTimeInterface $dateTime): int
     {
         \assert($this instanceof EntityRepository);
 
-        do {
-            $ids = $this->createQueryBuilder('o')
-                ->select('o.id')
-                ->andWhere('o.multiplier != 1')
-                ->setMaxResults(100)
-                ->getQuery()
-                ->getResult()
-            ;
+        $updatedRows = 0;
 
-            $res = (int) $this
-                ->createQueryBuilder('o')
-                ->update()
-                ->set('o.multiplier', 1)
-                ->set('o.updatedAt', ':updatedAt')
-                ->andWhere('o.id IN (:ids)')
-                ->setParameter('updatedAt', $dateTime)
-                ->setParameter('ids', $ids)
-                ->getQuery()
-                ->execute()
-            ;
-        } while ($res > 0);
+        $backOffStrategy = new FibonacciBackOffStrategy(250_000, 5);
+        $tries = 0;
+
+        $connection = $this->_em->getConnection();
+        $oldTransactionIsolation = (int) $connection->getTransactionIsolation();
+        $connection->setTransactionIsolation(TransactionIsolationLevel::READ_COMMITTED);
+
+        do {
+            $connection->beginTransaction();
+
+            try {
+                $ids = $this->createQueryBuilder('o')
+                    ->select('o.id')
+                    ->andWhere('o.multiplier != 1')
+                    ->setMaxResults(100)
+                    ->getQuery()
+                    ->getResult()
+                ;
+
+                $res = (int) $this
+                    ->createQueryBuilder('o')
+                    ->update()
+                    ->set('o.multiplier', 1)
+                    ->set('o.updatedAt', ':updatedAt')
+                    ->andWhere('o.id IN (:ids)')
+                    ->setParameter('updatedAt', $dateTime)
+                    ->setParameter('ids', $ids)
+                    ->getQuery()
+                    ->execute()
+                ;
+
+                $connection->commit();
+
+                $updatedRows += $res;
+            } catch (\Throwable $e) {
+                $connection->rollBack();
+
+                $backOffStrategy->backOff(++$tries, $e);
+            }
+        } while ($tries > 0 || (isset($res) && $res > 0));
+
+        $connection->setTransactionIsolation($oldTransactionIsolation);
+
+        return $updatedRows;
     }
 
     public function updateMultiplier(
@@ -49,11 +76,11 @@ trait ChannelPricingRepositoryTrait
         string $bulkIdentifier,
         bool $exclusive = false,
         bool $manuallyDiscountedProductsExcluded = true
-    ): void {
+    ): int {
         \assert($this instanceof EntityRepository);
 
         if (count($channelCodes) === 0 || count($productVariantIds) === 0) {
-            return;
+            return 0;
         }
 
         $qb = $this->createQueryBuilder('channelPricing');
@@ -81,12 +108,14 @@ trait ChannelPricingRepositoryTrait
 
         $qb->setParameter('multiplier', $multiplier);
 
-        $qb->getQuery()->execute();
+        return (int) $qb->getQuery()->execute();
     }
 
-    public function updatePrices(string $bulkIdentifier): void
+    public function updatePrices(string $bulkIdentifier): int
     {
         \assert($this instanceof EntityRepository);
+
+        $updatedRows = 0;
 
         do {
             // get an array of ids to work on
@@ -101,7 +130,7 @@ trait ChannelPricingRepositoryTrait
 
             // this query handles the case where an original price is set
             // i.e. we have made discounts on this product before
-            $this->createQueryBuilder('o')
+            $updatedRows += (int) $this->createQueryBuilder('o')
                 ->update()
                 ->set('o.price', 'ROUND(o.originalPrice * o.multiplier)')
                 ->andWhere('o.originalPrice is not null')
@@ -113,7 +142,7 @@ trait ChannelPricingRepositoryTrait
 
             // this query handles the case where a discount hasn't been applied before
             // so we want to move the current price to the original price before changing the price
-            $this->createQueryBuilder('o')
+            $updatedRows += (int) $this->createQueryBuilder('o')
                 ->update()
                 ->set('o.originalPrice', 'o.price')
                 ->set('o.price', 'ROUND(o.price * o.multiplier)')
@@ -126,7 +155,7 @@ trait ChannelPricingRepositoryTrait
             ;
 
             // this query sets the original price to null where the original price equals the price
-            $this->createQueryBuilder('o')
+            $updatedRows += (int) $this->createQueryBuilder('o')
                 ->update()
                 ->set('o.originalPrice', ':originalPrice')
                 ->andWhere('o.price = o.originalPrice')
@@ -148,6 +177,10 @@ trait ChannelPricingRepositoryTrait
                 ->getQuery()
                 ->execute()
             ;
+
+            $updatedRows += $res;
         } while ($res > 0);
+
+        return $updatedRows;
     }
 }
