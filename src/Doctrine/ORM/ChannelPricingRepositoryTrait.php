@@ -15,8 +15,7 @@ trait ChannelPricingRepositoryTrait
 {
     use HasAnyBeenUpdatedSinceTrait;
 
-    // todo I am pretty sure we need the bulk identifier in here
-    public function resetMultiplier(DateTimeInterface $dateTime): int
+    public function resetMultiplier(DateTimeInterface $dateTime, string $bulkIdentifier): int
     {
         \assert($this instanceof EntityRepository);
 
@@ -44,8 +43,10 @@ trait ChannelPricingRepositoryTrait
                     ->update()
                     ->set('o.multiplier', 1)
                     ->set('o.updatedAt', ':updatedAt')
+                    ->set('o.bulkIdentifier', ':bulkIdentifier')
                     ->andWhere('o.id IN (:ids)')
                     ->setParameter('updatedAt', $dateTime)
+                    ->setParameter('bulkIdentifier', $bulkIdentifier)
                     ->setParameter('ids', $ids)
                     ->getQuery()
                     ->execute()
