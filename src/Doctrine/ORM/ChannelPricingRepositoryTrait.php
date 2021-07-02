@@ -22,14 +22,12 @@ trait ChannelPricingRepositoryTrait
 
         $updatedRows = 0;
 
-        $backOffStrategy = new FibonacciBackOffStrategy(250_000, 5);
-        $tries = 0;
-
         $connection = $this->_em->getConnection();
         $oldTransactionIsolation = (int) $connection->getTransactionIsolation();
         $connection->setTransactionIsolation(TransactionIsolationLevel::READ_COMMITTED);
 
         do {
+            $res = 0;
             $connection->beginTransaction();
 
             try {
@@ -58,10 +56,8 @@ trait ChannelPricingRepositoryTrait
                 $updatedRows += $res;
             } catch (\Throwable $e) {
                 $connection->rollBack();
-
-                $backOffStrategy->backOff(++$tries, $e);
             }
-        } while ($tries > 0 || (isset($res) && $res > 0));
+        } while ($res > 0);
 
         $connection->setTransactionIsolation($oldTransactionIsolation);
 
