@@ -6,7 +6,6 @@ namespace Setono\SyliusCatalogPromotionPlugin\Doctrine\ORM;
 
 use DateTimeInterface;
 use Doctrine\DBAL\TransactionIsolationLevel;
-use EventSauce\BackOff\FibonacciBackOffStrategy;
 use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 
 /**
@@ -113,69 +112,79 @@ trait ChannelPricingRepositoryTrait
 
         $updatedRows = 0;
 
+        $connection = $this->_em->getConnection();
+        $oldTransactionIsolation = (int) $connection->getTransactionIsolation();
+        $connection->setTransactionIsolation(TransactionIsolationLevel::READ_COMMITTED);
+
         do {
-            // get an array of ids to work on
-            $ids = $this->createQueryBuilder('o')
-                ->select('o.id')
-                ->andWhere('o.bulkIdentifier = :bulkIdentifier')
-                ->setParameter('bulkIdentifier', $bulkIdentifier)
-                ->setMaxResults(100)
-                ->getQuery()
-                ->getResult()
-            ;
+            $res = 0;
+            $connection->beginTransaction();
 
-            // this query handles the case where an original price is set
-            // i.e. we have made discounts on this product before
-            $updatedRows += (int) $this->createQueryBuilder('o')
-                ->update()
-                ->set('o.price', 'ROUND(o.originalPrice * o.multiplier)')
-                ->andWhere('o.originalPrice is not null')
-                ->andWhere('o.id in (:ids)')
-                ->setParameter('ids', $ids)
-                ->getQuery()
-                ->execute()
-            ;
+            try {
+                // get an array of ids to work on
+                $ids = $this->createQueryBuilder('o')
+                    ->select('o.id')
+                    ->andWhere('o.bulkIdentifier = :bulkIdentifier')
+                    ->setParameter('bulkIdentifier', $bulkIdentifier)
+                    ->setMaxResults(100)
+                    ->getQuery()
+                    ->getResult();
 
-            // this query handles the case where a discount hasn't been applied before
-            // so we want to move the current price to the original price before changing the price
-            $updatedRows += (int) $this->createQueryBuilder('o')
-                ->update()
-                ->set('o.originalPrice', 'o.price')
-                ->set('o.price', 'ROUND(o.price * o.multiplier)')
-                ->andWhere('o.originalPrice is null')
-                ->andWhere('o.multiplier != 1')
-                ->andWhere('o.id in (:ids)')
-                ->setParameter('ids', $ids)
-                ->getQuery()
-                ->execute()
-            ;
+                // this query handles the case where an original price is set
+                // i.e. we have made discounts on this product before
+                $updatedRows += (int) $this->createQueryBuilder('o')
+                    ->update()
+                    ->set('o.price', 'ROUND(o.originalPrice * o.multiplier)')
+                    ->andWhere('o.originalPrice is not null')
+                    ->andWhere('o.id in (:ids)')
+                    ->setParameter('ids', $ids)
+                    ->getQuery()
+                    ->execute();
 
-            // this query sets the original price to null where the original price equals the price
-            $updatedRows += (int) $this->createQueryBuilder('o')
-                ->update()
-                ->set('o.originalPrice', ':originalPrice')
-                ->andWhere('o.price = o.originalPrice')
-                ->andWhere('o.id in (:ids)')
-                ->setParameter('ids', $ids)
-                ->setParameter('originalPrice', null)
-                ->getQuery()
-                ->execute()
-            ;
+                // this query handles the case where a discount hasn't been applied before
+                // so we want to move the current price to the original price before changing the price
+                $updatedRows += (int) $this->createQueryBuilder('o')
+                    ->update()
+                    ->set('o.originalPrice', 'o.price')
+                    ->set('o.price', 'ROUND(o.price * o.multiplier)')
+                    ->andWhere('o.originalPrice is null')
+                    ->andWhere('o.multiplier != 1')
+                    ->andWhere('o.id in (:ids)')
+                    ->setParameter('ids', $ids)
+                    ->getQuery()
+                    ->execute();
 
-            // set the bulk identifier to null to ensure the loop will come to an end ;)
-            $res = (int) $this
-                ->createQueryBuilder('o')
-                ->update()
-                ->set('o.bulkIdentifier', ':null')
-                ->andWhere('o.id IN (:ids)')
-                ->setParameter('null', null)
-                ->setParameter('ids', $ids)
-                ->getQuery()
-                ->execute()
-            ;
+                // this query sets the original price to null where the original price equals the price
+                $updatedRows += (int) $this->createQueryBuilder('o')
+                    ->update()
+                    ->set('o.originalPrice', ':originalPrice')
+                    ->andWhere('o.price = o.originalPrice')
+                    ->andWhere('o.id in (:ids)')
+                    ->setParameter('ids', $ids)
+                    ->setParameter('originalPrice', null)
+                    ->getQuery()
+                    ->execute();
 
-            $updatedRows += $res;
+                // set the bulk identifier to null to ensure the loop will come to an end ;)
+                $res = (int) $this
+                    ->createQueryBuilder('o')
+                    ->update()
+                    ->set('o.bulkIdentifier', ':null')
+                    ->andWhere('o.id IN (:ids)')
+                    ->setParameter('null', null)
+                    ->setParameter('ids', $ids)
+                    ->getQuery()
+                    ->execute();
+
+                $connection->commit();
+
+                $updatedRows += $res;
+            } catch (\Throwable $e) {
+                $connection->rollBack();
+            }
         } while ($res > 0);
+
+        $connection->setTransactionIsolation($oldTransactionIsolation);
 
         return $updatedRows;
     }
