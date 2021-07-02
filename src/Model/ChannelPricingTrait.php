@@ -82,6 +82,10 @@ trait ChannelPricingTrait
     public function setManuallyDiscounted(bool $manuallyDiscounted): void
     {
         $this->manuallyDiscounted = $manuallyDiscounted;
+
+        // when a user is manually changing the prices, we don't want this channel pricing to be part of any bulk updates
+        $this->bulkIdentifier = null;
+        $this->multiplier = 1;
     }
 
     public function getMultiplier(): float

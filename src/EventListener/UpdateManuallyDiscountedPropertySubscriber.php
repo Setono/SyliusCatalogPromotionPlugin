@@ -47,7 +47,6 @@ final class UpdateManuallyDiscountedPropertySubscriber implements EventSubscribe
             return;
         }
 
-        $channelPricing->resetBulkIdentifier();
         $channelPricing->setManuallyDiscounted(
             $channelPricing->hasDiscount()
         );
