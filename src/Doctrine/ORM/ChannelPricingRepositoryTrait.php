@@ -44,6 +44,7 @@ trait ChannelPricingRepositoryTrait
                     ->set('o.multiplier', 1)
                     ->set('o.updatedAt', ':updatedAt')
                     ->set('o.bulkIdentifier', ':bulkIdentifier')
+                    ->set('o.appliedPromotions', '')
                     ->andWhere('o.id IN (:ids)')
                     ->setParameter('updatedAt', $dateTime)
                     ->setParameter('bulkIdentifier', $bulkIdentifier)
