@@ -26,7 +26,6 @@ trait ChannelPricingRepositoryTrait
         $connection->setTransactionIsolation(TransactionIsolationLevel::READ_COMMITTED);
 
         do {
-            $res = 0;
             $connection->beginTransaction();
 
             try {
@@ -59,6 +58,8 @@ trait ChannelPricingRepositoryTrait
                 $updatedRows += $res;
             } catch (\Throwable $e) {
                 $connection->rollBack();
+
+                throw $e;
             }
         } while ($res > 0);
 
