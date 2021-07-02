@@ -15,6 +15,7 @@ trait ChannelPricingRepositoryTrait
 {
     use HasAnyBeenUpdatedSinceTrait;
 
+    // todo I am pretty sure we need the bulk identifier in here
     public function resetMultiplier(DateTimeInterface $dateTime): int
     {
         \assert($this instanceof EntityRepository);
