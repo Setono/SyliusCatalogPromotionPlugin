@@ -118,7 +118,7 @@ final class ProcessPromotionsCommand extends Command
 
         $bulkIdentifier = uniqid('bulk-', true);
 
-        $this->channelPricingRepository->resetMultiplier($startTime);
+        $this->jobManager->advance($job, $this->channelPricingRepository->resetMultiplier($startTime));
 
         foreach ($promotions as $promotion) {
             $qb = $this->productVariantRepository->createQueryBuilder('o');
@@ -155,7 +155,7 @@ final class ProcessPromotionsCommand extends Command
                 /** @var array<array-key, int> $productVariantIds */
                 $productVariantIds = $qb->getQuery()->getResult();
 
-                $this->channelPricingRepository->updateMultiplier(
+                $updatedRows = $this->channelPricingRepository->updateMultiplier(
                     $promotion->getMultiplier(),
                     $productVariantIds,
                     $promotion->getChannelCodes(),
@@ -167,11 +167,11 @@ final class ProcessPromotionsCommand extends Command
 
                 ++$i;
 
-                $this->jobManager->advance($job, $bulkSize);
+                $this->jobManager->advance($job, $updatedRows);
             } while (count($productVariantIds) !== 0);
         }
 
-        $this->channelPricingRepository->updatePrices($bulkIdentifier);
+        $this->jobManager->advance($job, $this->channelPricingRepository->updatePrices($bulkIdentifier));
 
         $job->setMetadataEntry('promotions', $promotionIds);
         $this->jobManager->finish($job);
