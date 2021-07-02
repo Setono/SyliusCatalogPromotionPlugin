@@ -118,7 +118,7 @@ final class ProcessPromotionsCommand extends Command
 
         $bulkIdentifier = uniqid('bulk-', true);
 
-        $this->jobManager->advance($job, $this->channelPricingRepository->resetMultiplier($startTime));
+        $this->jobManager->advance($job, $this->channelPricingRepository->resetMultiplier($startTime, $bulkIdentifier));
 
         foreach ($promotions as $promotion) {
             $qb = $this->productVariantRepository->createQueryBuilder('o');

@@ -13,7 +13,7 @@ interface ChannelPricingRepositoryInterface extends HasAnyBeenUpdatedSinceReposi
      *
      * @return int the number of updated rows in total
      */
-    public function resetMultiplier(DateTimeInterface $dateTime): int;
+    public function resetMultiplier(DateTimeInterface $dateTime, string $bulkIdentifier): int;
 
     /**
      * @param bool $exclusive If true this method will overwrite the multiplier instead of multiplying it
