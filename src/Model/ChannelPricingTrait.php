@@ -31,7 +31,7 @@ trait ChannelPricingTrait
     protected ?string $bulkIdentifier;
 
     /**
-     * @ORM\Column(type="simple_array")
+     * @ORM\Column(type="simple_array", nullable=true)
      *
      * @var array<array-key, string>
      */
