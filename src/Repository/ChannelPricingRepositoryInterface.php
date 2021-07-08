@@ -10,15 +10,11 @@ interface ChannelPricingRepositoryInterface extends HasAnyBeenUpdatedSinceReposi
 {
     /**
      * This resets the multiplier on all channel pricings
-     *
-     * @return int the number of updated rows in total
      */
-    public function resetMultiplier(DateTimeInterface $dateTime, string $bulkIdentifier): int;
+    public function resetMultiplier(DateTimeInterface $dateTime, string $bulkIdentifier): void;
 
     /**
      * @param bool $exclusive If true this method will overwrite the multiplier instead of multiplying it
-     *
-     * @return int the number of updated rows in total
      */
     public function updateMultiplier(
         string $promotionCode,
@@ -29,12 +25,10 @@ interface ChannelPricingRepositoryInterface extends HasAnyBeenUpdatedSinceReposi
         string $bulkIdentifier,
         bool $exclusive = false,
         bool $manuallyDiscountedProductsExcluded = true
-    ): int;
+    ): void;
 
     /**
      * This method will update ALL channel prices in the given bulk
-     *
-     * @return int the number of updated rows in total
      */
-    public function updatePrices(string $bulkIdentifier): int;
+    public function updatePrices(string $bulkIdentifier): void;
 }

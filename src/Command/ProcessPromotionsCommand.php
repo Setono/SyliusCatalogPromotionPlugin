@@ -49,6 +49,11 @@ final class ProcessPromotionsCommand extends Command
 
     private ServiceRegistryInterface $ruleRegistry;
 
+    private int $jobTtl;
+
+    /**
+     * @param int $jobTtl the ttl we set for the job (in seconds)
+     */
     public function __construct(
         JobRepositoryInterface $jobRepository,
         JobFactoryInterface $jobFactory,
@@ -57,7 +62,8 @@ final class ProcessPromotionsCommand extends Command
         ProductRepositoryInterface $productRepository,
         ProductVariantRepositoryInterface $productVariantRepository,
         PromotionRepositoryInterface $promotionRepository,
-        ServiceRegistryInterface $ruleRegistry
+        ServiceRegistryInterface $ruleRegistry,
+        int $jobTtl
     ) {
         parent::__construct();
 
@@ -69,6 +75,7 @@ final class ProcessPromotionsCommand extends Command
         $this->productVariantRepository = $productVariantRepository;
         $this->promotionRepository = $promotionRepository;
         $this->ruleRegistry = $ruleRegistry;
+        $this->jobTtl = $jobTtl;
     }
 
     protected function configure(): void
@@ -110,15 +117,17 @@ final class ProcessPromotionsCommand extends Command
         $job->setExclusive(true);
         $job->setType(self::JOB_TYPE);
         $job->setName('Sylius Catalog Promotion plugin: Process promotions');
+        $job->setTtl($this->jobTtl);
 
-        $this->jobManager->start($job);
+        $this->jobManager->start($job, 3);
 
         $startTime = $job->getStartedAt();
         Assert::notNull($startTime);
 
         $bulkIdentifier = uniqid('bulk-', true);
 
-        $this->jobManager->advance($job, $this->channelPricingRepository->resetMultiplier($startTime, $bulkIdentifier));
+        $this->channelPricingRepository->resetMultiplier($startTime, $bulkIdentifier);
+        $this->jobManager->advance($job);
 
         foreach ($promotions as $promotion) {
             $qb = $this->productVariantRepository->createQueryBuilder('o');
@@ -155,7 +164,7 @@ final class ProcessPromotionsCommand extends Command
                 /** @var array<array-key, int> $productVariantIds */
                 $productVariantIds = $qb->getQuery()->getResult();
 
-                $updatedRows = $this->channelPricingRepository->updateMultiplier(
+                $this->channelPricingRepository->updateMultiplier(
                     (string) $promotion->getCode(),
                     $promotion->getMultiplier(),
                     $productVariantIds,
@@ -167,12 +176,14 @@ final class ProcessPromotionsCommand extends Command
                 );
 
                 ++$i;
-
-                $this->jobManager->advance($job, $updatedRows);
             } while (count($productVariantIds) !== 0);
         }
 
-        $this->jobManager->advance($job, $this->channelPricingRepository->updatePrices($bulkIdentifier));
+        $this->jobManager->advance($job);
+
+        $this->channelPricingRepository->updatePrices($bulkIdentifier);
+
+        $this->jobManager->advance($job);
 
         $job->setMetadataEntry('promotions', $promotionIds);
         $this->jobManager->finish($job);
