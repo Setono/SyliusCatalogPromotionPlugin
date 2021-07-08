@@ -2,6 +2,10 @@
 <container xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xmlns="http://symfony.com/schema/dic/services"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <parameters>
+        <!-- 30 minutes -->
+        <parameter key="setono_sylius_catalog_promotion.command.process_promotions.job.ttl">1800</parameter>
+    </parameters>
     <services>
         <service id="setono_sylius_catalog_promotion.command.process_promotions"
                  class="Setono\SyliusCatalogPromotionPlugin\Command\ProcessPromotionsCommand">
@@ -13,6 +17,7 @@
             <argument type="service" id="sylius.repository.product_variant"/>
             <argument type="service" id="setono_sylius_catalog_promotion.repository.promotion"/>
             <argument type="service" id="setono_sylius_catalog_promotion.registry.rule"/>
+            <argument>%setono_sylius_catalog_promotion.command.process_promotions.job.ttl%</argument>
 
             <tag name="console.command"/>
         </service>
