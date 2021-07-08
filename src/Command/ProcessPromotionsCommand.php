@@ -118,6 +118,7 @@ final class ProcessPromotionsCommand extends Command
         $job->setType(self::JOB_TYPE);
         $job->setName('Sylius Catalog Promotion plugin: Process promotions');
         $job->setTtl($this->jobTtl);
+        $job->setMetadataEntry('promotions', $promotionIds);
 
         $this->jobManager->start($job, 3);
 
@@ -184,8 +185,6 @@ final class ProcessPromotionsCommand extends Command
         $this->channelPricingRepository->updatePrices($bulkIdentifier);
 
         $this->jobManager->advance($job);
-
-        $job->setMetadataEntry('promotions', $promotionIds);
         $this->jobManager->finish($job);
 
         return 0;
