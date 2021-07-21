@@ -25,6 +25,7 @@ composer require setono/sylius-catalog-promotion-plugin
 
 return [
     // ...
+    Setono\JobStatusBundle\SetonoJobStatusBundle::class => ['all' => true],
     Setono\SyliusCatalogPromotionPlugin\SetonoSyliusCatalogPromotionPlugin::class => ['all' => true],
     Sylius\Bundle\GridBundle\SyliusGridBundle::class => ['all' => true],
     // ...
