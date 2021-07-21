@@ -18,7 +18,6 @@
         "doctrine/event-manager": "^1.1",
         "doctrine/orm": "^2.7",
         "fakerphp/faker": "^1.9",
-        "fzaninotto/faker": "^1.10",
         "knplabs/knp-menu": "^3.2",
         "setono/job-status-bundle": "^0.2.1",
         "sylius/registry": "^1.6",
