@@ -17,7 +17,7 @@
         "doctrine/dbal": "^2.13",
         "doctrine/event-manager": "^1.1",
         "doctrine/orm": "^2.7",
-        "fzaninotto/faker": "~1.9",
+        "fzaninotto/faker": "^1.10",
         "knplabs/knp-menu": "^3.2",
         "setono/job-status-bundle": "^0.2.1",
         "sylius/registry": "^1.6",
