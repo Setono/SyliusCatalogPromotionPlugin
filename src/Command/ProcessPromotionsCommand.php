@@ -127,6 +127,8 @@ final class ProcessPromotionsCommand extends Command
 
         $bulkIdentifier = uniqid('bulk-', true);
 
+        $allAffectedProductVariantIds = [];
+
         $this->channelPricingRepository->resetMultiplier($startTime, $bulkIdentifier);
         $this->jobManager->advance($job);
 
@@ -165,6 +167,8 @@ final class ProcessPromotionsCommand extends Command
                 /** @var array<array-key, int> $productVariantIds */
                 $productVariantIds = $qb->getQuery()->getResult();
 
+                $allAffectedProductVariantIds = array_merge($allAffectedProductVariantIds, $productVariantIds);
+
                 $this->channelPricingRepository->updateMultiplier(
                     (string) $promotion->getCode(),
                     $promotion->getMultiplier(),
@@ -179,6 +183,8 @@ final class ProcessPromotionsCommand extends Command
                 ++$i;
             } while (count($productVariantIds) !== 0);
         }
+
+        $job->setMetadataEntry('productVariantIds', array_unique(array_column($allAffectedProductVariantIds, 'id')));
 
         $this->jobManager->advance($job);
 
