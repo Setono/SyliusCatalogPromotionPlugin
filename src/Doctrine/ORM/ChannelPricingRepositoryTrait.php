@@ -102,10 +102,15 @@ trait ChannelPricingRepositoryTrait
                 'channelPricing.bulkIdentifier is null',
                 'channelPricing.bulkIdentifier = :bulkIdentifier',
             ))
-            // here are two more safety checks. If the promotion code is already applied,
+            // here is another safety check. If the promotion code is already applied,
             // do not select this pricing for a discount
-            ->andWhere('channelPricing.appliedPromotions NOT LIKE :promotionEnding')
-            ->andWhere('channelPricing.appliedPromotions NOT LIKE :promotionMiddle')
+            ->andWhere($qb->expr()->orX(
+                'channelPricing.appliedPromotions IS NULL',
+                $qb->expr()->andX(
+                    'channelPricing.appliedPromotions NOT LIKE :promotionEnding',
+                    'channelPricing.appliedPromotions NOT LIKE :promotionMiddle',
+                )
+            ))
             ->set('channelPricing.updatedAt', ':date')
             ->set('channelPricing.bulkIdentifier', ':bulkIdentifier')
             ->set('channelPricing.appliedPromotions', "CONCAT(COALESCE(channelPricing.appliedPromotions, ''), CONCAT(',', :promotion))")
