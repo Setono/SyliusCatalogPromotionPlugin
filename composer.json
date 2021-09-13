@@ -17,7 +17,6 @@
         "doctrine/dbal": "^2.13",
         "doctrine/event-manager": "^1.1",
         "doctrine/orm": "^2.7",
-        "fzaninotto/faker": "^1.9",
         "knplabs/knp-menu": "^3.2",
         "setono/job-status-bundle": "^0.2.1",
         "sylius/registry": "^1.6",
@@ -32,6 +31,7 @@
         "webmozart/assert": "^1.10"
     },
     "require-dev": {
+        "fzaninotto/faker": "^1.9",
         "phpspec/phpspec": "^7.1",
         "phpunit/phpunit": "^9.5",
         "psalm/plugin-phpunit": "^0.16.1",
