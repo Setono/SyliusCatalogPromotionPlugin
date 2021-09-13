@@ -14,8 +14,11 @@ use Webmozart\Assert\Assert;
 class UpdatePage extends BaseUpdatePage implements UpdatePageInterface
 {
     use NamesIt;
+
     use SpecifiesItsDiscount;
+
     use ChecksCodeImmutability;
+
     use PageDefinedElements;
 
     public function setPriority(?string $priority): void
