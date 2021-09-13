@@ -27,9 +27,21 @@ trait ChannelPricingRepositoryTrait
             $connection->beginTransaction();
 
             try {
-                $ids = $this->createQueryBuilder('o')
+                $qb = $this->createQueryBuilder('o');
+                $ids = $qb
                     ->select('o.id')
-                    ->andWhere('o.multiplier != 1')
+                    ->andWhere('o.bulkIdentifier != :bulkIdentifier') // this ensures that the loop we are in doesn't turn into an infinite loop
+                    ->andWhere(
+                        $qb->expr()->orX(
+                            // if the multiplier is different from 1 we know that it was discounted before
+                            'o.multiplier != 1',
+
+                            // if the previous job timed out, the bulk identifier will be different from the
+                            // bulk identifier for this run. This will ensure that they will also be handled in this run
+                            'o.bulkIdentifier is not null',
+                        )
+                    )
+                    ->setParameter('bulkIdentifier', $bulkIdentifier)
                     ->setMaxResults(100)
                     ->getQuery()
                     ->getResult()
@@ -83,6 +95,17 @@ trait ChannelPricingRepositoryTrait
         $qb->update()
             ->andWhere('channelPricing.productVariant IN (:productVariantIds)')
             ->andWhere('channelPricing.channelCode IN (:channelCodes)')
+            // this 'or' is a safety check. If the previous run timed out, but managed to update some multipliers
+            // this will end up in discounts being compounded. With this check we ensure we only operate on pricings
+            // from this run or pricings that haven't been touched
+            ->andWhere($qb->expr()->orX(
+                'channelPricing.bulkIdentifier is null',
+                'channelPricing.bulkIdentifier = :bulkIdentifier',
+            ))
+            // here are two more safety checks. If the promotion code is already applied,
+            // do not select this pricing for a discount
+            ->andWhere('channelPricing.appliedPromotions NOT LIKE :promotionEnding')
+            ->andWhere('channelPricing.appliedPromotions NOT LIKE :promotionMiddle')
             ->set('channelPricing.updatedAt', ':date')
             ->set('channelPricing.bulkIdentifier', ':bulkIdentifier')
             ->set('channelPricing.appliedPromotions', "CONCAT(COALESCE(channelPricing.appliedPromotions, ''), CONCAT(',', :promotion))")
@@ -91,6 +114,12 @@ trait ChannelPricingRepositoryTrait
             ->setParameter('date', $dateTime)
             ->setParameter('bulkIdentifier', $bulkIdentifier)
             ->setParameter('promotion', $promotionCode)
+            // if you are checking for the promo code 'all_10_percent' there are two options for the applied_promotions column:
+            // 1. ,single_tshirt,all_10_percent
+            // 2. ,all_10_percent,single_tshirt
+            // and these two wildcards selections will handle those two options
+            ->setParameter('promotionEnding', '%,' . $promotionCode)
+            ->setParameter('promotionMiddle', '%,' . $promotionCode . ',%')
         ;
 
         if ($manuallyDiscountedProductsExcluded) {
