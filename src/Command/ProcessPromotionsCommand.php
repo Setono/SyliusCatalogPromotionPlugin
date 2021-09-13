@@ -7,6 +7,7 @@ namespace Setono\SyliusCatalogPromotionPlugin\Command;
 use DateTimeInterface;
 use Doctrine\ORM\EntityRepository;
 use Setono\JobStatusBundle\Entity\JobInterface;
+use Setono\JobStatusBundle\Entity\Spec\LastJobWithType;
 use Setono\JobStatusBundle\Factory\JobFactoryInterface;
 use Setono\JobStatusBundle\Manager\JobManagerInterface;
 use Setono\JobStatusBundle\Repository\JobRepositoryInterface;
@@ -90,7 +91,10 @@ final class ProcessPromotionsCommand extends Command
     {
         Assert::isInstanceOf($this->productVariantRepository, EntityRepository::class);
 
-        $lastJob = $this->jobRepository->findLastJobByType(self::JOB_TYPE);
+        /** @var JobInterface|mixed|null $lastJob */
+        $lastJob = $this->jobRepository->matchOneOrNullResult(new LastJobWithType(self::JOB_TYPE));
+        Assert::nullOrIsInstanceOf($lastJob, JobInterface::class);
+
         if (null !== $lastJob && $lastJob->isRunning()) {
             $output->writeln('The job is already running');
 
