@@ -33,12 +33,15 @@ trait ChannelPricingRepositoryTrait
                     ->andWhere('o.bulkIdentifier != :bulkIdentifier') // this ensures that the loop we are in doesn't turn into an infinite loop
                     ->andWhere(
                         $qb->expr()->orX(
-                            // if the multiplier is different from 1 we know that it was discounted before
+                            // if the multiplier is different from 1 we know that it was discounted before, and we reset it
                             'o.multiplier != 1',
 
                             // if the previous job timed out, the bulk identifier will be different from the
                             // bulk identifier for this run. This will ensure that they will also be handled in this run
                             'o.bulkIdentifier is not null',
+
+                            // if the applied promotions is not null we know that it was discounted before, and we reset it
+                            'o.appliedPromotions is not null'
                         )
                     )
                     ->setParameter('bulkIdentifier', $bulkIdentifier)
