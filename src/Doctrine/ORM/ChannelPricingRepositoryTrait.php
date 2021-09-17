@@ -30,7 +30,13 @@ trait ChannelPricingRepositoryTrait
                 $qb = $this->createQueryBuilder('o');
                 $ids = $qb
                     ->select('o.id')
-                    ->andWhere('o.bulkIdentifier != :bulkIdentifier') // this ensures that the loop we are in doesn't turn into an infinite loop
+                    // this ensures that the loop we are in doesn't turn into an infinite loop
+                    ->andWhere(
+                        $qb->expr()->orX(
+                            'o.bulkIdentifier != :bulkIdentifier',
+                            'o.bulkIdentifier is null'
+                        )
+                    )
                     ->andWhere(
                         $qb->expr()->orX(
                             // if the multiplier is different from 1 we know that it was discounted before, and we reset it
@@ -207,6 +213,7 @@ trait ChannelPricingRepositoryTrait
                     ->createQueryBuilder('o')
                     ->update()
                     ->set('o.bulkIdentifier', ':null')
+                    ->set('o.appliedPromotions', ':null')
                     ->andWhere('o.id IN (:ids)')
                     ->setParameter('null', null)
                     ->setParameter('ids', $ids)
