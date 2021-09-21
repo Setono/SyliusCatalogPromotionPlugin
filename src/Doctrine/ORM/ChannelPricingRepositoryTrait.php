@@ -213,7 +213,6 @@ trait ChannelPricingRepositoryTrait
                     ->createQueryBuilder('o')
                     ->update()
                     ->set('o.bulkIdentifier', ':null')
-                    ->set('o.appliedPromotions', ':null')
                     ->andWhere('o.id IN (:ids)')
                     ->setParameter('null', null)
                     ->setParameter('ids', $ids)
