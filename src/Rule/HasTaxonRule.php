@@ -49,6 +49,7 @@ final class HasTaxonRule extends Rule
             sprintf('WHERE %s.taxon IN (:%s)', $productTaxonAlias, $parameter)
         );
 
+        /** @psalm-suppress PossiblyNullArgument */
         $queryBuilder
             ->andWhere(sprintf('%s.id IN (%s)', $rootAlias, $subQueryBuilder->getDQL()))
             ->setParameter($parameter, $taxons)

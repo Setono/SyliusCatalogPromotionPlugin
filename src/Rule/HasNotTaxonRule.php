@@ -49,6 +49,7 @@ final class HasNotTaxonRule extends Rule
             sprintf('WHERE %s.taxon IN (:%s)', $productTaxonAlias, $parameter)
         );
 
+        /** @psalm-suppress PossiblyNullArgument */
         $queryBuilder
             ->andWhere(sprintf('%s.id NOT IN (%s)', $rootAlias, $subQueryBuilder->getDQL()))
             ->setParameter($parameter, $taxons)
