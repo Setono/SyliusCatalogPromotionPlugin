@@ -2,17 +2,58 @@ sylius_fixtures:
     suites:
         default:
             fixtures:
+
+                catalog_promotion_taxons:
+                    name: taxon
+                    options:
+                        custom:
+                            taxon_santa_caps:
+                                code: "santa_caps"
+                                slug: "santa-caps"
+                                children:
+                                    -   code: "pompon_santa_caps"
+                                        slug: "santa-caps/pompon"
+                                        name: "Santa caps with pompon"
+
                 product:
                     options:
                         custom:
+                            product_cap_with_pompon:
+                                code: "pompon_cap"
+                                name: "Cap with pompon"
+                                main_taxon: "caps"
+                                taxons:
+                                    - 'caps'
+                                    - 'caps_with_pompons'
+                                images:
+                                    - { path: '@SyliusCoreBundle/Resources/fixtures/caps/cap_01.jpg', type: 'main' }
+                                channels:
+                                    - "FASHION_WEB"
+
                             product_santa_cap:
-                                code: "santa-cap"
+                                code: "santa_cap"
+                                slug: "santa-cap"
                                 name: "Santa cap"
                                 main_taxon: "caps"
                                 taxons:
                                     - 'caps'
+                                    - 'santa_caps'
                                 images:
                                     - { path: '@SyliusCoreBundle/Resources/fixtures/caps/cap_03.jpg', type: 'main' }
+                                channels:
+                                    - "FASHION_WEB"
+
+                            product_santa_cap_with_pompon:
+                                code: "pompon_santa_cap"
+                                slug: "pompon-santa-cap"
+                                name: "Santa cap with pompon"
+                                main_taxon: "caps"
+                                taxons:
+                                    - 'caps'
+                                    - 'santa_caps'
+                                    - 'pompon_santa_caps'
+                                images:
+                                    - { path: '@SyliusCoreBundle/Resources/fixtures/caps/cap_01.jpg', type: 'main' }
                                 channels:
                                     - "FASHION_WEB"
 
@@ -22,12 +63,37 @@ sylius_fixtures:
                         random: 10
                         prototype:
                             rules:
-                              - type: "has_taxon"
-                                configuration:
-                                    taxons:
-                                        - "jeans"
+                                - type: "has_taxon"
+                                  configuration:
+                                      taxons:
+                                          - "jeans"
 
-                catalog_promotion_custom:
+                catalog_promotion_tshirts:
+                    name: catalog_promotion
+                    options:
+                        custom:
+                            thirts:
+                                code: "thirts_50_off"
+                                name: "-90% for tshirts (except mens)"
+                                priority: 1000
+                                exclusive: true
+                                starts_at: "now"
+                                ends_at: "+14 day"
+                                enabled: true
+                                discount: 90.00
+                                rules:
+                                    - type: "has_taxon"
+                                      configuration:
+                                          taxons:
+                                              - "t_shirts"
+                                    - type: "has_not_taxon"
+                                      configuration:
+                                          taxons:
+                                              - "mens_t_shirts"
+                                channels:
+                                    - "FASHION_WEB"
+
+                catalog_promotion_caps:
                     name: catalog_promotion
                     options:
                         custom:
@@ -39,10 +105,10 @@ sylius_fixtures:
                                 enabled: true
                                 discount: 20.00
                                 rules:
-                                  - type: "has_taxon"
-                                    configuration:
-                                        taxons:
-                                            - "caps"
+                                    - type: "has_taxon"
+                                      configuration:
+                                          taxons:
+                                              - "caps"
                             accidentally_disabled:
                                 code: "accidentally_disabled"
                                 name: "Accidentally disabled catalog promotion"
@@ -51,10 +117,10 @@ sylius_fixtures:
                                 enabled: false
                                 discount: 10.00
                                 rules:
-                                  - type: "has_taxon"
-                                    configuration:
-                                        taxons:
-                                            - "caps"
+                                    - type: "has_taxon"
+                                      configuration:
+                                          taxons:
+                                              - "caps"
 
                             ny_caps_50_off:
                                 code: "ny_caps_50_off"
@@ -67,12 +133,16 @@ sylius_fixtures:
                                 enabled: true
                                 discount: 50.00
                                 rules:
-                                  - type: "has_taxon"
-                                    configuration:
-                                        taxons:
-                                            - "caps"
+                                    - type: "has_taxon"
+                                      configuration:
+                                          taxons:
+                                              - "caps"
+                                    - type: "has_not_taxon"
+                                      configuration:
+                                          taxons:
+                                              - "pompon_santa_caps"
                                 channels:
-                                  - "FASHION_WEB"
+                                    - "FASHION_WEB"
 
                             ny_santa_cap_75_off:
                                 code: "ny_santa_cap_75_off"
@@ -85,11 +155,11 @@ sylius_fixtures:
                                 enabled: true
                                 discount: 75.00
                                 rules:
-                                  - type: "contains_product"
-                                    configuration:
-                                        product: "santa-cap"
+                                    - type: "contains_product"
+                                      configuration:
+                                          product: "santa_cap"
                                 channels:
-                                  - "FASHION_WEB"
+                                    - "FASHION_WEB"
 
                             bf_santa_cap_75_off:
                                 code: "bf_santa_cap_75_off"
@@ -102,9 +172,9 @@ sylius_fixtures:
                                 enabled: true
                                 discount: 75.00
                                 rules:
-                                  - type: "contains_products"
-                                    configuration:
-                                        products:
-                                            - "santa-cap"
+                                    - type: "contains_products"
+                                      configuration:
+                                          products:
+                                              - "santa_cap"
                                 channels:
-                                  - "FASHION_WEB"
+                                    - "FASHION_WEB"
