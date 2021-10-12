@@ -18,15 +18,12 @@ final class HasTaxonRule extends Rule
         Assert::isArray($value);
 
         $rootAlias = $this->getRootAlias($queryBuilder);
-        $productAlias = self::generateAlias('product');
-        $productTaxonsAlias = self::generateAlias('product_taxons');
-        $taxonAlias = self::generateAlias('taxon');
+        $productAlias = $this->join($queryBuilder, sprintf('%s.product', $rootAlias), 'product');
+        $productTaxonsAlias = $this->join($queryBuilder, sprintf('%s.productTaxons', $productAlias), 'product_taxons');
+        $taxonAlias = $this->join($queryBuilder, sprintf('%s.taxon', $productTaxonsAlias), 'taxon');
         $parameter = self::generateParameter('taxon_codes');
 
         $queryBuilder
-            ->join(sprintf('%s.product', $rootAlias), $productAlias)
-            ->join(sprintf('%s.productTaxons', $productAlias), $productTaxonsAlias)
-            ->join(sprintf('%s.taxon', $productTaxonsAlias), $taxonAlias)
             ->andWhere(sprintf(
                 '%s.code IN (:%s)',
                 $taxonAlias,

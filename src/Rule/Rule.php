@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Setono\SyliusCatalogPromotionPlugin\Rule;
 
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use InvalidArgumentException;
 use RuntimeException;
@@ -28,6 +29,30 @@ abstract class Rule implements RuleInterface
         Assert::string($rootAlias);
 
         return $rootAlias;
+    }
+
+    /**
+     * @return string Generated or existing alias
+     */
+    protected function join(QueryBuilder $queryBuilder, string $join, string $aliasPrefix): string
+    {
+        /** @psalm-var array<array-key, array<Join>> $existingJoins */
+        $existingJoins = $queryBuilder->getDQLPart('join');
+
+        $rootAlias = $this->getRootAlias($queryBuilder);
+        Assert::keyExists($existingJoins, $rootAlias);
+
+        /** @var Join $existingJoin */
+        foreach ($existingJoins[$rootAlias] as $existingJoin) {
+            if ($existingJoin->getJoin() === $join) {
+                return $existingJoin->getAlias();
+            }
+        }
+
+        $alias = self::generateAlias($aliasPrefix);
+        $queryBuilder->join($join, $alias);
+
+        return $alias;
     }
 
     /**
