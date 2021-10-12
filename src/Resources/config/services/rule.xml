@@ -6,6 +6,7 @@
     <services>
         <service id="setono_sylius_catalog_promotion.rule.has_taxon"
                  class="Setono\SyliusCatalogPromotionPlugin\Rule\HasTaxonRule">
+            <argument type="service" id="sylius.repository.taxon" />
             <tag name="setono_sylius_catalog_promotion.rule"
                  type="has_taxon"
                  label="setono_sylius_catalog_promotion.form.promotion_rule.has_taxon"
@@ -14,6 +15,7 @@
 
         <service id="setono_sylius_catalog_promotion.rule.has_not_taxon"
                  class="Setono\SyliusCatalogPromotionPlugin\Rule\HasNotTaxonRule">
+            <argument type="service" id="sylius.repository.taxon" />
             <tag name="setono_sylius_catalog_promotion.rule"
                  type="has_not_taxon"
                  label="setono_sylius_catalog_promotion.form.promotion_rule.has_not_taxon"
