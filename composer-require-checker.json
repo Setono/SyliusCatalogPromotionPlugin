@@ -32,7 +32,10 @@
         "Sylius\\Component\\Core\\Formatter\\StringInflector",
         "Sylius\\Component\\Core\\Model\\ChannelInterface",
         "Sylius\\Component\\Core\\Model\\ChannelPricingInterface",
+        "Sylius\\Component\\Core\\Model\\ProductTaxon",
+        "Sylius\\Component\\Core\\Model\\ProductVariant",
         "Sylius\\Component\\Core\\Repository\\ProductRepositoryInterface",
-        "Sylius\\Component\\Core\\Repository\\ProductVariantRepositoryInterface"
+        "Sylius\\Component\\Core\\Repository\\ProductVariantRepositoryInterface",
+        "Sylius\\Component\\Taxonomy\\Repository\\TaxonRepositoryInterface"
     ]
 }

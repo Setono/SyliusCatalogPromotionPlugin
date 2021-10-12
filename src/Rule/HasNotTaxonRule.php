@@ -12,9 +12,9 @@ use Sylius\Component\Core\Model\TaxonInterface;
 use Sylius\Component\Taxonomy\Repository\TaxonRepositoryInterface;
 use Webmozart\Assert\Assert;
 
-final class HasTaxonRule extends Rule
+final class HasNotTaxonRule extends Rule
 {
-    public const TYPE = 'has_taxon';
+    public const TYPE = 'has_not_taxon';
 
     private TaxonRepositoryInterface $taxonRepository;
 
@@ -28,11 +28,6 @@ final class HasTaxonRule extends Rule
         $value = self::getConfigurationValue('taxons', $configuration);
         Assert::isArray($value);
 
-        $rootAlias = $this->getRootAlias($queryBuilder);
-        $productVariantAlias = self::generateAlias('pv');
-        $productTaxonAlias = self::generateAlias('pt');
-        $parameter = self::generateParameter('include_taxons');
-
         $taxons = array_map(function (string $taxonCode): TaxonInterface {
             /** @var TaxonInterface|null $taxon */
             $taxon = $this->taxonRepository->findOneBy(['code' => $taxonCode]);
@@ -40,6 +35,11 @@ final class HasTaxonRule extends Rule
 
             return $taxon;
         }, $value);
+
+        $rootAlias = $this->getRootAlias($queryBuilder);
+        $productVariantAlias = self::generateAlias('pv');
+        $productTaxonAlias = self::generateAlias('pt');
+        $parameter = self::generateParameter('exclude_taxons');
 
         $em = $queryBuilder->getEntityManager();
         $subQueryBuilder = $em->createQuery(
@@ -51,7 +51,7 @@ final class HasTaxonRule extends Rule
 
         /** @psalm-suppress PossiblyNullArgument */
         $queryBuilder
-            ->andWhere(sprintf('%s.id IN (%s)', $rootAlias, $subQueryBuilder->getDQL()))
+            ->andWhere(sprintf('%s.id NOT IN (%s)', $rootAlias, $subQueryBuilder->getDQL()))
             ->setParameter($parameter, $taxons)
         ;
     }

@@ -50,6 +50,12 @@
             <tag name="form.type" />
         </service>
 
+        <service id="setono_sylius_catalog_promotion.form.type.promotion_rule.has_not_taxon_configuration"
+                 class="Setono\SyliusCatalogPromotionPlugin\Form\Type\Rule\HasNotTaxonConfigurationType">
+            <argument type="service" id="sylius.form.type.data_transformer.taxons_to_codes" />
+            <tag name="form.type" />
+        </service>
+
         <service id="setono_sylius_catalog_promotion.form.type.promotion_rule.contains_products_configuration"
                  class="Setono\SyliusCatalogPromotionPlugin\Form\Type\Rule\ContainsProductsConfigurationType">
             <argument type="service" id="sylius.form.type.data_transformer.products_to_codes" />
