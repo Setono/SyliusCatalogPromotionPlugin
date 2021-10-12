@@ -12,6 +12,14 @@
                  form-type="Setono\SyliusCatalogPromotionPlugin\Form\Type\Rule\HasTaxonConfigurationType"/>
         </service>
 
+        <service id="setono_sylius_catalog_promotion.rule.has_not_taxon"
+                 class="Setono\SyliusCatalogPromotionPlugin\Rule\HasNotTaxonRule">
+            <tag name="setono_sylius_catalog_promotion.rule"
+                 type="has_not_taxon"
+                 label="setono_sylius_catalog_promotion.form.promotion_rule.has_not_taxon"
+                 form-type="Setono\SyliusCatalogPromotionPlugin\Form\Type\Rule\HasNotTaxonConfigurationType"/>
+        </service>
+
         <service id="setono_sylius_catalog_promotion.rule.contains_product"
                  class="Setono\SyliusCatalogPromotionPlugin\Rule\ContainsProductRule">
             <tag name="setono_sylius_catalog_promotion.rule"

@@ -8,6 +8,7 @@ use InvalidArgumentException;
 use Setono\SyliusCatalogPromotionPlugin\Model\PromotionRuleInterface;
 use Setono\SyliusCatalogPromotionPlugin\Rule\ContainsProductRule;
 use Setono\SyliusCatalogPromotionPlugin\Rule\ContainsProductsRule;
+use Setono\SyliusCatalogPromotionPlugin\Rule\HasNotTaxonRule;
 use Setono\SyliusCatalogPromotionPlugin\Rule\HasTaxonRule;
 use function sprintf;
 use Sylius\Component\Resource\Factory\FactoryInterface;
@@ -43,6 +44,11 @@ final class PromotionRuleFactory implements PromotionRuleFactoryInterface
                 Assert::isArray($configuration['taxons']);
 
                 return $this->createHasTaxon($configuration['taxons']);
+            case HasNotTaxonRule::TYPE:
+                Assert::keyExists($configuration, 'taxons');
+                Assert::isArray($configuration['taxons']);
+
+                return $this->createHasNotTaxon($configuration['taxons']);
             case ContainsProductRule::TYPE:
                 Assert::keyExists($configuration, 'product');
                 Assert::string($configuration['product']);
@@ -71,6 +77,16 @@ final class PromotionRuleFactory implements PromotionRuleFactoryInterface
 
         return $this->createPromotionRule(
             HasTaxonRule::TYPE,
+            ['taxons' => $taxonCodes]
+        );
+    }
+
+    public function createHasNotTaxon(array $taxonCodes): PromotionRuleInterface
+    {
+        Assert::allString($taxonCodes);
+
+        return $this->createPromotionRule(
+            HasNotTaxonRule::TYPE,
             ['taxons' => $taxonCodes]
         );
     }

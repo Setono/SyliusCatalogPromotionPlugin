@@ -35,5 +35,8 @@ setono_sylius_catalog_promotion:
             has_taxon: Product having one of taxons
             has_taxon_configuration:
                 taxons: Taxons
+            has_not_taxon: Product not having any of taxons
+            has_not_taxon_configuration:
+                taxons: Taxons
             taxonomy: Taxonomy
             type: Type
