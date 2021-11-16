@@ -28,7 +28,7 @@ trait ChannelPricingTrait
     protected $multiplier = 1;
 
     /** @ORM\Column(type="string", nullable=true) */
-    protected ?string $bulkIdentifier;
+    protected ?string $bulkIdentifier = null;
 
     /**
      * @ORM\Column(type="simple_array", nullable=true)
