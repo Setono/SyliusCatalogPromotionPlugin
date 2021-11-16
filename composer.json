@@ -78,7 +78,7 @@
         ],
         "analyse": [
             "@ensure-test-container-exists",
-            "psalm"
+            "psalm --threads=8"
         ],
         "assets": [
             "@ensure-assets-installed",
