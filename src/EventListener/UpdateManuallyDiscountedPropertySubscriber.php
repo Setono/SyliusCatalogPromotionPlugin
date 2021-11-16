@@ -40,6 +40,12 @@ final class UpdateManuallyDiscountedPropertySubscriber implements EventSubscribe
             return;
         }
 
+        // here we check if the channel pricing is part of an already applied catalog promotion or
+        // a job is running to add a catalog promotion to this channel pricing
+        if ([] !== $channelPricing->getAppliedPromotions() || null !== $channelPricing->getBulkIdentifier()) {
+            return;
+        }
+
         if ($event instanceof PreUpdateEventArgs
             && !$event->hasChangedField('price')
             && !$event->hasChangedField('originalPrice')
