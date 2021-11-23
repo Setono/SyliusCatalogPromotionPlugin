@@ -20,6 +20,9 @@ trait ChannelPricingTrait
     /** @ORM\Column(type="boolean", options={"default": 0}) */
     protected bool $manuallyDiscounted = false;
 
+    /** @ORM\Column(type="text", nullable=true) */
+    protected ?string $manuallyDiscountedOrigin = null;
+
     /**
      * @ORM\Column(type="decimal", precision=8, scale=4, options={"default": 1})
      *
@@ -93,6 +96,16 @@ trait ChannelPricingTrait
         // when a user is manually changing the prices, we don't want this channel pricing to be part of any bulk updates
         $this->bulkIdentifier = null;
         $this->multiplier = 1;
+    }
+
+    public function getManuallyDiscountedOrigin(): ?string
+    {
+        return $this->manuallyDiscountedOrigin;
+    }
+
+    public function setManuallyDiscountedOrigin(?string $manuallyDiscountedOrigin): void
+    {
+        $this->manuallyDiscountedOrigin = $manuallyDiscountedOrigin;
     }
 
     public function getMultiplier(): float
