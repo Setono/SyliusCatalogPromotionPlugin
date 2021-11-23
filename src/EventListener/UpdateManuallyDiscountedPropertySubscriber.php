@@ -59,6 +59,10 @@ final class UpdateManuallyDiscountedPropertySubscriber implements EventSubscribe
 
     private function setOrigin(ChannelPricingInterface $channelPricing): void
     {
+        if (!$channelPricing->isManuallyDiscounted()) {
+            return;
+        }
+
         $origin = '';
 
         $request = $this->requestStack->getMasterRequest();

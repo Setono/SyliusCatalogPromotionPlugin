@@ -26,7 +26,7 @@ interface ChannelPricingInterface extends BaseChannelPricingInterface, Timestamp
     public function setManuallyDiscounted(bool $manuallyDiscounted): void;
 
     /**
-     * Returns the origin of the setManuallyDiscounted() method call
+     * Returns the origin of the setManuallyDiscounted() method call if isManuallyDiscounted() is true
      */
     public function getManuallyDiscountedOrigin(): ?string;
 
