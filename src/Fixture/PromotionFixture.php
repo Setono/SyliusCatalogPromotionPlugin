@@ -11,7 +11,7 @@ final class PromotionFixture extends AbstractResourceFixture
 {
     public function getName(): string
     {
-        return 'catalog_promotion';
+        return 'bitbag_catalog_promotion';
     }
 
     protected function configureResourceNode(ArrayNodeDefinition $resourceNode): void
