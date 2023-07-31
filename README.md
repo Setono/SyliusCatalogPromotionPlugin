@@ -14,7 +14,7 @@ Plugin for Sylius to define permanent or time-limited promotions for products an
 ### Add plugin to composer.json
 
 ```bash
-composer require setono/sylius-catalog-promotion-plugin
+composer require bitbag/sylius-catalog-promotion-plugin
 ```
 
 ### Register plugin
