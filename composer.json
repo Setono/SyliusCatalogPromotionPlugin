@@ -1,7 +1,8 @@
 {
     "name": "setono/sylius-catalog-promotion-plugin",
-    "type": "sylius-plugin",
     "description": "Catalog promotion plugin for Sylius",
+    "license": "MIT",
+    "type": "sylius-plugin",
     "keywords": [
         "sylius",
         "sylius-plugin",
@@ -9,53 +10,49 @@
         "setono",
         "promotions"
     ],
-    "license": "MIT",
     "require": {
-        "php": ">=7.4",
+        "php": ">=8.1",
         "beberlei/doctrineextensions": "^1.2",
         "doctrine/collections": "^1.6",
         "doctrine/dbal": "^2.13",
         "doctrine/event-manager": "^1.1",
         "doctrine/orm": "^2.7",
         "knplabs/knp-menu": "^3.2",
-        "setono/job-status-bundle": "^0.2.3",
+        "sylius/channel": "^1.0",
+        "sylius/channel-bundle": "^1.0",
+        "sylius/core": "^1.0",
+        "sylius/core-bundle": "^1.0",
+        "sylius/product-bundle": "^1.0",
+        "sylius/promotion": "^1.11",
+        "sylius/promotion-bundle": "^1.0",
         "sylius/registry": "^1.6",
         "sylius/resource-bundle": "^1.6",
-        "symfony/config": "^5.4 || ^6.0",
-        "symfony/console": "^5.4 || ^6.0",
-        "symfony/dependency-injection": "^5.4 || ^6.0",
-        "symfony/form": "^5.4 || ^6.0",
-        "symfony/lock": "^5.4 || ^6.0",
-        "symfony/options-resolver": "^5.4 || ^6.0",
-        "symfony/validator": "^5.4 || ^6.0",
-        "webmozart/assert": "^1.10"
+        "sylius/taxonomy": "^1.0",
+        "sylius/taxonomy-bundle": "^1.0",
+        "sylius/ui-bundle": "^1.0",
+        "symfony/config": "^5.4 || ^6.4",
+        "symfony/console": "^5.4 || ^6.4",
+        "symfony/dependency-injection": "^5.4 || ^6.4",
+        "symfony/form": "^5.4 || ^6.4",
+        "symfony/lock": "^5.4 || ^6.4",
+        "symfony/mailer": "^5.4 || ^6.4",
+        "symfony/options-resolver": "^5.4 || ^6.4",
+        "symfony/validator": "^5.4 || ^6.4",
+        "webmozart/assert": "^1.11"
     },
     "require-dev": {
-        "fzaninotto/faker": "^1.9",
-        "phpspec/phpspec": "^7.1",
+        "fakerphp/faker": "^1.9",
         "phpunit/phpunit": "^9.5",
-        "psalm/plugin-phpunit": "^0.16.1",
-        "psalm/plugin-symfony": "^3.0",
-        "setono/code-quality-pack": "^2.1.2",
+        "psalm/plugin-phpunit": "^0.18.1",
+        "setono/code-quality-pack": "^2.6",
         "setono/sylius-behat-pack": "^0.2.1",
-        "sylius/sylius": "~1.7.0",
-        "symfony/debug-bundle": "^5.4 || ^6.0",
-        "symfony/dotenv": "^5.4 || ^6.0",
-        "symfony/intl": "^5.4 || ^6.0",
-        "symfony/web-profiler-bundle": "^5.4 || ^6.0",
-        "weirdan/doctrine-psalm-plugin": "^1.0"
+        "sylius/sylius": "~1.12.13",
+        "symfony/debug-bundle": "^5.4 || ^6.4",
+        "symfony/dotenv": "^5.4 || ^6.4",
+        "symfony/intl": "^5.4 || ^6.4",
+        "symfony/web-profiler-bundle": "^5.4 || ^6.4"
     },
-    "config": {
-        "sort-packages": true
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "1.0-dev"
-        },
-        "unused": [
-            "beberlei/doctrineextensions"
-        ]
-    },
+    "prefer-stable": true,
     "autoload": {
         "psr-4": {
             "Setono\\SyliusCatalogPromotionPlugin\\": "src/"
@@ -69,16 +66,25 @@
             "tests/Application/Kernel.php"
         ]
     },
-    "prefer-stable": true,
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": false,
+            "ergebnis/composer-normalize": true,
+            "symfony/thanks": false
+        },
+        "sort-packages": true
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    },
     "scripts": {
         "all": [
             "@checks",
             "@tests"
         ],
-        "analyse": [
-            "@ensure-test-container-exists",
-            "psalm --threads=8"
-        ],
+        "analyse": "psalm",
         "assets": [
             "@ensure-assets-installed",
             "@ensure-assets-compiled"
@@ -102,7 +108,6 @@
         "ensure-assets-installed": "[[ -d tests/Application/node_modules ]] || (cd tests/Application && yarn install)",
         "ensure-database-created": "(cd tests/Application && bin/console doctrine:database:create --if-not-exists)",
         "ensure-schema-updated": "(cd tests/Application && bin/console doctrine:schema:update --force)",
-        "ensure-test-container-exists": "[[ -f tests/Application/var/cache/test/ApplicationTests_Setono_SyliusCatalogPromotionPlugin_Application_KernelTestDebugContainer.xml ]] || tests/Application/bin/console cache:warmup --env=test",
         "ensure-vendors-installed": "[[ -f vendor/autoload.php ]] || COMPOSER_MEMORY_LIMIT=-1 composer install",
         "fix-style": "ecs check --fix",
         "fixtures": [

@@ -7,7 +7,6 @@ namespace Tests\Setono\SyliusCatalogPromotionPlugin\Behat\Context\Cli;
 use Behat\Behat\Context\Context;
 use Setono\SyliusCatalogPromotionPlugin\Command\ProcessPromotionsCommand;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
-use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Webmozart\Assert\Assert;

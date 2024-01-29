@@ -6,9 +6,8 @@ namespace Tests\Setono\SyliusCatalogPromotionPlugin\Behat\Context\Setup;
 
 use Behat\Behat\Context\Context;
 use DateTime;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Setono\SyliusCatalogPromotionPlugin\Factory\PromotionRuleFactoryInterface;
-use Setono\SyliusCatalogPromotionPlugin\Model\Promotion;
 use Setono\SyliusCatalogPromotionPlugin\Model\PromotionInterface;
 use Setono\SyliusCatalogPromotionPlugin\Model\PromotionRuleInterface;
 use Setono\SyliusCatalogPromotionPlugin\Repository\PromotionRepositoryInterface;
@@ -41,7 +40,7 @@ final class CatalogPromotionContext implements Context
         PromotionRuleFactoryInterface $promotionRuleFactory,
         TestPromotionFactoryInterface $testDiscountFactory,
         PromotionRepositoryInterface $promotionRepository,
-        ObjectManager $objectManager
+        ObjectManager $objectManager,
     ) {
         $this->sharedStorage = $sharedStorage;
         $this->promotionRuleFactory = $promotionRuleFactory;
@@ -203,7 +202,7 @@ final class CatalogPromotionContext implements Context
     public function itGivesPercentageDiscount(PromotionInterface $promotion, float $percentage): void
     {
         $this->persistDiscount(
-            $this->setPercentageDiscount($promotion, $percentage)
+            $this->setPercentageDiscount($promotion, $percentage),
         );
     }
 
@@ -213,14 +212,14 @@ final class CatalogPromotionContext implements Context
     public function itGivesPercentageOffEveryProductClassifiedAs(
         PromotionInterface $promotion,
         float $percentage,
-        TaxonInterface $taxon
+        TaxonInterface $taxon,
     ): void {
         $this->createPercentageDiscount(
             $promotion,
             $percentage,
             $this->promotionRuleFactory->createHasTaxon([
                 $taxon->getCode(),
-            ])
+            ]),
         );
     }
 
@@ -230,13 +229,13 @@ final class CatalogPromotionContext implements Context
     public function itGivesOffOnEveryProductClassifiedAs(
         PromotionInterface $promotion,
         float $percentage,
-        array $promotionTaxons
+        array $promotionTaxons,
     ): void {
         $promotionTaxonsCodes = [$promotionTaxons[0]->getCode(), $promotionTaxons[1]->getCode()];
         $this->createPercentageDiscount(
             $promotion,
             $percentage,
-            $this->promotionRuleFactory->createHasTaxon($promotionTaxonsCodes)
+            $this->promotionRuleFactory->createHasTaxon($promotionTaxonsCodes),
         );
     }
 
@@ -247,7 +246,7 @@ final class CatalogPromotionContext implements Context
     public function itGivesPercentageDiscountOffOnAProduct(
         PromotionInterface $promotion,
         float $percentage,
-        ?ProductInterface $product = null
+        ?ProductInterface $product = null,
     ): void {
         if (null == $product) {
             $product = $this->sharedStorage->get('product');
@@ -256,7 +255,7 @@ final class CatalogPromotionContext implements Context
         $this->createPercentageDiscount(
             $promotion,
             $percentage,
-            $this->promotionRuleFactory->createContainsProduct($product->getCode())
+            $this->promotionRuleFactory->createContainsProduct($product->getCode()),
         );
     }
 
@@ -266,13 +265,13 @@ final class CatalogPromotionContext implements Context
     public function itGivesPercentageDiscountOffOnAProducts(
         PromotionInterface $promotion,
         float $percentage,
-        array $products
+        array $products,
     ): void {
         $productCodes = [$products[0]->getCode(), $products[1]->getCode()];
         $this->createPercentageDiscount(
             $promotion,
             $percentage,
-            $this->promotionRuleFactory->createContainsProducts($productCodes)
+            $this->promotionRuleFactory->createContainsProducts($productCodes),
         );
     }
 
@@ -302,11 +301,11 @@ final class CatalogPromotionContext implements Context
     private function createPercentageDiscount(
         PromotionInterface $promotion,
         float $percentage,
-        PromotionRuleInterface $rule = null
+        PromotionRuleInterface $rule = null,
     ): void {
         $this->persistDiscount(
             $this->setPercentageDiscount($promotion, $percentage),
-            $rule
+            $rule,
         );
     }
 
