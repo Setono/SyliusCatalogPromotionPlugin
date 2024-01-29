@@ -37,7 +37,7 @@ class PromotionExampleFactory extends AbstractExampleFactory
         ChannelRepositoryInterface $channelRepository,
         PromotionRepositoryInterface $promotionRepository,
         Factory $promotionFactory,
-        PromotionRuleExampleFactory $promotionRuleExampleFactory
+        PromotionRuleExampleFactory $promotionRuleExampleFactory,
     ) {
         $this->channelRepository = $channelRepository;
         $this->promotionRepository = $promotionRepository;
@@ -101,20 +101,20 @@ class PromotionExampleFactory extends AbstractExampleFactory
             ->setDefault('code', static function (Options $options): string {
                 return StringInflector::nameToCode($options['name']);
             })
-            ->setDefault('name', function (Options $options): string {
+            ->setDefault('name', function (): string {
                 /** @var string $text */
                 $text = $this->faker->words(3, true);
 
                 return $text;
             })
-            ->setDefault('description', function (Options $options): string {
+            ->setDefault('description', function (): string {
                 return $this->faker->sentence();
             })
 
             ->setDefault('priority', 0)
             ->setAllowedTypes('priority', 'int')
 
-            ->setDefault('exclusive', function (Options $options): bool {
+            ->setDefault('exclusive', function (): bool {
                 return $this->faker->boolean(25);
             })
 
@@ -123,11 +123,11 @@ class PromotionExampleFactory extends AbstractExampleFactory
             ->setDefault('ends_at', null)
             ->setAllowedTypes('ends_at', ['null', 'string'])
 
-            ->setDefault('enabled', function (Options $options): bool {
+            ->setDefault('enabled', function (): bool {
                 return $this->faker->boolean(90);
             })
 
-            ->setDefault('discount', function (Options $options): float {
+            ->setDefault('discount', function (): float {
                 return $this->faker->randomFloat(3, 0, 100);
             })
             ->setNormalizer('discount', static function (Options $options, $value): float {

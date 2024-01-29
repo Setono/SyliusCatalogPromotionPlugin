@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Setono\SyliusCatalogPromotionPlugin\Model;
 
+use Doctrine\Common\Collections\Collection;
 use Sylius\Component\Core\Model\ChannelPricingInterface as BaseChannelPricingInterface;
+use Sylius\Component\Promotion\Model\CatalogPromotionInterface;
 use Sylius\Component\Resource\Model\TimestampableInterface;
 
 interface ChannelPricingInterface extends BaseChannelPricingInterface, TimestampableInterface
@@ -31,7 +33,7 @@ interface ChannelPricingInterface extends BaseChannelPricingInterface, Timestamp
 
     public function resetBulkIdentifier(): void;
 
-    public function getAppliedPromotions(): array;
+    public function getAppliedPromotions(): Collection;
 
-    public function addAppliedPromotion(string $promotionCode): void;
+    public function addAppliedPromotion(CatalogPromotionInterface $promotionCode): void;
 }

@@ -18,10 +18,6 @@ final class RegisterRulesPass implements CompilerPassInterface
         $formRegistry = $container->getDefinition('setono_sylius_catalog_promotion.form_registry.rule');
         $formToLabelMap = [];
 
-        /**
-         * @var string $id
-         * @var array $tagged
-         */
         foreach ($container->findTaggedServiceIds('setono_sylius_catalog_promotion.rule') as $id => $tagged) {
             /** @var array $attributes */
             foreach ($tagged as $attributes) {

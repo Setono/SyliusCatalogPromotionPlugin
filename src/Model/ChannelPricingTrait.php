@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace Setono\SyliusCatalogPromotionPlugin\Model;
 
 use DateTimeInterface;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Sylius\Component\Core\Model\ChannelPricing;
+use Sylius\Component\Promotion\Model\CatalogPromotionInterface;
 use Sylius\Component\Resource\Model\TimestampableTrait;
 
 /**
@@ -35,10 +37,11 @@ trait ChannelPricingTrait
      *
      * @var array<array-key, string>
      */
-    protected array $appliedPromotions = [];
+    protected $appliedPromotions;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     *
      * @Gedmo\Timestampable(on="create")
      *
      * @var DateTimeInterface|null
@@ -47,18 +50,24 @@ trait ChannelPricingTrait
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     *
      * @Gedmo\Timestampable(on="update")
      *
      * @var DateTimeInterface|null
      */
     protected $updatedAt;
 
+    public function __construct()
+    {
+        $this->appliedPromotions = [];
+    }
+
     public function hasDiscount(): bool
     {
-        return null !== $this->getOriginalPrice()
-            && null !== $this->getPrice()
-            && $this->getOriginalPrice() > $this->getPrice()
-            ;
+        return null !== $this->getOriginalPrice() &&
+            null !== $this->getPrice() &&
+            $this->getOriginalPrice() > $this->getPrice()
+        ;
     }
 
     public function getDiscountAmount(): ?int
@@ -110,12 +119,12 @@ trait ChannelPricingTrait
         $this->bulkIdentifier = null;
     }
 
-    public function getAppliedPromotions(): array
+    public function getAppliedPromotions(): Collection
     {
         return $this->appliedPromotions;
     }
 
-    public function addAppliedPromotion(string $promotionCode): void
+    public function addAppliedPromotion(CatalogPromotionInterface $promotionCode): void
     {
         $this->appliedPromotions[] = $promotionCode;
     }

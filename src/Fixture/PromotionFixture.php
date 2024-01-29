@@ -11,11 +11,12 @@ final class PromotionFixture extends AbstractResourceFixture
 {
     public function getName(): string
     {
-        return 'catalog_promotion';
+        return 'setono_catalog_promotion';
     }
 
     protected function configureResourceNode(ArrayNodeDefinition $resourceNode): void
     {
+        /** @psalm-suppress MixedMethodCall,UndefinedInterfaceMethod,PossiblyNullReference */
         $resourceNode
             ->children()
                 ->scalarNode('code')->cannotBeEmpty()->end()
@@ -43,7 +44,8 @@ final class PromotionFixture extends AbstractResourceFixture
                         ->end()
                     ->end()
                 ->end()
-                ->arrayNode('channels')->scalarPrototype()->end()->end()
+                ->arrayNode('channels')
+                    ->scalarPrototype()->end()
         ;
     }
 }
